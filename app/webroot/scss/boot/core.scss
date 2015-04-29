@@ -2,6 +2,8 @@
 $granat: #36466B;
 $niebieski: #59CEF0;
 $the_space: 10px;
+$oa_edit: #f0d17b;
+$oa_edit_hover: #a89256;
 
 body {
     padding-top: 60px;
@@ -56,13 +58,16 @@ nav.navbar li > .glyph {
 .object-title {
     margin-top: 5px;
     margin-bottom: 30px;
-    //display: inline-block;
-    //vertical-align: top;
 }
 
 .object-title > a {
     font-size: 80%;
     padding: 0 1em;
+    color: $oa_edit;
+}
+
+.object-title > a:hover {
+    color: $oa_edit_hover;
 }
 
 .action-strip {
