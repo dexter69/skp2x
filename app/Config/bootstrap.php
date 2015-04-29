@@ -143,6 +143,10 @@ else { Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf'); }
  * 
  */
 
+//UŻYJEMY zamiast DEVEL
+define('LIN', "/");
+define('WIN', "\\");
+
 //MATERIAŁ KART
 define('PVC', 1);    // STANDARD PVC
 define('BIO', 2);    // BIO PVC
