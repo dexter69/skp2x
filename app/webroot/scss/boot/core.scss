@@ -56,6 +56,19 @@ nav.navbar li > .glyph {
 .object-title {
     margin-top: 5px;
     margin-bottom: 30px;
+    //display: inline-block;
+    //vertical-align: top;
+}
+
+.object-title > a {
+    font-size: 80%;
+    padding: 0 1em;
+}
+
+.action-strip {
+   display: inline-block; 
+   vertical-align: center;
+   font-size: 2em;
 }
 
 // Większa etykieta

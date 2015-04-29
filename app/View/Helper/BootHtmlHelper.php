@@ -11,18 +11,20 @@ class BootHtmlHelper extends AppHelper {
     
     public $helpers = array('Html', 'Math');
     
-    public function glyphLink( $glyphname = null, $kontroler = null, $akcja = null ) {
+    public function glyphLink( $glyphname = null, $kontroler = null, $akcja = null, $id = null ) {
     /* 
      * $glyphname - nazwa boot ikonki
      * $kontroler - nazwa kontrolera
      *   $akcja - akcja kontrolera 
    */
+        if( $id != null ) {
+            $opcje = array( 'controller' => $kontroler, 'action' => $akcja, $id);
+        } else {
+            $opcje = array( 'controller' => $kontroler, 'action' => $akcja );
+        }
         return $this->Html->link(
             '<span class="' . $glyphname . '" aria-hidden="true"></span>',
-            array(
-                'controller' => $kontroler,
-                'action' => $akcja
-            ),
+            $opcje,
             array( 'escape' => false, 'class' => 'glyph')
         );
     }
@@ -124,6 +126,11 @@ class BootHtmlHelper extends AppHelper {
                 array(
                     'controller' => 'customers',
                     'action' => 'edit', $id )); 
+    }
+    
+    // chcemy ładny link do edycji klienta z glyph - ikonką
+    public function customerEditGlyph( $id = 1 ) {
+        return $this->glyphLink('glyphicon glyphicon-edit', 'customers', 'edit', $id);
     }
     
     // chcemy ładny link z bazowego numeru zamówienia

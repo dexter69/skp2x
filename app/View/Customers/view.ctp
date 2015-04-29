@@ -9,7 +9,12 @@ echo $this->Html->css('boot/customer', null, array('inline' => false));
 <div class="row">
     <div class="col-md-12">
         <!--<span class="label label-default label-big">Klient:</span>-->
-        <h1 class="object-title"><?php echo $customer['Customer']['name'];?></h1>
+        <h1 class="object-title"> 
+            <?php 
+                echo $customer['Customer']['name']; 
+                echo $this->BootHtml->customerEditGlyph( $customer['Customer']['id'] );
+            ?>            
+        </h1>
         <ul class="nav nav-pills customer-pills f15">
             <li role="presentation" class="active"><a href="#profile" data-toggle="tab"><strong>Dane klienta</strong></a></li>
             <li role="presentation"><a href="#zamowienia" data-toggle="tab"><strong>Zamówienia</strong></a></li>
