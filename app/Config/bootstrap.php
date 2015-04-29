@@ -1,9 +1,6 @@
 <?php
 //DEPREC ###################
 //define('DEVEL', false);    // coby sterować różnymi rzeczami 
-//UŻYJEMY zamiast DEVEL
-define('LIN', "/");
-define('WIN', "\\");
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
  *
@@ -133,6 +130,10 @@ Configure::write('CakePdf', array(
         'download' => true  ,
 	//'filename' => 'example.pdf'	
     ));
+
+//UŻYJEMY zamiast DEVEL
+define('LIN', "/");
+define('WIN', "\\");
 
 if( DS == WIN) { // We are on Windows!
     Configure::write('CakePdf.binary', 'C:\wkhtmltopdf\bin\wkhtmltopdf.exe');     
