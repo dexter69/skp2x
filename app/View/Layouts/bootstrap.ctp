@@ -32,7 +32,10 @@
             //echo $this->Html->css( array('bootswatch/cerulean/bootstrap.min', 'core') );
             //echo $this->Html->css( array('bootswatch/custom/bootstrap.min', 'boot/core') );
             echo $this->Html->css( array('bootswatch/custom/bootstrap.min') ); ?>
-            <link rel="stylesheet" type="text/css" href="/SKP/2x/css/boot/core.css?v=29042200" />
+            <!--<link rel="stylesheet" type="text/css" href="/SKP/2x/css/boot/core.css?v=29042200" />
+            poniżej wersja na apacz'a
+            -->
+            <link rel="stylesheet" type="text/css" href="/skp/css/boot/core.css?v=29042200" />
         <?php
             echo $this->fetch('meta');
             echo $this->fetch('css');
