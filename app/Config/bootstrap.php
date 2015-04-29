@@ -1,5 +1,9 @@
 <?php
-define('DEVEL', false);    // coby sterować różnymi rzeczami
+//DEPREC ###################
+//define('DEVEL', false);    // coby sterować różnymi rzeczami 
+//UŻYJEMY zamiast DEVEL
+define('LIN', "/");
+define('WIN', "\\");
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
  *
@@ -130,8 +134,11 @@ Configure::write('CakePdf', array(
 	//'filename' => 'example.pdf'	
     ));
 
-if( DEVEL ) { Configure::write('CakePdf.binary', 'C:\wkhtmltopdf\bin\wkhtmltopdf.exe'); }
-else { Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf'); }
+if( DS == WIN) { // We are on Windows!
+    Configure::write('CakePdf.binary', 'C:\wkhtmltopdf\bin\wkhtmltopdf.exe');     
+} else { // We are on Linux!
+    Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');     
+}
 
 //Configure::write('CakePdf.binary', 'C:\wkhtmltopdf\bin\wkhtmltopdf.exe');
 //Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');
@@ -142,10 +149,6 @@ else { Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf'); }
  * GLOBALNE STAŁE
  * 
  */
-
-//UŻYJEMY zamiast DEVEL
-define('LIN', "/");
-define('WIN', "\\");
 
 //MATERIAŁ KART
 define('PVC', 1);    // STANDARD PVC

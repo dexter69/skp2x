@@ -4,11 +4,9 @@ $this->layout='bootstrap';
 echo $this->Html->css('boot/customer', null, array('inline' => false));
 //echo count($customer['Order']) . "<br>";
 //echo count($customer['Card']) . "<br>";
-//echo DS . '<br>';
-//echo LIN . '<br>';
-//echo WIN;
-if( DS == LIN ) { echo 'We are on Linux!'; } 
-if( DS == WIN ){ echo 'We are on Windows!'; }
+//echo DS . '<br>'; //echo LIN . '<br>'; //echo WIN;
+//if( DS == LIN ) { echo 'We are on Linux!'; } 
+//if( DS == WIN ){ echo 'We are on Windows!'; }
 ?>
 
 <div class="row">

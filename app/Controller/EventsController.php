@@ -185,7 +185,8 @@ class EventsController extends AppController {
                         default:
                             $email = new CakeEmail('homepl_smtp');
                     }
-                    if( DEVEL ) {
+                    //if( DEVEL ) {
+                    if( DS == WIN) { // We are on Windows!
                         $email->to('darek@polskiekarty.pl');
                     } else
                         { $email->to($odbiorcy); }
