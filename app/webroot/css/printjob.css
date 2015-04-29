@@ -1,0 +1,67 @@
+body {
+	background: white;
+	max-width: 297mm;
+	min-width: 297mm;
+	
+}
+#content {	padding-left: 20px; }
+
+#uwagoza, #tablewrap {
+	display: inline-block;
+	vertical-align: top;
+	
+}
+
+#tablewrap { max-width: 53%;
+	
+}
+
+#uwagoza {
+	border-left: 1px solid black;
+	padding-left: 2mm;
+	margin-left: 5mm;
+	max-width: 44%;
+}
+
+#uwagoza span:first-child {
+	font-weight: bold;
+	padding: 0 2mm 2mm 0;
+}
+
+.redoza {
+	color: red;
+	font-weight: bold;
+}
+
+#nrjob {
+	color: red;
+	font-size: 150%;
+	font-weight: bold;
+}
+
+
+
+.related {
+	margin: 5mm 0 5mm 0;
+}
+
+.gruby { font-weight: bold; }
+
+.waski {
+	font-family: "Helvetica Narrow","Arial Narrow",Tahoma,Arial,Helvetica,sans-serif;
+}
+
+#print_job_cards tr td {
+    white-space: normal; 
+}
+.karta { width: 20%; }
+.ile { width: 7%; }
+.materia { width: 7%; }
+.siprze { width: 5%; }
+.wynie { width: 6%; }
+.cmyk { width: 8%; }
+.lam    { width: 8%; }
+.sipo { width: 4%; }
+.mag { width: 4%; }
+.pasek { width: 5%; }
+.perso { width: 3%; }

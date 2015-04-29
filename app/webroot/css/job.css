@@ -1,0 +1,104 @@
+/* background-color: lightgreen */
+table.j-add {
+	table-layout:fixed;
+}
+
+table.j-add td, table.j-add th {
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+/*table.j-add th.karta, table.j-add td.karta { width: 10em;  }*/
+table.j-add th.cbox, table.j-add td.cbox { width: 1.5em; }
+table.j-add th.klient, table.j-add td.klient { width: 8em }
+table.j-add th.handel, table.j-add td.handel { width: 5em }
+table.j-add th.nr, table.j-add td.nr { width: 6.7em }
+table.j-add th.ile, table.j-add td.ile { width: 6em }
+table.j-add th.czas, table.j-add td.czas { width: 11em }
+table.j-add th.ikna, table.j-add td.ikna { width: 5em }
+table.j-add .utech { width: 18px; }
+table.j-add .utech > p { 
+    margin: 0;
+    padding: 0;
+    height: 22px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #c1c1c1;
+}
+table.j-add .utech > div { display: none; } 
+table.j-add .utech > div.up {
+    display: block;
+    background-color: #36466B;
+    box-shadow: 15px 15px 5px #888888;
+    width: 600px;
+    height: 300px;
+    border-radius: 10px;
+    padding: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -300px;
+} 
+table.j-add .utech > div.up textarea { width: 90%; height: 95%;}
+p.zamek { margin: 0; padding: 0}
+.normal p.zamek { display: none; }
+.normal.up p.zamek { 
+    display: block;
+    width: 30px; height: 30px;    
+    /*background-image: url('../img/close22white.png');*/
+    background-image: url('../img/close_32.png');
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+
+table.j-add .utech > p.jest { background-color: lightgreen; }
+table.j-add td.ikna input { width: 85% }
+
+table.j-add td.iknas, table.j-add td.suma  { font-weight: bold; }
+
+td.ikna input {
+	/*max-height: 30px;*/
+	font-size: 100%;
+}
+
+table.j-add tr:last-child td div {
+	height: 17px;
+	padding: 0;
+	margin: 0;
+}
+
+table.j-add tr:last-child  {
+	background-color: inherit;
+	
+}
+
+table.j-add tr:last-child td {
+	border-bottom-style: none;	
+}
+
+/*fieldset { min-width: 807px }*/
+
+div.jobs.form {
+	min-width: 851px
+}
+fieldset > div {
+	display: inline-block;
+	vertical-align: top;
+}
+
+input[ark-nr="1"] {
+	width: 130px;
+}
+
+fieldset textarea {
+	width: 610px;
+}
+
+#JobAddForm label {
+	font-weight: bold;
+}
+
+div.index th:first-child, div.index td:first-child { width: 4em; }

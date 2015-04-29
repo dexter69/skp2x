@@ -1,0 +1,40 @@
+#CustomerAddForm fieldset label {	font-weight: bold; }
+/*
+div.wrapit { border: 1px solid blue; }
+*/
+#nr_budynku_div, #kraj_div, #cr_div, #tel_div {	width: 27%;  }
+#osoba_kontaktowa_div { width: 38%; }
+#nr_budynku_div  > input, #kraj_div  > input,
+#cr_div  > input, #email_div  > input {	width: 93%; }
+
+#kod_div { width: 17%;  }
+#ulica_div > input { width: 96%; }
+#kod_div > input { width: 90%; }
+#waluta_div { width: 12%; }
+#waluta_div select { width: 90%; }
+
+.opcje_platnosci {
+	padding: 0 20px 0 0;
+	margin-bottom: 0;
+	width: 40%;	
+}
+
+.platnosci1 select { width: 95%; }
+.platnosci2 { width: 35%; min-width: 100px; }
+.platnosci2 > input { width: 86% !important; }
+
+#comment_div { margin-bottom: 0	}
+#comment_div > textarea { width: 97%; height: 115px;}
+/*
+dt { width: 12em; }
+dd { margin-left: 12em; }
+*/
+
+th:first-child, td:first-child { width: 4em; }
+
+th { text-align: center; }
+table .numer { width: 6em; }
+td.numer { text-align: right; }
+.data { width: 11em; }
+td.data { text-align: right; }
+

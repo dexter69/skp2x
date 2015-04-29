@@ -1,0 +1,126 @@
+#OrderEditForm fieldset #finaluw {
+	
+	display: block;
+}
+
+div.view {
+	margin-bottom: 50px;
+}
+
+dt {
+
+	width: 12em;
+}
+dd {
+	margin-left: 12em;
+
+}
+
+
+
+#OrderEditForm fieldset input[required] {
+	/*background-color: #dafefe;*/
+}
+
+#OrderEditForm  div {	
+	display: inline-block;
+	/*border: 1px solid lightgrey*/
+}
+
+#OrderAddForm fieldset > div:not(#datepicker) {
+	display: inline-block;
+}
+
+#OrderAddForm fieldset td.noinput {
+	font-size: 140%;
+	max-width: 300px;
+	overflow: hidden;
+}
+
+
+
+/*#OrderAddForm fieldset div.divhid { display: none; }*/
+
+ 
+
+div#procent { visibility: hidden }
+
+
+#ordcards td:first-child {
+	
+	width: 25px;
+}
+
+th.required:after {
+    color: #EE3322;
+    content: "*";
+    display: inline;
+}
+
+[row] input[required] {
+	/*background-color: #ffd9da*/
+}
+
+
+
+th.cenaile, td[row] {
+	/*background-color: #add22d;*/
+	width: 90px;
+}
+
+.mnoznik {
+	/*background-color: #e2ac1d;*/
+	width: 67px;
+}
+
+table#ordcards { margin-bottom: 1.5em;}
+
+#content.dexmodif table td.actions a {
+	margin: 0;
+}
+
+#datepicker  {
+	min-height: 307px;
+	margin-bottom: 0;
+}
+
+#paywrap  {
+	width: 35%;
+	min-width: 400px;
+	/*margin: 0 1em;*/
+}
+
+#paywrap > div { display: inline-block;  }
+#paywrap p + div {	width: 55%; }
+#paywrap p + div select { width: 95%; }
+#paywrap > div:last-child { width: 35%; }
+
+
+#OrderAddForm fieldset {
+	/*position: relative;*/
+}
+
+#adrwrap { width: 35%; }
+
+#OrderAddForm fieldset #extraadres { /*visibility: hidden;*/ width: 61%; /*float: right;*/}
+
+#OrderAddForm fieldset > div#commentwrap { display: block; }
+
+#OrderAddForm fieldset #extraadres > div {
+	display: inline-block;
+	/*background-color: lightgreen;*/
+	margin: 1px;
+}
+
+#OrderAddForm fieldset #extraadres #name_div {
+	display: block;
+}
+
+#ulica_div { width: 73%; }
+#nr_budynku_div { width: 20%; /*float: right;*/ }
+#kod_div { width: 17%; }
+#OrderAddForm fieldset #extraadres > div#miasto_div { width: 44%; }
+#kraj_div  { width: 28%; /*float: right;*/ }
+
+.datepickerwrap {	/*float: right;*/  margin-bottom: 0;}
+

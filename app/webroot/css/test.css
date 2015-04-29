@@ -1,0 +1,14 @@
+div.colorwrap {  width: 100%; display: table; padding: 0; }
+div.colorwrap > div {
+	
+	display: table-cell;
+	
+	
+}
+
+#div_green {	background: green;  width: 20%;  }
+#div_orange {	background: orange;   }
+#div_red {	background: red;  }
+
+
+

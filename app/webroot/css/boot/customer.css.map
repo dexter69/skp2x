@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAGA,eAAgB,CACZ,aAAa,CAAE,GAAG,CAItB,eAAgB,CACZ,aAAa,CAAE,IAAI,CACnB,SAAS,CAAE,IAAI,CAInB,yBAA6B,CACzB,UAAU,CAAE,KAAK,CAKrB,OAAQ,CAAE,gBAAgB,CAAE,MAAM,CAAE,SAAS,CAAE,IAAI",
+"sources": ["../../scss/boot/customer.scss"],
+"names": [],
+"file": "customer.css"
+}

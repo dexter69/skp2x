@@ -1,0 +1,52 @@
+
+#header div {
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+}
+
+#header div.out {
+	background:  url('../img/logoutoza.png') no-repeat left;
+	float: right;
+
+}
+
+#header p {
+	display: inline-block;
+	margin: 0;
+	vertical-align: top;
+	line-height: 32px;
+	color: #59cef0;
+	float: right;
+}
+
+#header p span {
+	font-weight: bold;
+	padding: 0 10px 0 5px;
+	
+}
+
+#header div.stopfloat {
+	width: 0;
+	clear: both;
+}
+
+#CustomerAddForm fieldset {	padding: 0; }
+
+.wrapit { margin: 0; background-color: #b0d6f0; }
+
+.dexmodif div.actions {
+	
+	width: 12%;
+}
+
+.dexmodif div.index {
+	width: 78%;
+}
+
+
+.dexmodif a {
+    
+    text-decoration: none;
+}
+
