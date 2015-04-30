@@ -8,6 +8,9 @@ echo $this->Html->css('boot/customer', null, array('inline' => false));
 //if( DS == LIN ) { echo 'We are on Linux!'; } 
 //if( DS == WIN ){ echo 'We are on Windows!'; }
 //echo $this->webroot;
+/*
+ *  dfksdfk
+ */
 ?>
 
 <div class="row">
