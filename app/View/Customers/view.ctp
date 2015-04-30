@@ -7,7 +7,7 @@ echo $this->Html->css('boot/customer', null, array('inline' => false));
 //echo DS . '<br>'; //echo LIN . '<br>'; //echo WIN;
 //if( DS == LIN ) { echo 'We are on Linux!'; } 
 //if( DS == WIN ){ echo 'We are on Windows!'; }
-echo $this->webroot;
+//echo $this->webroot;
 ?>
 
 <div class="row">
