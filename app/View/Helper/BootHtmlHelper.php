@@ -207,5 +207,26 @@ class BootHtmlHelper extends AppHelper {
                 { return $bnr; }
     }
     
+    /*
+     *  Chcemy link do pliku css z możliwym parametrem
+     */
+    
+    public function css( 
+            $path = array(), // jak w oryginalnej
+            $time_par = false) { // jeżeli true, metoda generuje link z timestamp
+        
+        if( $time_par && !empty($path) ) {
+            $retlnk = null; $time = time();
+            foreach( $path as $prm) {
+                $href = $this->webroot . CSS_URL . $prm . '.css?v=' . $time;  
+                $retlnk .= '<link rel="stylesheet" type="text/css" href="' . $href . '" />';
+            }
+            return $retlnk;
+           // return '<link rel="stylesheet" type="text/css" href="' . $href . '" />';
+           // '<link rel="stylesheet" type="text/css" href="/SKP/2x/css/boot/core.css?v=29042200" />';
+        }
+        return $this->Html->css($path);
+    }
+    
     
 }
