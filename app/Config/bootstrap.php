@@ -455,10 +455,13 @@ define('ZERO', 0); // nic
 define('publi', 1); // o
 define('kor_no', 14); // o
 define('kor_ok', 15); // o
+
+define('p_ov', 5); // c - zamarkowanie, ze porso zostało zakończone
 define('d_no', 6); // c
 define('p_no', 7); // c
 define('d_ok', 8); // c
 define('p_ok', 9); // c
+
 define('put_kom', 13); // o i c - komentarz
 define('fix_o', 16); // o i c
 define('send_o', 17); // o , zaznacz że wysłane (u klienta)
@@ -469,11 +472,12 @@ define('unlock_again', 20); // czyli uzupełnione źle, z powrotem do handlowca
 define('klepnij', 23); // jest ok wrcamy do produkcji
 define('push4checking', 24); // daj Frankowi i/lub Adamowi do sprawdzenia
 
+/* DEPREC - nie ma takich w bazie na apacz 12 maj 2015
 define('kor_no1', 2); // o
 define('kor_ok1', 3); // o
 define('kor_no2', 4); // o
 define('kor_ok2', 5); // o
-
+*/
 define('fix_k', 10); // c
 define('fix_o1', 11); // o
 define('fix_o2', 12); // o

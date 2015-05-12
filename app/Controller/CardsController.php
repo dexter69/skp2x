@@ -213,48 +213,68 @@ class CardsController extends AppController {
 	
 	public function prepareSubmits($card ) {
 		
-		//$user_dzial = $this->Auth->user('dzial');
-		$tworca = $card['Card']['user_id'] == $this->Auth->user('id');
-		$tab = array(
-			'buttons' => array(d_no, d_ok, p_no, p_ok, /*fix_k,*/ put_kom),
-			'bcontr' => array(d_no=>0, d_ok=>0, p_no=>0, p_ok=>0, /*fix_k=>0,*/ put_kom=>0),
-			'ile' => 0 //liczba submitow do wyświetlenia
-		);
-		
-		
-		switch( $card['Card']['status'] ) {
-			case W4D:
-			case W4DPNO:
-			case W4DPOK:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
-				$tab = $this->plant_DTP($tab, $card['Order']['status']);
-			break;
-			case W4DP:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
-				$tab = $this->plant_DTP($tab, $card['Order']['status']);
-				$tab = $this->plant_PERSO($tab, $card, $card['Order']['status']);
-			break;
-			case W4PDNO:
-			case W4PDOK:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
-				$tab = $this->plant_PERSO($tab, $card, $card['Order']['status']);
-			break;
-			case DOK:
-			case DNO:
-			case DOKPNO:
-			case DOKPOK:
-			case DNOPNO:
-			case DNOPOK:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
-			break;	
-			default:		
-				$tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
-		}
-		
-		return $tab;
+            //$user_dzial = $this->Auth->user('dzial');
+            $tworca = $card['Card']['user_id'] == $this->Auth->user('id');
+            $tab = array(
+                    'buttons' => array(d_no, d_ok, p_no, p_ok, p_ov, put_kom),
+                    'bcontr' => array(d_no=>0, d_ok=>0, p_no=>0, p_ok=>0, p_ov=>0, put_kom=>0),
+                    'ile' => 0 //liczba submitow do wyświetlenia
+            );
+
+
+            switch( $card['Card']['status'] ) {
+                    case W4D:
+                    case W4DPNO:
+                    case W4DPOK:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
+                            $tab = $this->plant_DTP($tab, $card['Order']['status']);
+                    break;
+                    case W4DP:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
+                            $tab = $this->plant_DTP($tab, $card['Order']['status']);
+                            $tab = $this->plant_PERSO($tab, $card, $card['Order']['status']);
+                    break;
+                    case W4PDNO:
+                    case W4PDOK:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
+                            $tab = $this->plant_PERSO($tab, $card, $card['Order']['status']);
+                    break;
+                    case DOK:
+                    case DNO:
+                    case DOKPNO:
+                    case DOKPOK:
+                    case DNOPNO:
+                    case DNOPOK:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
+                    break;
+                    case W_PROD:
+                        $tab = $this->plant_POVER($tab, $card['Card'], $this->Auth->user('dzial'));
+                        $tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
+                    break;
+                    default:		
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
+            }
+
+            return $tab;
 		
 	}
 
+        private function plant_POVER( $button_tab = array(), $karta = array(), $dzial = 0 ) {
+            
+            $ret_tab = $button_tab;
+            
+            $warunek = 
+                    // d) użytkownik jest superafdminem, z perso lub dtp 
+                    in_array($dzial, array(SUA, DTP, PER) ) &&
+                    $karta['isperso'] && // b) karta ma personalizację
+                    !$karta['pover'] && // c) nie została już zamarkowana
+                    $karta['status'] == W_PROD; // a) ma klarowny status
+            if( $warunek ) {
+                $ret_tab['bcontr'][p_ov] = 1;
+		$ret_tab['ile']++;
+            }
+            return $ret_tab;
+        }
 
 	private function plant_KOMENTUJ( $button_tab = array(), $tworca = false, $isperso = false ) {
 		

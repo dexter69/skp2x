@@ -16,6 +16,7 @@ class MaHelper extends AppHelper {
 				'ODRZUĆ',	
 		kor_ok => //'kor_ok',
 				'AKCEPTUJ',
+                p_ov => 'perso gotowe',
 		d_no => 'odrzuć pliki',//'d_no',
 		p_no => 'odrzuć perso',
 		d_ok => 'akceptuj pliki',//'d_ok',
@@ -29,10 +30,11 @@ class MaHelper extends AppHelper {
 		klepnij => 'PRZYJMIJ',
 		push4checking => 'DO DTP/P',
 		
-		kor_no1 => 'odrzuć', //'kor_no1',
-		kor_ok1 => 'akceptuj',//'kor_ok1',
+                /* DEPREC
+		kor_no1 => 'odrzuć', 
+		kor_ok1 => 'akceptuj',
 		kor_no2 => 'kor_no2',
-		kor_ok2 => 'kor_ok2',
+		kor_ok2 => 'kor_ok2',*/
 		
 		fix_k => 'popraw',//'fix_k',
 		fix_o1 => 'poprawione',//'fix_o1',
@@ -80,6 +82,7 @@ class MaHelper extends AppHelper {
 		publi => false,
 		kor_no => true,
 		kor_ok => false,
+                p_ov => false,
 		d_no => true,
 		p_no => true,
 		d_ok => false,
@@ -89,11 +92,11 @@ class MaHelper extends AppHelper {
 		unlock_o => false,
 		unlock_again => true,
 		klepnij => false,
-		
+		/* deprec
 		kor_no1 => true,
 		kor_ok1 => false,
 		kor_no2 => true,
-		kor_ok2 => false,
+		kor_ok2 => false,*/
 		
 		fix_k => false,
 		fix_o1 => false,
@@ -170,7 +173,7 @@ class MaHelper extends AppHelper {
 			'zakończył',
 			'zakończyła','class' => 'ziel'),
 			
-			
+		/* deprec	
 		kor_ok1 => array(
 			'zatwierdził',
 			'zatwierdziła','class' => 'ziel'),
@@ -182,7 +185,7 @@ class MaHelper extends AppHelper {
 			'odrzuciła','class' => 'czer'),
 		kor_no2 => array(
 			'odrzucił',
-			'odrzuciła','class' => 'czer'),
+			'odrzuciła','class' => 'czer'),*/
 		fix_o1 => array(
 			'poprawił',
 			'poprawiła','class' => 'pom'),
