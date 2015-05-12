@@ -898,7 +898,7 @@ class Card extends AppModel {
 			'x_lam'=>	array( 
 								'label' => false,
 							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array('2'=>'BŁYSZCZĄCY', '3'=>'GŁADKI', '4'=>'CHROPOWATY'), 
+								'options' => array('2'=>'BŁYSZCZĄCY', '3'=>'GŁADKI', '4'=>'CHROPOWATY', '0' => 'BRAK'), 
 								'default' => 2 //
 							),
 			'mag'=>	array( 

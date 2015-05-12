@@ -91,11 +91,13 @@ class AppHelper extends Helper {
     //LAMINAT
     public $laminat = array(
         'short1' =>  array (
+                        BRAK    =>      'BRAK', // karty bez laminatu
                         BL	=>	'BŁYS',	// LAMINAT BŁYSZCZĄCY
                         GL	=>	'GŁAD', // LAMINAT GŁADKI
                         CH	=>	'CHRO' // LAMINAT CHROPWATY
                     ),
         'long1' =>  array (
+                        BRAK    =>      'BRAK', // karty bez laminatu
                         BL	=>	'BŁYSZCZĄCY',	// LAMINAT BŁYSZCZĄCY
                         GL	=>	'GŁADKI', // LAMINAT GŁADKI
                         CH	=>	'CHROPOWATY' // LAMINAT CHROPWATY
