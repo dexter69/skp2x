@@ -21,12 +21,12 @@ if( array_key_exists($par, $klasa) )
 	<table id="karty" cellpadding="0" cellspacing="0">
 	<tr>
 			<th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
-			
+                        <th class="per"></th>
 			<th class="nazwa"><?php echo $this->Paginator->sort('name','Nazwa karty'); ?></th>
-			<th class="nr"><?php echo $this->Paginator->sort('Order.nr', 'Zamówienie'); ?></th>
-			<th class="nr"><?php echo $this->Paginator->sort('job_id', 'Zlecenie'); ?></th>
-			<th class="termin"><?php echo $this->Paginator->sort('Order.stop_day', 'Termin'); ?></th>
-			<th><?php echo $this->Paginator->sort('customer_id', 'Klient'); ?></th>
+			<th class="nr"><?php echo $this->Paginator->sort('Order.nr', 'Handlowe'); ?></th>
+			<th class="nr"><?php echo $this->Paginator->sort('job_id', 'Produk.'); ?></th>
+			<th class="termin"><?php echo $this->Paginator->sort('Order.stop_day', 'Czas'); ?></th>
+			<th class="klient"><?php echo $this->Paginator->sort('customer_id', 'Klient'); ?></th>
 			
 			<th class="ile"><?php echo $this->Paginator->sort('quantity', 'Ilość'); ?></th>
 			<th class="status"><?php echo $this->Paginator->sort('status'); ?></th>
@@ -41,8 +41,17 @@ if( array_key_exists($par, $klasa) )
 	</tr>
 	<?php foreach ($cards as $card): ?>
 	<tr>
-		<td class="id"><?php echo h($card['Card']['id']); ?>&nbsp;</td>
-		
+		<td class="id"><?php echo $card['Card']['id']; ?>&nbsp;</td>
+                <?php
+                    $klasa = null;
+                    if( $card['Card']['isperso'] ) {
+                        $klasa = ' jest';
+                        if( $card['Card']['status'] == KONEC || $card['Card']['pover'] ) {
+                            $klasa = ' pover';
+                        }                       
+                    } 
+                ?>
+                <td class="per<?php echo $klasa ?>"></td>
 		<!--<td><?php echo h($card['Card']['name']); ?>&nbsp;</td>-->
 		<td class="nazwa">
 			<?php echo $this->Html->link($card['Card']['name'], array('action' => 'view', $card['Card']['id']), array('title' => $card['Card']['name'])); ?>
@@ -68,11 +77,11 @@ if( array_key_exists($par, $klasa) )
 			?>
 		</td>
 		
-		<td class="termin">
-			<?php echo $this->Ma->md($card['Order']['stop_day']);
+		<td class="termin wyroznij-date">
+			<?php echo $this->Ma->mdvs($card['Order']['stop_day']);
 				//echo $this->Html->link($card['Owner']['name'], array('controller' => 'users', 'action' => 'view', $card['Owner']['id'])); ?>
 		</td>
-		<td>
+		<td class="klient">
 			<?php echo $this->Html->link($card['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $card['Customer']['id'])); ?>
 		</td>
 		
@@ -81,9 +90,9 @@ if( array_key_exists($par, $klasa) )
 		<!--<td><?php echo h($card['Card']['status']); ?>&nbsp;</td>-->
 		<td class="status"><?php 
 			if( $card['Card']['status'] == PRIV && $card['Order']['id'] ) 
-				echo 'ZAŁĄCZONA';
+				echo 'ZAŁĄCZ.';
 			else
-				echo $this->Ma->status_karty($card['Card']['status']); ?>&nbsp;
+				echo $this->Ma->status_karty($card['Card']['status'], true); ?>&nbsp;
 		</td>
 		<td class="ebutt"><?php echo $this->Html->link('<div></div>', array('action' => 'edit', $card['Card']['id']), array('class' => 'ebutt',  'escape' =>false)); ?></td>
 		<!--

@@ -347,6 +347,18 @@ class MaHelper extends AppHelper {
 				substr($dstring, 0, 4);     //rok
                 } else  { return $dstring; }
 	}
+        
+        public function mdvs( $dstring ) { //moja data bardzo krótka
+            
+            if( $dstring ) {
+                //$mies =  $this->mies_short[substr($dstring, 5, 2)];
+                return 
+                    substr($dstring, 8, 2).' '.                 //dzien
+                    $this->mies_short[substr($dstring, 5, 2)]; // miesiąc     
+            } else  { 
+                return $dstring;                 
+            }
+        }
 		
 	public function mdt($dstring = null, $seconds = false) { //moja data i czas
 
@@ -448,8 +460,13 @@ class MaHelper extends AppHelper {
 	
 	
 	
-	public function status_karty($stat) {
-		if( $stat != NULL) return $this->card_stat[$stat];
+	public function status_karty($stat, $short = false) {
+		if( $stat != NULL) {
+                    if( $short ) {
+                       return $this->card_stat_short[$stat]; 
+                    }
+                    return $this->card_stat[$stat];
+                }
 		return $stat;
 	}
 
@@ -750,11 +767,6 @@ class MaHelper extends AppHelper {
 					//'DNOPOK',
 		
 		KONEC => 'ZAKOŃCZONA',
-				
-				
-				
-				
-				
 		W4P => 'DTP OK',
 		W4P => 'PERSO?',//'W4P',
 		DREJ => 'BŁĘDY W PLIKACH',
@@ -764,7 +776,34 @@ class MaHelper extends AppHelper {
 		R2BJ => 'SPRAWDZONA',//'R2BJ',
 		JOBED => 'P.D.P.',//'JOBED',
 		W_PROD => 'PRODUKCJA'//'W_PROD'
-	);	
+	);
+        
+        public $card_stat_short = array(
+		PRIV => 'PRYW.',
+		NOWKA => 'NOWA',
+		W4D => 'DTP?',
+		W4DP => 'DTP?/P?',
+		W4DPNO => 'DTP?/P-',
+		W4DPOK => 'DTP?/P+',
+		W4PDNO => 'DTP-/P?',
+		W4PDOK => 'DTP+/P?',
+		DOK => 	'DTP+',
+		DNO => 'DTP-',
+		DOKPNO => 'DTP+/P-',
+		DOKPOK => 'DTP+/P+',
+		DNOPNO => 'DTP-/P-',
+		DNOPOK	=> 'DTP-/P+',
+		KONEC => 'ZAKOŃ.',
+		W4P => 'DTP OK',
+		W4P => 'PERSO?',
+		DREJ => 'BŁĘDY',
+		PREJ => 'BŁEDY',
+		D_OK => 'DTP OK',
+		P_OK => 'PER OK',
+		R2BJ => 'SPRAWDZONA',
+		JOBED => 'P.D.P.',
+		W_PROD => 'PRODUK.'
+	);
 	
 	
 	// XXXXXX  JOBS XXXXXXX

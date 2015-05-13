@@ -218,9 +218,13 @@ $this->set('title_for_layout', $card['Card']['name']);
 		{	$startdiv1 = $startdiv2 = $stopdiv = null; }
 		echo '<div style="clear: both"></div>'; 
 		if( $isperso ) {
+                        $klasa = null;
+                        if( $card['Card']['status'] == KONEC || $card['Card']['pover'] ) {
+                           $klasa = ' pover-view';
+                        }
 			echo $startdiv1;
 			echo $this->Ma->viewheader('PERSONALIZACJA', array('class' => 'margingor'));
-			echo $this->Html->tag('p', nl2br($card['Card']['perso']), array('class' => 'comments'));	
+			echo $this->Html->tag('p', nl2br($card['Card']['perso']), array('class' => 'comments' . $klasa));	
 			echo $stopdiv;
 		}
 		if( $inne ) {

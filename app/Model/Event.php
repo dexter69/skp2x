@@ -235,9 +235,8 @@ class Event extends AppModel {
 		//przygotowanie danych	
 		//$zapisz = null;
 		switch ($event) {
-			
 			//handlowiec opublikował zamówienie
-    		case publi: 
+                        case publi: 
 				$rqdata['Order']['status'] = NOWKA;
 				$rqdata['Order']['data_publikacji']=date('Y-m-d H:i:s');
 				//status_kart( $rqdata['Card'], DO_SPRAWDZENIA );
@@ -327,7 +326,11 @@ class Event extends AppModel {
 					$rqdata['Order']['status'] = O_REJ;
 				$rqdata['Card'] = array( $rqdata['Card'] );
 			break;
-			
+                        case p_ov:
+                              $rqdata['Card']['id'] = $rqdata['Event']['card_id'];
+                              $rqdata['Card']['pover'] = 1;
+                              unset( $rqdata['Card']['status'], $rqdata['Card']['isperso'] );
+                        break;
 			case fix_o:
 				$rqdata['Order']['status'] = FIXED;
 				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
