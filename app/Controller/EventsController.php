@@ -77,6 +77,10 @@ class EventsController extends AppController {
                                     $xyz=$this->e_powiadamiaj($this->request->data['Event']);
                                     //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
                                     //return;
+                                    if( $this->request->data['Event']['co'] == p_ov ) {
+                                        // zakończenie perso -> tak chciał Adam
+                                        return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'ptodo' ));
+                                    }
                                     return $this->redirect(array('controller' => 'orders', 'action' => 'view', $oid ));
                             } else
                                     if( $jid ) {
