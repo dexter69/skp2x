@@ -8,9 +8,10 @@
 	
 	
 $klasa = array(	'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
-				'my'=>null, 'active'=>null, 'closed'=>null);
+		'my'=>null, 'active'=>null, 'closed'=>null, 'ponly'=>null,
+                'pover'=>null, 'ptodo'=>null);
 if( array_key_exists($par, $klasa) )
-	$klasa[$par] = 'swieci';
+    { $klasa[$par] = 'swieci'; }
 ?>
 <div id="indekskart" class="cards index">
 	<h2 class="hfiltry"><?php echo 'KARTY'; 

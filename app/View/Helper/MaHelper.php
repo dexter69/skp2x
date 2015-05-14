@@ -1424,14 +1424,20 @@ class MaHelper extends AppHelper {
 					'</p>';
 			break;
 			case 'cards':
-				$retcode =  '<p class="filtry">'.
-							$this->Html->link( 'DTP?', array( 'controller' => 'cards', 'action' => 'index', 'dtpcheck'), array('class' => $klasa['dtpcheck'])) .
-							$this->Html->link( 'PERSO?', array( 'controller' => 'cards', 'action' => 'index', 'persocheck'), array('class' => $klasa['persocheck'])) .							
-							$this->Html->link( 'aktywne', array( 'controller' => 'cards', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .							
-							$this->Html->link( 'zakończone', array( 'controller' => 'cards', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
-							$this->Html->link( 'wszystkie', array( 'controller' => 'cards', 'action' => 'index', 'all-but-priv'), array('class' => $klasa['all-but-priv'])) .
-							$this->Html->link( 'moje', array( 'controller' => 'cards', 'action' => 'index', 'my'), array('class' => $klasa['my'])) .
-							'</p>';
+				$retcode =
+                                '<p class="filtry">'.
+                                    $this->Html->link( 'DTP?', array( 'controller' => 'cards', 'action' => 'index', 'dtpcheck'), array('class' => $klasa['dtpcheck'])) .
+                                    $this->Html->link( 'PERSO?', array( 'controller' => 'cards', 'action' => 'index', 'persocheck'), array('class' => $klasa['persocheck'])) .
+                                
+                                    $this->Html->link( 'P-ONLY', array( 'controller' => 'cards', 'action' => 'index', 'ponly'), array('class' => $klasa['ponly'])) .
+                                    $this->Html->link( 'P-TODO', array( 'controller' => 'cards', 'action' => 'index', 'ptodo'), array('class' => $klasa['ptodo'])) .
+                                    $this->Html->link( 'P-JUŻ', array( 'controller' => 'cards', 'action' => 'index', 'pover'), array('class' => $klasa['pover'])) .
+                                
+                                    $this->Html->link( 'aktywne', array( 'controller' => 'cards', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .							
+                                    $this->Html->link( 'zakończone', array( 'controller' => 'cards', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
+                                    $this->Html->link( 'wszystkie', array( 'controller' => 'cards', 'action' => 'index', 'all-but-priv'), array('class' => $klasa['all-but-priv'])) .
+                                    $this->Html->link( 'moje', array( 'controller' => 'cards', 'action' => 'index', 'my'), array('class' => $klasa['my'])) .
+				'</p>';
 			break;
 			case 'jobs':
 				$retcode =  '<p class="filtry">'.
