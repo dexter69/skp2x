@@ -264,12 +264,7 @@ if( $order['Order']['nr'] ) {
         ?>  
 	</table>
 <?php endif; ?>
-<!--
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Card'), array('controller' => 'cards', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>-->
+
 </div>
 
 
@@ -278,66 +273,67 @@ if( $order['Order']['nr'] ) {
 <div class="ul-events">
 	<?php $this->Ma->kontrolka_ord($order, $evcontrol);	?>
 	<ul>
-		<?php
-			$start = count($order['Event'])-1;
-			for ($i = $start; $i >=0; $i--) {
-				$event = $order['Event'][$i];
-				echo $this->Html->tag('li', null, array('class' => 'post'));
-					echo $this->Html->tag('div', null, array('class' => 'postinfo'));
-					/*
-					if( $event['card_id'] ) $co = //'<span>kartę: </span>'.
-							$karty[$event['card_id']]; 
-					else
-					*/
-						switch( $event['co'] ) {
-							case put_kom:
-								$co ='';
-							break;
-							case p_no: 
-							case p_ok: 
-							case d_no: 
-							case d_ok: 
-								$co = $karty[$event['card_id']]; 
-							break;
-							default:
-								$co ='';
-						}
-						
-					//substr($event['created'],0,10)
-					
-					if( $event['co'] == put_kom && $event['card_id']  ) {
-						$kartkomm = ' odnośnie karty:';
-						foreach( $order['Card'] as $karta )
-						if( $karta['id'] == $event['card_id'] )
-							$kartkomm .= ' ' . $karta['name'];
-					}
-						
-					else
-						$kartkomm = null;
-					
-					echo '<p>'.$ludz[$event['user_id']]['name'].'</p>'.'<p class="gibon"><span class="' . 
-							//$this->Ma->evtext[$event['co']]['class'].'">' . 
-							$evtext[$event['co']]['class'] . '">' .
-							//$this->Ma->evtext[$event['co']][$ludz[$event['user_id']]['k']]. ' ' .
-							$evtext[$event['co']][$ludz[$event['user_id']]['k']]. ' ' .
-							$co . $kartkomm .
-							
-							'</span></p>'.'<span>'.$this->Ma->mdt($event['created']).'</span>';
-					$list = array( nl2br($event['post']) );
-					
-					echo $this->Html->tag('/div');
-					echo $this->Html->tag('div');
-						echo $this->Html->nestedList(
-						$list,
-						array('class'=>'olevent'),
-						null,
-						'ol'
-						);
-					echo $this->Html->tag('span', $i + 1, array('class' => 'event_nr'));	
-					echo $this->Html->tag('/div');
-					
-				echo $this->Html->tag('/li');
-			} ?>
+            <?php
+            $start = count($order['Event'])-1;
+            for ($i = $start; $i >=0; $i--) {
+                    $event = $order['Event'][$i];
+                    echo $this->Html->tag('li', null, array('class' => 'post'));
+                            echo $this->Html->tag('div', null, array('class' => 'postinfo'));
+                            /*
+                            if( $event['card_id'] ) $co = //'<span>kartę: </span>'.
+                                            $karty[$event['card_id']]; 
+                            else
+                            */
+                            switch( $event['co'] ) {
+                                    case put_kom:
+                                            $co ='';
+                                    break;
+                                    case p_ov:
+                                    case p_no: 
+                                    case p_ok: 
+                                    case d_no: 
+                                    case d_ok: 
+                                            $co = $karty[$event['card_id']]; 
+                                    break;
+                                    default:
+                                            $co ='';
+                            }
+
+                            //substr($event['created'],0,10)
+
+                            if( $event['co'] == put_kom && $event['card_id']  ) {
+                                    $kartkomm = ' odnośnie karty:';
+                                    foreach( $order['Card'] as $karta )
+                                    if( $karta['id'] == $event['card_id'] )
+                                            $kartkomm .= ' ' . $karta['name'];
+                            }
+
+                            else
+                                    $kartkomm = null;
+
+                            echo '<p>'.$ludz[$event['user_id']]['name'].'</p>'.'<p class="gibon"><span class="' . 
+                                            //$this->Ma->evtext[$event['co']]['class'].'">' . 
+                                            $evtext[$event['co']]['class'] . '">' .
+                                            //$this->Ma->evtext[$event['co']][$ludz[$event['user_id']]['k']]. ' ' .
+                                            $evtext[$event['co']][$ludz[$event['user_id']]['k']]. ' ' .
+                                            $co . $kartkomm .
+
+                                            '</span></p>'.'<span>'.$this->Ma->mdt($event['created']).'</span>';
+                            $list = array( nl2br($event['post']) );
+
+                            echo $this->Html->tag('/div');
+                            echo $this->Html->tag('div');
+                                    echo $this->Html->nestedList(
+                                    $list,
+                                    array('class'=>'olevent'),
+                                    null,
+                                    'ol'
+                                    );
+                            echo $this->Html->tag('span', $i + 1, array('class' => 'event_nr'));	
+                            echo $this->Html->tag('/div');
+
+                    echo $this->Html->tag('/li');
+            } ?>
 	</ul>
 </div>
 

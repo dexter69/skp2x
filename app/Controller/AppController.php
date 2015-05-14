@@ -164,8 +164,8 @@ class AppController extends Controller {
                     'odrzucił perso: ',
                     'odrzuciła perso: ','class' => 'czer'),
             p_ov => array(
-                    'zakończył personalizację',
-                    'zakończyła personalizację','class' => 'ziel'),
+                    'zakończył personalizację: ',
+                    'zakończyła personalizację: ','class' => 'ziel'),
             put_kom => array(
                     'napisał',
                     'napisała','class' => 'pom'),
