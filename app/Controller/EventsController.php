@@ -147,7 +147,7 @@ class EventsController extends AppController {
 			}
 			$uids[4] = 1; // Jola zawsze dostaje			
 			unset($uids[$this->Auth->user('id')]); // generujący zdarzenie nie dostaje maila
-			$uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze
+			$uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
 			
 			foreach( $uids as $key => $wartosc) $tab[] = $key;
 			
@@ -159,7 +159,10 @@ class EventsController extends AppController {
 			foreach( $ludziki as $ludz) 
 				if( $ludz['User']['enotif'] != null )
 					$odbiorcy[] = $ludz['User']['enotif'];
-			//                        
+			if( $eventtab['co'] == p_ov ) { 
+                        // w wypadku zakończenia perso, dodatkowo dostaje Krysia
+                            $odbiorcy[] = 'info@polskiekarty.pl';
+                        }
 			$this->piknij($odbiorcy, $temat, $tresc, $linktab, $theEvent['id']);
 			
 			return true;
