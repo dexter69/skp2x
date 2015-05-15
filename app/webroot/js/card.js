@@ -124,20 +124,27 @@
 			$('td.wybroza:last-child select').css('visibility', 'hidden');
 		
 	}
-
-	function check_perso() {
-		
-            if( $('.perso-types input[type=checkbox]:checked').length > 0 ) {
-                $('#CardIsperso').val('1');
+        
+        function check_is_perso() {
+            
+            if( $('#CardIsperso').val() === '1' ) {
                 $('#CardPerso').removeAttr('disabled');
                 $('#CardPerso').attr('required','required');
             } else {
-                $('#CardIsperso').val('0');
                 $('#CardPerso').removeAttr('required');
                 $('#CardPerso').attr('disabled','disabled');
             }
-				
-	}
+        }
+        
+        function check_perso() {
+            
+            if( $('.perso-types input[type=checkbox]:checked').length > 0 ) {
+                $('#CardIsperso').val('1');
+            } else {
+                $('#CardIsperso').val('0');
+            }
+            check_is_perso();
+        }
 	
 	/*
 	tylko EDIT - sprawdza wartosc input 'role' dla wszystich dołączonych do karty plików, bu 
@@ -176,7 +183,7 @@
 	$( document ).ready(function() {
 		
             check_podklady();
-            check_perso();
+            check_is_perso();
             check_edit_pliki();
 
 
