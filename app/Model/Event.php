@@ -374,50 +374,53 @@ class Event extends AppModel {
 			/* Jola wysłała do sprawdzenia DTP lub/i PERSO.
 			   Najpierw sprawdźmy czy nie zapomniała zaklikać kart
 			*/	
-				$kliki = 0; $i=0;
-				foreach( $rqdata['Card'] as $karta) {
-					switch( $karta['D'] + $karta['P'] ) {
-						case 0: // ta karta nas nie obchodzi
-							unset($rqdata['Card'][$i]);
-						break;
-						case 1: // ta nas obchodzi
-							if( $rqdata['Card'][$i]['remstatus'] )// tzn ze juz ustawialismy
-								unset($rqdata['Card'][$i]['remstatus']);
-							else // trzeba zapamiętać
-								$rqdata['Card'][$i]['remstatus'] = $rqdata['Card'][$i]['status'];
-							if( $karta['D'] ) {
-								if( $karta['isperso'] )
-									$rqdata['Card'][$i]['status'] = W4DPOK;
-								else
-									$rqdata['Card'][$i]['status'] = W4D;
-							}
-							else {
-								$rqdata['Card'][$i]['status'] = W4PDOK;
-							}
-							unset($rqdata['Card'][$i]['D']); unset($rqdata['Card'][$i]['P']);
-							unset($rqdata['Card'][$i]['isperso']);
-						break;
-						case 2:
-							if( $rqdata['Card'][$i]['remstatus'] )// tzn ze juz ustawialismy
-								unset($rqdata['Card'][$i]['remstatus']);
-							else // trzeba zapamiętać
-								$rqdata['Card'][$i]['remstatus'] = $rqdata['Card'][$i]['status'];
-							$rqdata['Card'][$i]['status'] = W4DP;
-							unset($rqdata['Card'][$i]['D']); unset($rqdata['Card'][$i]['P']);
-							unset($rqdata['Card'][$i]['isperso']);
-						break;
-					}
-					$kliki = $kliki + $karta['D'] + $karta['P'];
-					$i++;
-				}
-				if( !$kliki ) {
-					$this->code = 777;
-					$this->msg = 'ZAPOMNIAŁAŚ/ŁEŚ ZAZNACZYĆ KARTY';
-					return false;
-				} else {
-					$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-					$rqdata['Order']['status'] = UZU_CHECK;
-				}
+                            $kliki = 0; $i=0;
+                            foreach( $rqdata['Card'] as $karta) {
+                                switch( $karta['D'] + $karta['P'] ) {
+                                    case 0: // ta karta nas nie obchodzi
+                                            unset($rqdata['Card'][$i]);
+                                    break;
+                                    case 1: // ta nas obchodzi
+                                        if( $rqdata['Card'][$i]['remstatus'] ) {// tzn ze juz ustawialismy
+                                            unset($rqdata['Card'][$i]['remstatus']);
+                                        } else {// trzeba zapamiętać
+                                            $rqdata['Card'][$i]['remstatus'] = $rqdata['Card'][$i]['status'];
+                                        }
+                                        if( $karta['D'] ) {
+                                            if( $karta['isperso'] )
+                                                $rqdata['Card'][$i]['status'] = W4DPOK;
+                                            else
+                                                $rqdata['Card'][$i]['status'] = W4D;
+                                        }
+                                        else {
+                                            $rqdata['Card'][$i]['status'] = W4PDOK;
+                                            $rqdata['Card'][$i]['pover'] = 0;
+                                        }
+                                        unset($rqdata['Card'][$i]['D']); unset($rqdata['Card'][$i]['P']);
+                                        unset($rqdata['Card'][$i]['isperso']);
+                                    break;
+                                    case 2:
+                                        if( $rqdata['Card'][$i]['remstatus'] )// tzn ze juz ustawialismy
+                                                unset($rqdata['Card'][$i]['remstatus']);
+                                        else // trzeba zapamiętać
+                                                $rqdata['Card'][$i]['remstatus'] = $rqdata['Card'][$i]['status'];
+                                        $rqdata['Card'][$i]['status'] = W4DP;
+                                        $rqdata['Card'][$i]['pover'] = 0;
+                                        unset($rqdata['Card'][$i]['D']); unset($rqdata['Card'][$i]['P']);
+                                        unset($rqdata['Card'][$i]['isperso']);
+                                    break;
+                                }
+                                $kliki = $kliki + $karta['D'] + $karta['P'];
+                                $i++;
+                            }
+                            if( !$kliki ) {
+                                    $this->code = 777;
+                                    $this->msg = 'ZAPOMNIAŁAŚ/ŁEŚ ZAZNACZYĆ KARTY';
+                                    return false;
+                            } else {
+                                    $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                                    $rqdata['Order']['status'] = UZU_CHECK;
+                            }
 			break;
 			
 			
