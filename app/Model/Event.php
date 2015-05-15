@@ -235,310 +235,310 @@ class Event extends AppModel {
 		//przygotowanie danych	
 		//$zapisz = null;
 		switch ($event) {
-			//handlowiec opublikował zamówienie
-                        case publi: 
-				$rqdata['Order']['status'] = NOWKA;
-				$rqdata['Order']['data_publikacji']=date('Y-m-d H:i:s');
-				//status_kart( $rqdata['Card'], DO_SPRAWDZENIA );
-				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-				status_kart( $rqdata['Card'], W4D );
-			break;
-			case kor_no: 
-				$rqdata['Order']['status'] = O_REJ;
-				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];				
-				unset($rqdata['Card']);
-			break;
-			case kor_ok:
-				$tab = $this->is_klosing_aktion($rqdata['Event']);
-				if( $tab['konec'] ) {
-					$tab['dane']['Event'] = $rqdata['Event'];
-					$rqdata = $tab['dane'];
-					$rqdata['Order']['status'] = O_ACC;
-				} else {
-					$rqdata['Order']['status'] = O_FINE;
-					$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-					unset($rqdata['Card']);
-				}
-			break;
-			case d_ok:
-			case p_ok:
-				$tab = $this->is_klosing_aktion($rqdata['Event']);
-				//$rqdata = $tab;
-				//break;
-				if( $tab['konec'] ) {
-					// czyli wszystkie inne karty i zamówienie są klepnęte	
-					$tab['dane']['Event'] = $rqdata['Event'];
-					$rqdata = $tab['dane'];
-				} else  { // nie jest zamykającą akcją, zajmujemy się tylko tą kartą
-					if( $tab['noerr'] ) {
-						$rqdata['Card']['id'] = $rqdata['Event']['card_id'];
-						switch( $rqdata['Card']['status'] ) { //status tej karty
-							case W4D: $rqdata['Card']['status'] = DOK;	break;
-							case W4DP:	if( $event == d_ok )
-											$rqdata['Card']['status'] = W4PDOK; 
-										else
-											$rqdata['Card']['status'] = W4DPOK;		
-							break;
-							case W4DPNO: $rqdata['Card']['status'] = DOKPNO; break;
-							case W4DPOK: $rqdata['Card']['status'] = DOKPOK; break;
-							case W4PDNO: $rqdata['Card']['status'] = DNOPOK; break;
-							case W4PDOK: $rqdata['Card']['status'] = DOKPOK; break;
-						}
-						unset($rqdata['Card']['isperso']);
-						//$rqdata['dane'] = $tab['dane'];
-					} else { // coś nie tak, błędy
-						$rqdata = array();
-					}					
-				}						
-			break;
-			case d_no:
-				$ocards = $this->check_other_cards( $rqdata['Event'] );
-				//print_r($ocards);
-				$rqdata['Card']['id'] = $rqdata['Event']['card_id'];
-				switch($ocards[$rqdata['Card']['id']]) { //status tej karty
-					case W4D: $rqdata['Card']['status'] = DNO;	break;
-					case W4DP: $rqdata['Card']['status'] = W4PDNO; break;
-					case W4DPNO: $rqdata['Card']['status'] = DNOPNO; break;
-					case W4DPOK: $rqdata['Card']['status'] = DNOPOK; break;
-				}
-				unset($rqdata['Card']['isperso']);				
-				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-				if( $ocards['order_status'] == UZU_CHECK )
-					$rqdata['Order']['status'] = W4UZUP;//UZU_REJ;
-				else
-					$rqdata['Order']['status'] = O_REJ;
-				$rqdata['Card'] = array( $rqdata['Card'] );	
-				//$rqdata['ocards'] = $ocards;				
-			break;
-			case p_no:
-				$ocards = $this->check_other_cards( $rqdata['Event'] );
-				$rqdata['Card']['id'] = $rqdata['Event']['card_id'];
-				switch($ocards[$rqdata['Card']['id']]) { //status tej karty
-					case W4DP: $rqdata['Card']['status'] = W4DPNO; break;
-					case W4PDNO: $rqdata['Card']['status'] = DNOPNO; break;
-					case W4PDOK: $rqdata['Card']['status'] = DOKPNO; break;
-				}
-				unset($rqdata['Card']['isperso']);
-				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-				if( $ocards['order_status'] == UZU_CHECK )
-					$rqdata['Order']['status'] = W4UZUP;
-				else
-					$rqdata['Order']['status'] = O_REJ;
-				$rqdata['Card'] = array( $rqdata['Card'] );
-			break;
-                        case p_ov:
-                              $rqdata['Card']['id'] = $rqdata['Event']['card_id'];
-                              $rqdata['Card']['pover'] = 1;
-                              unset( $rqdata['Card']['status'], $rqdata['Card']['isperso'] );
-                        break;
-			case fix_o:
-				$rqdata['Order']['status'] = FIXED;
-				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-				smart_status( $rqdata['Card'] );
-			break;
-			case unlock_o:
-				$rqdata['Order']['status'] = W4UZUP;				
-				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-				// zapamiętaj bierzący status zamówienia
-				$oldstat = $this->Order->order_status($rqdata['Event']['order_id']);
-				if( $oldstat >= 0 )
-					$rqdata['Order']['remstatus'] = $oldstat;
-				else
-					$rqdata['Order']['remstatus'] = ABSURD;
-				$rqdata['Event'] = array( $rqdata['Event'] );
-			break;
-			case update_o:
-				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-				
-				$rqdata['Order']['status'] = UZUPED; //na razie bezwarunkowo
-				unset($rqdata['Card']);
-			break;
-			case unlock_again:
-				$rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-				$rqdata['Order']['status'] = W4UZUP;								
-				$rqdata['Event'] = array( $rqdata['Event'] );
-				unset($rqdata['Card']);
-			break;
-			case klepnij:
-				//przywróć stary status zamówienia (a kart?)
-				$ord = $this->find('first', array(
-						'conditions' => array('Order.id' => $rqdata['Event']['order_id'] ),
-						'fields' => array('Order.id', 'Order.status', 'Order.remstatus')
-				));
-				$rqdata['Order'] = $ord['Order'];
-				$rqdata['Order']['status'] = $rqdata['Order']['remstatus'];
-				$rqdata['Order']['remstatus'] = 0;
-				unset($rqdata['Card']);
-			break;
-			case push4checking:
-			/* Jola wysłała do sprawdzenia DTP lub/i PERSO.
-			   Najpierw sprawdźmy czy nie zapomniała zaklikać kart
-			*/	
-                            $kliki = 0; $i=0;
-                            foreach( $rqdata['Card'] as $karta) {
-                                switch( $karta['D'] + $karta['P'] ) {
-                                    case 0: // ta karta nas nie obchodzi
-                                            unset($rqdata['Card'][$i]);
-                                    break;
-                                    case 1: // ta nas obchodzi
-                                        if( $rqdata['Card'][$i]['remstatus'] ) {// tzn ze juz ustawialismy
-                                            unset($rqdata['Card'][$i]['remstatus']);
-                                        } else {// trzeba zapamiętać
-                                            $rqdata['Card'][$i]['remstatus'] = $rqdata['Card'][$i]['status'];
-                                        }
-                                        if( $karta['D'] ) {
-                                            if( $karta['isperso'] )
-                                                $rqdata['Card'][$i]['status'] = W4DPOK;
-                                            else
-                                                $rqdata['Card'][$i]['status'] = W4D;
-                                        }
-                                        else {
-                                            $rqdata['Card'][$i]['status'] = W4PDOK;
-                                            $rqdata['Card'][$i]['pover'] = 0;
-                                        }
-                                        unset($rqdata['Card'][$i]['D']); unset($rqdata['Card'][$i]['P']);
-                                        unset($rqdata['Card'][$i]['isperso']);
-                                    break;
-                                    case 2:
-                                        if( $rqdata['Card'][$i]['remstatus'] )// tzn ze juz ustawialismy
-                                                unset($rqdata['Card'][$i]['remstatus']);
-                                        else // trzeba zapamiętać
-                                                $rqdata['Card'][$i]['remstatus'] = $rqdata['Card'][$i]['status'];
-                                        $rqdata['Card'][$i]['status'] = W4DP;
-                                        $rqdata['Card'][$i]['pover'] = 0;
-                                        unset($rqdata['Card'][$i]['D']); unset($rqdata['Card'][$i]['P']);
-                                        unset($rqdata['Card'][$i]['isperso']);
-                                    break;
-                                }
-                                $kliki = $kliki + $karta['D'] + $karta['P'];
-                                $i++;
-                            }
-                            if( !$kliki ) {
-                                    $this->code = 777;
-                                    $this->msg = 'ZAPOMNIAŁAŚ/ŁEŚ ZAZNACZYĆ KARTY';
-                                    return false;
+                    //handlowiec opublikował zamówienie
+                    case publi: 
+                            $rqdata['Order']['status'] = NOWKA;
+                            $rqdata['Order']['data_publikacji']=date('Y-m-d H:i:s');
+                            //status_kart( $rqdata['Card'], DO_SPRAWDZENIA );
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                            status_kart( $rqdata['Card'], W4D );
+                    break;
+                    case kor_no: 
+                            $rqdata['Order']['status'] = O_REJ;
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];				
+                            unset($rqdata['Card']);
+                    break;
+                    case kor_ok:
+                            $tab = $this->is_klosing_aktion($rqdata['Event']);
+                            if( $tab['konec'] ) {
+                                    $tab['dane']['Event'] = $rqdata['Event'];
+                                    $rqdata = $tab['dane'];
+                                    $rqdata['Order']['status'] = O_ACC;
                             } else {
+                                    $rqdata['Order']['status'] = O_FINE;
                                     $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-                                    $rqdata['Order']['status'] = UZU_CHECK;
+                                    unset($rqdata['Card']);
                             }
-			break;
-			
-			
-			
-			case eJPUBLI:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sDTP_REQ;
-				status_kart( $rqdata['Card'], JOBED );
-				break;
-			case eJ_FILE1:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sHAS_F1;
-				$rqdata['Upload'] = $this->Job->Upload->manage_jobed_files($rqdata);
-			break;
-			case eJF_BACK:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sDTP2FIX;
-				unset($rqdata['Card']);
-			break;
-			case eJ_FILE2:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sHAS_F2;
-				$rqdata['Upload'] = $this->Job->Upload->manage_jobed_files($rqdata);
-			break;
-			case eJF_OK:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sW4B;
-				unset($rqdata['Card']);
-			break;
-			case eJ_B2KOR:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sKOR2FIX;
-				unset($rqdata['Card']);
-			break;
-			case eJ_B2DTP:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sDTP2FIX2;
-				unset($rqdata['Card']);
-			break;
-			case eJ_FILE3:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sW4B2;
-				$rqdata['Upload'] = $this->Job->Upload->manage_jobed_files($rqdata);				
-			break;
-			case eJ_KOR2B:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sW4B2;
-				unset($rqdata['Card']);
-			break;
-			case eJ_KOR2DTP:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sDTP2FIX;
-				unset($rqdata['Card']);
-			break;
-			case eJ_ACC:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sJ_PROD;
-				status_kart( $rqdata['Card'], W_PROD );
-			break;
-			case eJ_COF2KOR:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sPAUSE4K;
-				unset($rqdata['Card']);
-			break;
-			case eJ_COF2DTP:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sPAUSE4D;
-				unset($rqdata['Card']);
-			break;
-			case eJ_KBACK:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sBACK2B;
-				unset($rqdata['Card']);
-			break;
-			case eJ_DBACK:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sBACK2B;
-				$rqdata['Upload'] = $this->Job->Upload->manage_jobed_files($rqdata);	
-				//unset($rqdata['Card']);			
-			break;
-			case eJB_UNPAUSE:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sJ_PROD;
-				unset($rqdata['Card']);
-			break;
-			
-			
-			
-			
-			
-			
-			//case eKOR_POP:
-			case eB_REJ2DTP:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sDTP_REQ;
-				unset($rqdata['Card']);
-				break;/*
-			case eDTP_REJ:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sDAFC;
-				unset($rqdata['Card']);
-				break;
-			*/
-			case ePUSH2B:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sW4B;
-				unset($rqdata['Card']);
-				break;
-			case eB_REJ2KOR:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sASKOR;
-				unset($rqdata['Card']);
-				break;
-			case eB_REJ:
-				$rqdata['Job']['id'] = $rqdata['Event']['job_id'];
-				$rqdata['Job']['status'] = sB_REJ;
-				unset($rqdata['Card']);
-			break;
+                    break;
+                    case d_ok:
+                    case p_ok:
+                            $tab = $this->is_klosing_aktion($rqdata['Event']);
+                            //$rqdata = $tab;
+                            //break;
+                            if( $tab['konec'] ) {
+                                    // czyli wszystkie inne karty i zamówienie są klepnęte	
+                                    $tab['dane']['Event'] = $rqdata['Event'];
+                                    $rqdata = $tab['dane'];
+                            } else  { // nie jest zamykającą akcją, zajmujemy się tylko tą kartą
+                                    if( $tab['noerr'] ) {
+                                            $rqdata['Card']['id'] = $rqdata['Event']['card_id'];
+                                            switch( $rqdata['Card']['status'] ) { //status tej karty
+                                                    case W4D: $rqdata['Card']['status'] = DOK;	break;
+                                                    case W4DP:	if( $event == d_ok )
+                                                                                    $rqdata['Card']['status'] = W4PDOK; 
+                                                                            else
+                                                                                    $rqdata['Card']['status'] = W4DPOK;		
+                                                    break;
+                                                    case W4DPNO: $rqdata['Card']['status'] = DOKPNO; break;
+                                                    case W4DPOK: $rqdata['Card']['status'] = DOKPOK; break;
+                                                    case W4PDNO: $rqdata['Card']['status'] = DNOPOK; break;
+                                                    case W4PDOK: $rqdata['Card']['status'] = DOKPOK; break;
+                                            }
+                                            unset($rqdata['Card']['isperso']);
+                                            //$rqdata['dane'] = $tab['dane'];
+                                    } else { // coś nie tak, błędy
+                                            $rqdata = array();
+                                    }					
+                            }						
+                    break;
+                    case d_no:
+                            $ocards = $this->check_other_cards( $rqdata['Event'] );
+                            //print_r($ocards);
+                            $rqdata['Card']['id'] = $rqdata['Event']['card_id'];
+                            switch($ocards[$rqdata['Card']['id']]) { //status tej karty
+                                    case W4D: $rqdata['Card']['status'] = DNO;	break;
+                                    case W4DP: $rqdata['Card']['status'] = W4PDNO; break;
+                                    case W4DPNO: $rqdata['Card']['status'] = DNOPNO; break;
+                                    case W4DPOK: $rqdata['Card']['status'] = DNOPOK; break;
+                            }
+                            unset($rqdata['Card']['isperso']);				
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                            if( $ocards['order_status'] == UZU_CHECK )
+                                    $rqdata['Order']['status'] = W4UZUP;//UZU_REJ;
+                            else
+                                    $rqdata['Order']['status'] = O_REJ;
+                            $rqdata['Card'] = array( $rqdata['Card'] );	
+                            //$rqdata['ocards'] = $ocards;				
+                    break;
+                    case p_no:
+                            $ocards = $this->check_other_cards( $rqdata['Event'] );
+                            $rqdata['Card']['id'] = $rqdata['Event']['card_id'];
+                            switch($ocards[$rqdata['Card']['id']]) { //status tej karty
+                                    case W4DP: $rqdata['Card']['status'] = W4DPNO; break;
+                                    case W4PDNO: $rqdata['Card']['status'] = DNOPNO; break;
+                                    case W4PDOK: $rqdata['Card']['status'] = DOKPNO; break;
+                            }
+                            unset($rqdata['Card']['isperso']);
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                            if( $ocards['order_status'] == UZU_CHECK )
+                                    $rqdata['Order']['status'] = W4UZUP;
+                            else
+                                    $rqdata['Order']['status'] = O_REJ;
+                            $rqdata['Card'] = array( $rqdata['Card'] );
+                    break;
+                    case p_ov:
+                          $rqdata['Card']['id'] = $rqdata['Event']['card_id'];
+                          $rqdata['Card']['pover'] = 1;
+                          unset( $rqdata['Card']['status'], $rqdata['Card']['isperso'] );
+                    break;
+                    case fix_o:
+                            $rqdata['Order']['status'] = FIXED;
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                            smart_status( $rqdata['Card'] );
+                    break;
+                    case unlock_o:
+                            $rqdata['Order']['status'] = W4UZUP;				
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                            // zapamiętaj bierzący status zamówienia
+                            $oldstat = $this->Order->order_status($rqdata['Event']['order_id']);
+                            if( $oldstat >= 0 )
+                                    $rqdata['Order']['remstatus'] = $oldstat;
+                            else
+                                    $rqdata['Order']['remstatus'] = ABSURD;
+                            $rqdata['Event'] = array( $rqdata['Event'] );
+                    break;
+                    case update_o:
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+
+                            $rqdata['Order']['status'] = UZUPED; //na razie bezwarunkowo
+                            unset($rqdata['Card']);
+                    break;
+                    case unlock_again:
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                            $rqdata['Order']['status'] = W4UZUP;								
+                            $rqdata['Event'] = array( $rqdata['Event'] );
+                            unset($rqdata['Card']);
+                    break;
+                    case klepnij:
+                            //przywróć stary status zamówienia (a kart?)
+                            $ord = $this->find('first', array(
+                                            'conditions' => array('Order.id' => $rqdata['Event']['order_id'] ),
+                                            'fields' => array('Order.id', 'Order.status', 'Order.remstatus')
+                            ));
+                            $rqdata['Order'] = $ord['Order'];
+                            $rqdata['Order']['status'] = $rqdata['Order']['remstatus'];
+                            $rqdata['Order']['remstatus'] = 0;
+                            unset($rqdata['Card']);
+                    break;
+                    case push4checking:
+                    /* Jola wysłała do sprawdzenia DTP lub/i PERSO.
+                       Najpierw sprawdźmy czy nie zapomniała zaklikać kart
+                    */	
+                        $kliki = 0; $i=0;
+                        foreach( $rqdata['Card'] as $karta) {
+                            switch( $karta['D'] + $karta['P'] ) {
+                                case 0: // ta karta nas nie obchodzi
+                                        unset($rqdata['Card'][$i]);
+                                break;
+                                case 1: // ta nas obchodzi
+                                    if( $rqdata['Card'][$i]['remstatus'] ) {// tzn ze juz ustawialismy
+                                        unset($rqdata['Card'][$i]['remstatus']);
+                                    } else {// trzeba zapamiętać
+                                        $rqdata['Card'][$i]['remstatus'] = $rqdata['Card'][$i]['status'];
+                                    }
+                                    if( $karta['D'] ) {
+                                        if( $karta['isperso'] )
+                                            $rqdata['Card'][$i]['status'] = W4DPOK;
+                                        else
+                                            $rqdata['Card'][$i]['status'] = W4D;
+                                    }
+                                    else {
+                                        $rqdata['Card'][$i]['status'] = W4PDOK;
+                                        $rqdata['Card'][$i]['pover'] = 0;
+                                    }
+                                    unset($rqdata['Card'][$i]['D']); unset($rqdata['Card'][$i]['P']);
+                                    unset($rqdata['Card'][$i]['isperso']);
+                                break;
+                                case 2:
+                                    if( $rqdata['Card'][$i]['remstatus'] )// tzn ze juz ustawialismy
+                                            unset($rqdata['Card'][$i]['remstatus']);
+                                    else // trzeba zapamiętać
+                                            $rqdata['Card'][$i]['remstatus'] = $rqdata['Card'][$i]['status'];
+                                    $rqdata['Card'][$i]['status'] = W4DP;
+                                    $rqdata['Card'][$i]['pover'] = 0;
+                                    unset($rqdata['Card'][$i]['D']); unset($rqdata['Card'][$i]['P']);
+                                    unset($rqdata['Card'][$i]['isperso']);
+                                break;
+                            }
+                            $kliki = $kliki + $karta['D'] + $karta['P'];
+                            $i++;
+                        }
+                        if( !$kliki ) {
+                                $this->code = 777;
+                                $this->msg = 'ZAPOMNIAŁAŚ/ŁEŚ ZAZNACZYĆ KARTY';
+                                return false;
+                        } else {
+                                $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                                $rqdata['Order']['status'] = UZU_CHECK;
+                        }
+                    break;
+
+
+
+                    case eJPUBLI:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sDTP_REQ;
+                            status_kart( $rqdata['Card'], JOBED );
+                            break;
+                    case eJ_FILE1:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sHAS_F1;
+                            $rqdata['Upload'] = $this->Job->Upload->manage_jobed_files($rqdata);
+                    break;
+                    case eJF_BACK:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sDTP2FIX;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_FILE2:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sHAS_F2;
+                            $rqdata['Upload'] = $this->Job->Upload->manage_jobed_files($rqdata);
+                    break;
+                    case eJF_OK:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sW4B;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_B2KOR:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sKOR2FIX;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_B2DTP:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sDTP2FIX2;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_FILE3:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sW4B2;
+                            $rqdata['Upload'] = $this->Job->Upload->manage_jobed_files($rqdata);				
+                    break;
+                    case eJ_KOR2B:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sW4B2;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_KOR2DTP:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sDTP2FIX;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_ACC:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sJ_PROD;
+                            status_kart( $rqdata['Card'], W_PROD );
+                    break;
+                    case eJ_COF2KOR:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sPAUSE4K;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_COF2DTP:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sPAUSE4D;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_KBACK:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sBACK2B;
+                            unset($rqdata['Card']);
+                    break;
+                    case eJ_DBACK:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sBACK2B;
+                            $rqdata['Upload'] = $this->Job->Upload->manage_jobed_files($rqdata);	
+                            //unset($rqdata['Card']);			
+                    break;
+                    case eJB_UNPAUSE:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sJ_PROD;
+                            unset($rqdata['Card']);
+                    break;
+
+
+
+
+
+
+                    //case eKOR_POP:
+                    case eB_REJ2DTP:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sDTP_REQ;
+                            unset($rqdata['Card']);
+                            break;/*
+                    case eDTP_REJ:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sDAFC;
+                            unset($rqdata['Card']);
+                            break;
+                    */
+                    case ePUSH2B:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sW4B;
+                            unset($rqdata['Card']);
+                            break;
+                    case eB_REJ2KOR:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sASKOR;
+                            unset($rqdata['Card']);
+                            break;
+                    case eB_REJ:
+                            $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
+                            $rqdata['Job']['status'] = sB_REJ;
+                            unset($rqdata['Card']);
+                    break;
 			
 			
 		} // end of switch

@@ -7,7 +7,7 @@ $this->Html->scriptBlock($jscode, array('inline' => false));
 echo $this->Html->script(array(/*'jquery',*/ 'jquery-ui', 'card'/*, 'common'*/), array('inline' => false)); 
 //echo $this->Html->script('card', array('block' => 'scriptBottom')); 
 
-//echo '<pre>';	print_r($tbl[2]); echo  '</pre>';
+//echo '<pre>';	print_r($vju['perso']); echo  '</pre>';
 
 //echo '<pre>';	print_r($uploads); echo  '</pre>';
 //echo '<pre>';	print_r($customers); echo  '</pre>';
@@ -27,7 +27,7 @@ $this->Ma->displayActions($links);
 <div id="kartadd" class="cards form">
 <?php echo $this->Form->create('Card', array('type' => 'file')); ?>
 	<fieldset>
-		<legend><?php echo __('NOWA KARTA'); ?></legend>
+		<legend><?php echo 'NOWA KARTA'; ?></legend>
 	<?php
 		/*
 		foreach ( $karty as $record ) foreach ( $record['Upload'] as $upload ) {

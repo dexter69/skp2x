@@ -1280,15 +1280,21 @@ class MaHelper extends AppHelper {
 	public function make_perasoAndFcomment( $vju = array() ) {
 		
 		
-		$markup =	$this->Html->tag('div', null, array('id' => 'persokeep')) .
-						$this->viewheader('PERSONALIZACJA', array('class' => 'dol_small')) .
-						$this->Form->input('Card.isperso', $vju['isperso']) .
-						$this->Form->input('Card.perso', $vju['perso']) .
-					$this->Html->tag('/div') .
-					$this->Html->tag('div', null, array('id' => 'finaluw', 'class' => 'input textarea')) .
-						$this->viewheader('UWAGI DO CAŁEGO PROJEKTU', array('class' => 'dol_small')) .
-						$this->Form->input('Card.comment',$vju['comment']) .
-					$this->Html->tag('/div');
+		$markup =	
+                            $this->Html->tag('div', null, array('id' => 'persokeep')) .
+                                    $this->viewheader('PERSONALIZACJA', array('class' => 'dol_very_small')) .
+                                    $this->Form->hidden( 'Card.isperso', array('default' => '0') ) .
+                                    $this->Html->tag('div', null, array('id' => 'xyz123', 'class' => 'perso-types')) .
+                                        $this->Form->input('Card.pl', array( 'label' => 'pod laminat' )) .
+                                        $this->Form->input('Card.pt', array( 'label' => 'płaska' )) .
+                                        $this->Form->input('Card.pe', array( 'label' => 'embossing' )) .
+                                    $this->Html->tag('/div') .
+                                    $this->Form->input('Card.perso', $vju['perso']) .
+                            $this->Html->tag('/div') .
+                            $this->Html->tag('div', null, array('id' => 'finaluw', 'class' => 'input textarea')) .
+                                    $this->viewheader('UWAGI DO CAŁEGO PROJEKTU', array('class' => 'dol_small')) .
+                                    $this->Form->input('Card.comment',$vju['comment']) .
+                            $this->Html->tag('/div');
 					
 		
 		return $markup;
