@@ -1,10 +1,11 @@
 <?php 
-	echo $this->Html->css('card', null, array('inline' => false));
-	//echo '<pre>';	print_r($cards); echo  '</pre>';
-	$this->set('title_for_layout', 'Karty');
-	
-	//echo '<pre>'; print_r($gibon); echo '</pre>';
-	//echo 'Szukano: ' . '<b>'.$gibon.'</b>';
+    echo $this->Html->css('card.css?v=43957439857', null, array('inline' => false));
+    //echo $this->Ma->walnijJqueryUI();
+    //echo '<pre>';	print_r($cards); echo  '</pre>';
+    $this->set('title_for_layout', 'Karty');
+
+    //echo '<pre>'; print_r($gibon); echo '</pre>';
+    //echo 'Szukano: ' . '<b>'.$gibon.'</b>';
 	
 	
 $klasa = array(	'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
@@ -21,24 +22,24 @@ if( array_key_exists($par, $klasa) )
 	</h2>
 	<table id="karty" cellpadding="0" cellspacing="0">
 	<tr>
-			<th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
-                        <th class="per"></th>
-			<th class="nazwa"><?php echo $this->Paginator->sort('name','Nazwa karty'); ?></th>
-			<th class="nr"><?php echo $this->Paginator->sort('Order.nr', 'Handlowe'); ?></th>
-			<th class="nr"><?php echo $this->Paginator->sort('job_id', 'Produk.'); ?></th>
-			<th class="termin"><?php echo $this->Paginator->sort('Order.stop_day', 'Czas'); ?></th>
-			<th class="klient"><?php echo $this->Paginator->sort('customer_id', 'Klient'); ?></th>
-			
-			<th class="ile"><?php echo $this->Paginator->sort('quantity', 'Ilość'); ?></th>
-			<th class="status"><?php echo $this->Paginator->sort('status'); ?></th>
-			<th class="ebutt"></th><!--
-			<th><?php echo $this->Paginator->sort('price'); ?></th>
-			<th><?php echo $this->Paginator->sort('wzor'); ?></th>--><!--
-			<th><?php echo $this->Paginator->sort('comment'); ?></th>
-			
-			<th><?php echo $this->Paginator->sort('created'); ?></th>
-			<th><?php echo $this->Paginator->sort('modified'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>-->
+            <th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
+            <th class="per"></th>
+            <th class="nazwa"><?php echo $this->Paginator->sort('name','Nazwa karty'); ?></th>
+            <th class="nr"><?php echo $this->Paginator->sort('Order.nr', 'Handlowe'); ?></th>
+            <th class="nr"><?php echo $this->Paginator->sort('job_id', 'Produk.'); ?></th>
+            <th class="termin"><?php echo $this->Paginator->sort('Order.stop_day', 'Czas'); ?></th>
+            <th class="klient"><?php echo $this->Paginator->sort('customer_id', 'Klient'); ?></th>
+
+            <th class="ile"><?php echo $this->Paginator->sort('quantity', 'Ilość'); ?></th>
+            <th class="status"><?php echo $this->Paginator->sort('status'); ?></th>
+            <th class="ebutt"></th><!--
+            <th><?php echo $this->Paginator->sort('price'); ?></th>
+            <th><?php echo $this->Paginator->sort('wzor'); ?></th>--><!--
+            <th><?php echo $this->Paginator->sort('comment'); ?></th>
+
+            <th><?php echo $this->Paginator->sort('created'); ?></th>
+            <th><?php echo $this->Paginator->sort('modified'); ?></th>
+            <th class="actions"><?php echo __('Actions'); ?></th>-->
 	</tr>
 	<?php foreach ($cards as $card): ?>
 	<tr>

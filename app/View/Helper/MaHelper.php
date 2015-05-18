@@ -291,30 +291,32 @@ class MaHelper extends AppHelper {
 			'zatwierdziła','class' => 'ziel')
 	
 	);
+        
+        public function walnijJqueryUI( $jquery = false ) {
+        // coby wypluć ui na stronie
+        // Produkuje styl + jqueryUI, domyślnie nie daje jquery ($jquery = false)
+            
+            return null;
+        }
 
 	public function mjson( $stri = null ) {
-		
-		
-
-	$str = json_encode($stri);
-
-
-
-	$str = preg_replace_callback(
-   	 '/\\\\u([0-9a-f]{4})/i',
-   	 function ($matches) {
-        $sym = mb_convert_encoding(
-                pack('H*', $matches[1]), 
-                'UTF-8', 
-                'UTF-16'
-                );
-	    return $sym;
-    	},
-    	$str
-	);
-
-	return $str;
 	
+            $str = json_encode($stri);
+            
+            $str = preg_replace_callback(
+             '/\\\\u([0-9a-f]{4})/i',
+             function ($matches) {
+            $sym = mb_convert_encoding(
+                    pack('H*', $matches[1]), 
+                    'UTF-8', 
+                    'UTF-16'
+                    );
+                return $sym;
+            },
+            $str
+            );
+
+            return $str;
 	}
 	
 	public function responsive_divs( $markup = null, $htmlid = null ) {

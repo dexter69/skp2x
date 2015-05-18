@@ -28,6 +28,8 @@ class Card extends AppModel {
                 '8'     =>      'BIAŁY',
                 '1'	=>	'INNY'	//inny kolor - uwagi												
         );	
+        
+        public $tempor = array();
 								
 	public function saveitAll( $puc = array(), &$errno ) { 
 		
@@ -66,8 +68,8 @@ class Card extends AppModel {
 			// znaczy mamy jakies pliki z bazy, ale pozbądźmy się
 			// ewentualnie tych, które nie są tego klienta - stare
 			foreach ( $puc['Wspolne'] as $key => $value ) {
-				if( $value['taken'] )
-					$ready['Upload']['Upload'][] = $value['id'];
+                            if( $value['taken'] )
+                                    $ready['Upload']['Upload'][] = $value['id'];
 			}			
 		}
 		
@@ -77,29 +79,31 @@ class Card extends AppModel {
 		//czyściymy w razie co tekst personalizacji, jeżeli użytkownik nie wybrał jej
 		if( $ready['Card']['isperso'] == ZIRO ) $ready['Card']['perso'] = null;
 		if( !$edycja )
-			$ready['Card']['status'] = PRIV; //pocztątkowy stan karty
+                    $ready['Card']['status'] = PRIV; //pocztątkowy stan karty
 		else {
-			// potrzebny nam status zamówienia
-			$dane = $this->find('first', array(
-				'conditions' => array('Card.id' => $ready['Card']['id'] ),
-				'fields' => array('Order.id', 'Order.status'),
-				'recursive' => 0
-			));			
-			if( $ready['Card']['status'] != PRIV && $ready['Card']['status'] != NOWKA &&
-                            $dane['Order']['status'] != W4UZUP && AuthComponent::user('dzial') != SUA ) {
-			// edycja, więc resetujemy status karty do ponownego sprawdzenia, pod warunkiem,
-			// że nie jest to edycja karty prywatnej, NOWKA na wszelki wypadek, bo nie pamiętam
-			// czy gdzieś jest używane, oraz zamówienie nie jest W4UZUP i nie edytuje Super Admin
-                                if( $ready['Card']['isperso'] ) { $ready['Card']['status'] = W4DP; }
-                                else { $ready['Card']['status'] = W4D; }
-			}
+                    // potrzebny nam status zamówienia
+                    $dane = $this->find('first', array(
+                            'conditions' => array('Card.id' => $ready['Card']['id'] ),
+                            'fields' => array('Order.id', 'Order.status'),
+                            'recursive' => 0
+                    ));			
+                    if( $ready['Card']['status'] != PRIV && $ready['Card']['status'] != NOWKA &&
+                        $dane['Order']['status'] != W4UZUP && AuthComponent::user('dzial') != SUA ) {
+                    // edycja, więc resetujemy status karty do ponownego sprawdzenia, pod warunkiem,
+                    // że nie jest to edycja karty prywatnej, NOWKA na wszelki wypadek, bo nie pamiętam
+                    // czy gdzieś jest używane, oraz zamówienie nie jest W4UZUP i nie edytuje Super Admin
+                        if( $ready['Card']['isperso'] ) { $ready['Card']['status'] = W4DP; }
+                        else { $ready['Card']['status'] = W4D; }
+                    }
 		}
 		if( !$edycja ) $this->create();
+                //$this->tempor = $ready;
 		if( $this->save($ready) ) {
-			$errno = $this->Upload->eventually_kosz( $wynik['remove'] );
-			return TRUE; 
+                    $errno = $this->Upload->eventually_kosz( $wynik['remove'] );
+                    return TRUE; 
 		}
 		else {
+                    //debug($this->validationErrors);
 			$errno = 6;
 			return FALSE;
 		}
@@ -750,16 +754,17 @@ class Card extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+                /*
 		'isperso' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+                    'boolean' => array(
+                            'rule' => array('boolean'),
+                            //'message' => 'Your custom message here',
+                            //'allowEmpty' => false,
+                            //'required' => false,
+                            //'last' => false, // Stop validation after this rule
+                            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+                    ),
+		),*/
 		'dziurka' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
