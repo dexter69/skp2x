@@ -218,14 +218,22 @@ $this->set('title_for_layout', $card['Card']['name']);
 		{	$startdiv1 = $startdiv2 = $stopdiv = null; }
 		echo '<div style="clear: both"></div>'; 
 		if( $isperso ) {
-                        $klasa = null;
-                        if( $card['Card']['status'] == KONEC || $card['Card']['pover'] ) {
-                           $klasa = ' pover-view';
-                        }
-			echo $startdiv1;
-			echo $this->Ma->viewheader('PERSONALIZACJA', array('class' => 'margingor'));
-			echo $this->Html->tag('p', nl2br($card['Card']['perso']), array('class' => 'comments' . $klasa));	
-			echo $stopdiv;
+                    $klasa = null;
+                    if( $card['Card']['status'] == KONEC || $card['Card']['pover'] ) {
+                       $klasa = ' pover-view';
+                    }
+                    $peropcje = null;
+                    if( $card['Card']['pl'] + $card['Card']['pt'] + $card['Card']['pe'] ) {
+                    // czyli są zaznaczone jakieś opcje
+                        $peropcje = 
+                        $this->Ma->perso3opcje['podlam-span'][$card['Card']['pl']] .
+                        $this->Ma->perso3opcje['plaska-span'][$card['Card']['pt']] .
+                        $this->Ma->perso3opcje['emboss-span'][$card['Card']['pe']];
+                    }
+                    echo $startdiv1;
+                    echo $this->Ma->viewheader('PERSONALIZACJA' . $peropcje, array('class' => 'margingor'));
+                    echo $this->Html->tag('p', nl2br($card['Card']['perso']), array('class' => 'comments' . $klasa));	
+                    echo $stopdiv;
 		}
 		if( $inne ) {
 			echo $startdiv2;
