@@ -33,80 +33,80 @@ class Card extends AppModel {
 								
 	public function saveitAll( $puc = array(), &$errno ) { 
 		
-		// puc <=> project, upload and card data
-		/*
-			$errno - numery błędów:
-			
-			0 - bez błędu
-			1 - inny błąd
-			2 - pusta tablica wejściowa
-			3 - 
-			4 - pliki przeniesione do uploads, ale nie udało się w bazie zapisac info
-			5 - liczba wysłanych plików różna od liczby zapisanych
-			6 - nie udało się projektu zapisać
-			7 - coś nie tak z edycją, id karty = 0 ?
-		*/
-		
-		$errno = $this->prepare_4S($puc, $edycja);
-                if( $errno )	{ return false; }
-		
-		$errno = $this->takeCareFiles_4S($puc, $edycja, $wynik);
-                if( $errno )	{ return false; }
-		
-		// zapisaliśmy z sukcesem pliki powyżej, w $out mamy tablice z identy-
-		// fikatorami zapisanych rekorów w uploads
-		
-				
-		// przepisujemy projekt/dane karty
-		$ready = array();
-		$ready['Card'] = $puc['Card'];
-		
-		// teraz chcemy połączyć te dane z ewentualnymi starymi plikami (od innych)
-		// kart, dołączonymi do tego projektu
-		$ready['Upload'] = array('Upload' => array());
-		if( !empty($puc['Wspolne']) ) { 
-			// znaczy mamy jakies pliki z bazy, ale pozbądźmy się
-			// ewentualnie tych, które nie są tego klienta - stare
-			foreach ( $puc['Wspolne'] as $key => $value ) {
-                            if( $value['taken'] )
-                                    $ready['Upload']['Upload'][] = $value['id'];
-			}			
-		}
-		
-		
-		$ready['Upload']['Upload'] = array_merge( $ready['Upload']['Upload'], $wynik['out'] );
-		
-		//czyściymy w razie co tekst personalizacji, jeżeli użytkownik nie wybrał jej
-		if( $ready['Card']['isperso'] == ZIRO ) $ready['Card']['perso'] = null;
-		if( !$edycja )
-                    $ready['Card']['status'] = PRIV; //pocztątkowy stan karty
-		else {
-                    // potrzebny nam status zamówienia
-                    $dane = $this->find('first', array(
-                            'conditions' => array('Card.id' => $ready['Card']['id'] ),
-                            'fields' => array('Order.id', 'Order.status'),
-                            'recursive' => 0
-                    ));			
-                    if( $ready['Card']['status'] != PRIV && $ready['Card']['status'] != NOWKA &&
-                        $dane['Order']['status'] != W4UZUP && AuthComponent::user('dzial') != SUA ) {
-                    // edycja, więc resetujemy status karty do ponownego sprawdzenia, pod warunkiem,
-                    // że nie jest to edycja karty prywatnej, NOWKA na wszelki wypadek, bo nie pamiętam
-                    // czy gdzieś jest używane, oraz zamówienie nie jest W4UZUP i nie edytuje Super Admin
-                        if( $ready['Card']['isperso'] ) { $ready['Card']['status'] = W4DP; }
-                        else { $ready['Card']['status'] = W4D; }
-                    }
-		}
-		if( !$edycja ) $this->create();
-                //$this->tempor = $ready;
-		if( $this->save($ready) ) {
-                    $errno = $this->Upload->eventually_kosz( $wynik['remove'] );
-                    return TRUE; 
-		}
-		else {
-                    //debug($this->validationErrors);
-			$errno = 6;
-			return FALSE;
-		}
+            // puc <=> project, upload and card data
+            /*
+                    $errno - numery błędów:
+
+                    0 - bez błędu
+                    1 - inny błąd
+                    2 - pusta tablica wejściowa
+                    3 - 
+                    4 - pliki przeniesione do uploads, ale nie udało się w bazie zapisac info
+                    5 - liczba wysłanych plików różna od liczby zapisanych
+                    6 - nie udało się projektu zapisać
+                    7 - coś nie tak z edycją, id karty = 0 ?
+            */
+
+            $errno = $this->prepare_4S($puc, $edycja);
+            if( $errno )	{ return false; }
+
+            $errno = $this->takeCareFiles_4S($puc, $edycja, $wynik);
+            if( $errno )	{ return false; }
+
+            // zapisaliśmy z sukcesem pliki powyżej, w $out mamy tablice z identy-
+            // fikatorami zapisanych rekorów w uploads
+
+
+            // przepisujemy projekt/dane karty
+            $ready = array();
+            $ready['Card'] = $puc['Card'];
+
+            // teraz chcemy połączyć te dane z ewentualnymi starymi plikami (od innych)
+            // kart, dołączonymi do tego projektu
+            $ready['Upload'] = array('Upload' => array());
+            if( !empty($puc['Wspolne']) ) { 
+                    // znaczy mamy jakies pliki z bazy, ale pozbądźmy się
+                    // ewentualnie tych, które nie są tego klienta - stare
+                    foreach ( $puc['Wspolne'] as $key => $value ) {
+                        if( $value['taken'] )
+                                $ready['Upload']['Upload'][] = $value['id'];
+                    }			
+            }
+
+
+            $ready['Upload']['Upload'] = array_merge( $ready['Upload']['Upload'], $wynik['out'] );
+
+            //czyściymy w razie co tekst personalizacji, jeżeli użytkownik nie wybrał jej
+            if( $ready['Card']['isperso'] == ZIRO ) $ready['Card']['perso'] = null;
+            if( !$edycja )
+                $ready['Card']['status'] = PRIV; //pocztątkowy stan karty
+            else {
+                // potrzebny nam status zamówienia
+                $dane = $this->find('first', array(
+                        'conditions' => array('Card.id' => $ready['Card']['id'] ),
+                        'fields' => array('Order.id', 'Order.status'),
+                        'recursive' => 0
+                ));			
+                if( $ready['Card']['status'] != PRIV && $ready['Card']['status'] != NOWKA &&
+                    $dane['Order']['status'] != W4UZUP && AuthComponent::user('dzial') != SUA ) {
+                // edycja, więc resetujemy status karty do ponownego sprawdzenia, pod warunkiem,
+                // że nie jest to edycja karty prywatnej, NOWKA na wszelki wypadek, bo nie pamiętam
+                // czy gdzieś jest używane, oraz zamówienie nie jest W4UZUP i nie edytuje Super Admin
+                    if( $ready['Card']['isperso'] ) { $ready['Card']['status'] = W4DP; }
+                    else { $ready['Card']['status'] = W4D; }
+                }
+            }
+            if( !$edycja ) $this->create();
+            //$this->tempor = $ready;
+            if( $this->save($ready) ) {
+                $errno = $this->Upload->eventually_kosz( $wynik['remove'] );
+                return TRUE; 
+            }
+            else {
+                //debug($this->validationErrors);
+                    $errno = 6;
+                    return FALSE;
+            }
 			
 		
 	

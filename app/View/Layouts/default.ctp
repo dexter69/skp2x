@@ -29,7 +29,7 @@ $cakeDescription = __d('cake_dev', 'SKP');
 	<?php
 		echo $this->Html->meta('icon');
 		echo $this->Html->script(array('jquery', 'common')); 
-		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('cake.generic.css?v=32848734');
 		//echo $this->Html->css('dex');
 		
 		echo $this->fetch('meta');

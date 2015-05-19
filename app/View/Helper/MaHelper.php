@@ -298,6 +298,86 @@ class MaHelper extends AppHelper {
             
             return null;
         }
+        
+        /*  #################################################################
+         *   CECHY kart, zamówień i zleceń
+         */
+        
+        public $tablica_cech = array();
+        
+        // wzór pustej tablicy cech
+        private $tablica_cech_wzor = array(
+            //na razie tylko personalizacja
+            'set' => false, // ustawiona -> true, zrestetowana/pusta -> false
+            'isperso' => false, // ogólnie czy jest, może się przyda?
+            'pl' => false, // personalizacja pod laminatem
+            'pt' => false, // personalizacja płaska albo Termodruk
+            'pe' => false, // Embossing
+            'pp' => false /* personalizacja ogólnie, że jest
+                            Zasada:
+                                'pp' == true, to wszystkie inne false (stara karta)
+                                 i na odwrót, któraś z 3-ech true, to 'pp' false
+                            */
+        );
+
+        private function getAndSetCechyKarty( $karta = array() ) {
+            // odczytajmy z karty w formacie bazy, co ona ma i zwróćmy jako cechy w
+            // formacie tablicy $tablica_cech oraz ustawmy te wartości w tej tablicy
+            $this->resetTablicaCech(); // reset gwarantowany
+            if( !empty($karta) ) {
+                $this->tablica_cech['set'] = true; // tak, bo sprawdziliśmy i ustawiliśmy
+                // na razie tylko perso
+                if( $karta['isperso'] ) {
+                   $this->tablica_cech['isperso'] = true;                   
+                   $this->tablica_cech['pl'] =  $karta['pl'] == '1';
+                   $this->tablica_cech['pt'] =  $karta['pt'] == '1';
+                   $this->tablica_cech['pe'] =  $karta['pe'] == '1';
+                   if( !$this->tablica_cech['pl'] && !$this->tablica_cech['pt'] &&
+                       !$this->tablica_cech['pe'] ) { 
+                       $this->tablica_cech['pp'] = true; // znaczy perso "po staremu"
+                   }
+                }                
+            }
+            return $this->tablica_cech;
+        }       
+        
+        
+        private function resetTablicaCech() {
+            $this->tablica_cech = $this->tablica_cech_wzor;
+        }
+
+        public function cechyKarty( $karta = array(), $wrap_klasa = null ) {
+            
+            $this->getAndSetCechyKarty( $karta );
+            if( $this->tablica_cech['isperso'] ) {
+                $html = null;
+                if( $this->tablica_cech['pp'] ) { // karta po staremu
+                    $html .= $this->markCechy('?', 'p-old');
+                } else { // karta po nowemu
+                    if( $this->tablica_cech['pl'] ) { $html .= $this->markCechy('L', 'p-lam'); }
+                    if( $this->tablica_cech['pt'] ) { $html .= $this->markCechy('P', 'p-pla'); }
+                    if( $this->tablica_cech['pe'] ) { $html .= $this->markCechy('E', 'p-emb'); }
+                }
+                $klasa = 'cechy-wrap';
+                if( $wrap_klasa != null ) {
+                    $klasa .= ' ' . $wrap_klasa;
+                }
+                $html = '<div class="' . $klasa . '"><div class="process perso">' . $html . '</div></div>';
+                return $html;
+            }
+            return null;
+        }
+        
+        private function markCechy( $char = null, $klasa = null ) {
+            
+            if( $klasa != null ) {
+                return '<div class="' . $klasa . '"><div>' . $char . '</div></div>';
+            }
+            return '<div><div>' . $char . '</div></div>';
+        }
+        /*   CECHY kart, zamówień i zleceń
+         *  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         */ 
 
 	public function mjson( $stri = null ) {
 	

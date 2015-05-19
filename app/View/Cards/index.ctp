@@ -1,5 +1,5 @@
 <?php 
-    echo $this->Html->css('card.css?v=43957439857', null, array('inline' => false));
+    echo $this->Html->css('card.css?v=32848734', null, array('inline' => false));
     //echo $this->Ma->walnijJqueryUI();
     //echo '<pre>';	print_r($cards); echo  '</pre>';
     $this->set('title_for_layout', 'Karty');
@@ -25,11 +25,13 @@ if( array_key_exists($par, $klasa) )
             <th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
             <th class="per"></th>
             <th class="nazwa"><?php echo $this->Paginator->sort('name','Nazwa karty'); ?></th>
+            <th class="opcje">Opcje</th>
             <th class="nr"><?php echo $this->Paginator->sort('Order.nr', 'Handlowe'); ?></th>
             <th class="nr"><?php echo $this->Paginator->sort('job_id', 'Produk.'); ?></th>
             <th class="termin"><?php echo $this->Paginator->sort('Order.stop_day', 'Czas'); ?></th>
-            <th class="klient"><?php echo $this->Paginator->sort('customer_id', 'Klient'); ?></th>
-
+            <!--<th class="klient"><?php echo $this->Paginator->sort('customer_id', 'Klient'); ?></th>
+            -->
+            
             <th class="ile"><?php echo $this->Paginator->sort('quantity', 'Ilość'); ?></th>
             <th class="status"><?php echo $this->Paginator->sort('status'); ?></th>
             <th class="ebutt"></th><!--
@@ -58,14 +60,20 @@ if( array_key_exists($par, $klasa) )
 		<td class="nazwa">
 			<?php echo $this->Html->link($card['Card']['name'], array('action' => 'view', $card['Card']['id']), array('title' => $card['Card']['name'])); ?>
 		</td>
+                <td class="opcje">
+                    <?php 
+                        //echo $this->Html->link($card['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $card['Customer']['id'])); 
+                        echo $this->Ma->cechyKarty( $card['Card'], 'indeks' );
+                    ?>
+		</td>
 		<td class="nr">
-			<?php 
-				if( $card['Order']['id'] ) 
-					if( $card['Order']['nr'] )
-						echo $this->Html->link($this->Ma->bnr2nrh($card['Order']['nr'], $card['Creator']['inic']), array('controller' => 'orders', 'action' => 'view', $card['Order']['id']), array('escape' => false)); 
-					else
-						echo $this->Html->link($card['Order']['id'], array('controller' => 'orders', 'action' => 'view', $card['Order']['id'])); 					
-			?>
+                    <?php 
+                        if( $card['Order']['id'] ) 
+                            if( $card['Order']['nr'] )
+                                    echo $this->Html->link($this->Ma->bnr2nrh($card['Order']['nr'], $card['Creator']['inic']), array('controller' => 'orders', 'action' => 'view', $card['Order']['id']), array('escape' => false)); 
+                            else
+                                    echo $this->Html->link($card['Order']['id'], array('controller' => 'orders', 'action' => 'view', $card['Order']['id'])); 					
+                    ?>
 		</td>
 		<td class="nr">
 			<?php //echo $this->Html->link($card['Job']['id'], array('controller' => 'jobs', 'action' => 'view', $card['Job']['id'])); ?>
@@ -83,9 +91,7 @@ if( array_key_exists($par, $klasa) )
 			<?php echo $this->Ma->mdvs($card['Order']['stop_day']);
 				//echo $this->Html->link($card['Owner']['name'], array('controller' => 'users', 'action' => 'view', $card['Owner']['id'])); ?>
 		</td>
-		<td class="klient">
-			<?php echo $this->Html->link($card['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $card['Customer']['id'])); ?>
-		</td>
+		
 		
 		<td class="ile"><?php if( $card['Card']['ilosc'] )
 				echo $this->Ma->tys($card['Card']['ilosc']*$card['Card']['mnoznik']); ?>&nbsp;</td>

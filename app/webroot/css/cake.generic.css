@@ -1463,6 +1463,48 @@ div#szukanie {	float: right; width: auto;}
 	padding: 6px 8px;
 }
 
+/*
+*  Cechy obiektów, że perso, sito itp.
+*/
 
+.cechy-wrap, .cechy-wrap div {
+    display: inline-block;
+}
+
+.cechy-wrap.wju {
+    padding-left: 0.5em;
+}
+
+.process > div {
+    padding: 0 0.12em;
+}
+
+.process > div > div {
+    background-color: #144689;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    
+}
+
+.indeks > .process > div > div {
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}    
+
+.wju > .process > div > div {
+    padding: 0.0em 0.25em;
+    border-radius: 3px;
+}    
+
+.process > .p-lam > div {
+    background-color: #1E90FF;
+    color: white;
+}
+
+.process > .p-emb > div {
+    background-color: #7559af;
+    color: white;
+}
 
 

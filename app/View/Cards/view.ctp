@@ -9,17 +9,27 @@
 //
 //echo '<pre>';	print_r($vju['x_sito']['options']); echo  '</pre>'; 
 
-echo $this->Html->css('card', null, array('inline' => false));
+echo $this->Html->css('card.css?v=32848734', null, array('inline' => false));
 echo $this->Html->script(array('event'), array('inline' => false)); 
 $this->Ma->displayActions('cards');
 $this->set('title_for_layout', $card['Card']['name']);
+
+//echo '<pre>';	print_r($card['Card']); echo  '</pre>'; 
+//echo $this->Ma->cechyKarty( $card['Card'] );
+//echo '<pre>';	print_r($this->Ma->tablica_cech); echo  '</pre>'; 
+//if( $this->Ma->tablica_cech['isperso'] ) echo 'Gibon';
+
 ?>
 
 
 
 <div id="kartview" class="cards view">
 <h2><?php 	//echo '<p>Oglądasz kartę</p>'; 
-			echo '<span>'.$card['Card']['name'].'</span>'.$this->Ma->editlink('card', $card['Card']['id']); ?></h2>
+        echo '<span>'.$card['Card']['name'].'</span>' . 
+        $this->Ma->editlink('card', $card['Card']['id']); 
+        echo $this->Ma->cechyKarty( $card['Card'], 'wju' );
+        ?>
+</h2>
 	<?php $this->Ma->nawiguj( $links, $card['Card']['id'] ); //nawigacyjne do dodaj, usuń, edycja itp. ?>
 	<dl id="cardviewdl">
 		<dt><?php echo 'Id'; ?></dt>
