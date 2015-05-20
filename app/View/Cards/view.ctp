@@ -9,8 +9,10 @@
 //
 //echo '<pre>';	print_r($vju['x_sito']['options']); echo  '</pre>'; 
 
-echo $this->Html->css('card.css?v=32848734', null, array('inline' => false));
+echo $this->Html->css('card.css?v=3284457', null, array('inline' => false));
 echo $this->Html->script(array('event'), array('inline' => false)); 
+echo $this->Ma->walnijJqueryUI();
+echo $this->Ma->jqueryUItoolTip('.process');
 $this->Ma->displayActions('cards');
 $this->set('title_for_layout', $card['Card']['name']);
 

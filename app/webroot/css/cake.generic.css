@@ -1477,6 +1477,7 @@ div#szukanie {	float: right; width: auto;}
 
 .process > div {
     padding: 0 0.12em;
+    cursor: default;
 }
 
 .process > div > div {

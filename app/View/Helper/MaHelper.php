@@ -295,8 +295,18 @@ class MaHelper extends AppHelper {
         public function walnijJqueryUI( $jquery = false ) {
         // coby wypluć ui na stronie
         // Produkuje styl + jqueryUI, domyślnie nie daje jquery ($jquery = false)
+            return 
+                $this->Html->css(array('custom-theme3/jquery-ui.min'), array('inline' => false)) .
+                $this->Html->script(array('jquery-ui'), array('inline' => false)); 
+        }
+        
+        public function jqueryUItoolTip( $selektor = null ) {
+        // trzeba się upewnić, że jquery UI jest wcześniej załadowane
+            $code = "$(function() {" .
+                        "$( '" . $selektor . "' ).tooltip();" .
+                    "});";
+            return $this->Html->scriptBlock($code, array('inline' => false));
             
-            return null;
         }
         
         /*  #################################################################
@@ -318,6 +328,13 @@ class MaHelper extends AppHelper {
                                 'pp' == true, to wszystkie inne false (stara karta)
                                  i na odwrót, któraś z 3-ech true, to 'pp' false
                             */
+        );
+        
+        private $ztitles = array(
+            'p-plaska' => 'personalizacja PŁASKA',
+            'p-laminat' => 'personalizacja pod LAMINATEM',
+            'p-emboss' => 'EMBOSSING',
+            'p-old' => 'personalizacja'
         );
 
         private function getAndSetCechyKarty( $karta = array() ) {
@@ -352,11 +369,11 @@ class MaHelper extends AppHelper {
             if( $this->tablica_cech['isperso'] ) {
                 $html = null;
                 if( $this->tablica_cech['pp'] ) { // karta po staremu
-                    $html .= $this->markCechy('?', 'p-old');
+                    $html .= $this->markCechy('?', 'p-old', $this->ztitles['p-old']);
                 } else { // karta po nowemu
-                    if( $this->tablica_cech['pl'] ) { $html .= $this->markCechy('L', 'p-lam'); }
-                    if( $this->tablica_cech['pt'] ) { $html .= $this->markCechy('P', 'p-pla'); }
-                    if( $this->tablica_cech['pe'] ) { $html .= $this->markCechy('E', 'p-emb'); }
+                    if( $this->tablica_cech['pl'] ) { $html .= $this->markCechy('L', 'p-lam', $this->ztitles['p-laminat']); }
+                    if( $this->tablica_cech['pt'] ) { $html .= $this->markCechy('P', 'p-pla', $this->ztitles['p-plaska']); }
+                    if( $this->tablica_cech['pe'] ) { $html .= $this->markCechy('E', 'p-emb', $this->ztitles['p-emboss']); }
                 }
                 $klasa = 'cechy-wrap';
                 if( $wrap_klasa != null ) {
@@ -368,12 +385,21 @@ class MaHelper extends AppHelper {
             return null;
         }
         
-        private function markCechy( $char = null, $klasa = null ) {
+//        $znaczki_titles = array(
+//            'p-plaska' => 'personalizacja PŁASKA',
+//            'p-laminat' => 'personalizacja pod LAMINATEM',
+//            'p-emboss' => 'EMBOSSING',
+//            'p-old' => 'personalizacja'
+        
+        private function markCechy( $char = null, $klasa = null, $title = null ) {
             
             if( $klasa != null ) {
-                return '<div class="' . $klasa . '"><div>' . $char . '</div></div>';
+                $klasa = ' class="' . $klasa . '"';
             }
-            return '<div><div>' . $char . '</div></div>';
+            if( $title != null ) {
+                $title = ' title="' . $title . '"';
+            }
+            return '<div' . $klasa . $title . '><div>' . $char . '</div></div>';
         }
         /*   CECHY kart, zamówień i zleceń
          *  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,5 +1,7 @@
 <?php 
     echo $this->Html->css('card.css?v=32848734', null, array('inline' => false));
+    echo $this->Ma->walnijJqueryUI();
+    echo $this->Ma->jqueryUItoolTip('.process');
     //echo $this->Ma->walnijJqueryUI();
     //echo '<pre>';	print_r($cards); echo  '</pre>';
     $this->set('title_for_layout', 'Karty');
@@ -165,3 +167,9 @@ if( array_key_exists($par, $klasa) )
 </div>
 
 -->
+
+<!--  <script>
+    $(function() {
+      $( '.process' ).tooltip();
+    });
+  </script>-->

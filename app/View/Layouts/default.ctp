@@ -21,22 +21,22 @@ $cakeDescription = __d('cake_dev', 'SKP');
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php //echo $cakeDescription ?>
-		<?php echo $title_for_layout; ?>
-	</title>
-	<?php
-		echo $this->Html->meta('icon');
-		echo $this->Html->script(array('jquery', 'common')); 
-		echo $this->Html->css('cake.generic.css?v=32848734');
-		//echo $this->Html->css('dex');
-		
-		echo $this->fetch('meta');
-		echo $this->fetch('css');
-		echo $this->fetch('script');
-                
-	?>
+    <?php echo $this->Html->charset(); ?>
+    <title>
+            <?php //echo $cakeDescription ?>
+            <?php echo $title_for_layout; ?>
+    </title>
+    <?php
+            echo $this->Html->meta('icon');
+            echo $this->Html->script(array('jquery', 'common')); 
+            echo $this->Html->css('cake.generic.css?v=328576834');
+            //echo $this->Html->css('dex');
+
+            echo $this->fetch('meta');
+            echo $this->fetch('css');
+            echo $this->fetch('script');
+
+    ?>
 </head>
 <body>        
 	<div id="container">
