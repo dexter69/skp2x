@@ -192,6 +192,8 @@ class CardsController extends AppController {
                 $cards = $this->Paginator->paginate();
         }
         //$links = $this->links;
+        //$cards['upc'] = $this->userPersoChange();
+        $cards['pvis'] = $this->userPersoVis();
         $this->set( compact('cards', /*'links'*/ 'par' ) );
 
     }
@@ -216,6 +218,8 @@ class CardsController extends AppController {
             $evcontrol = $this->prepareSubmits($card );
             $links = $this->links;
             $vju = $this->Card->get_view_options();
+            //$card['Card']['upc'] = $this->userPersoChange();
+            $card['Card']['pvis'] = $this->userPersoVis();
             $this->set(compact('card', 'evcontrol', 'links', 'vju'));
 
             //test
@@ -230,6 +234,34 @@ class CardsController extends AppController {
              */
                  
 	}
+        /*
+        private function userPersoChange() {
+        // sprawdź, czy zalogowany użytkownik może zmieniać datę perso
+            $userOK = 
+                $this->Auth->user('dzial') == SUA ||
+                $this->Auth->user('dzial') == PER ||
+                $this->Auth->user('dzial') == DTP;
+            //$statusOK = 'Card.status !=' => array(PRIV, KONEC);
+            if( $this->Auth->user('dzial') == SUA ||
+                $this->Auth->user('dzial') == PER ||
+                $this->Auth->user('dzial') == DTP ) {
+                
+                return true;
+            }
+            return false;
+        }
+        */
+        
+        private function userPersoVis() {
+        // sprawdź, czy zalogowany użytkownik może widzieć datę perso  
+            if( $this->Auth->user('dzial') == SUA ||
+                $this->Auth->user('dzial') == PER ||
+                $this->Auth->user('dzial') == DTP ) {
+                
+                return true;
+            }
+            return false;
+        }
 	
 	public function prepareSubmits($card ) {
 		

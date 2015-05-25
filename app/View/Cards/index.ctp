@@ -1,7 +1,7 @@
 <?php 
     echo $this->Html->css('card.css?v=32848734', null, array('inline' => false));
     echo $this->Ma->walnijJqueryUI();
-    echo $this->Ma->jqueryUItoolTip('.process');
+    echo $this->Ma->jqueryUItoolTip('.process, .persodate');
     //echo $this->Ma->walnijJqueryUI();
     //echo '<pre>';	print_r($cards); echo  '</pre>';
     $this->set('title_for_layout', 'Karty');
@@ -88,10 +88,25 @@ if( array_key_exists($par, $klasa) )
 						echo $this->Html->link($card['Job']['id'], array('controller' => 'jobs', 'action' => 'view', $card['Job']['id']));
 			?>
 		</td>
-		
-		<td class="termin wyroznij-date">
-			<?php echo $this->Ma->mdvs($card['Order']['stop_day']);
-				//echo $this->Html->link($card['Owner']['name'], array('controller' => 'users', 'action' => 'view', $card['Owner']['id'])); ?>
+                <?php
+                    //$cards['upc']
+                    if( $cards['pvis'] && $card['Card']['stop_perso']) { 
+                    // zalogowany użytkownik -> perso date i data perso ustawiona
+                        $klasa = 'termin wyroznij-date persodate';
+                        $title = ' title="' . $this->Ma->mdvs($card['Order']['stop_day']) . '"';
+                        $datka = $this->Ma->mdvs($card['Card']['stop_perso']);
+                    } else {
+                        $klasa = 'termin wyroznij-date';
+                        $title = null;
+                        $datka = $this->Ma->mdvs($card['Order']['stop_day']);
+                    }
+                    if( $cards['pvis'] && $this->Ma->stanPersoChange( $card['Card'] ) ) {
+                    // jeżeli można zmieniać datę perso    
+                        $klasa .=  ' changable';
+                    }
+		?>
+		<td class="<?php echo $klasa; ?>" <?php echo $title; ?>>
+			<?php echo $datka;	?>
 		</td>
 		
 		

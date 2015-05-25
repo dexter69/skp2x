@@ -1,3 +1,6 @@
+$data_handlowa: red;
+$data_perso: green;
+
 $perso: MidnightBlue;
 
 #karta_klient input { width: 97%; }
@@ -367,7 +370,7 @@ p.pover-view {
 #search_wrap { padding-left: 20px;}
 
 .wyroznij-date { //termin wyróżniony
-    color: red;
+    color: $data_handlowa;
 }
 
 /* Wyświetlanie opcji perso
@@ -379,5 +382,15 @@ p.viewheader > span {
     padding: 0 0 0 1.9em;
 }
 
+// KWestie dat perso
+.wyroznij-date.persodate, .wyroznij_date.persodate {
+    color: $data_perso;
+}
 
+.persodate {
+    cursor: default;
+}
 
+.changable {
+    cursor: pointer;
+}

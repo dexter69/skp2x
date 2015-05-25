@@ -12,7 +12,7 @@
 echo $this->Html->css('card.css?v=3284457', null, array('inline' => false));
 echo $this->Html->script(array('event'), array('inline' => false)); 
 echo $this->Ma->walnijJqueryUI();
-echo $this->Ma->jqueryUItoolTip('.process');
+echo $this->Ma->jqueryUItoolTip('.process, .persodate');
 $this->Ma->displayActions('cards');
 $this->set('title_for_layout', $card['Card']['name']);
 
@@ -36,7 +36,7 @@ $this->set('title_for_layout', $card['Card']['name']);
 	<dl id="cardviewdl">
 		<dt><?php echo 'Id'; ?></dt>
 		<dd>
-			<?php echo h($card['Card']['id']); ?>
+			<?php echo $card['Card']['id']; ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo 'Nazwa karty'; ?></dt>
@@ -44,9 +44,25 @@ $this->set('title_for_layout', $card['Card']['name']);
 			<?php echo $card['Card']['name']; ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo 'Termin'; ?></dt>
-		<dd class="wyroznij_date">
-			<?php echo $this->Ma->md($card['Order']['stop_day']); ?>
+		<dt><?php echo 'Termin'; ?></dt>    
+                <?php
+                    if( $card['Card']['pvis'] && $card['Card']['stop_perso']) { 
+                    // zalogowany użytkownik -> perso date i data perso ustawiona
+                        $klasa = 'wyroznij_date persodate';
+                        $title = ' title="' . $this->Ma->md($card['Order']['stop_day']) . '"';
+                        $datka = $this->Ma->md($card['Card']['stop_perso']);
+                    } else {
+                        $klasa = 'wyroznij_date';
+                        $title = null;
+                        $datka = $this->Ma->md($card['Order']['stop_day']);
+                    }
+                    if( $card['Card']['pvis'] && $this->Ma->stanPersoChange( $card['Card'] ) ) {
+                    // jeżeli można zmieniać datę perso    
+                        $klasa .=  ' changable';
+                    }
+                ?>
+		<dd class="<?php echo $klasa ?>"  <?php echo $title ?>>
+			<?php echo $datka; ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo 'Klient'; ?></dt>

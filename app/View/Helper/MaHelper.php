@@ -1843,6 +1843,16 @@ class MaHelper extends AppHelper {
         }
         
     }
+    
+    public function stanPersoChange( $karta = array('isperso' => 0) ) {
+    // sprawdzamy czy stan karty nadaje się do zmieninania karty
+        if( $karta['isperso'] ) { // ma wogóle perso
+          if( $karta['status'] != PRIV && $karta['status'] != KONEC ) {
+              return true;
+          } 
+        }
+        return false;
+    }
 	
 }
 

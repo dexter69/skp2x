@@ -238,7 +238,7 @@ define('ADM',9); //admin
 define('MAR',1); //marketing
 define('KOR',2); //koordynator
 define('KIP',3); //kierownik produkcji (Becia)
-define('DTP',4); //dtp - Marek
+define('DTP',4); //dtp - Frank
 define('PER',5); //peronalizacja
 
 //KARTY
