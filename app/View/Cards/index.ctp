@@ -16,6 +16,8 @@ $klasa = array(	'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
 if( array_key_exists($par, $klasa) )
     { $klasa[$par] = 'swieci'; }
 ?>
+<input type="text" id="taken-date" size="30">
+<div id="datepicker"></div>
 <div id="indekskart" class="cards index">
 	<h2 class="hfiltry"><?php echo 'KARTY'; 
 		echo $this->Ma->indexFiltry('cards', $klasa);
@@ -45,7 +47,8 @@ if( array_key_exists($par, $klasa) )
             <th><?php echo $this->Paginator->sort('modified'); ?></th>
             <th class="actions"><?php echo __('Actions'); ?></th>-->
 	</tr>
-	<?php foreach ($cards as $card): ?>
+	<?php $i=0;
+            foreach ($cards as $card): ?>
 	<tr>
 		<td class="id"><?php echo $card['Card']['id']; ?>&nbsp;</td>
                 <?php
@@ -80,12 +83,12 @@ if( array_key_exists($par, $klasa) )
 		<td class="nr">
 			<?php //echo $this->Html->link($card['Job']['id'], array('controller' => 'jobs', 'action' => 'view', $card['Job']['id'])); ?>
 			<?php
-				if( $card['Job']['nr'] )
-						echo $this->Html->link($this->Ma->bnr2nrj($card['Job']['nr'], null),
-							array('controller' => 'jobs', 'action' => 'view', $card['Job']['id']), array('escape' => false)
-						); 
-					else
-						echo $this->Html->link($card['Job']['id'], array('controller' => 'jobs', 'action' => 'view', $card['Job']['id']));
+                            if( $card['Job']['nr'] )
+                                echo $this->Html->link($this->Ma->bnr2nrj($card['Job']['nr'], null),
+                                        array('controller' => 'jobs', 'action' => 'view', $card['Job']['id']), array('escape' => false)
+                                ); 
+                            else
+                                echo $this->Html->link($card['Job']['id'], array('controller' => 'jobs', 'action' => 'view', $card['Job']['id']));
 			?>
 		</td>
                 <?php
@@ -94,19 +97,32 @@ if( array_key_exists($par, $klasa) )
                     // zalogowany użytkownik -> perso date i data perso ustawiona
                         $klasa = 'termin wyroznij-date persodate';
                         $title = ' title="' . $this->Ma->mdvs($card['Order']['stop_day']) . '"';
-                        $datka = $this->Ma->mdvs($card['Card']['stop_perso']);
+                        $data = $card['Card']['stop_perso'];
+                        //$datka = $this->Ma->mdvs($card['Card']['stop_perso']);
                     } else {
                         $klasa = 'termin wyroznij-date';
                         $title = null;
-                        $datka = $this->Ma->mdvs($card['Order']['stop_day']);
+                        $data = $card['Order']['stop_day'];
+                        //$datka = $this->Ma->mdvs($card['Order']['stop_day']);
                     }
+                    $datka = $this->Ma->mdvs($data);
+                    $cal_wrap = null;
                     if( $cards['pvis'] && $this->Ma->stanPersoChange( $card['Card'] ) ) {
                     // jeżeli można zmieniać datę perso    
                         $klasa .=  ' changable';
+                        $cal_wrap = '<div class="kalendar-wraper"><div id="cal' . $i++ . '"></div></div>';
                     }
+                    $thid = null;
+//                    if( $i++ == 0 ) {
+//                        $thid = ' id="datepickerghfgh" ';
+//                    } 
 		?>
-		<td class="<?php echo $klasa; ?>" <?php echo $title; ?>>
-			<?php echo $datka;	?>
+		<td
+                    <?php echo $thid; ?>
+                    class="<?php echo $klasa; ?>"
+                    <?php echo $title; ?>
+                    data-termin="<?php echo $data; ?>">
+			<?php echo $datka . $cal_wrap;	?>
 		</td>
 		
 		
