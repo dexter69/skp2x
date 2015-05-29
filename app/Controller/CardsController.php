@@ -26,6 +26,22 @@ class CardsController extends AppController {
     	parent::beforeFilter();
     	//$this->actionAllowed();
 	}
+        
+        public function addCzasPerso() {
+		
+	    //$this->autoRender = false; // We don't render a view in this example
+	    $this->request->onlyAllow('ajax'); // No direct access via browser URL
+	    //$this->layout = 'ajax';
+	    
+            $data = array(
+               'msg' => 'Bla bla',
+               'jestok' => true 
+            );
+	     
+            $this->set(compact('data')); // Pass $data to the view
+            $this->set('_serialize', 'data');
+            
+	}
 	
 /**
  * search method

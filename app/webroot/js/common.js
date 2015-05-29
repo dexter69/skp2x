@@ -87,37 +87,81 @@ function interfejs( item ) {
             $('#taken-date').val(dateText);
             $( "#datepicker" ).datepicker( "destroy" );
             // pokaż busy gif
-            if( zapiszDate(dateText) ) {
-            // udało się zapisać wybraną datę
-            /*
-             *  destroy busy gif,
-             *  zmień datę w td/dd (i odpowiedznie klasy)
-             */
+            busy('on', item);
+            var succes = zapiszDate2(dateText, item);
+            // destroy busy gif
+            setTimeout(function(){  
+                busy('off', item);                
+            }, 1500);
+            
+            if( succes ) {
+                setTimeout(function(){                      
+                    $( item ).addClass( "persodate" );
+                }, 1500);
             } else {
-            /*
-             *  destroy busy gif,
+            /*             
              *  pokaż stosowny komunikat
              */    
             }
         }
-    });
-    
-    $('#datepicker table td').click(function() {	
-        //alert('Gibon');
-        //var currentDate = $( "#datepicker" ).datepicker( "getDate" );
-        //$('#taken-date').val(currentDate);
-    });
-    
-    $('#taken-date').change(function() {	
-        //alert('Gibon');
-        //var currentDate = $( "#datepicker" ).datepicker( "getDate" );
-        //$('#taken-date').val(currentDate);
-    });
-    
-    //$( "#" + theid ).datepicker();
+    });    
 }
 
-function zapiszDate( tekstZdata ) {
+
+function busy( mode, obj ) {
+// mode on lub off    
+    if( mode === 'on' ) {       
+       $( obj ).addClass( "busy" );
+       return;
+    }
+    $( obj ).removeClass( "busy" );
+}
+
+function zapiszDate( tekstZdata, obj ) {
+// obj td, dd ....
     
-    return true;
+    var zapisano = true;
+    
+    // taki obiekt mniej więcej będziemy otrzymywali od cake'e
+    var backinfo = {
+      termin: '2015-06-12',
+      tshort: '17 cze'  
+    };
+    
+    if( zapisano ) { //udało się w bazie zapisac  
+        
+        $( obj ).attr('title', $( obj ).text());
+        //$( obj ).text( tekstZdata.substr(5, 5) );
+        $( obj ).text(backinfo.tshort);
+        return true;
+    }
+    
+    return false;
+}
+
+//var posting = $.post(
+//                "wejsciowka.php",
+//                dane
+//            );
+
+function zapiszDate2( tekstZdata, obj ) {
+    
+    var dane = {
+        id: $(obj).data('id'),
+        stop_perso: tekstZdata
+    }
+    
+    var posting = $.post(
+                "/skp/2x/cards/addCzasPerso.json",
+                dane
+    );
+    
+    posting.done(function( data ) {
+        
+    });
+    
+    posting.fail(function( data ) {
+                
+    });
+    
 }

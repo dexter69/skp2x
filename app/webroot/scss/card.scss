@@ -408,3 +408,15 @@ p.viewheader > span {
     margin-top: -115px;
     box-shadow: 15px 15px 40px 0px #4D4D4D;
 }
+
+td.busy, dd.busy {
+    background-image: url('../img/bg.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    color: transparent;
+}
+
+.wyroznij-date.persodate.busy, .wyroznij_date.persodate.busy {
+    color: transparent;
+}

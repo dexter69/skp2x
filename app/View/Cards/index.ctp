@@ -1,7 +1,7 @@
 <?php 
     echo $this->Html->css('card.css?v=32848734', null, array('inline' => false));
     echo $this->Ma->walnijJqueryUI();
-    echo $this->Ma->jqueryUItoolTip('.process, .persodate');
+    echo $this->Ma->jqueryUItoolTip('.process, #karty td');
     //echo $this->Ma->walnijJqueryUI();
     //echo '<pre>';	print_r($cards); echo  '</pre>';
     $this->set('title_for_layout', 'Karty');
@@ -106,23 +106,17 @@ if( array_key_exists($par, $klasa) )
                         //$datka = $this->Ma->mdvs($card['Order']['stop_day']);
                     }
                     $datka = $this->Ma->mdvs($data);
-                    $cal_wrap = null;
                     if( $cards['pvis'] && $this->Ma->stanPersoChange( $card['Card'] ) ) {
                     // jeżeli można zmieniać datę perso    
-                        $klasa .=  ' changable';
-                        $cal_wrap = '<div class="kalendar-wraper"><div id="cal' . $i++ . '"></div></div>';
+                        $klasa .=  ' changable';                        
                     }
-                    $thid = null;
-//                    if( $i++ == 0 ) {
-//                        $thid = ' id="datepickerghfgh" ';
-//                    } 
 		?>
 		<td
-                    <?php echo $thid; ?>
                     class="<?php echo $klasa; ?>"
                     <?php echo $title; ?>
-                    data-termin="<?php echo $data; ?>">
-			<?php echo $datka . $cal_wrap;	?>
+                    data-id="<?php echo $card['Card']['id']; ?>"
+                    >
+                    <?php echo $datka; ?>
 		</td>
 		
 		
