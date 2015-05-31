@@ -37,31 +37,30 @@ var datoza = {
 // do pomiaru szerokości
 function checkSize() {
 
-        var bodyw;
-        var oknow;
-        var wynik;
+    var bodyw;
+    var oknow;
+    var wynik;
 
-        bodyw = $( 'body' ).width();
-        oknow = $(window).width();
-        wynik = (oknow - bodyw)/2 +2;
-        $( 'div#gener.actions' ).css( "left", wynik );
+    bodyw = $( 'body' ).width();
+    oknow = $(window).width();
+    wynik = (oknow - bodyw)/2 +2;
+    $( 'div#gener.actions' ).css( "left", wynik );
 
 }	
 
 function fireSearch() {
 
    if( $( '#szukanie' ).hasClass( 'hid' ) ) {
-                $( '#szukanie' ).removeClass('hid');
-                $( '#szukanie' ).addClass( 'vis');	
-                $('#CardSirczname').click(function() {	
-                        $(this).val('');
-                });
-                $('#CardSirczname').focus();
-        } else {
-                $( '#szukanie' ).removeClass('vis');
-                $( '#szukanie' ).addClass( 'hid');	
-        } 
-
+        $( '#szukanie' ).removeClass('hid');
+        $( '#szukanie' ).addClass( 'vis');	
+        $('#CardSirczname').click(function() {	
+                $(this).val('');
+        });
+        $('#CardSirczname').focus();
+    } else {
+        $( '#szukanie' ).removeClass('vis');
+        $( '#szukanie' ).addClass( 'hid');	
+    }
 }
 
 /*
@@ -88,7 +87,7 @@ function interfejs( item ) {
             $( "#datepicker" ).datepicker( "destroy" );
             // pokaż busy gif
             busy('on', item);
-            var succes = zapiszDate2(dateText, item);
+            var succes = zapiszDate(dateText, item);
             // destroy busy gif
             setTimeout(function(){  
                 busy('off', item);                
@@ -117,7 +116,7 @@ function busy( mode, obj ) {
     $( obj ).removeClass( "busy" );
 }
 
-function zapiszDate( tekstZdata, obj ) {
+function zapiszDate_old( tekstZdata, obj ) {
 // obj td, dd ....
     
     var zapisano = true;
@@ -139,22 +138,20 @@ function zapiszDate( tekstZdata, obj ) {
     return false;
 }
 
-//var posting = $.post(
-//                "wejsciowka.php",
-//                dane
-//            );
 
-function zapiszDate2( tekstZdata, obj ) {
+function zapiszDate( tekstZdata, obj ) {
     
     var dane = {
         id: $(obj).data('id'),
         stop_perso: tekstZdata
-    }
+    };
     
     var posting = $.post(
-                "/skp/2x/cards/addCzasPerso.json",
-                dane
-    );
+                        "/skp/2x/cards/addCzasPerso.json",
+                        //"/skp/2x/cards/addCzasPerso",
+                        //"/skp/2x/cards/test",
+                        dane
+                    );
     
     posting.done(function( data ) {
         

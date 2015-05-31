@@ -33,15 +33,30 @@ class CardsController extends AppController {
 	    $this->request->onlyAllow('ajax'); // No direct access via browser URL
 	    //$this->layout = 'ajax';
 	    
-            $data = array(
-               'msg' => 'Bla bla',
-               'jestok' => true 
+            $result = array(
+                 'msg' => ':-(',
+                 'saved' => false
             );
-	     
-            $this->set(compact('data')); // Pass $data to the view
-            $this->set('_serialize', 'data');
+	    
+            $data =  array( 'Card' => $this->request->data );            
+            if ($this->Card->save( $data )) {
+            // handle the success.
+                $result['saved'] = true;
+                $result['msg'] = 'Hura!';
+            }
             
+            
+            $this->set(compact('result')); // Pass $data to the view
+            $this->set('_serialize', 'result');
+            //$this->render('test');
 	}
+        
+        public function test() {
+            
+           $test = $this->request->data;
+           //$test = 'gibon';
+           $this->set(compact('test')); 
+        }
 	
 /**
  * search method
