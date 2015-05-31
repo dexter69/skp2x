@@ -43,11 +43,12 @@ class CardsController extends AppController {
             // handle the success.
                 $result['saved'] = true;
                 $result['msg'] = 'Hura!';
+                $result['stop_perso'] = $this->request->data['stop_perso'];
             }
             
             
             $this->set(compact('result')); // Pass $data to the view
-            $this->set('_serialize', 'result');
+            //$this->set('_serialize', 'result'); <- to robimy, gdy nie używamy view files
             //$this->render('test');
 	}
         

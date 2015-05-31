@@ -83,15 +83,15 @@ function interfejs( item ) {
         monthNames:  datoza.miesiace,
         dayNamesMin: datoza.dni,
         onSelect: function(dateText) {
-            $('#taken-date').val(dateText);
+            //$('#taken-date').val(dateText);
             $( "#datepicker" ).datepicker( "destroy" );
             // pokaż busy gif
             busy('on', item);
             var succes = zapiszDate(dateText, item);
             // destroy busy gif
-            setTimeout(function(){  
+            //setTimeout(function(){  
                 busy('off', item);                
-            }, 1500);
+            //}, 1500);
             
             if( succes ) {
                 setTimeout(function(){                      
@@ -142,23 +142,26 @@ function zapiszDate_old( tekstZdata, obj ) {
 function zapiszDate( tekstZdata, obj ) {
     
     var dane = {
-        id: $(obj).data('id'),
-        stop_perso: tekstZdata
+        id: $(obj).data('id'),  // tu mamy id ustawianej karty
+        stop_perso: tekstZdata  // i datę pobraną z kalendarza
     };
     
     var posting = $.post(
                         "/skp/2x/cards/addCzasPerso.json",
-                        //"/skp/2x/cards/addCzasPerso",
-                        //"/skp/2x/cards/test",
                         dane
                     );
     
     posting.done(function( data ) {
-        
+        if( data.result.saved ) {
+            //alert('bingo!');
+            $( obj ).text(data.result.stop_perso);
+        } else {
+            alert('nie zapisano ;-(');
+        }
     });
     
     posting.fail(function( data ) {
-                
+         alert('fail!');
     });
     
 }
