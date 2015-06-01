@@ -28,7 +28,8 @@ $cakeDescription = __d('cake_dev', 'SKP');
     </title>
     <?php
             echo $this->Html->meta('icon');
-            echo $this->Html->script(array('jquery', 'common')); 
+            echo $this->Html->script(array('jquery', 'funkcje')); 
+            echo $this->Html->script('common', array('block' => 'scriptBottom'));
             echo $this->Html->css('cake.generic.css?v=328576834');
             //echo $this->Html->css('dex');
 

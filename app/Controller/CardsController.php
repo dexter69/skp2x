@@ -34,22 +34,22 @@ class CardsController extends AppController {
 	    //$this->layout = 'ajax';
 	    
             $result = array(
-                 'msg' => ':-(',
-                 'saved' => false
+                'msg' => ':-(',
+                'saved' => false,
+                'stop_perso' => null
             );
 	    
             $data =  array( 'Card' => $this->request->data );            
-            if ($this->Card->save( $data )) {
+            if ( $this->Card->save( $data ) ) {
             // handle the success.
                 $result['saved'] = true;
                 $result['msg'] = 'Hura!';
                 $result['stop_perso'] = $this->request->data['stop_perso'];
-            }
-            
+            } 
             
             $this->set(compact('result')); // Pass $data to the view
             //$this->set('_serialize', 'result'); <- to robimy, gdy nie używamy view files
-            //$this->render('test');
+            sleep(2);
 	}
         
         public function test() {

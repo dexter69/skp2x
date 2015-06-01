@@ -420,3 +420,25 @@ td.busy, dd.busy {
 .wyroznij-date.persodate.busy, .wyroznij_date.persodate.busy {
     color: transparent;
 }
+
+// Tu info po zmianie daty
+
+#komunikat.pokaz {    
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    //margin-left: -210px;
+    margin-top: -100px;
+    box-shadow: 15px 15px 40px 0px #4D4D4D;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1.5em;
+    background-color: #ff6666;
+    color: white;
+    cursor: pointer;
+}
+
+#komunikat.pokaz > p {
+    font-size: 0.5em;
+}

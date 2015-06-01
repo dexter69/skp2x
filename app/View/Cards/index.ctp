@@ -2,6 +2,8 @@
     echo $this->Html->css('card.css?v=32848734', null, array('inline' => false));
     echo $this->Ma->walnijJqueryUI();
     echo $this->Ma->jqueryUItoolTip('.process, #karty td');
+    echo $this->Html->script(array('card-perso'), array('block' => 'scriptBottom'));
+
     //echo $this->Ma->walnijJqueryUI();
     //echo '<pre>';	print_r($cards); echo  '</pre>';
     $this->set('title_for_layout', 'Karty');
@@ -16,8 +18,9 @@ $klasa = array(	'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
 if( array_key_exists($par, $klasa) )
     { $klasa[$par] = 'swieci'; }
 ?>
-<input type="text" id="taken-date" size="30">
+<!--<input type="text" id="taken-date" size="30">-->
 <div id="datepicker"></div>
+<div id="komunikat"></div>
 <div id="indekskart" class="cards index">
 	<h2 class="hfiltry"><?php echo 'KARTY'; 
 		echo $this->Ma->indexFiltry('cards', $klasa);
@@ -115,6 +118,7 @@ if( array_key_exists($par, $klasa) )
                     class="<?php echo $klasa; ?>"
                     <?php echo $title; ?>
                     data-id="<?php echo $card['Card']['id']; ?>"
+                    data-termin="<?php echo $data; ?>"
                     >
                     <?php echo $datka; ?>
 		</td>
