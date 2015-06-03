@@ -36,6 +36,28 @@ class Card extends AppModel {
 //            'stop_day' => 'Order.stop_day'
 //        );
 
+        public $findMethods = array('gibon' =>  true);
+
+        protected function _findGibon($state, $query, $results = array()) {
+            if ($state === 'after') {
+                foreach( $results as $key => $val ) {
+                    $results[$key]['Card']['dziurka'] = $key;
+                }
+            }
+            return $results;
+        }
+        
+        public function afterFind($results, $primary = false) {
+            foreach ($results as $key => $val) {
+                $results[$key]['Gibon'] =  array('gibon' => $key);
+//                if (isset($val['Event']['begindate'])) {
+//                    $results[$key]['Event']['begindate'] = $this->dateFormatAfterFind(
+//                        $val['Event']['begindate']
+//                    );
+//                }
+            }
+            return $results;
+        }
         
 	public function saveitAll( $puc = array(), &$errno ) { 
 		

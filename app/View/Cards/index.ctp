@@ -5,7 +5,7 @@
     echo $this->Html->script(array('card-perso'), array('block' => 'scriptBottom'));
 
     //echo $this->Ma->walnijJqueryUI();
-    //echo '<pre>';	print_r($cards); echo  '</pre>';
+    echo '<pre>';	print_r($cards); echo  '</pre>';
     $this->set('title_for_layout', 'Karty');
 
     //echo '<pre>'; print_r($gibon); echo '</pre>';

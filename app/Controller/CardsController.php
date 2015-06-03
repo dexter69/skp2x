@@ -17,6 +17,7 @@ class CardsController extends AppController {
 	
 	public $paginate = array(
             //'limit' => 25,
+            //'gibon',
             'order' => array(
                 'Card.id' => 'desc'
             )
@@ -24,6 +25,7 @@ class CardsController extends AppController {
         
         // dla ludziów z perso
         public $paginate_perso = array(
+            //'gibon',
             'order' => array(
                 'Card.stop_perso' => 'desc'
                 , 'Order.stop_day' => 'desc'
@@ -136,9 +138,14 @@ class CardsController extends AppController {
                         $opcje = array();
         }
         if( !empty($opcje) ) {
-                $cards = $this->Paginator->paginate( 'Card', $opcje );			
+                //$cards = $this->Paginator->paginate( 'Card', $opcje );			
+                //$cards = $this->paginate( 'Card', $opcje );
+                $this->paginate = array('gibon');
+                $cards = $this->paginate();
         } else {
-                $cards = $this->Paginator->paginate();
+                //$cards = $this->Paginator->paginate();
+            $this->paginate = array('gibon', 'callbacks' => true);
+                $cards = $this->paginate();
         }
         //$links = $this->links;
         //$cards['upc'] = $this->userPersoChange();
