@@ -30,7 +30,14 @@ class Card extends AppModel {
         );	
         
         public $tempor = array();
-								
+        
+        // Te dwa poniżej miałczymy, żeby mieć sortowanie ok w perso
+        public $virtualFields = array(
+            'stop_day' => 'Order.stop_day'
+            //,            'stop3' => 'Order.stop_day'
+        );
+
+        
 	public function saveitAll( $puc = array(), &$errno ) { 
 		
             // puc <=> project, upload and card data

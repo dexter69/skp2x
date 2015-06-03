@@ -1,5 +1,5 @@
 <?php 
-    echo $this->Html->css('card.css?v=32848734', null, array('inline' => false));
+    echo $this->Html->css('card.css?v=3289976734', null, array('inline' => false));
     echo $this->Ma->walnijJqueryUI();
     echo $this->Ma->jqueryUItoolTip('.process, #karty td');
     echo $this->Html->script(array('card-perso'), array('block' => 'scriptBottom'));
@@ -18,9 +18,7 @@ $klasa = array(	'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
 if( array_key_exists($par, $klasa) )
     { $klasa[$par] = 'swieci'; }
 ?>
-<!--<input type="text" id="taken-date" size="30">-->
-<div id="datepicker"></div>
-<div id="komunikat"></div>
+
 <div id="indekskart" class="cards index">
 	<h2 class="hfiltry"><?php echo 'KARTY'; 
 		echo $this->Ma->indexFiltry('cards', $klasa);
@@ -35,8 +33,14 @@ if( array_key_exists($par, $klasa) )
             <th class="opcje">Opcje</th>
             <th class="nr"><?php echo $this->Paginator->sort('Order.nr', 'Handlowe'); ?></th>
             <th class="nr"><?php echo $this->Paginator->sort('job_id', 'Produk.'); ?></th>
-            <th class="termin"><?php echo $this->Paginator->sort('Order.stop_day', 'Czas'); ?></th>
-            <!--<th class="klient"><?php echo $this->Paginator->sort('customer_id', 'Klient'); ?></th>
+            <th class="termin"><?php 
+                if( $cards['pvis'] ) {
+                    echo 'Czas';
+                } else {
+                    echo $this->Paginator->sort('Order.stop_day', 'Czas');
+                } ?>
+            </th>
+            <!--<th class="klient"><?php //echo $this->Paginator->sort('customer_id', 'Klient'); ?></th>
             -->
             
             <th class="ile"><?php echo $this->Paginator->sort('quantity', 'Ilość'); ?></th>
@@ -164,6 +168,9 @@ if( array_key_exists($par, $klasa) )
 	?>
 	</div>
 </div>
+
+<!-- Do zmieniania daty perso -->
+<div id="datepicker"></div><div id="komunikat"></div>
 
 <?php $this->Ma->displayActions('cards'); ?>
 

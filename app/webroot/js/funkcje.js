@@ -41,11 +41,12 @@ function busy( mode, obj ) {
     $( obj ).removeClass( "busy" );
 }
 
-function zapiszDate( tekstZdata, obj ) {
+function zapiszDate( tekstZdata, obj, longoza ) {
     
     var dane = {
         id: $(obj).data('id'),  // tu mamy id ustawianej karty
-        stop_perso: tekstZdata  // i datę pobraną z kalendarza
+        stop_perso: tekstZdata,  // i datę pobraną z kalendarza
+        dl: longoza             // czy chcemy spowrotem długą, czy krótką datę
     };
     
     //pokaż busy gif;
@@ -58,13 +59,13 @@ function zapiszDate( tekstZdata, obj ) {
     
     posting.done(function( data ) {
         busy('off', obj);
-        if( data.result.saved ) {
-            $( obj ).text(data.result.stop_perso);
+        if( data.saved ) {
+            $( obj ).text(data.stop_perso);
             $( obj ).addClass( "persodate" );
+            $( obj ).data("termin", tekstZdata);
         } else {
             komunikat('Niestety nie udało się zmienić daty...', '-210px');
         }
-        
     });
     
     posting.fail(function( data ) {
@@ -84,7 +85,7 @@ function komunikat( str, mleft ) {
 }
 
 
-function interfejs( item ) {
+function interfejs( item, dlugosc ) {
     
     // Nazwy dni i miesięcy
     var datoza = {
@@ -93,7 +94,7 @@ function interfejs( item ) {
            "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"
        ],
        dni : [ "Ni", "Po", "Wt", "Śr", "Cz", "Pt", "So"]
-    };
+    };    
     
     $( "#datepicker" ).datepicker({
         dateFormat: "yy-mm-dd",
@@ -105,7 +106,7 @@ function interfejs( item ) {
         minDate: 0,
         onSelect: function(dateText) {
             $( "#datepicker" ).datepicker( "destroy" );
-            zapiszDate(dateText, item);
+            zapiszDate(dateText, item, dlugosc);
         }
     });    
 }

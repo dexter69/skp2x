@@ -3,7 +3,12 @@ $(function() {
     /*
      *  PERSO - change date
      */
-    $("td.changable, dd.changable").click(function() {
-        interfejs( this );
+    $("td.changable").click(function() {
+        interfejs( this, 'short' );
     });
+    
+    $("dd.changable").click(function() {
+        interfejs( this, 'long' );
+    });
+    
 });

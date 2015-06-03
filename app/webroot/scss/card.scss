@@ -409,12 +409,19 @@ p.viewheader > span {
     box-shadow: 15px 15px 40px 0px #4D4D4D;
 }
 
-td.busy, dd.busy {
+td.busy, dl#cardviewdl dd.busy {
     background-image: url('../img/bg.gif');
-    background-repeat: no-repeat;
-    background-position: center;
+    background-repeat: no-repeat;    
     background-size: contain;
     color: transparent;
+}
+
+td.busy {
+  background-position: center;  
+}
+
+dl#cardviewdl dd.busy {
+  background-position: 30px  
 }
 
 .wyroznij-date.persodate.busy, .wyroznij_date.persodate.busy {

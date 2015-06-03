@@ -16,113 +16,25 @@ class CardsController extends AppController {
 	public $components = array('Paginator');
 	
 	public $paginate = array(
-        //'limit' => 17,
-        'order' => array(
-            'Card.id' => 'desc'
-        )
-    );
+            //'limit' => 25,
+            'order' => array(
+                'Card.id' => 'desc'
+            )
+        );
+        
+        // dla ludziów z perso
+        public $paginate_perso = array(
+            'order' => array(
+                'Card.stop_perso' => 'desc',
+                'Order.stop_day' => 'desc'
+            )
+        );
 	
 	public function beforeFilter() {
     	parent::beforeFilter();
     	//$this->actionAllowed();
 	}
         
-        public function addCzasPerso() {
-		
-	    //$this->autoRender = false; // We don't render a view in this example
-	    $this->request->onlyAllow('ajax'); // No direct access via browser URL
-	    //$this->layout = 'ajax';
-	    
-            $result = array(
-                'msg' => ':-(',
-                'saved' => false,
-                'stop_perso' => null
-            );
-	    
-            $data =  array( 'Card' => $this->request->data );            
-            if ( $this->Card->save( $data ) ) {
-            // handle the success.
-                $result['saved'] = true;
-                $result['msg'] = 'Hura!';
-                $result['stop_perso'] = $this->request->data['stop_perso'];
-            } 
-            
-            $this->set(compact('result')); // Pass $data to the view
-            //$this->set('_serialize', 'result'); <- to robimy, gdy nie używamy view files
-            sleep(2);
-	}
-        
-        public function test() {
-            
-           $test = $this->request->data;
-           //$test = 'gibon';
-           $this->set(compact('test')); 
-        }
-	
-/**
- * search method
- *
- * @return void
- */
-	public function search($par = null) {
-	
-            function korekt_numer( $moze_nr = null) {
-            // sprawdzamy czy szukana fraza to poprawny numer
-                $dl = strlen($moze_nr);
-                $i = 0;
-                while ( $i < $dl && ctype_digit( substr($moze_nr, $i, 1) ) ) {
-                    $i++;
-                }
-                // co przerwało pętlę?
-                if( $i < $dl ) { //znaczy nie przeszliśmy całego stringu
-                    if( substr($moze_nr, $i, 1) != "/" ) { return 0; } // nie cyfra i ne slash
-                    else { // slash, muszą być jeszcze dokładnie 2 cyfry
-                        if( $i + 3 != $dl ) { return 0; } //ilość znaków się nie zgadza
-                        if( !ctype_digit( substr($moze_nr, $i+1, 2) ) ) { //dwa ostatnie znaki to nie cyfry
-                            return 0;
-                        }
-                    }
-                }
-                if( $i == $dl && $dl > 5 ) { return 0; }
-                if( $i < $dl && $i > 5 ) { return 0; }
-                // powyzej za dlugie numery
-                return $i; // tu mamy pozycje slasha lub $i = $dl
-            }
-            
-            if ($this->request->is('post')) {
-
-                $szukane = $this->request->data['Card']['sirczname'];
-                $fraza = $szukane;
-                $kr = korekt_numer( $szukane );
-                if( $kr ) { //jeżeli ktoś wpisał poprawny numer
-                    if( $kr == strlen($szukane)) { //ktoś wpisał same cyfry
-                        $numer = (int)(date('y') . BASE_ZERO) + (int)$szukane;
-                        $fraza .= '/' . date('y');
-                    } else {
-                        $numer = (int)(substr($szukane, $kr+1) . BASE_ZERO) + (int)substr($szukane, 0, $kr);                       
-                    }
-                    $wynik = array(
-                        'zamowienie' => $this->Card->Order->findOrderByNr($numer),
-                        'zlecenie' => $this->Card->Job->findJobByNr($numer)
-                    );
-                } else {                   
-                   $wynik = array(
-                       'klienci' => $this->Card->Customer->findCustomerByName($szukane),
-                       'karty' => $this->Card->findCardByName2($szukane)       
-                   );
-                }    
-                
-                $ile = 0;
-                foreach ($wynik as $arr) {  $ile += count($arr); }
-                if( array_key_exists('zamowienie', $wynik) && !empty($wynik['zamowienie'])) {
-                    --$ile;
-                }
-                $this->set( compact('wynik', 'fraza', 'ile') );                
-                //$this->render('search2');
-            } else {
-                $this->redirect($this->referer());		
-            }
-	}		
 
 /**
  * index method
@@ -132,8 +44,13 @@ class CardsController extends AppController {
     public function index($par = null) {
 
         $this->Card->recursive = 0;
-
-        $this->Paginator->settings = $this->paginate;
+        $user_perso = $this->userPersoVis();
+        
+        if( $user_perso ) { // jeżeli użytkownik perso to sortujemy po dacie
+            $this->Paginator->settings = $this->paginate_perso;
+        } else {
+            $this->Paginator->settings = $this->paginate;
+        }
 
         if( !$this->akcjaOK(null, 'index', $par) ) {
                 //jeżeli ta akcja nie jest dozwolona przekieruj na inną dozwoloną
@@ -225,7 +142,7 @@ class CardsController extends AppController {
         }
         //$links = $this->links;
         //$cards['upc'] = $this->userPersoChange();
-        $cards['pvis'] = $this->userPersoVis();
+        $cards['pvis'] = $user_perso;
         $this->set( compact('cards', /*'links'*/ 'par' ) );
 
     }
@@ -288,8 +205,7 @@ class CardsController extends AppController {
         // sprawdź, czy zalogowany użytkownik może widzieć datę perso  
             if( $this->Auth->user('dzial') == SUA ||
                 $this->Auth->user('dzial') == PER ||
-                $this->Auth->user('dzial') == DTP ) {
-                
+                $this->Auth->user('dzial') == DTP ) {                
                 return true;
             }
             return false;
@@ -686,4 +602,97 @@ class CardsController extends AppController {
 		return false;
 	}
 
+    public function addCzasPerso() {
+
+    //$this->autoRender = false; // We don't render a view in this example
+    $this->request->onlyAllow('ajax'); // No direct access via browser URL
+    //$this->layout = 'ajax';
+
+    $result = array(
+        'msg' => ':-(',
+        'saved' => false,
+        'stop_perso' => null
+    );
+
+    $data =  array( 'Card' => $this->request->data );            
+    if ( $this->Card->save( $data ) ) {
+    // handle the success.
+        $result['saved'] = true;
+        $result['msg'] = 'Hura!';
+        $result['stop_perso'] = $this->request->data['stop_perso'];
+        $result['dl'] = $this->request->data['dl']; 
+    } 
+
+    $this->set(compact('result')); // Pass $data to the view
+    //$this->set('_serialize', 'result'); <- to robimy, gdy nie używamy view files
+    //sleep(2);
+}
+                
+	
+/**
+ * search method
+ *
+ * @return void
+ */
+    public function search($par = null) {
+
+        function korekt_numer( $moze_nr = null) {
+        // sprawdzamy czy szukana fraza to poprawny numer
+            $dl = strlen($moze_nr);
+            $i = 0;
+            while ( $i < $dl && ctype_digit( substr($moze_nr, $i, 1) ) ) {
+                $i++;
+            }
+            // co przerwało pętlę?
+            if( $i < $dl ) { //znaczy nie przeszliśmy całego stringu
+                if( substr($moze_nr, $i, 1) != "/" ) { return 0; } // nie cyfra i ne slash
+                else { // slash, muszą być jeszcze dokładnie 2 cyfry
+                    if( $i + 3 != $dl ) { return 0; } //ilość znaków się nie zgadza
+                    if( !ctype_digit( substr($moze_nr, $i+1, 2) ) ) { //dwa ostatnie znaki to nie cyfry
+                        return 0;
+                    }
+                }
+            }
+            if( $i == $dl && $dl > 5 ) { return 0; }
+            if( $i < $dl && $i > 5 ) { return 0; }
+            // powyzej za dlugie numery
+            return $i; // tu mamy pozycje slasha lub $i = $dl
+        }
+
+        if ($this->request->is('post')) {
+
+            $szukane = $this->request->data['Card']['sirczname'];
+            $fraza = $szukane;
+            $kr = korekt_numer( $szukane );
+            if( $kr ) { //jeżeli ktoś wpisał poprawny numer
+                if( $kr == strlen($szukane)) { //ktoś wpisał same cyfry
+                    $numer = (int)(date('y') . BASE_ZERO) + (int)$szukane;
+                    $fraza .= '/' . date('y');
+                } else {
+                    $numer = (int)(substr($szukane, $kr+1) . BASE_ZERO) + (int)substr($szukane, 0, $kr);                       
+                }
+                $wynik = array(
+                    'zamowienie' => $this->Card->Order->findOrderByNr($numer),
+                    'zlecenie' => $this->Card->Job->findJobByNr($numer)
+                );
+            } else {                   
+               $wynik = array(
+                   'klienci' => $this->Card->Customer->findCustomerByName($szukane),
+                   'karty' => $this->Card->findCardByName2($szukane)       
+               );
+            }    
+
+            $ile = 0;
+            foreach ($wynik as $arr) {  $ile += count($arr); }
+            if( array_key_exists('zamowienie', $wynik) && !empty($wynik['zamowienie'])) {
+                --$ile;
+            }
+            $this->set( compact('wynik', 'fraza', 'ile') );                
+            //$this->render('search2');
+        } else {
+            $this->redirect($this->referer());		
+        }
+    }		
+
+        
 }

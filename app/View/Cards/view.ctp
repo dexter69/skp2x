@@ -9,12 +9,16 @@
 //
 //echo '<pre>';	print_r($vju['x_sito']['options']); echo  '</pre>'; 
 
-echo $this->Html->css('card.css?v=3284457', null, array('inline' => false));
+echo $this->Html->css('card.css?v=328496968', null, array('inline' => false));
 echo $this->Html->script(array('event'), array('inline' => false)); 
 echo $this->Ma->walnijJqueryUI();
 echo $this->Ma->jqueryUItoolTip('.process, .persodate');
-$this->Ma->displayActions('cards');
+echo $this->Html->script(array('card-perso'), array('block' => 'scriptBottom'));
+
 $this->set('title_for_layout', $card['Card']['name']);
+
+$this->Ma->displayActions('cards');
+
 
 //echo '<pre>';	print_r($card['Card']); echo  '</pre>'; 
 //echo $this->Ma->cechyKarty( $card['Card'] );
@@ -48,20 +52,28 @@ $this->set('title_for_layout', $card['Card']['name']);
                 <?php
                     if( $card['Card']['pvis'] && $card['Card']['stop_perso']) { 
                     // zalogowany użytkownik -> perso date i data perso ustawiona
-                        $klasa = 'wyroznij_date persodate';
+                        $klasa = 'termin wyroznij_date persodate';
                         $title = ' title="' . $this->Ma->md($card['Order']['stop_day']) . '"';
-                        $datka = $this->Ma->md($card['Card']['stop_perso']);
+                        $data = $card['Card']['stop_perso'];
+                        //$datka = $this->Ma->md($card['Card']['stop_perso']);
                     } else {
-                        $klasa = 'wyroznij_date';
+                        $klasa = 'termin wyroznij_date';
                         $title = null;
-                        $datka = $this->Ma->md($card['Order']['stop_day']);
+                        $data = $card['Order']['stop_day'];
+                        //$datka = $this->Ma->md($card['Order']['stop_day']);
                     }
+                    $datka = $this->Ma->md($data);
                     if( $card['Card']['pvis'] && $this->Ma->stanPersoChange( $card['Card'] ) ) {
                     // jeżeli można zmieniać datę perso    
                         $klasa .=  ' changable';
                     }
                 ?>
-		<dd class="<?php echo $klasa ?>"  <?php echo $title ?>>
+		<dd
+                    class="<?php echo $klasa ?>"
+                    <?php echo $title ?>
+                    data-id="<?php echo $card['Card']['id']; ?>"
+                    data-termin="<?php echo $data; ?>"
+                    >
 			<?php echo $datka; ?>
 			&nbsp;
 		</dd>
@@ -351,6 +363,8 @@ $this->set('title_for_layout', $card['Card']['name']);
 
 </div>
 
+<!-- Do zmieniania daty perso -->
+<div id="datepicker"></div><div id="komunikat"></div>
 
 <?php $this->Ma->kontrolka($card, $evcontrol);	?>	
 
