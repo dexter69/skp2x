@@ -43,4 +43,8 @@
  */
 	require CAKE . 'Config' . DS . 'routes.php';
         
-        Router::parseExtensions('json');
+        Router::parseExtensions('json', 'pdf');
+        /* tego pdf przedtem tu nie było a generowanie pdf było ok
+         *  po wprowadzeniu tylko json generowanie pdf pada
+         *  po dopisaniu pdf jest ok
+         */

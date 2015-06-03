@@ -25,8 +25,8 @@ class CardsController extends AppController {
         // dla ludziów z perso
         public $paginate_perso = array(
             'order' => array(
-                'Card.stop_perso' => 'asc',
-                'Order.stop_day' => 'asc'
+                'Card.stop_perso' => 'desc'
+                , 'Order.stop_day' => 'desc'
             )
         );
 	
