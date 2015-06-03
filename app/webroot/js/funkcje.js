@@ -53,7 +53,8 @@ function zapiszDate( tekstZdata, obj, longoza ) {
     busy('on', obj);
     
     var posting = $.post(
-                        "/skp/2x/cards/addCzasPerso.json",
+                        //"/skp/2x/cards/addCzasPerso.json",
+                        "/skp/cards/addCzasPerso.json",
                         dane
                     );
     
