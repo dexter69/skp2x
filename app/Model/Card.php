@@ -36,27 +36,67 @@ class Card extends AppModel {
 //            'stop_day' => 'Order.stop_day'
 //        );
 
-        public $findMethods = array('gibon' =>  true);
-
-        protected function _findGibon($state, $query, $results = array()) {
-            if ($state === 'after') {
-                foreach( $results as $key => $val ) {
-                    $results[$key]['Card']['dziurka'] = $key;
-                }
-            }
-            return $results;
-        }
-        
-        public function afterFind($results, $primary = false) {
-            foreach ($results as $key => $val) {
-                $results[$key]['Gibon'] =  array('gibon' => $key);
-//                if (isset($val['Event']['begindate'])) {
-//                    $results[$key]['Event']['begindate'] = $this->dateFormatAfterFind(
-//                        $val['Event']['begindate']
-//                    );
+//        public $findMethods = array('gibon' =>  true);
+//
+//        protected function _findGibon($state, $query, $results = array()) {
+//            if ($state === 'after') {
+//                foreach( $results as $key => $val ) {
+//                    $results[$key]['Card']['dziurka'] = $key;
 //                }
+//            }
+//            return $results;
+//        }
+//        
+//        public function afterFind($results, $primary = false) {
+//            foreach ($results as $key => $val) {
+//                $results[$key]['Gibon'] =  array('gibon' => $key);
+////                if (isset($val['Event']['begindate'])) {
+////                    $results[$key]['Event']['begindate'] = $this->dateFormatAfterFind(
+////                        $val['Event']['begindate']
+////                    );
+////                }
+//            }
+//            return $results;
+//        }
+        
+        /* 
+         * dla perso - obejście problemu stop_perso = null w kartach, by dostarczyć dane
+         */
+        public function quasiPaginate(
+                $parametr = null,
+                $opcje_szukania = array(),
+                $paramki = array(),
+                $normal = array()) {
+            
+            if( $normal['pvis'] && in_array($parametr, array('persocheck', 'ponly', 'pover', 'ptodo')))   {
+                //$time_start = microtime(true);
+                $sort = $sorted = $gotowe = array();            
+                $wyniki = $this->find('all', $opcje_szukania);
+
+                foreach( $wyniki as $key => $wiersz ) {
+                    if( $wiersz['Card']['stop_perso'] == null) {
+                        $wyniki[$key]['Card']['stop_perso'] = $wiersz['Order']['stop_day'];
+                    } else {
+                        $wyniki[$key]['Card']['pdate'] = true;
+                    }
+                    // tworzymy tablice pomocna w sortowaniu
+                    $sort[$key] = $wyniki[$key]['Card']['stop_perso'];
+                }
+                asort($sort); // sortujemy zachwujac indeksy
+                // ustaw wyniki wg posortowanej tablicy
+                foreach( $sort as $key => $val ) {
+                    $sorted[] = $wyniki[$key];
+                }
+                $start =  ($paramki['paging']['Card']['page']-1)*$paramki['paging']['Card']['limit'];
+                $stop = $paramki['paging']['Card']['page']*$paramki['paging']['Card']['limit'] - 1;
+                if( $stop >  $paramki['paging']['Card']['count']-1 ) { $stop = $paramki['paging']['Card']['count']-1; }
+                for ($x = $start; $x <= $stop; $x++) {
+                    $gotowe[] = $sorted[$x];
+                }
+                $gotowe['pvis'] = $normal['pvis'];
+                return $gotowe;
             }
-            return $results;
+            return $normal;
         }
         
 	public function saveitAll( $puc = array(), &$errno ) { 

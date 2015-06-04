@@ -41,7 +41,7 @@ function busy( mode, obj ) {
     $( obj ).removeClass( "busy" );
 }
 
-function zapiszDate( tekstZdata, obj, longoza ) {
+function zapiszDate( tekstZdata, obj, longoza, url ) {
     
     var dane = {
         id: $(obj).data('id'),  // tu mamy id ustawianej karty
@@ -52,11 +52,10 @@ function zapiszDate( tekstZdata, obj, longoza ) {
     //pokaż busy gif;
     busy('on', obj);
     
-    var posting = $.post(
-                        "/skp/2x/cards/addCzasPerso.json",
-                        //"/skp/cards/addCzasPerso.json",
-                        dane
-                    );
+    //"/skp/2x/cards/addCzasPerso.json",
+    //"/skp/cards/addCzasPerso.json",
+    
+    var posting = $.post( url, dane );
     
     posting.done(function( data ) {
         busy('off', obj);
@@ -86,7 +85,7 @@ function komunikat( str, mleft ) {
 }
 
 
-function interfejs( item, dlugosc ) {
+function interfejs( item, dlugosc, url ) {
     
     // Nazwy dni i miesięcy
     var datoza = {
@@ -103,11 +102,10 @@ function interfejs( item, dlugosc ) {
         firstDay: 1, //w Polsze pierwszym dniem tygodnia jest pon
         monthNames:  datoza.miesiace,
         dayNamesMin: datoza.dni,
-        //duration: "slow",
         minDate: 0,
         onSelect: function(dateText) {
             $( "#datepicker" ).datepicker( "destroy" );
-            zapiszDate(dateText, item, dlugosc);
+            zapiszDate(dateText, item, dlugosc, url);
         }
     });    
 }

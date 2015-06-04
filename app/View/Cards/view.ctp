@@ -15,6 +15,9 @@ echo $this->Ma->walnijJqueryUI();
 echo $this->Ma->jqueryUItoolTip('.process, .persodate');
 echo $this->Html->script(array('card-perso'), array('block' => 'scriptBottom'));
 
+$jscode = 'var theurl = "' . $this->Html->url(array('action' => 'addCzasPerso', 'ext' => 'json')) . '";';
+echo $this->Html->scriptBlock($jscode, array('inline' => false));
+
 $this->set('title_for_layout', $card['Card']['name']);
 
 $this->Ma->displayActions('cards');

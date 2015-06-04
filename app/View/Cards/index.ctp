@@ -3,14 +3,15 @@
     echo $this->Ma->walnijJqueryUI();
     echo $this->Ma->jqueryUItoolTip('.process, #karty td');
     echo $this->Html->script(array('card-perso'), array('block' => 'scriptBottom'));
-
-    //echo $this->Ma->walnijJqueryUI();
-    echo '<pre>';	print_r($cards); echo  '</pre>';
+    $jscode = 'var theurl = "' . $this->Html->url(array('action' => 'addCzasPerso', 'ext' => 'json')) . '";';
+    echo $this->Html->scriptBlock($jscode, array('inline' => false));
+   
     $this->set('title_for_layout', 'Karty');
 
-    //echo '<pre>'; print_r($gibon); echo '</pre>';
+    //echo '<pre>'; print_r($cards); echo '</pre>';
     //echo 'Szukano: ' . '<b>'.$gibon.'</b>';
-	
+
+    //echo $this->Html->url(array('action' => 'addCzasPerso', 'ext' => 'json'));
 	
 $klasa = array(	'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
 		'my'=>null, 'active'=>null, 'closed'=>null, 'ponly'=>null,
@@ -54,7 +55,7 @@ if( array_key_exists($par, $klasa) )
             <th><?php echo $this->Paginator->sort('modified'); ?></th>
             <th class="actions"><?php echo __('Actions'); ?></th>-->
 	</tr>
-	<?php $i=0;
+	<?php $i=0; $pvis = $cards['pvis']; unset($cards['pvis']);
             foreach ($cards as $card): ?>
 	<tr>
 		<td class="id"><?php echo $card['Card']['id']; ?>&nbsp;</td>
@@ -100,20 +101,20 @@ if( array_key_exists($par, $klasa) )
 		</td>
                 <?php
                     //$cards['upc']
-                    if( $cards['pvis'] && $card['Card']['stop_perso']) { 
+                    $klasa = 'termin wyroznij-date';
+                    $title = null;
+                    if( $pvis && $card['Card']['stop_perso']) { 
                     // zalogowany użytkownik -> perso date i data perso ustawiona
-                        $klasa = 'termin wyroznij-date persodate';
-                        $title = ' title="' . $this->Ma->mdvs($card['Order']['stop_day']) . '"';
                         $data = $card['Card']['stop_perso'];
-                        //$datka = $this->Ma->mdvs($card['Card']['stop_perso']);
-                    } else {
-                        $klasa = 'termin wyroznij-date';
-                        $title = null;
+                        if (isset( $card['Card']['pdate']) ) {
+                            $klasa .= ' persodate';
+                            $title = ' title="' . $this->Ma->mdvs($card['Order']['stop_day']) . '"';
+                        } 
+                    } else {                                                
                         $data = $card['Order']['stop_day'];
-                        //$datka = $this->Ma->mdvs($card['Order']['stop_day']);
                     }
                     $datka = $this->Ma->mdvs($data);
-                    if( $cards['pvis'] && $this->Ma->stanPersoChange( $card['Card'] ) ) {
+                    if( $pvis && $this->Ma->stanPersoChange( $card['Card'] ) ) {
                     // jeżeli można zmieniać datę perso    
                         $klasa .=  ' changable';                        
                     }

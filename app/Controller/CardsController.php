@@ -48,8 +48,9 @@ class CardsController extends AppController {
         $this->Card->recursive = 0;
         $user_perso = $this->userPersoVis();
         
-        if( $user_perso ) { // jeżeli użytkownik perso to sortujemy po dacie
-            $this->Paginator->settings = $this->paginate_perso;
+        if( $user_perso && in_array($par, array('persocheck', 'ponly', 'pover', 'ptodo')) ) { 
+            // jeżeli użytkownik perso to sortujemy po dacie
+            //$this->Paginator->settings = $this->paginate_perso;
         } else {
             $this->Paginator->settings = $this->paginate;
         }
@@ -137,20 +138,23 @@ class CardsController extends AppController {
                 default:
                         $opcje = array();
         }
+        //$karty = array();
         if( !empty($opcje) ) {
-                //$cards = $this->Paginator->paginate( 'Card', $opcje );			
-                //$cards = $this->paginate( 'Card', $opcje );
-                $this->paginate = array('gibon');
-                $cards = $this->paginate();
+            $cards = $this->Paginator->paginate( 'Card', $opcje );            
         } else {
-                //$cards = $this->Paginator->paginate();
-            $this->paginate = array('gibon', 'callbacks' => true);
-                $cards = $this->paginate();
+                $cards = $this->Paginator->paginate();
         }
         //$links = $this->links;
         //$cards['upc'] = $this->userPersoChange();
         $cards['pvis'] = $user_perso;
-        $this->set( compact('cards', /*'links'*/ 'par' ) );
+        $cards = $this->Card->quasiPaginate(
+                $par,
+                array('conditions' => $opcje),
+                $this->request->params,
+                $cards
+        );
+        $paramki = $this->request->params;
+        $this->set( compact('cards', /*'karty', 'links'*/ 'par', 'paramki' ) );
 
     }
 
