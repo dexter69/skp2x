@@ -17,7 +17,6 @@ class CardsController extends AppController {
 	
 	public $paginate = array(
             //'limit' => 25,
-            //'gibon',
             'order' => array(
                 'Card.id' => 'desc'
             )
@@ -25,7 +24,6 @@ class CardsController extends AppController {
         
         // dla ludziów z perso
         public $paginate_perso = array(
-            //'gibon',
             'order' => array(
                 'Card.stop_perso' => 'desc'
                 , 'Order.stop_day' => 'desc'
@@ -48,10 +46,12 @@ class CardsController extends AppController {
         $this->Card->recursive = 0;
         $user_perso = $this->userPersoVis();
         
-        if( $user_perso && in_array($par, array('persocheck', 'ponly', 'pover', 'ptodo')) ) { 
-            // jeżeli użytkownik perso to sortujemy po dacie
-            //$this->Paginator->settings = $this->paginate_perso;
-        } else {
+//        if( $user_perso && in_array($par, array('persocheck', 'ponly', 'pover', 'ptodo')) ) { 
+//        } else {
+//            $this->Paginator->settings = $this->paginate;
+//        }
+        
+        if( !$user_perso || !in_array($par, array('persocheck', 'ponly', 'pover', 'ptodo')) ) {
             $this->Paginator->settings = $this->paginate;
         }
 
