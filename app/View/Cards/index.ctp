@@ -172,11 +172,7 @@ if( array_key_exists($par, $klasa) )
 
 <!-- Do zmieniania daty perso -->
 
-<div id="datepicker">
-<!--    <div style="background-color: #007300; width: 50px; height: 50px;"></div>-->
-</div>
-
-<div id="komunikat"></div>
+<div id="datepicker"></div><div id="komunikat"></div>
 
 <?php $this->Ma->displayActions('cards'); ?>
 
