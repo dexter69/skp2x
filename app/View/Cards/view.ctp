@@ -28,11 +28,20 @@ $this->Ma->displayActions('cards');
 //echo '<pre>';	print_r($this->Ma->tablica_cech); echo  '</pre>'; 
 //if( $this->Ma->tablica_cech['isperso'] ) echo 'Gibon';
 
+$klasa = array(	'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
+		'my'=>null, 'active'=>null, 'closed'=>null, 'ponly'=>null,
+                'pover'=>null, 'ptodo'=>null);
+
 ?>
 
 
 
 <div id="kartview" class="cards view">
+<?php
+    if( $card['Card']['pvis'] ) {
+        echo '<h2 class="hfiltry">' . $this->Ma->indexFiltry('cards', $klasa) . '</h2>';
+    }
+?>
 <h2><?php 	//echo '<p>Oglądasz kartę</p>'; 
         echo '<span>'.$card['Card']['name'].'</span>' . 
         $this->Ma->editlink('card', $card['Card']['id']); 
