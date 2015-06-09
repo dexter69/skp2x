@@ -160,12 +160,20 @@ class EventsController extends AppController {
 					'recursive' => 0
 			));
 			$odbiorcy = array();
-			foreach( $ludziki as $ludz) 
+			foreach( $ludziki as $ludz) {
 				if( $ludz['User']['enotif'] != null )
 					$odbiorcy[] = $ludz['User']['enotif'];
+                        }
 			if( $eventtab['co'] == p_ov ) { 
                         // w wypadku zakończenia perso, dodatkowo dostaje Krysia
                             $odbiorcy[] = 'info@polskiekarty.pl';
+                        }
+                        // Frank nie chce tych powiadomień...
+                        if( $eventtab['co'] == p_ov || $eventtab['co'] == send_o ) {
+                            $klucz = array_search('grafik@polskiekarty.pl',  $odbiorcy);
+                            if( $klucz != false ) {
+                                unset( $odbiorcy[$klucz] );
+                            }
                         }
 			$this->piknij($odbiorcy, $temat, $tresc, $linktab, $theEvent['id']);
 			
