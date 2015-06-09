@@ -129,7 +129,7 @@ Configure::write('CakePdf', array(
         //'orientation' => 'portrait',//'landscape',
         'download' => true  ,
 	//'filename' => 'example.pdf'	
-    ));
+));
 
 //UŻYJEMY zamiast DEVEL
 define('LIN', "/");

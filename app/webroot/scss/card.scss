@@ -449,3 +449,15 @@ dl#cardviewdl dd.busy {
 #komunikat.pokaz > p {
     font-size: 0.5em;
 }
+
+// Zamykanie datepickera
+#close-pic {
+   height: 25px;
+   line-height: 25px;
+   color: brown;
+   background-color: #F8DA4E;
+   cursor: pointer;
+   vertical-align: central;
+   text-align: center;
+   margin: 0 0 2px 0;
+}

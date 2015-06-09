@@ -107,6 +107,11 @@ function interfejs( item, dlugosc, url ) {
             $( "#datepicker" ).datepicker( "destroy" );
             zapiszDate(dateText, item, dlugosc, url);
         }
-    });    
+    });  
+    $("#datepicker.hasDatepicker > div").append( '<p id="close-pic">kliknij tu, aby zamknąć</p>' );
+    // zamknięcie kliknięciem
+    $("#close-pic").click(function() {
+        $( "#datepicker" ).datepicker( "destroy" );
+    });  
 }
 
