@@ -74,14 +74,25 @@ class EventsController extends AppController {
 			if ( $this->Event->prepareData($this->request->data, true) ) {
 					
                             if( $oid ) {
-                                    $xyz=$this->e_powiadamiaj($this->request->data['Event']);
-                                    //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
-                                    //return;
-                                    if( $this->request->data['Event']['co'] == p_ov ) {
+                                $xyz=$this->e_powiadamiaj($this->request->data['Event']);
+                                //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
+                                //return;
+//                                if( $this->request->data['Event']['co'] == p_ov ) {
+//                                    
+//                                    return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'ptodo' ));
+//                                }
+                                
+                                switch( $this->request->data['Event']['co'] ) {
+                                    case p_ov:
                                         // zakończenie perso -> tak chciał Adam
                                         return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'ptodo' ));
-                                    }
-                                    return $this->redirect(array('controller' => 'orders', 'action' => 'view', $oid ));
+                                    case p_no:
+                                    case p_ok:
+                                        return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'persocheck' ));
+                                    default:
+                                        return $this->redirect(array('controller' => 'orders', 'action' => 'view', $oid ));
+                                }
+                                
                             } else
                                     if( $jid ) {
                                             $xyz=$this->e_powiadamiaj($this->request->data['Event']);
@@ -151,13 +162,13 @@ class EventsController extends AppController {
 			}
 			$uids[4] = 1; // Jola zawsze dostaje			
 			unset($uids[$this->Auth->user('id')]); // generujący zdarzenie nie dostaje maila
-			$uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
+			//$uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
 			
 			foreach( $uids as $key => $wartosc) $tab[] = $key;
 			
 			$ludziki = $this->Event->User->find('all', array(
-					'conditions' => array('User.id' => $tab),
-					'recursive' => 0
+                                'conditions' => array('User.id' => $tab),
+                                'recursive' => 0
 			));
 			$odbiorcy = array();
 			foreach( $ludziki as $ludz) {
