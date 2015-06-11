@@ -57,8 +57,6 @@ class EventsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			//if( $this->request->data['Event'] )
-			
-
 			//$this->Event->create();
 			
 			$sbstr = substr($this->request->data['Event']['post'], 0, 2);								
@@ -77,11 +75,6 @@ class EventsController extends AppController {
                                 $xyz=$this->e_powiadamiaj($this->request->data['Event']);
                                 //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
                                 //return;
-//                                if( $this->request->data['Event']['co'] == p_ov ) {
-//                                    
-//                                    return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'ptodo' ));
-//                                }
-                                
                                 switch( $this->request->data['Event']['co'] ) {
                                     case p_ov:
                                         // zakończenie perso -> tak chciał Adam
