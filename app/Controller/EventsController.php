@@ -87,20 +87,20 @@ class EventsController extends AppController {
                                 }
                                 
                             } else
-                                    if( $jid ) {
-                                            $xyz=$this->e_powiadamiaj($this->request->data['Event']);
-                                            //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
-                                            //return;
-                                            //return $this->redirect(array('controller' => 'jobs', 'action' => 'index'));
-                                            return $this->redirect(array('controller' => 'jobs', 'action' => 'view', $jid));
-                                    } else
-                                        { return $this->redirect(array('controller' => 'orders', 'action' => 'index')); }
+                                if( $jid ) {
+                                    $xyz=$this->e_powiadamiaj($this->request->data['Event']);
+                                    //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
+                                    //return;
+                                    //return $this->redirect(array('controller' => 'jobs', 'action' => 'index'));
+                                    return $this->redirect(array('controller' => 'jobs', 'action' => 'view', $jid));
+                                } else
+                                    { return $this->redirect(array('controller' => 'orders', 'action' => 'index')); }
 						
 			} else {
-				if( $this->Event->code != 777)
-					$this->Session->setFlash('BŁĄD ('. $this->Event->code .')');
-				else
-					$this->Session->setFlash( $this->Event->msg );
+				if( $this->Event->code != 777) {
+                                $this->Session->setFlash('BŁĄD ('. $this->Event->code .')'); }
+				else {
+                                    $this->Session->setFlash( $this->Event->msg ); }
 				return $this->redirect($this->referer());
 			}
 		}
