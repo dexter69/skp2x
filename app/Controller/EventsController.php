@@ -156,8 +156,8 @@ class EventsController extends AppController {
 			$uids[4] = 1; // Jola zawsze dostaje			
 			unset($uids[$this->Auth->user('id')]); // generujący zdarzenie nie dostaje maila
 			//$uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
-			
-			foreach( $uids as $key => $wartosc) $tab[] = $key;
+			$tab = array();
+                        foreach( $uids as $key => $wartosc) { $tab[] = $key; }
 			
 			$ludziki = $this->Event->User->find('all', array(
                                 'conditions' => array('User.id' => $tab),
