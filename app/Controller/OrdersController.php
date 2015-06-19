@@ -637,11 +637,11 @@ class OrdersController extends AppController {
 			
 			*/
 			if ( $this->Order->editItAll($this->request->data) ) {
-				$this->Session->setFlash( $this->Order->succMsg, 'default', array('class' => GOOD_FLASH));
-				//return $this->redirect(array('action' => 'index'));
-				return $this->redirect(array('action' => 'view', $id));
+                            $this->Session->setFlash( $this->Order->succMsg, 'default', array('class' => GOOD_FLASH));
+                            //return $this->redirect(array('action' => 'index'));
+                            return $this->redirect(array('action' => 'view', $id));
 			} else {
-				$this->Session->setFlash(__('Nie udało się zapisać zamówienia. Sprubój ponownie.' . ' eiaErr = '.$this->Order->eiaErr));
+                            $this->Session->setFlash(__('Nie udało się zapisać zamówienia. Sprubój ponownie.' . ' eiaErr = '.$this->Order->eiaErr));
 			}
 		} else {
 				$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
