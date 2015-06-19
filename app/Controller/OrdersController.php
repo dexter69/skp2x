@@ -587,7 +587,8 @@ class OrdersController extends AppController {
 				//return;
 				if ($this->Order->saveItAll($this->request->data)) {
 					$this->Session->setFlash('Zamówienie zostało zapisane.', 'default', array('class' => GOOD_FLASH));
-					return $this->redirect(array('action' => 'index'));
+					//return $this->redirect(array('action' => 'index'));
+                                        return $this->redirect(array('action' => 'view', $this->Order->id));
 				} else {
 					$blad = $this->Order->siaErr;
 					$this->Session->setFlash(__('Nie można zapisać zamówienia. Proszę, spróbuj ponownie: '.$blad));
