@@ -119,8 +119,10 @@ class CardsController extends AppController {
                     );
                 break; 
                 case 'ptodo':
-                    $opcje = array(
-                        'Card.status !=' => array(PRIV, JOBED, KONEC),
+                    $opcje = array( 
+                        //'Card.status !=' => array(PRIV, JOBED, KONEC),
+                        // chcemy jednak tylko te co w produkcji
+                        'Card.status' => W_PROD,
                         'Card.isperso' => 1,
                         'Card.pover' => 0
                     );
