@@ -20,10 +20,10 @@ class OrdersController extends AppController {
         public $helpers = array('Pdf');
 	
 	public $paginate = array(
-        'order' => array(
-            'Order.nr' => 'desc'
-        )
-    );
+            'order' => array(
+                'Order.nr' => 'desc'
+            )
+        );
 	
 	public function beforeFilter() {
     	parent::beforeFilter();

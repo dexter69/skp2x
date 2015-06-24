@@ -120,7 +120,7 @@ class CardsController extends AppController {
                 break; 
                 case 'ptodo':
                     $opcje = array(
-                        'Card.status !=' => array(PRIV, KONEC),
+                        'Card.status !=' => array(PRIV, JOBED, KONEC),
                         'Card.isperso' => 1,
                         'Card.pover' => 0
                     );
