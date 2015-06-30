@@ -11,6 +11,13 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
  * @property Order $Order
  */
 class User extends AppModel {
+    
+    public function hashMe( $item2hash = null ) {
+        
+        $passwordHasher = new SimplePasswordHasher();
+        //$this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
+        return $passwordHasher->hash($item2hash);
+    }
 	
 	
 /**
@@ -22,15 +29,15 @@ class User extends AppModel {
 	// formatowania do views
 	public $view_options = 
             array (
-                'dzial'=>	array( 
-                                                    //'label' => 'Zaliczka?',
-                                                    //'div' => false,
-                                                    'options' => array(
-                                                            SUA=>'superadmin', MAR=>'marketing', KOR=>'koordynator',
-                                                            KIP=> 'kierownik prod.', DTP=> 'dział DTP', PER=> 'personalizacja'
-                                                    ),
-                                                    'default' => 1 //
-                                            )					
+                'dzial' =>  array( 
+                    //'label' => 'Zaliczka?',
+                    //'div' => false,
+                    'options' => array(
+                            SUA=>'superadmin', MAR=>'marketing', KOR=>'koordynator',
+                            KIP=> 'kierownik prod.', DTP=> 'dział DTP', PER=> 'personalizacja'
+                    ),
+                    'default' => 1 //
+                )					
             );	
         
     public function inicjaly() {
@@ -184,11 +191,11 @@ class User extends AppModel {
 	
 	
 	public function beforeSave($options = array()) {
-    	if (isset($this->data[$this->alias]['password'])) {
-        	$passwordHasher = new SimplePasswordHasher();
-        	$this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
-    	}
-    	return true;
+            if (isset($this->data[$this->alias]['password'])) {
+                $passwordHasher = new SimplePasswordHasher();
+                $this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
+            }
+            return true;
 	}
 
 }

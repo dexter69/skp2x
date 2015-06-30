@@ -14,6 +14,62 @@ class UsersController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
+        
+        public function hash( $ile = 1 ) {
+            
+            $time_start = microtime(true);
+            $wynik = array(); $jest = 0; $mzi = 0;          
+            for ($x = 0; $x < $ile; $x++) {
+                $hashVal = $this->User->hashMe(String::uuid());
+                $arr2 = $this->podziel($hashVal);
+                $v1 = $arr2[0];
+                $v2 = $arr2[1];
+                $mzi += $this->mzi($v1);
+                $mzi += $this->mzi($v2); //in_array("mac", $os)
+                if( ! in_array($v1, $wynik, true) ) { $wynik[] = $v1; } else { $jest++; }
+                if( ! in_array($v2, $wynik, true) ) { $wynik[] = $v2; } else { $jest++; }                
+//                if( $this->nieMaWtab($v1, $wynik) ) { $wynik[] = $v1; } else { $jest++; }
+//                if( $this->nieMaWtab($v2, $wynik) ) { $wynik[] = $v2; } else { $jest++; }                
+            } 
+            $czas = microtime(true) - $time_start;
+            $this->set(compact('wynik', 'jest', 'mzi', 'czas'));
+        }
+        
+        private function mzi($str) {
+            
+            $char = substr($str, 0, 1);
+            if(
+                $char == 'M' ||
+                $char == 'Z' ||
+                $char == 'I' ||                        
+                $char == 'm' ||
+                $char == 'z' ||
+                $char == 'i' 
+            ) { return 1; }
+            return 0;
+        }
+        private function podziel($str = null) {
+            
+            $arr = array( '', '');
+            if( strlen($str) == 40 ) {
+                $strarr = str_split($str);
+                for ($x = 0; $x < 40; $x=$x+2) {
+                    $arr[0] .= $strarr[$x];
+                    $arr[1] .= $strarr[$x+1];
+                }
+            }
+            return $arr;
+        }
+        
+        private function nieMaWtab($war, $tab) {
+            
+            foreach($tab as $val) {
+                if( $war === $val) {
+                    return false;
+                }
+            }
+            return true;
+        }
 	
 	/* Poniższe potrzebne, by móc dodać użytkownika bez loggowania (gdy nie ma jeszcze żadnego)
 	
@@ -24,13 +80,13 @@ class UsersController extends AppController {
 	}*/
 
 	public function login() {
-    	if ($this->request->is('post')) {
-       		if ($this->Auth->login()) {
-            	return $this->redirect($this->Auth->redirect());
-            	//return $this->redirect( array( 'action' => 'przekieruj'));
-        	}
-        $this->Session->setFlash(__('Błędna nazwa użytkownika lub hasło, spróbuj ponownie'));
-    	}    	
+            if ($this->request->is('post')) {
+                if ($this->Auth->login()) {
+                return $this->redirect($this->Auth->redirect());
+                    //return $this->redirect( array( 'action' => 'przekieruj'));
+                    }
+                $this->Session->setFlash(__('Błędna nazwa użytkownika lub hasło, spróbuj ponownie'));
+            }    	
 	}
 
 	public function logout() {
