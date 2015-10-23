@@ -65,7 +65,21 @@ class CustomersController extends AppController {
 		$this->set( compact('customers', 'links' ) );
 		
 	}
-
+        
+/**
+ * active method - w celach statystycznych - szukamy klientów, którzy coś zamówili w 2015
+ *
+ * @throws NotFoundException
+ * * @return void
+ */
+        
+        public function active() {
+         
+            $klienci = $this->Customer->aktywni2015();
+            // cokolwiek zamówili
+            //$klienci = $this->Customer->aktywni();
+            $this->set( compact( 'klienci') );
+        }
 
 /**
  * view method

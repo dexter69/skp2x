@@ -45,6 +45,67 @@ class Customer extends AppModel {
             return $this->opcje_zaliczki[$bazowaFormPla];
         }
     }
+    /* Chcemy klientów, którzy coś zamówili w 2015 */
+    public function aktywni2015() {
+        
+        $this->Behaviors->attach('Containable');
+        $dane = $this->find('all', array(
+                //'conditions' => array( 'Customer.waluta !='  => 'PLN' ),
+                'fields' => array('Customer.id', 'Customer.name', 'Customer.waluta'),
+                'contain' => array(
+                                'Order.id', 'Order.nr', 'Order.stop_day',
+                                'Order.data_publikacji',
+                                'AdresSiedziby.kraj'
+                )                
+        ));
+        $wyniki = $this->oczyscDo2015($dane);
+        //$wyniki = $this->oczyscDoZagranicznych($dane);
+        return $wyniki;
+    }
+    
+    // tylko zagraniczni
+    private function oczyscDoZagranicznych( $tab = array() ) {
+        
+        $tablica = $tab;
+        $aktywni = 0;
+        
+        foreach( $tab as $row ) {
+            $kr = $row['AdresSiedziby']['kraj'];
+            if( !empty($row['Order']) ) {
+               if( $kr != 'Polska' && $kr != 'POLSKA') {
+                    $aktywni++;
+                } 
+            }
+            
+        }
+        
+        return array( 'tablica' => $tablica, 'aktywni' => $aktywni);
+    }
+    
+    
+    // Funkcja wyrzuca klientów, którzy nie mają zamówień złożonych w 2015
+    private function oczyscDo2015( $tab = array() ) {
+        
+        $aktywni = 0;
+        $tablica = $tab;
+        $kl = 0;
+        foreach( $tab as $row ) {
+            $i=0;
+            foreach( $row['Order'] as $order ) {
+                if( $order['data_publikacji'] < '2014-01-01' ) {
+                    unset( $tablica[$kl]['Order'][$i] );
+                }
+                $i++;
+            }
+            if( !empty($tablica[$kl]['Order'])  ) {
+                //unset( $tablica[$kl]['Order'] );
+                $aktywni++;
+            }
+            $kl++;
+        }
+        
+        return array( 'tablica' => $tablica, 'aktywni' => $aktywni);
+    }
     
     public function customerRelated( $klient_id = NULL ) {
             

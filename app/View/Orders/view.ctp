@@ -24,13 +24,14 @@ if( $order['Order']['nr'] ) {
 //echo date('Y-m-d');
 ?>
 <div class="orders view">
-<h2 class="oj-naglowek"><?php echo //'Zamówienie '. 
-                        '<strong>'.
-			$this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic'], false) .
-                        '</strong>' .
-			$this->Ma->editlink('order', $order['Order']['id']) 
-                        . $this->Ma->pdflink('order', $order['Order']['id'])
-                        ; 
+<h2 class="oj-naglowek">
+    <?php echo //'Zamówienie '. 
+        '<strong>'.
+        $this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic'], false) .
+        '</strong>' .
+        $this->Ma->editlink('order', $order['Order']['id']) 
+        . $this->Ma->pdflink('order', $order['Order']['id'])
+        ; 
     ?>
 </h2>
 	<?php //$this->Ma->nawiguj( $links, $order['Order']['id'] ); //nawigacyjne do dodaj, usuń, edycja itp. ?>
