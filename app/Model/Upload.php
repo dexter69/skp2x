@@ -262,6 +262,7 @@ class Upload extends AppModel {
 									BAZA=>'BAZA DANYCH',
 									PODPERSO=>'PODGLĄD PERSO',
 									PODGLAD=>'PODGLĄD',
+                                                                        PODPIS => 'PODPIS',
 									OTHER_ROLE=>'INNA'), 
 								'default' => NULL //
 							),

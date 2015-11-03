@@ -254,6 +254,7 @@ define('PROJ', 2);
 define('BAZA', 3);
 define('PODPERSO', 4);
 define('PODGLAD', 5);
+define('PODPIS', 6);
 
 
 //Job
