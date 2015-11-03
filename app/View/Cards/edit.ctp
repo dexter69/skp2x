@@ -15,7 +15,7 @@ echo $this->Html->script(array('jquery', 'jquery-ui', 'card'/*, 'common'*/), arr
 //echo '<pre>';	print_r($karty); echo  '</pre>';
 
 //echo '<pre>';	print_r($ownerid); echo  '</pre>';
-echo '<pre>';	print_r($vju['role']); echo  '</pre>';
+//echo '<pre>';	print_r($vju['role']); echo  '</pre>';
 $this->Ma->displayActions($links); 
 ?>
 <div id="kartedit" class="cards form">
