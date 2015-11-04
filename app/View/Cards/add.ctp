@@ -8,7 +8,7 @@ echo $this->Html->script(array(/*'jquery',*/ 'jquery-ui', 'card'/*, 'common'*/),
 //echo $this->Html->script('card', array('block' => 'scriptBottom')); 
 
 //echo '<pre>';	print_r($vju['perso']); echo  '</pre>';
-
+//echo '<pre>';	print_r($vju['x_material']); echo  '</pre>';
 //echo '<pre>';	print_r($uploads); echo  '</pre>';
 //echo '<pre>';	print_r($customers); echo  '</pre>';
 //echo '<pre>';	print_r($wspolne); echo  '</pre>';

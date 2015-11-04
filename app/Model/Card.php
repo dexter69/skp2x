@@ -879,223 +879,230 @@ class Card extends AppModel {
 	// ######################################
 	// formatowania do views
 	public $view_options = 
-		array (
-			'name'=>	array( 
-								'label' => 'Nazwa karty',
-							 	//'div' => array('id' => ''),
-								//'options' => array('1'=>'xxx', '2'=>'yyy', '3'=>'zzz'), 
-								//'default' => 1 
-							),
-			'quantity'=>	array( 
-								'label' => false,
-							 	'div' => false,
-								//'required' => false
-								//'options' => array('1'=>'STANDARD PVC', '2'=>'BIO PVC', '3'=>'TRANSPARENT'), 
-								//'default' => 0 //
-							),
-			'ilosc'=>	array( 
-								'label' => false,
-							 	'div' => false,
-								'required' => false,
-								//'options' => array('1'=>'STANDARD PVC', '2'=>'BIO PVC', '3'=>'TRANSPARENT'), 
-								//'default' => 0 //,
-								'min' => 1
-							),
-			'mnoznik'=>	array( 
-								'label' => false,
-							 	'div' => false,
-								//'required' => true
-								'options' => array('1'=>'szt.', '1000'=>'tys.', '1000000'=>'mln.'), 
-								'default' => 2 //
-							),
-			'price'=>	array( 
-								'label' => false,
-							 	'div' => false,
-								//'options' => array('1'=>'STANDARD PVC', '2'=>'BIO PVC', '3'=>'TRANSPARENT'), 
-								//'default' => 1 //
-								'required' => false,
-								//'step' => 0.0001,
-								//'min' => 0.0001,
-								'type' => 'text'
-							),
-			'wzor'=>	array( 
-								'label' => 'Wzory/Załączniki',
-							 	//'div' => array('id' => 'user_id_div'),
-								'options' => array(NIE=>'BRAK', 2 => 'KARTA WZORCOWA', 3=>'CROMALIN',
-												 	4 => 'WYDRUK CYFROWY', 5 => 'POWTÓRKA (UWAGI)',
-													PAU => 'PATRZ UWAGI'
-								), 
-								'default' => NIE //
-							),
-			'x_material'=>	array( 
-								'label' => false,
-							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array('1'=>'STANDARD PVC', '2'=>'BIO PVC', '3'=>'TRANSPARENT'), 
-								'default' => 1 //
-							),
-			// x_c, x_m, x_y, x_k - CMYK dla awers i rewers
-			'x_c'=>	array( 
-								'label' => false,
-							 	'div' => false,//array('id' => 'user_id_div'),
-								'options' => array(1 => 'C', 0 => '-'), 
-								//'type' => 'checkbox',
-								'default' => 1 //
-							),
-			'x_m'=>	array( 
-								'label' => false,
-							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array(1 => 'M', 0 => '-'),  
-								//'type' => 'checkbox',
-								'default' => 1 //
-							),
-			'x_y'=>	array( 
-								'label' => false,
-							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array(1 => 'Y', 0 => '-'),  
-								//'type' => 'checkbox',
-								'default' => 1 //
-							),
-			'x_k'=>	array( 
-								'label' => false,
-							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array(1 => 'K', 0 => '-'),  
-								//'type' => 'checkbox',
-								'default' => 1 //
-							),
-			'x_pant'=>	array( 
-								'label' => false,
-							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array(0,1,2,3,4), 
-								//'default' => 2 //
-							),
-			'x_lam'=>	array( 
-								'label' => false,
-							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array('2'=>'BŁYSZCZĄCY', '3'=>'GŁADKI', '4'=>'CHROPOWATY', '0' => 'BRAK'), 
-								'default' => 2 //
-							),
-			'mag'=>	array( 
-								'label' => 'Pasek magnetyczny',
-							 	//'div' => array('id' => 'user_id_div'),
-								'options' => array('0'=>'BRAK', '1'=>'HiCo', '2'=>'LoCo'), 
-								'default' => 0 //
-							),
-			'x_sito'=>	array( 
-								'label' => false,
-							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array(), 
-								'default' => 0 //
-							),
-			'x_wybr'=>	array( 
-								'label' => false,
-							 	'div' => false, //array('id' => 'user_id_div'),
-								'options' => array(
-												NIE	=>	'NIE',
-												TAK	=>	'TAK' //1 - zarezerw na inny
-											), 
-								'default' => NIE //
-							),							
-							
-			'x_podpis'=>	array( 
-								'etykieta' => 'PASEK DO PODPISU',
-								'label' => false,
-								'div' => false,
-							 	//'div' => array('id' => 'user_id_div'),
-								'options' => array(
-									BRAK	=>	'BRAK',	
-									//'1' =>	'INNY', /* zarezerwowane */
-									TRAN	=>	'PRZEŹROCZ.', //Pasek do podpisu - przeźroczysty
-									BIAL	=>	'BIAŁY', //Pasek do podpisu - biały
-								), 
-								'default' => 0 //
-							),
-			'dziurka'=>	array( 
-								//'label' => 'PASEK DO PODPISU',
-							 	//'div' => array('id' => 'user_id_div'),
-								'options' => array(
-												'0'	=>	'BRAK',	//nie ma 
-												'2'	=>	'OKRĄGŁA',
-												'3'	=>	'OWALNA',
-												'4' =>	'EURO',
-												'1'	=>	'INNA'
-											), 
-								'default' => 0 //
-							),
-			'chip'=>	array( 
-								//'label' => 'PASEK DO PODPISU',
-							 	//'div' => array('id' => 'user_id_div'),
-								'options' => array(
-												'0'	=>	'BRAK',	//nie ma 
-												'2'	=>	'UNIQUE',
-												'3'	=>	'MIFARE',
-												'4'	=>	'SLE',
-												'1' =>	'INNY'
-											), 
-								'default' => 0 //
-							),
-			'ksztalt'=>	array( 
-								//'label' => 'PASEK DO PODPISU',
-							 	//'div' => array('id' => 'user_id_div'),
-								'options' => array(
-												'0'	=>	'STANDARD',
-												'2'	=>	'"2+1"',
-												'3' =>	'"Brelokx3"',
-												'1'	=>	'INNY'
-											), 
-								'default' => 0 //
-							),
-			'hologram' =>	array(	//'label' => 'PERSONALIZACJA', 
-									//'div'  => array('id'=>'..'),
-									//'type' => 'text',
-									'options' => array(
-												NIE	=>	'NIE',
-												TAK	=>	'TAK' 
-											),
-									'default' => 0
-							),
-			'yesno'=>	array( 
-								'label' => false,
-							 	'div' => false,
-								'options' => array(
-												false	=>	'NIE',
-												true	=>	'TAK' 
-											), 
-								'default' => false //
-							),
-			'sito_comment' =>	array( 
-								'label' => 'UWAGI DO SITODRUKU',
-							 	
-							),
-			'cmyk_comment' =>	array( 
-								'label' => 'UWAGI DO OFFSETU',
-							 	
-							),
-			'isperso' =>	array(	'label' => false, //'PERSONALIZACJA', 
-									'div'  => false, //array('id'=>'pchoose'),
-									//'type' => 'text',
-									'options' => array(
-												ZIRO	=>	'NIE',
-												JEDEN	=>	'TAK' 
-											),
-									'default' => ZERO
-							),
-			'perso' =>	array(	'label' => false, 
-								'div'  => array('id'=>'ptext')
-								/*	'div'  => false,
-									'type' => 'text',
-									'default' => 0*/
-							),
-			'option_comment' =>	array( 
-								'label' => 'UWAGI',
-							 	
-							),
-			'comment' =>	array( 
-								//'label' => 'UWAGI DO CAŁEGO PROJEKTU',
-								'label' => false,
-							 	//'div' => array('id'=>'finaluw')
-							 	'div' => false
-							)							
-		);
+            array (
+                'name'=>	array( 
+                                                        'label' => 'Nazwa karty',
+                                                        //'div' => array('id' => ''),
+                                                        //'options' => array('1'=>'xxx', '2'=>'yyy', '3'=>'zzz'), 
+                                                        //'default' => 1 
+                                                ),
+                'quantity'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false,
+                                                        //'required' => false
+                                                        //'options' => array('1'=>'STANDARD PVC', '2'=>'BIO PVC', '3'=>'TRANSPARENT'), 
+                                                        //'default' => 0 //
+                                                ),
+                'ilosc'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false,
+                                                        'required' => false,
+                                                        //'options' => array('1'=>'STANDARD PVC', '2'=>'BIO PVC', '3'=>'TRANSPARENT'), 
+                                                        //'default' => 0 //,
+                                                        'min' => 1
+                                                ),
+                'mnoznik'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false,
+                                                        //'required' => true
+                                                        'options' => array('1'=>'szt.', '1000'=>'tys.', '1000000'=>'mln.'), 
+                                                        'default' => 2 //
+                                                ),
+                'price'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false,
+                                                        //'options' => array('1'=>'STANDARD PVC', '2'=>'BIO PVC', '3'=>'TRANSPARENT'), 
+                                                        //'default' => 1 //
+                                                        'required' => false,
+                                                        //'step' => 0.0001,
+                                                        //'min' => 0.0001,
+                                                        'type' => 'text'
+                                                ),
+                'wzor'=>	array( 
+                                                        'label' => 'Wzory/Załączniki',
+                                                        //'div' => array('id' => 'user_id_div'),
+                                                        'options' => array(NIE=>'BRAK', 2 => 'KARTA WZORCOWA', 3=>'CROMALIN',
+                                                                                                4 => 'WYDRUK CYFROWY', 5 => 'POWTÓRKA (UWAGI)',
+                                                                                                PAU => 'PATRZ UWAGI'
+                                                        ), 
+                                                        'default' => NIE //
+                                                ),
+                'x_material'=>	array( 
+                                        'label' => false,
+                                        'div' => false, //array('id' => 'user_id_div'),
+                                        'options' => array(
+                                                        '1' => 'STANDARD PVC',
+                                                        '2' => 'BIO PVC',
+                                                        '3' => 'TRANSPARENT',
+                                                        '4' => 'KOLOROWE PVC',
+                                                        '5' => 'PVC Z FOLIĄ',
+                                                        '0' => 'INNY'
+                                            ), 
+                                        'default' => 1 //
+                                        ),
+                // x_c, x_m, x_y, x_k - CMYK dla awers i rewers
+                'x_c'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false,//array('id' => 'user_id_div'),
+                                                        'options' => array(1 => 'C', 0 => '-'), 
+                                                        //'type' => 'checkbox',
+                                                        'default' => 1 //
+                                                ),
+                'x_m'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false, //array('id' => 'user_id_div'),
+                                                        'options' => array(1 => 'M', 0 => '-'),  
+                                                        //'type' => 'checkbox',
+                                                        'default' => 1 //
+                                                ),
+                'x_y'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false, //array('id' => 'user_id_div'),
+                                                        'options' => array(1 => 'Y', 0 => '-'),  
+                                                        //'type' => 'checkbox',
+                                                        'default' => 1 //
+                                                ),
+                'x_k'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false, //array('id' => 'user_id_div'),
+                                                        'options' => array(1 => 'K', 0 => '-'),  
+                                                        //'type' => 'checkbox',
+                                                        'default' => 1 //
+                                                ),
+                'x_pant'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false, //array('id' => 'user_id_div'),
+                                                        'options' => array(0,1,2,3,4), 
+                                                        //'default' => 2 //
+                                                ),
+                'x_lam'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false, //array('id' => 'user_id_div'),
+                                                        'options' => array('2'=>'BŁYSZCZĄCY', '3'=>'GŁADKI', '4'=>'CHROPOWATY', '0' => 'BRAK'), 
+                                                        'default' => 2 //
+                                                ),
+                'mag'=>	array( 
+                                                        'label' => 'Pasek magnetyczny',
+                                                        //'div' => array('id' => 'user_id_div'),
+                                                        'options' => array('0'=>'BRAK', '1'=>'HiCo', '2'=>'LoCo'), 
+                                                        'default' => 0 //
+                                                ),
+                'x_sito'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false, //array('id' => 'user_id_div'),
+                                                        'options' => array(), 
+                                                        'default' => 0 //
+                                                ),
+                'x_wybr'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false, //array('id' => 'user_id_div'),
+                                                        'options' => array(
+                                                                                        NIE	=>	'NIE',
+                                                                                        TAK	=>	'TAK' //1 - zarezerw na inny
+                                                                                ), 
+                                                        'default' => NIE //
+                                                ),							
+
+                'x_podpis'=>	array( 
+                                                        'etykieta' => 'PASEK DO PODPISU',
+                                                        'label' => false,
+                                                        'div' => false,
+                                                        //'div' => array('id' => 'user_id_div'),
+                                                        'options' => array(
+                                                                BRAK	=>	'BRAK',	
+                                                                //'1' =>	'INNY', /* zarezerwowane */
+                                                                TRAN	=>	'PRZEŹROCZ.', //Pasek do podpisu - przeźroczysty
+                                                                BIAL	=>	'BIAŁY', //Pasek do podpisu - biały
+                                                        ), 
+                                                        'default' => 0 //
+                                                ),
+                'dziurka'=>	array( 
+                                                        //'label' => 'PASEK DO PODPISU',
+                                                        //'div' => array('id' => 'user_id_div'),
+                                                        'options' => array(
+                                                                                        '0'	=>	'BRAK',	//nie ma 
+                                                                                        '2'	=>	'OKRĄGŁA',
+                                                                                        '3'	=>	'OWALNA',
+                                                                                        '4' =>	'EURO',
+                                                                                        '1'	=>	'INNA'
+                                                                                ), 
+                                                        'default' => 0 //
+                                                ),
+                'chip'=>	array( 
+                                                        //'label' => 'PASEK DO PODPISU',
+                                                        //'div' => array('id' => 'user_id_div'),
+                                                        'options' => array(
+                                                                                        '0'	=>	'BRAK',	//nie ma 
+                                                                                        '2'	=>	'UNIQUE',
+                                                                                        '3'	=>	'MIFARE',
+                                                                                        '4'	=>	'SLE',
+                                                                                        '1' =>	'INNY'
+                                                                                ), 
+                                                        'default' => 0 //
+                                                ),
+                'ksztalt'=>	array( 
+                                                        //'label' => 'PASEK DO PODPISU',
+                                                        //'div' => array('id' => 'user_id_div'),
+                                                        'options' => array(
+                                                                                        '0'	=>	'STANDARD',
+                                                                                        '2'	=>	'"2+1"',
+                                                                                        '3' =>	'"Brelokx3"',
+                                                                                        '1'	=>	'INNY'
+                                                                                ), 
+                                                        'default' => 0 //
+                                                ),
+                'hologram' =>	array(	//'label' => 'PERSONALIZACJA', 
+                                                                //'div'  => array('id'=>'..'),
+                                                                //'type' => 'text',
+                                                                'options' => array(
+                                                                                        NIE	=>	'NIE',
+                                                                                        TAK	=>	'TAK' 
+                                                                                ),
+                                                                'default' => 0
+                                                ),
+                'yesno'=>	array( 
+                                                        'label' => false,
+                                                        'div' => false,
+                                                        'options' => array(
+                                                                                        false	=>	'NIE',
+                                                                                        true	=>	'TAK' 
+                                                                                ), 
+                                                        'default' => false //
+                                                ),
+                'sito_comment' =>	array( 
+                                                        'label' => 'UWAGI DO SITODRUKU',
+
+                                                ),
+                'cmyk_comment' =>	array( 
+                                                        'label' => 'UWAGI DO OFFSETU',
+
+                                                ),
+                'isperso' =>	array(	'label' => false, //'PERSONALIZACJA', 
+                                                                'div'  => false, //array('id'=>'pchoose'),
+                                                                //'type' => 'text',
+                                                                'options' => array(
+                                                                                        ZIRO	=>	'NIE',
+                                                                                        JEDEN	=>	'TAK' 
+                                                                                ),
+                                                                'default' => ZERO
+                                                ),
+                'perso' =>	array(	'label' => false, 
+                                                        'div'  => array('id'=>'ptext')
+                                                        /*	'div'  => false,
+                                                                'type' => 'text',
+                                                                'default' => 0*/
+                                                ),
+                'option_comment' =>	array( 
+                                                        'label' => 'UWAGI',
+
+                                                ),
+                'comment' =>	array( 
+                                                        //'label' => 'UWAGI DO CAŁEGO PROJEKTU',
+                                                        'label' => false,
+                                                        //'div' => array('id'=>'finaluw')
+                                                        'div' => false
+                                                )							
+            );
 		
 		public function get_view_options() {
    
