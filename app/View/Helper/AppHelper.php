@@ -37,7 +37,7 @@ class AppHelper extends Helper {
             BIO => 'BIO',
             TRA => 'TRA',
             KOL => 'KOL',
-            FOL => 'FOL',
+            FOL => 'FOLIA',
             OPVC => 'INNY'
         ),
         'long1' => array(
