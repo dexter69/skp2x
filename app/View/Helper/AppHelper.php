@@ -35,12 +35,18 @@ class AppHelper extends Helper {
         'short1' => array(
             PVC => 'PVC',
             BIO => 'BIO',
-            TRA => 'TRA'
+            TRA => 'TRA',
+            KOL => 'KOL',
+            FOL => 'FOL',
+            OPVC => 'INY'
         ),
         'long1' => array(
             PVC => 'STANDARD PVC',
             BIO => 'BIO PVC',
-            TRA => 'TRANSPARENT'
+            TRA => 'TRANSPARENT',
+            KOL => 'KOLOR PVC',
+            FOL => 'PVC FOLIĄ',
+            OPVC => 'INNY'
         )
     );
     
