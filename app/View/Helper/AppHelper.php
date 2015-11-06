@@ -38,7 +38,7 @@ class AppHelper extends Helper {
             TRA => 'TRA',
             KOL => 'KOL',
             FOL => 'FOL',
-            OPVC => 'INY'
+            OPVC => 'INNY'
         ),
         'long1' => array(
             PVC => 'STANDARD PVC',
