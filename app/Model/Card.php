@@ -387,6 +387,27 @@ class Card extends AppModel {
  *
  * @var array
  */
+	public $hasOne = array(
+		'Proof' => array(
+			'className' => 'Proof',
+			'foreignKey' => 'card_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);        
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
 	public $hasMany = array(
 		'Event' => array(
 			'className' => 'Event',

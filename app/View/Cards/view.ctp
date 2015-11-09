@@ -5,8 +5,8 @@
 //echo '<pre>';	print_r($bcontr); echo  '</pre>'; 
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
 //echo '<pre>';	print_r($links); echo  '</pre>'; 
-//echo '<pre>';	print_r($card); echo  '</pre>'; 
-//
+//echo '<pre>';	print_r($card['Proof']); echo  '</pre>'; 
+//if( empty($card['Proof']) ) { echo 'EMPTY'; } else { echo 'NIE'; }
 //echo '<pre>';	print_r($vju['x_sito']['options']); echo  '</pre>'; 
 
 echo $this->Html->css('card.css?v=328496968', null, array('inline' => false));
