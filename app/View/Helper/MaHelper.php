@@ -6,6 +6,21 @@ class MaHelper extends AppHelper {
 	
 	public $helpers = array('Number','Form','Html');
         
+        // 25.11.2015
+        // uproszczenie w cakowych widokach
+        public function dtdd( $dt = null, $dd = null) {
+            echo "<dt>$dt</dt><dd>$dd&nbsp;</dd>";
+        }
+        
+        public function dd( $dd = null, $atr = array() ) {
+            
+            $out = '<dd';
+            foreach($atr as $key => $val ) {
+                $out .= " $key=" . '"' . $val . '"';
+            }
+            $out .= ">$dd</dd>";
+            echo $out;
+        }
         
         public $perso3opcje = array(
             'podlam' => array(
