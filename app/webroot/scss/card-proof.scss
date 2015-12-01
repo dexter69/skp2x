@@ -1,0 +1,81 @@
+//Poprawka widoku formularza akcji w widoku karty (w związku z tbsami)
+#tabsy div.form {
+    border-left: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+// Promień komórek w tabeli
+$promien: 5px;
+// kolory
+$jasny: #a1c4e9;
+$edyt: #83bfaf; //#64af9c; // kolor dla edytowalnych elementów
+$ciemny: #4a73bd;
+$naglowek: white; //nagłówek tabeli
+
+
+table.proof1 th, table.proof1 td {
+    border: 1px solid black;
+    //border-radius: 3px;
+    padding: 0.5mm;
+    text-align: center;
+}
+
+table.proof1 th {
+    border-bottom: none;
+    border-top-left-radius: $promien;
+    border-top-right-radius: $promien;
+    background-color: $ciemny;
+    color: $naglowek;
+}
+
+table.proof1 td {
+    border-bottom-left-radius: $promien;
+    border-bottom-right-radius: $promien;
+    background-color: $jasny;
+}
+
+table.proof1 { 
+    //border-collapse: collapse;
+    border-spacing: 2.5mm 0; 
+}
+
+// otwarta klodka pozielenia edytowalne elementy
+[data-locked=false] .pedit { background-color: $edyt; }
+
+/* Panel sterowania
+*/
+
+#panel {
+    //background-color: $jasny;
+    margin-bottom: 0.2em;
+    text-align: right;
+    padding: 0 3mm;
+    font-size: 32px;
+    position: relative;
+}
+
+$zielona-klodka: green;
+$czerwona-klodka: red;
+
+[data-editable=false] #panel {  color: $czerwona-klodka; }
+[data-editable=true] #panel {  color: $zielona-klodka; }
+
+// mozna klikać w kłódkę
+[data-editable=true] i { cursor: pointer; }
+
+#panel > p {
+    border: 1px solid grey;
+    margin: -11px 0 0 0;
+    background-repeat: no-repeat;    
+    background-position: center;
+    height: 22px;
+    width: 30px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;  
+    right: 1.5em;
+}
+
+[data-lang=en] #panel > p { background-image: url("../img/proof/en32.png");}
+[data-lang=pl] #panel > p { background-image: url("../img/proof/pl32.png");}

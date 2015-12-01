@@ -429,5 +429,4 @@ class PdfHelper extends AppHelper {
     }
 }
 
-?>
 

@@ -2,37 +2,67 @@
 echo $this->element('cards/view/head', array('title' => $card['Card']['name'])); ?>
 
 <div id="kartview" class="cards view">
-    <?php echo $this->element('cards/view/h2', array('card' => $card['Card'], 'links' => $links )); 
+    <?php
+        echo $this->element('cards/view/h2', array('card' => $card['Card'], 'links' => $links )); 
+        $comm = $this->Proof->wspolne($card);
+    // Ten element dl ?>
+    <div id="tabsy">
+        <ul>
+            <li><a href="#karta-tab">Karta</a></li>
+            <li><a href="#proof-tab">Proof</a></li>
+        </ul>
+        <div id="karta-tab">
+        <?php
+        echo $this->element('cards/view/dl', array(
+            'card' => $card['Card'],
+            'order' => $card['Order'],
+            'customer' => $card['Customer'],
+            'owner' => $card['Owner'],
+            'creator' => $card['Creator'],
+            'job' => $card['Job'],
+            'comm' => $comm
+        )); 
 
-    echo $this->element('cards/view/dl', array(
-        'card' => $card['Card'],
-        'order' => $card['Order'],
-        'customer' => $card['Customer'],
-        'owner' => $card['Owner'],
-        'creator' => $card['Creator'],
-        'job' => $card['Job']
-    )); 
-
-
-    echo $this->element('cards/view/cmyk', array(
-        'card' => $card['Card'],
-        'vju' => $vju
-    ));             
-
-    echo $this->element('cards/view/rest', array(
-        'card' => $card['Card'],
-        'vju' => $vju
-    ));  
-
-    if( !empty($card['Upload']) ) {
-        echo $this->element('cards/view/pliki', array('uploads' => $card['Upload'])); 
-    } ?>
-
+        // CMYK
+        echo $this->element('cards/view/cmyk', array(
+            'card' => $card['Card'],
+            'vju' => $vju
+        ));             
+        // Reszta
+        echo $this->element('cards/view/rest', array(
+            'card' => $card['Card'],
+            'vju' => $vju
+        ));  
+        // Pliki
+        if( !empty($card['Upload']) ) {
+            echo $this->element('cards/view/pliki', array('uploads' => $card['Upload'])); 
+        } 
+        $this->Ma->kontrolka($card, $evcontrol);?>
+        </div>
+        <div id="proof-tab"><?php
+            echo $this->element('cards/view/proof-tab', array(
+                'card' => $card['Card'],
+                /*'vju' => $vju,*/
+                'comm' => $comm,
+                'proof' => $card['Proof'],
+                'lang' => $card['Customer']['proof-lang'],
+                'locked' => true,
+                'editable' => true
+            ));      
+        ?>    
+        </div>
+    </div>
 </div>
 <!-- Do zmieniania daty perso -->
 <div id="datepicker"></div><div id="komunikat"></div>
 
-<?php $this->Ma->kontrolka($card, $evcontrol);		
+<?php //$this->Ma->kontrolka($card, $evcontrol);	?>
+
+<script>
+  $(function() {
+    $( "#tabsy" ).tabs({active: 1});
+  });
+</script>
 
 
 

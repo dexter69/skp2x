@@ -1,8 +1,8 @@
 <dl id="cardviewdl">
 <?php
 
-    $this->Ma->dtdd('Id', $card['id']);
-    $this->Ma->dtdd('Nazwa karty', $card['name']);
+    $this->Proof->dtdd('Id', $card['id']);
+    $this->Proof->dtdd('Nazwa karty', $card['name']);
     
     //ustal atrybuty dka tego dd (potrzebne do perso)
     if( $card['pvis'] && $card['stop_perso']) { 
@@ -28,45 +28,39 @@
         'data-termin' => $data
     );
     if( $title ) { $atrs['title'] = $title; } 
-    $this->Ma->dd($datka, $atrs);
+    $this->Proof->dd($datka, $atrs);
     
-    $this->Ma->dtdd('Klient',
+    $this->Proof->dtdd('Klient',
                     $this->Html->link($customer['name'], array(
                     'controller' => 'customers', 'action' => 'view', $customer['id']
     )));
     
-    $this->Ma->dtdd('Opiekun', $owner['name']);
+    $this->Proof->dtdd('Opiekun', $owner['name']);
     
-    if( $order['id'] ) {
-        if( $order['nr'] )
-            { $dd = $this->Html->link($this->Ma->bnr2nrh($order['nr'], $creator['inic']), array('controller' => 'orders', 'action' => 'view', $order['id']), array('escape' => false)); }
-        else
-            { $dd = $this->Html->link('id = '.$order['id'], array('controller' => 'orders', 'action' => 'view', $order['id'])); }
-    }
-    $this->Ma->dtdd('Zamówienie (H)', $dd);
+    if( $order['nr'] )
+        { $dd = $this->Html->link($comm['handlowe'], array('controller' => 'orders', 'action' => 'view', $order['id']), array('escape' => false)); }
+    else
+        { $dd = $this->Html->link($comm['handlowe'], array('controller' => 'orders', 'action' => 'view', $order['id'])); }
+    $this->Proof->dtdd('Zamówienie (H)', $dd);
     
     if( $job['nr'] ) {
         $dd = $this->Html->link( $this->Ma->bnr2nrj($job['nr'], null), array('controller' => 'jobs', 'action' => 'view', $job['id']), array('escape' => false));
     } else {
         $dd = $this->Html->link($job['id'], array('controller' => 'jobs', 'action' => 'view', $job['id']));
     }
-    $this->Ma->dtdd('Zlecenie (P)', $dd);
+    $this->Proof->dtdd('Zlecenie (P)', $dd);
     
-    $this->Ma->dtdd('Cena', $card['price']);
-    
-    $dd = null;
-    if( $card['ilosc'] )
-        { $dd = $this->Ma->tys($card['ilosc']*$card['mnoznik']); }
-    $this->Ma->dtdd('Ilość', $dd);
+    $this->Proof->dtdd('Cena', $comm['cena']);
+    $this->Proof->dtdd('Ilość', $comm['ilosc']);
     
     if( $card['status'] == PRIV && $order['id'] )
         { $dd = 'ZAŁĄCZONA'; }
     else
         { $dd =  $this->Ma->status_karty($card['status']); }
-    $this->Ma->dtdd('Status', $dd);
+    $this->Proof->dtdd('Status', $dd);
     
-    $this->Ma->dtdd('Stworzone', $this->Ma->mdt($card['created']));
-    $this->Ma->dtdd('Zmodyfikowane', $this->Ma->mdt($card['modified']));
+    $this->Proof->dtdd('Stworzone', $this->Ma->mdt($card['created']));
+    $this->Proof->dtdd('Zmodyfikowane', $this->Ma->mdt($card['modified']));
     ?>
 </dl>
 

@@ -8,6 +8,7 @@ App::uses('AppController', 'Controller');
  */
 class CardsController extends AppController {
 
+        public $helpers = array('Proof');
 /**
  * Components
  *
