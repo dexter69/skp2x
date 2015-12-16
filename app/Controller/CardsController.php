@@ -524,96 +524,105 @@ class CardsController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
+        // via ajax sprawdzamy, czy kartę można edytować
+        public function editable() {
+            
+            $answer = array(
+                //'editable' => true
+                'editable' => false
+            );            
+            $this->set(array(
+                'answer' => $answer,
+                '_serialize' => 'answer'
+            ));
+            //sleep(1);
+	}  
 
 	private function akcjaOK( $dane = array(), $akcja = null, $par = null  ) {
 	
-		//return true;
-		switch($akcja) {
-                    case 'edit':
-                        $card = $dane['Card'];
-                        $order = $dane['Order'];
-                        if( $this->Auth->user('CAE') == EDIT_SAL || $card['status'] == PRIV ||							
-                                in_array($order['status'], array(O_REJ, W4UZUP, UZU_REJ)) ) { 
-                                //stan karty pozawla na edycję
-                                switch( $this->Auth->user('CAE') ) {
-                                        case NO_RIGHT:
-                                        case EDIT_SHR:
-                                                return false;
-                                        case EDIT_OWN:
-                                                if( $this->Auth->user('id') == $card['user_id'] )
-                                                        return true;
-                                                else
-                                                        return false;
-                                        case EDIT_ALL:
-                                        case EDIT_SAL:
-                                                return true;
-                                }							
-                        } else
-                                return false;
-                        break;
-                    case 'view':
-                        $card = $dane['Card'];
-                        if( $this->Auth->user('id') == $card['user_id'] )
-                                $jego_karta = true;
-                        else
-                                $jego_karta = false;
-                        if( 1 ) {//jeżeli nie ma przeszkód, nie związanych z uprawnieniami, do wyświetlenia
-                                switch( $this->Auth->user('CAV') ) {
-                                        case VIEW_SAL:
-                                        case VIEW_ALL:
-                                                return true;
-                                                break;
-                                        case VIEW_NO_PRIV: //nie może prywatnych kart innych ludzi oglądać
-                                                //if( $jego_karta || !in_array($card['status'], array(STARTED, STICKED))  )
-                                                if( $jego_karta || $card['status'] != PRIV  )
-                                                        return true;
-                                        break;
-                                        case VIEW_NO_KOR:
-                                                if( $card['status'] != PRIV && $card['status'] != NOWKA )
-                                                        return true;
-                                        break;								
-                                        case NO_RIGHT:
-                                        case VIEW_SHR:
-                                                return false;
-                                                break;
-                                        case VIEW_OWN:
-                                                return $jego_karta;
-                                                break;
-                                }
-                        }
-                        break;
-                    case 'index':
-                        $upraw = $this->Auth->user('CAX');
-                        switch($par) {
-                                case null:
-                                        if( $upraw == IDX_ALL || $upraw == IDX_SAL ) 
-                                                return true;
-                                        break;
-                                case 'all-but-priv':
-                                case 'active':
-                                case 'closed':
-                                        //if( $upraw == IDX_NO_PRIV || $upraw == IDX_ALL || $upraw == IDX_SAL) return true;
-                                        if( in_array($upraw, array( IDX_NO_PRIV, IDX_ALL, IDX_SAL ) ) ) return true;															
-                                break;
-                                case 'no-priv-no-kor':
-                                        if( in_array($upraw, array(IDX_NO_KOR, IDX_NO_PRIV, IDX_ALL, IDX_SAL) ) ) return true;
-                                break;	
-                                case 'ponly':
-                                case 'pover':
-                                case 'ptodo':
-                                case 'my':
-                                case 'dtpcheck':
-                                case 'persocheck':
-                                case 'szukaj':
-                                        return true;
-                                break;								
-
-                                default:
+            switch($akcja) {
+                case 'edit':
+                    $card = $dane['Card'];
+                    $order = $dane['Order'];
+                    if( $this->Auth->user('CAE') == EDIT_SAL || $card['status'] == PRIV ||							
+                            in_array($order['status'], array(O_REJ, W4UZUP, UZU_REJ)) ) { 
+                            //stan karty pozawla na edycję
+                            switch( $this->Auth->user('CAE') ) {
+                                case NO_RIGHT:
+                                case EDIT_SHR:
                                         return false;
-                        }
+                                case EDIT_OWN: // ($lang ? 'en' : 'pl')
+                                    return $this->Auth->user('id') == $card['user_id'] ? true : false;
+                                case EDIT_ALL:
+                                case EDIT_SAL:
+                                    return true;
+                            }							
+                    } else {
+                        return false; }
                     break;
-		}
-		return false;
+                case 'view':
+                    $card = $dane['Card'];
+                    if( $this->Auth->user('id') == $card['user_id'] )
+                            $jego_karta = true;
+                    else
+                            $jego_karta = false;
+                    if( 1 ) {//jeżeli nie ma przeszkód, nie związanych z uprawnieniami, do wyświetlenia
+                            switch( $this->Auth->user('CAV') ) {
+                                    case VIEW_SAL:
+                                    case VIEW_ALL:
+                                            return true;
+                                            break;
+                                    case VIEW_NO_PRIV: //nie może prywatnych kart innych ludzi oglądać
+                                            //if( $jego_karta || !in_array($card['status'], array(STARTED, STICKED))  )
+                                            if( $jego_karta || $card['status'] != PRIV  )
+                                                    return true;
+                                    break;
+                                    case VIEW_NO_KOR:
+                                            if( $card['status'] != PRIV && $card['status'] != NOWKA )
+                                                    return true;
+                                    break;								
+                                    case NO_RIGHT:
+                                    case VIEW_SHR:
+                                            return false;
+                                            break;
+                                    case VIEW_OWN:
+                                            return $jego_karta;
+                                            break;
+                            }
+                    }
+                    break;
+                case 'index':
+                    $upraw = $this->Auth->user('CAX');
+                    switch($par) {
+                            case null:
+                                    if( $upraw == IDX_ALL || $upraw == IDX_SAL ) 
+                                            return true;
+                                    break;
+                            case 'all-but-priv':
+                            case 'active':
+                            case 'closed':
+                                    //if( $upraw == IDX_NO_PRIV || $upraw == IDX_ALL || $upraw == IDX_SAL) return true;
+                                    if( in_array($upraw, array( IDX_NO_PRIV, IDX_ALL, IDX_SAL ) ) ) return true;															
+                            break;
+                            case 'no-priv-no-kor':
+                                    if( in_array($upraw, array(IDX_NO_KOR, IDX_NO_PRIV, IDX_ALL, IDX_SAL) ) ) return true;
+                            break;	
+                            case 'ponly':
+                            case 'pover':
+                            case 'ptodo':
+                            case 'my':
+                            case 'dtpcheck':
+                            case 'persocheck':
+                            case 'szukaj':
+                                    return true;
+                            break;								
+
+                            default:
+                                    return false;
+                    }
+                break;
+            }
+            return false;
 	}
 
     public function addCzasPerso() {

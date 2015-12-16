@@ -201,16 +201,15 @@
             $('.cu' + $('#CardCustomerId').val()).show();
 
             $( '#CardKlient' ).click(function() {
-                    if( $( '#CardKlient' ).val() ) {
-                            $( '#CardKlient' ).val('');
-                            $('#CardCustomerId').val(0);
-                            //alert('TAK!');	
-                            //$('#wpliki input').attr('disabled', 'disabled');
-                            $('#wpliki input[type="checkbox"]').removeAttr('checked');
-                            $('#wpliki tr').hide();
-                            $('#wdiv > label').hide();
-
-                    }
+                if( $( '#CardKlient' ).val() ) {
+                    $( '#CardKlient' ).val('');
+                    $('#CardCustomerId').val(0);
+                    //alert('TAK!');	
+                    //$('#wpliki input').attr('disabled', 'disabled');
+                    $('#wpliki input[type="checkbox"]').removeAttr('checked');
+                    $('#wpliki tr').hide();
+                    $('#wdiv > label').hide();
+                }
             });
 
             $( '#CardKlient' ).focusout(function() {

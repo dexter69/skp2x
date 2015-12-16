@@ -75,12 +75,13 @@ if( $card['wzor'] ) {
     $inne .= $this->Html->tag('dd', $vju['wzor']['options'][$card['wzor']], null);
 }
 $isperso = $card['isperso'];
-if( !$inne && $isperso ) {
+if( $inne || !$isperso || $card['option_comment'] ) {
+    $startdiv1 = $startdiv2 = $stopdiv = null;    
+} else {
     $startdiv1 = $this->Html->tag('div', null, array('id' => 'perop1'));	
     $startdiv2 = $this->Html->tag('div', null, array('id' => 'perop2'));	
     $stopdiv = $this->Html->tag('/div');
-} else { 
-    $startdiv1 = $startdiv2 = $stopdiv = null; }
+}
 echo '<div style="clear: both"></div>'; 
 if( $isperso ) {
     $klasa = null;
@@ -100,7 +101,7 @@ if( $isperso ) {
     echo $this->Html->tag('p', nl2br($card['perso']), array('class' => 'comments' . $klasa));	
     echo $stopdiv;
 }
-if( $inne ) {
+if( $inne || $card['option_comment']) {
     echo $startdiv2;
     echo $this->Ma->viewheader('INNE OPCJE', array('class' => 'masymetric'));
     echo $this->Html->tag('dl', null, array('id' => 'innedl'));

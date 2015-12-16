@@ -17,12 +17,12 @@ class ProofHelper extends AppHelper {
     // parametry strony
     public function parametry( $lang, $locked, $editable) {
         
-        $div = 
-                ' data-lang="' . ($lang ? 'en' : 'pl') . '"' .
-                ' data-locked="' . ($locked ? 'true' : 'false') . '"' .
-                ' data-editable="' . ($editable ? 'true' : 'false') . '"';
-        return array(
-            'div' => $div,
+        $class =    'class="proof-stuff ' . ($lang ? 'en ' : 'pl ') . 
+                    ($locked ? 'locked ' : 'unlocked ') .
+                    ($editable ? 'edit-yes' : 'edit-no') . '"';
+        
+        return array(            
+            'class' => $class,
             'iclass' => $locked ? 'fa fa-lock' : 'fa fa-unlock'
         );
     }

@@ -4,8 +4,12 @@
     $this->Proof->setupJsCode($proof, $card);
     
 ?>
-<div id="proof-preview" class="proof-stuff" <?php echo $par['div']; ?>>
-    <div id="panel"><p></p><i class="<?php echo $par['iclass'];?>"></i></div>
+<div id="proof-preview" <?php echo $par['class']; ?>>
+    <div id="panel">
+        <p></p>
+        <i class="fa fa-lock"></i>
+        <i class="fa fa-unlock"></i>
+    </div>
     <?php
         echo $this->Proof->topTable( $comm ); 
     ?>        

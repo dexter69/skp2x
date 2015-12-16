@@ -46,8 +46,9 @@ echo $this->element('cards/view/head', array('title' => $card['Card']['name']));
                 'comm' => $comm,
                 'proof' => $card['Proof'],
                 'lang' => $card['Customer']['proof-lang'],
-                'locked' => true,
-                'editable' => true
+                'locked' => true, // to zawsze niech bedzie przy defaultowym ładowaniu
+                'editable' => false /*zawsze na wszelki wypadek, a po sprawdzeniu ajaxem
+                 zmieniamy to ewentualnie*/
             ));      
         ?>    
         </div>
@@ -56,7 +57,9 @@ echo $this->element('cards/view/head', array('title' => $card['Card']['name']));
 <!-- Do zmieniania daty perso -->
 <div id="datepicker"></div><div id="komunikat"></div>
 
-<?php //$this->Ma->kontrolka($card, $evcontrol);	?>
+<?php 
+//$this->Proof->printR($card['Card']);
+//$this->Ma->kontrolka($card, $evcontrol);	?>
 
 <script>
   $(function() {

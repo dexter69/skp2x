@@ -41,7 +41,7 @@ table.proof1 {
 }
 
 // otwarta klodka pozielenia edytowalne elementy
-[data-locked=false] .pedit { background-color: $edyt; }
+.unlocked .pedit { background-color: $edyt; }
 
 /* Panel sterowania
 */
@@ -58,11 +58,16 @@ table.proof1 {
 $zielona-klodka: green;
 $czerwona-klodka: red;
 
-[data-editable=false] #panel {  color: $czerwona-klodka; }
-[data-editable=true] #panel {  color: $zielona-klodka; }
+.edit-no #panel {  color: $czerwona-klodka; }
+.edit-yes #panel {  color: $zielona-klodka; }
 
 // mozna klikać w kłódkę
-[data-editable=true] i { cursor: pointer; }
+//.edit-yes i { cursor: pointer; }
+#panel > i { cursor: pointer; }
+
+//mamy obie kłódki, ale widoczna jest tylko ta odpowiednia
+.locked i.fa-unlock { display: none;} 
+.unlocked i.fa-lock { display: none;} 
 
 #panel > p {
     border: 1px solid grey;
@@ -77,5 +82,5 @@ $czerwona-klodka: red;
     right: 1.5em;
 }
 
-[data-lang=en] #panel > p { background-image: url("../img/proof/en32.png");}
-[data-lang=pl] #panel > p { background-image: url("../img/proof/pl32.png");}
+.en #panel > p { background-image: url("../img/proof/en32.png");}
+.pl #panel > p { background-image: url("../img/proof/pl32.png");}
