@@ -406,6 +406,7 @@ define('ABSURD', 254); // c, o, j - roboczy
 define('PRIV', 0); // c i o
 define('NOWKA', 1); // c i o
 
+
 define('W4D', 51); // c
 define('W4DP', 52); // c
 define('W4DPNO', 53); // c

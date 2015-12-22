@@ -31,33 +31,16 @@ class Card extends AppModel {
         
         public $tempor = array();
         
-        // Te dwa poniżej miałczymy, żeby mieć sortowanie ok w perso
-//        public $virtualFields = array(
-//            'stop_day' => 'Order.stop_day'
-//        );
-
-//        public $findMethods = array('gibon' =>  true);
-//
-//        protected function _findGibon($state, $query, $results = array()) {
-//            if ($state === 'after') {
-//                foreach( $results as $key => $val ) {
-//                    $results[$key]['Card']['dziurka'] = $key;
-//                }
-//            }
-//            return $results;
-//        }
-//        
-//        public function afterFind($results, $primary = false) {
-//            foreach ($results as $key => $val) {
-//                $results[$key]['Gibon'] =  array('gibon' => $key);
-////                if (isset($val['Event']['begindate'])) {
-////                    $results[$key]['Event']['begindate'] = $this->dateFormatAfterFind(
-////                        $val['Event']['begindate']
-////                    );
-////                }
-//            }
-//            return $results;
-//        }
+        /* znajdź kartę i related - uproszczenie kodu w kontrolerze */
+        public function znajdzTaKarta( $karta_id = null ) {
+            
+            if ( $karta_id && $this->exists($karta_id)) {
+                return $this->find('first', array(
+                        'conditions' => array('Card.' . $this->primaryKey => $karta_id)
+                ));
+            }
+            return null;
+        }
         
         /* 
          * dla perso - obejście problemu stop_perso = null w kartach, by dostarczyć dane

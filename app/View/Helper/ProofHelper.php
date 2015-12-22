@@ -55,11 +55,15 @@ class ProofHelper extends AppHelper {
         $the_html = '<table class="proof1" cellpadding="0" cellspacing="0"><thead>';
         $the_html .= $this->Html->tableHeaders($hdata) . '</thead><tbody>';
         $cells = array(
-            array(date("d.m.Y"), array('id' => 'burok', 'contenteditable' => 'true')),
+            array(date("d.m.Y"), array('id' => 'burok')),
             $dane['handlowe'],
             $dane['ilosc'],
             $dane['cena'] . " " . $dane['waluta'] . ($dane['lang'] ? "/pc." : "/szt."),
-            array($dane['customer_nr'], array('class' => 'pedit', 'name' => 'data[Proof][customer_nr]'))//$dane['customer_nr']
+            array(  $dane['customer_nr'], array(
+                        'class' => 'pedit',
+                        'name' => 'data[Proof][customer_nr]',
+                        'contenteditable' => 'false'
+            ))//$dane['customer_nr']
         );
         $the_html .= $this->Html->tableCells( array($cells) ) . '</tbody></table>';
                 

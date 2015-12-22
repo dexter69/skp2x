@@ -1,18 +1,6 @@
 var tenSelektor = '#proof-preview';
 $(function() {
-    /*
-    $( "#kwi" ).click(function(){
-        var tmp = $(this).data("lan");
-        var text = $(this).text();
-        $(this).text(tmp);
-        $(this).data("lan", text);
-    });
-    
-    $( "#burok" ).keyup(function() {
-        console.log( "Handler for .keyup() called." );
-    });
-    */
-    //console.log(model);
+    console.log(model);
     //log('start');
     refreshProofData( setEditableOrNot );    
     setKlik4Klodka();
@@ -24,10 +12,18 @@ function refreshProofData( callBack ) {
     /* myBase to zmienna generowana w nagłówku przez $this->webroot 
      pieprzony get robi cache i jak strona się ładuje z cacha, to skurczybyk
      się z serwerem nie kontaktuje i dlatego ten parametr potrzebny */
-    var geting = $.get( myBase + "cards/editable.json", { "_": $.now() } );
+    var posting = $.post( myBase + "proofs/editable.json", { "_": $.now() } );
     
-    geting.done(function( dane ) {   
+    posting.done(function( dane ) {   
         callBack( dane ); // w zależności od stanu ustawiamy możliwość edycji lub jej brak        
+    });
+}
+
+function setKlik4Klodka() {
+    
+    $("#panel > i").click(function(){        
+        //console.log(stanKlodki());
+        refreshProofData( klikService );
     });
 }
 
@@ -38,14 +34,6 @@ function setEditableOrNot( info ) {
     } else {
         setEdycjaZabroniona();
     } 
-}
-
-function setKlik4Klodka() {
-    
-    $("#panel > i").click(function(){        
-        //console.log(stanKlodki());
-        refreshProofData( klikService );
-    });
 }
 
 // po kliknięciu w kłudkę i odświerzeniu danych Proof'a robimy obsługę tego kliknięcia
@@ -60,18 +48,14 @@ function klikService( info ) {
             break;
         case 'zamknieta': // zamknięta i zielona
             if( info.editable ) {
-                // otwórz kłudkę
-                swapLock2();
-            } else {
-                // zrób czerwoną
+                openTheLock(); // otwiera kłódkę i czyni odpowiednie pola edytowalne
+            } else { // zrób czerwoną
                 setEdycjaZabroniona(); }
             break; 
         case 'otwarta': // otwarta i zielona
-            if( info.editable ) {
-                // zapisz dane i zamknij kłudkę
-                swapLock();
-            } else {
-                // zrób czerwoną i komunikat o niemożności zapisania
+            if( info.editable ) { // zapisz dane i zamknij kłudkę
+                closeTheLock();
+            } else { // zrób czerwoną i komunikat o niemożności zapisania
                 swapLock();
                 setEdycjaZabroniona();
                 console.log('Edycja nie jest dozwolona, nie zapisano danych!');
@@ -80,6 +64,25 @@ function klikService( info ) {
         default: // inny przypadek, czyli błąd! - wyświetl komunikat
             console.log('pieprzony blad!');
     }
+}
+
+function openTheLock() {    
+    swapLock();
+    setContentEditable(true);
+}
+
+// zapisuje dane zamyka kłódkę, i ustawia pola z klasą .pedit na contenteditable=false
+function closeTheLock() {
+    swapLock();
+    setContentEditable(false);
+}
+
+// pola z klasą .pedit ustawiamy na contenteditable=true
+function setContentEditable(yes_or_no) {
+    
+    $('#proof-preview .pedit').each(function(){
+        $(this).attr('contenteditable', yes_or_no);
+    });
 }
 
 function swapLock() {
@@ -155,43 +158,6 @@ function setUpThePadlock() {
 
 //################################################
 
-
-function setThePadlockGreen() {
-    
-    console.log("Powinna być zielona MUU");
-    setProofEditable();
-    bindKlickServis4klodka(); //coby się otwierała i zamykała
-}
-
-function bindKlickServis4klodka() {
-    
-    //console.log('SET');
-    $(".edit-yes #panel > i").click(function(){        
-        //swapLock(); // otwórz lub zamknij kłudkę
-    });
-}
-
-function swapLock_old() {
-    $('#proof-preview').toggleClass('locked');
-    $('#proof-preview').toggleClass('unlocked');
-    $('#proof-preview #panel > i').toggleClass('fa-lock');
-    $('#proof-preview #panel > i').toggleClass('fa-unlock');
-}
-
-function setProofEditable() {
-    $('#proof-preview').removeClass('edit-no');
-    $('#proof-preview').addClass('edit-yes');
-}
-
-function setThePadlockRed() {
-    console.log("Niechaj będzie czerwona KWE");
-    setProofUnEditable();
-}
-
-function setProofUnEditable() {
-    $('#proof-preview').removeClass('edit-yes');
-    $('#proof-preview').addClass('edit-no');
-}
 
 // ustaw kłodkę do klikania
 function setupKlodka() {

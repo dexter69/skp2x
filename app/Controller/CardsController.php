@@ -454,53 +454,51 @@ class CardsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		if (!$this->Card->exists($id)) {
-			throw new NotFoundException(__('Invalid card'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
+            if (!$this->Card->exists($id)) {
+                    throw new NotFoundException('Nie ma tekiej karty!');
+            }
+            if ($this->request->is(array('post', 'put'))) {
 //			$this->Card->print_r2($this->request->data);
 //			return;			
-			if ($this->Card->saveitAll($this->request->data, $blad)) {
-				$this->Session->setFlash('KARTA ZOSTAŁA ZAPISANA!', 'default', array('class' => GOOD_FLASH));
-				return $this->redirect(array('action' => 'view', $this->Card->id));
-				/**/
-			} else {
-                            $this->Session->setFlash('Nie można zapisac karty. Proszę spróbuj ponownie.' . ' :'. $blad);
-                            //$this->Card->print_r2($this->Card->tempor);
-			}
-		} else {
-			$options = array('conditions' => array('Card.' . $this->Card->primaryKey => $id));
-			$this->request->data = $this->Card->find('first', $options);
-			if( !$this->akcjaOK($this->request->data, 'edit') ) {
-				$this->Session->setFlash('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');
-				return $this->redirect($this->referer());
-			} 
-		}
-		$users = $this->Card->Owner->find('list');
-		$customers = $this->Card->Customer->find('list');
-		
-		$orders = $this->Card->Order->find('list');
-		$jobs = $this->Card->Job->find('list');
-		//$this -> render('edit_');
-		$vju = $this->Card->get_view_options();
-		$links = $this->links;
-		
-		/**/
-		// id usera brane z karty - przyda się do edycji przez inne osoby niz handlowiec: twórca
-		$customers = $this->Card->Customer->find('list', array(
-			'conditions' => array('owner_id' => $this->request->data['Card']['owner_id']),
-			//'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id')
-		));
-		$klienci = array();
-		foreach( $customers as $key => $value) 
-			$klienci[] = array('label' => $value, 'id' => $key);
-			
-		$klienci = "var klienci =  \n" . str_replace("},", "},\n", json_encode($klienci) );
-		$jscode = "var yeswyb = " . true . ";\nvar yesperso = " . JEDEN . ";\n";
-		$jscode .= "var orvalue = " . OTHER_ROLE . ";\n\n" . $klienci . ";";
-		
-		$wspolne = $this->Card->findPropperUploads();
-		$this->set(compact('vju', 'users', 'klienci', 'orders', 'jobs', 'links', 'jscode', 'wspolne'));
+                    if ($this->Card->saveitAll($this->request->data, $blad)) {
+                            $this->Session->setFlash('KARTA ZOSTAŁA ZAPISANA!', 'default', array('class' => GOOD_FLASH));
+                            return $this->redirect(array('action' => 'view', $this->Card->id));
+                            /**/
+                    } else {
+                        $this->Session->setFlash('Nie można zapisac karty. Proszę spróbuj ponownie.' . ' :'. $blad);
+                        //$this->Card->print_r2($this->Card->tempor);
+                    }
+            } else {                    
+                    $this->request->data = $this->Card->znajdzTaKarta($id);
+                    if( !$this->akcjaOK($this->request->data, 'edit') ) {
+                            $this->Session->setFlash('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');
+                            return $this->redirect($this->referer());
+                    } 
+            }
+            $users = $this->Card->Owner->find('list');
+
+            $orders = $this->Card->Order->find('list');
+            $jobs = $this->Card->Job->find('list');
+            //$this -> render('edit_');
+            $vju = $this->Card->get_view_options();
+            $links = $this->links;
+
+            /**/
+            // id usera brane z karty - przyda się do edycji przez inne osoby niz handlowiec: twórca
+            $customers = $this->Card->Customer->find('list', array(
+                    'conditions' => array('owner_id' => $this->request->data['Card']['owner_id']),
+                    //'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id')
+            ));
+            $klienci = array();
+            foreach( $customers as $key => $value) {
+                $klienci[] = array('label' => $value, 'id' => $key); }
+
+            $klienci = "var klienci =  \n" . str_replace("},", "},\n", json_encode($klienci) );
+            $jscode = "var yeswyb = " . true . ";\nvar yesperso = " . JEDEN . ";\n";
+            $jscode .= "var orvalue = " . OTHER_ROLE . ";\n\n" . $klienci . ";";
+
+            $wspolne = $this->Card->findPropperUploads();
+            $this->set(compact('vju', 'users', 'klienci', 'orders', 'jobs', 'links', 'jscode', 'wspolne'));
 	}
 
 /**
@@ -528,8 +526,9 @@ class CardsController extends AppController {
         public function editable() {
             
             $answer = array(
-                //'editable' => true
-                'editable' => false
+                'editable' => true,
+                //'editable' => false,
+                'uid' => $this->Auth->user('id')
             );            
             $this->set(array(
                 'answer' => $answer,
@@ -537,29 +536,30 @@ class CardsController extends AppController {
             ));
             //sleep(1);
 	}  
+        
+        private function isEdycjaKartyOK( $c_user_id = null, $c_status = null, $o_status = null ) {
+            
+            $cae = $this->Auth->user('CAE');
+            if( $cae == EDIT_SAL || $c_status == PRIV ||							
+                in_array( $o_status, array(O_REJ, W4UZUP, UZU_REJ)) ) {                 
+                //stan karty pozawla na edycję
+                
+                if( $cae ==  EDIT_OWN && $this->Auth->user('id') == $c_user_id ) {
+                    return true;
+                }
+                if( $cae ==  EDIT_ALL || $cae ==  EDIT_SAL ) {
+                    return true;
+                }                							
+            } 
+            return false; 
+        }
+        
 
 	private function akcjaOK( $dane = array(), $akcja = null, $par = null  ) {
 	
             switch($akcja) {
-                case 'edit':
-                    $card = $dane['Card'];
-                    $order = $dane['Order'];
-                    if( $this->Auth->user('CAE') == EDIT_SAL || $card['status'] == PRIV ||							
-                            in_array($order['status'], array(O_REJ, W4UZUP, UZU_REJ)) ) { 
-                            //stan karty pozawla na edycję
-                            switch( $this->Auth->user('CAE') ) {
-                                case NO_RIGHT:
-                                case EDIT_SHR:
-                                        return false;
-                                case EDIT_OWN: // ($lang ? 'en' : 'pl')
-                                    return $this->Auth->user('id') == $card['user_id'] ? true : false;
-                                case EDIT_ALL:
-                                case EDIT_SAL:
-                                    return true;
-                            }							
-                    } else {
-                        return false; }
-                    break;
+                case 'edit':         
+                    return $this->isEdycjaKartyOK( $dane['Card']['user_id'], $dane['Card']['status'], $dane['Order']['status']);                    
                 case 'view':
                     $card = $dane['Card'];
                     if( $this->Auth->user('id') == $card['user_id'] )
@@ -624,6 +624,29 @@ class CardsController extends AppController {
             }
             return false;
 	}
+        
+        /* Z powyższego na wszelki wypadek
+         case 'edit':
+                    $card = $dane['Card'];
+                    $order = $dane['Order'];
+                    if( $this->Auth->user('CAE') == EDIT_SAL || $card['status'] == PRIV ||							
+                            in_array($order['status'], array(O_REJ, W4UZUP, UZU_REJ)) ) { 
+                            //stan karty pozawla na edycję
+                            switch( $this->Auth->user('CAE') ) {
+                                case NO_RIGHT:
+                                case EDIT_SHR:
+                                        return false;
+                                case EDIT_OWN: // ($lang ? 'en' : 'pl')
+                                    return $this->Auth->user('id') == $card['user_id'] ? true : false;
+                                case EDIT_ALL:
+                                case EDIT_SAL:
+                                    return true;
+                            }							
+                    } else {
+                        return false; }
+                    break;
+          
+         */
 
     public function addCzasPerso() {
 

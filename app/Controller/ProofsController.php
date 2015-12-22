@@ -14,6 +14,26 @@ class ProofsController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
+        
+        
+        // via ajax sprawdzamy, czy kartę można edytować
+        public function editable() {
+            
+            $answer = array(
+                //'editable' => true,
+                'editable' => false,
+                'uid' => $this->Auth->user('id')
+            );            
+            $this->set(array(
+                'answer' => $answer,
+                '_serialize' => 'answer'
+            ));
+            //sleep(1);
+	}
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+         Te poniżej BAKED 
+ */
 
 /**
  * index method
