@@ -35,7 +35,8 @@ class ProofHelper extends AppHelper {
                 'id'  => $proof['id'],
                 'card_id' => $karta['id'],
                 'customer_nr' => $proof['customer_nr']
-        )); 
+            )
+            ); 
         
         
         $jcode =  "var model =  " . json_encode( $tab );

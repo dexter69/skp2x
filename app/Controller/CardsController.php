@@ -435,7 +435,7 @@ class CardsController extends AppController {
 		// przygotowujemy tablicę z klientami dla autocomplete w $jscode
 		$klienci = array();
 		foreach( $customers as $key => $value) 
-			$klienci[] = array('label' => $value, 'id' => $key);
+                    { $klienci[] = array('label' => $value, 'id' => $key); }
 		$jscode = "var yeswyb = " . true . ";\nvar yesperso = " . JEDEN . ";\n" . "var klienci =  " . json_encode($klienci);
 		
 		// Chcemy pliki podpięte do kart "w buforze" zalogowanego użytkownika
@@ -525,17 +525,21 @@ class CardsController extends AppController {
         // via ajax sprawdzamy, czy kartę można edytować
         public function editable() {
             
+            // $this->request->data['id'] - id karty
+            $dane = $this->Card->findCard4proofCheck( $this->request->data['id'] );
+            
             $answer = array(
-                'editable' => true,
+                'editable' => $this->isEdycjaKartyOK($dane['Card']['user_id'], $dane['Card']['status'], $dane['Order']['status']),
                 //'editable' => false,
-                'uid' => $this->Auth->user('id')
+                'uid' => $this->Auth->user('id'),
+                'dane' => $dane
             );            
             $this->set(array(
                 'answer' => $answer,
                 '_serialize' => 'answer'
             ));
             //sleep(1);
-	}  
+	} 
         
         private function isEdycjaKartyOK( $c_user_id = null, $c_status = null, $o_status = null ) {
             

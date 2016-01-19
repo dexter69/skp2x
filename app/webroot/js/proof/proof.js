@@ -12,7 +12,10 @@ function refreshProofData( callBack ) {
     /* myBase to zmienna generowana w nagłówku przez $this->webroot 
      pieprzony get robi cache i jak strona się ładuje z cacha, to skurczybyk
      się z serwerem nie kontaktuje i dlatego ten parametr potrzebny */
-    var posting = $.post( myBase + "proofs/editable.json", { "_": $.now() } );
+    var posting = $.post( myBase + "cards/editable.json", { 
+        "_": $.now(),
+        "id": model.Proof.card_id
+    });
     
     posting.done(function( dane ) {   
         callBack( dane ); // w zależności od stanu ustawiamy możliwość edycji lub jej brak        
@@ -29,9 +32,12 @@ function setKlik4Klodka() {
 
 function setEditableOrNot( info ) {
     /* info to dane zasysnięte z serwera o stałej strukturze */
+    //console.log(info.editable);
     if( info.editable ) {   
+        //console.log('dozwolona');
         setEdycjaDozwolona();        
     } else {
+        //console.log('zabroniona');
         setEdycjaZabroniona();
     } 
 }
@@ -94,7 +100,7 @@ function setEdycjaDozwolona() {
     zamienKlasy(tenSelektor, 'edit-no', 'edit-yes');
 }
 
-function setEdycjaZabroniona() {    
+function setEdycjaZabroniona() {       
     zamienKlasy(tenSelektor, 'edit-yes', 'edit-no');
     zamienKlasy(tenSelektor, 'unlocked', 'locked');
 }

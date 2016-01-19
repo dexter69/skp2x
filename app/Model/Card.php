@@ -262,6 +262,25 @@ class Card extends AppModel {
                 }
 		return null;
 	}
+        
+        // do zabawa z pdf - proof'em
+        public function findCard4proofCheck( $id = NULL ) {
+		
+		if( $id ) {
+                    $this->Behaviors->attach('Containable');
+                    $otions = array(
+                            'conditions' => array('Card.' . $this->primaryKey => $id),
+                            'fields' => array('Card.id', 'Card.user_id', 'Card.name', 'Card.status'),
+                            'contain' => array(
+                                'Order.id', 'Order.nr', 'Order.status'
+                            )
+                    );
+                    $karta = $this->find('first', $otions);
+                    return $karta;
+                }
+                //return array('hue' => 'kwe');
+		return null;
+	}
 	
 	public function findPropperUploads() {
 		
