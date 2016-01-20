@@ -9,6 +9,7 @@
         <p></p>
         <i class="fa fa-lock"></i>
         <i class="fa fa-unlock"></i>
+        <i class="fa fa-spinner fa-pulse"></i>
     </div>
     <?php
         echo $this->Proof->topTable( $comm ); 

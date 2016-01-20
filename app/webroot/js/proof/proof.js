@@ -12,15 +12,37 @@ function refreshProofData( callBack ) {
     /* myBase to zmienna generowana w nagłówku przez $this->webroot 
      pieprzony get robi cache i jak strona się ładuje z cacha, to skurczybyk
      się z serwerem nie kontaktuje i dlatego ten parametr potrzebny */
+    loadingON(); // włącz kręciołe
     var posting = $.post( myBase + "cards/editable.json", { 
         "_": $.now(),
         "id": model.Proof.card_id
     });
     
     posting.done(function( dane ) {   
+        console.log('done');
         callBack( dane ); // w zależności od stanu ustawiamy możliwość edycji lub jej brak        
     });
+    
+    posting.fail(function( dane ) {
+        console.log('fail');
+    });
+    
+    posting.always(function( dane ) {
+        loadingOFF();
+        console.log('always');
+        if( posting.status === 403) { // traktujemy to, że użytkownik nie jest zalogowany
+            // przekierowujemy do logowania
+            location.assign(myBase + 'users/login');
+        }
+    });
+    
 }
+
+// kręcioła
+// włącz 
+function loadingON() {  $('#proof-preview').addClass('loading'); }
+// wyłącz
+function loadingOFF() { $('#proof-preview').removeClass('loading'); }
 
 function setKlik4Klodka() {
     
@@ -33,6 +55,7 @@ function setKlik4Klodka() {
 function setEditableOrNot( info ) {
     /* info to dane zasysnięte z serwera o stałej strukturze */
     //console.log(info.editable);
+    loadingOFF(); // wyłącz kręciołe
     if( info.editable ) {   
         //console.log('dozwolona');
         setEdycjaDozwolona();        

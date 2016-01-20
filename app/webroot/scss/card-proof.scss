@@ -57,17 +57,20 @@ table.proof1 {
 
 $zielona-klodka: green;
 $czerwona-klodka: red;
+$kolor-kreciola: grey;
 
 .edit-no #panel {  color: $czerwona-klodka; }
 .edit-yes #panel {  color: $zielona-klodka; }
+.loading #panel i.fa-spinner {  color: $kolor-kreciola; }
 
 // mozna klikać w kłódkę
 //.edit-yes i { cursor: pointer; }
 #panel > i { cursor: pointer; }
 
 //mamy obie kłódki, ale widoczna jest tylko ta odpowiednia
-.locked i.fa-unlock { display: none;} 
-.unlocked i.fa-lock { display: none;} 
+.locked i.fa-unlock, .unlocked i.fa-lock, i.fa-spinner,
+.loading i.fa-unlock, .loading i.fa-lock { display: none;} 
+.loading i.fa-spinner { display: inline-block;} 
 
 #panel > p {
     border: 1px solid grey;
