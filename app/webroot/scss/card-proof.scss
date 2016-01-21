@@ -71,6 +71,7 @@ $kolor-kreciola: grey;
 .locked i.fa-unlock, .unlocked i.fa-lock, i.fa-spinner,
 .loading i.fa-unlock, .loading i.fa-lock { display: none;} 
 .loading i.fa-spinner { display: inline-block;} 
+i.fa-lock { margin-right: 0.3em; }
 
 #panel > p {
     border: 1px solid grey;
@@ -87,3 +88,10 @@ $kolor-kreciola: grey;
 
 .en #panel > p { background-image: url("../img/proof/en32.png");}
 .pl #panel > p { background-image: url("../img/proof/pl32.png");}
+
+$ff-rozmiar: 14px;
+
+// FORMULARZ
+#proof-form { font-size: $ff-rozmiar; }
+
+#proof-form #ProofUpdateForm input { padding: 0.4em 1em; }

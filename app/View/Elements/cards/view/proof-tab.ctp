@@ -17,5 +17,10 @@
     
 </div>
 <?php
+// Formularz proofa
+echo $this->element('cards/view/proof-form', array(
+    //'card' => $card['Card'],
+    //'vju' => $vju
+)); 
 $this->Proof->printR($proof);
 echo "\nlang = $lang";

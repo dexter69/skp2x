@@ -58,7 +58,7 @@ echo $this->element('cards/view/head', array('title' => $card['Card']['name']));
 <div id="datepicker"></div><div id="komunikat"></div>
 
 <?php 
-$this->Proof->printR($card['Card']);
+$this->Proof->printR($card);
 //$this->Ma->kontrolka($card, $evcontrol);	?>
 
 <script>

@@ -34,7 +34,7 @@ class ProofHelper extends AppHelper {
             'Proof' => array(
                 'id'  => $proof['id'],
                 'card_id' => $karta['id'],
-                'customer_nr' => $proof['customer_nr']
+                'customer_nr' => $karta['customer_nr']
             )
             ); 
         
@@ -78,7 +78,7 @@ class ProofHelper extends AppHelper {
             'handlowe' => $this->nrHandlowego($karta),
             'ilosc' => $this->ileKart($karta),
             'cena' => $this->cenaKarty($karta),
-            'customer_nr' => $karta['Proof']['customer_nr'],
+            'customer_nr' => $karta['Card']['customer_nr'],
             'waluta' => $karta['Customer']['waluta'],
             'lang' => $karta['Customer']['proof-lang']
         );
