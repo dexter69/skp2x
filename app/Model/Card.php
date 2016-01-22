@@ -268,14 +268,14 @@ class Card extends AppModel {
 		
 		if( $id ) {
                     $this->Behaviors->attach('Containable');
-                    $otions = array(
+                    $options = array(
                             'conditions' => array('Card.' . $this->primaryKey => $id),
                             'fields' => array('Card.id', 'Card.user_id', 'Card.name', 'Card.status'),
                             'contain' => array(
                                 'Order.id', 'Order.nr', 'Order.status'
                             )
                     );
-                    $karta = $this->find('first', $otions);
+                    $karta = $this->find('first', $options);
                     return $karta;
                 }
                 //return array('hue' => 'kwe');
@@ -1064,16 +1064,16 @@ class Card extends AppModel {
                                                         'default' => 0 //
                                                 ),
                 'ksztalt'=>	array( 
-                                                        //'label' => 'PASEK DO PODPISU',
-                                                        //'div' => array('id' => 'user_id_div'),
-                                                        'options' => array(
-                                                                                        '0'	=>	'STANDARD',
-                                                                                        '2'	=>	'"2+1"',
-                                                                                        '3' =>	'"Brelokx3"',
-                                                                                        '1'	=>	'INNY'
-                                                                                ), 
-                                                        'default' => 0 //
-                                                ),
+                                    //'label' => 'PASEK DO PODPISU',
+                                    //'div' => array('id' => 'user_id_div'),
+                                    'options' => array(
+                                                    '0'	=>	'STANDARD',
+                                                    '2'	=>	'"2+1"',
+                                                    '3' =>	'"Brelokx3"',
+                                                    '1'	=>	'INNY'
+                                                    ), 
+                                    'default' => 0 //
+                                    ),
                 'hologram' =>	array(	//'label' => 'PERSONALIZACJA', 
                                                                 //'div'  => array('id'=>'..'),
                                                                 //'type' => 'text',

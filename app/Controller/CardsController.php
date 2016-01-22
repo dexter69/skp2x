@@ -522,7 +522,7 @@ class CardsController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
-        // via ajax sprawdzamy, czy kartę można edytować
+        // via ajax zasysamy dane i sprawdzamy, czy kartę można edytować
         public function editable() {
             
             // $this->request->data['id'] - id karty

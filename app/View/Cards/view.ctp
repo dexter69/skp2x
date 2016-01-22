@@ -42,10 +42,11 @@ echo $this->element('cards/view/head', array('title' => $card['Card']['name']));
         <div id="proof-tab"><?php
             echo $this->element('cards/view/proof-tab', array(
                 'card' => $card['Card'],
-                /*'vju' => $vju,*/
+                'vju' => $vju,
                 'comm' => $comm,
                 'proof' => $card['Proof'],
                 'lang' => $card['Customer']['proof-lang'],
+                'waluta' => $card['Customer']['waluta'],
                 'locked' => true, // to zawsze niech bedzie przy defaultowym ładowaniu
                 'editable' => false /*zawsze na wszelki wypadek, a po sprawdzeniu ajaxem
                  zmieniamy to ewentualnie*/

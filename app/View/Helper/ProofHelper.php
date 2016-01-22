@@ -28,21 +28,61 @@ class ProofHelper extends AppHelper {
     }
     
     // setup JS code - dane, powiązania dom ze zmiennymi bazy itp.
-    public function setupJsCode( $proof = array(), $karta = array() ) {
+    public function setupJsCode($proof = array(), $karta = array(),
+                                $currency = 'PLN',$wju = array(), $jazyk = 0 ) {
         
-        $tab = array(
+        if( $karta['ksztalt'] ) { //znaczy, że kształt jest niestandardowy
+            $size = null;    }
+        else {
+            $size = $proof['size'];  }
+        if( $proof['id'] ) { // tzn. ze istnieje wpos w bazie
+            $kolory = array('a' => $proof['a_kolor'], 'r' => $proof['r_kolor']);
+            $waluta = $proof['waluta'];
+        }
+        else { // nie, to będzie (ewentualnie) nowy proof
+            $kolory = $this->proofKolor( $karta, $wju, $jazyk);
+            $waluta = $currency; } // waluta z profilu klienta
+        $model = array(
             'Proof' => array(
                 'id'  => $proof['id'],
                 'card_id' => $karta['id'],
-                'customer_nr' => $karta['customer_nr']
+                'customer_nr' => $karta['customer_nr'],
+                'waluta' => $waluta,
+                'a_kolor' => $kolory['a'],
+                'r_kolor' => $kolory['r'],
+                'size' => $size,
+                'uwagi' => $proof['uwagi'],
+            ),
+            'bind' => array(    // "połączenia" z elementami widoku i formularza
+                'view' => array(),
+                'edit'  => array()
             )
             ); 
         
-        
-        $jcode =  "var model =  " . json_encode( $tab );
+        $jcode =  "var model =  " . json_encode( $model );
         $this->Html->scriptBlock($jcode, array('block' => 'scriptBottom'));
         echo $this->Html->script(array('proof/proof'), array('block' => 'scriptBottom'));
     }
+    
+    private function proofKolor( $card = array(), $vju = array(), $lang = 0) {
+        
+        $word = ($lang ? 'pantons' : 'pantony');  //$lang != 0 - język angielski
+        $ret = array();
+        
+        $ret['a'] = $vju['x_c']['options'][$card['a_c']].
+                    $vju['x_m']['options'][$card['a_m']].
+                    $vju['x_y']['options'][$card['a_y']].
+                    $vju['x_k']['options'][$card['a_k']];
+        if( $card['a_pant'] ) { $ret['a'] .= ", $word: " . $card['a_pant']; }
+        
+        $ret['r'] = $vju['x_c']['options'][$card['r_c']].
+                    $vju['x_m']['options'][$card['r_m']].
+                    $vju['x_y']['options'][$card['r_y']].
+                    $vju['x_k']['options'][$card['r_k']];        
+        if( $card['r_pant'] ) { $ret['r'] .= ", $word: " . $card['r_pant']; }
+        
+        return $ret;
+    }    
     
     // górna tabela
     public function topTable( $dane = array()) {

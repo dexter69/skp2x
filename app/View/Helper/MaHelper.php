@@ -1394,21 +1394,21 @@ class MaHelper extends AppHelper {
 
 	public function make_options( $vju = array() ) {
 		
-		$markup =
-			$this->Html->tag('div', null, array('class' => 'optiondiv')) .
-				$this->Form->input('Card.mag',$vju['mag']) .
-				$this->Form->input('Card.wzor',$vju['wzor']) .
-				$this->Form->input('Card.chip',$vju['chip']) .
-			$this->Html->tag('/div') .
-			$this->Html->tag('div', null, array('class' => 'optiondiv')) .
-				$this->Form->input('Card.dziurka',$vju['dziurka']) .
-				$this->Form->input('Card.ksztalt',$vju['ksztalt']) .
-				$this->Form->input('Card.hologram',$vju['hologram']) .
-			$this->Html->tag('/div') .
-			$this->Html->tag('div', null, array('class' => 'optiondiv')) .
-				$this->Form->input('Card.option_comment',$vju['option_comment']) .
-			$this->Html->tag('/div');
-		return $markup;
+            $markup =
+                $this->Html->tag('div', null, array('class' => 'optiondiv')) .
+                        $this->Form->input('Card.mag',$vju['mag']) .
+                        $this->Form->input('Card.wzor',$vju['wzor']) .
+                        $this->Form->input('Card.chip',$vju['chip']) .
+                $this->Html->tag('/div') .
+                $this->Html->tag('div', null, array('class' => 'optiondiv')) .
+                        $this->Form->input('Card.dziurka',$vju['dziurka']) .
+                        $this->Form->input('Card.ksztalt',$vju['ksztalt']) .
+                        $this->Form->input('Card.hologram',$vju['hologram']) .
+                $this->Html->tag('/div') .
+                $this->Html->tag('div', null, array('class' => 'optiondiv')) .
+                        $this->Form->input('Card.option_comment',$vju['option_comment']) .
+                $this->Html->tag('/div');
+            return $markup;
 	}
 	
 	
