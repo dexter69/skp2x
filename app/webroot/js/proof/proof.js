@@ -1,6 +1,6 @@
 var tenSelektor = '#proof-preview';
 $(function() {
-    console.log(model);
+    console.log('model = ', model);
     //log('start');
     refreshProofData( setEditableOrNot );    
     setKlik4Klodka();
@@ -19,23 +19,39 @@ function refreshProofData( callBack ) {
     });
     
     posting.done(function( dane ) {   
-        console.log('done');
+        //console.log('done');        
+        updateModel(dane); // uaktualnij model "proofa" - czyli element łączący kartę/proofa
         callBack( dane ); // w zależności od stanu ustawiamy możliwość edycji lub jej brak        
     });
     
     posting.fail(function( dane ) {
-        console.log('fail');
+        //console.log('fail');
     });
     
     posting.always(function( dane ) {
         loadingOFF();
-        console.log('always');
+        //console.log('always');
+        //console.log('dane = ', dane)
         if( posting.status === 403) { // traktujemy to, że użytkownik nie jest zalogowany
             // przekierowujemy do logowania
             location.assign(myBase + 'users/login');
         }
     });
     
+}
+
+// uaktualnij js-owy model proofa
+function updateModel( server_data ) {
+    
+    var proof = server_data.dane.Proof;
+    
+    console.log('dane = ', server_data);
+    console.log('proof = ', proof);
+    if( proof.id ) { // znaczy są jakieś dane w bazie
+        console.log('jes!');
+    } else {
+        console.log('ni ma!');
+    }
 }
 
 // kręcioła
@@ -55,7 +71,7 @@ function setKlik4Klodka() {
 function setEditableOrNot( info ) {
     /* info to dane zasysnięte z serwera o stałej strukturze */
     //console.log(info.editable);
-    loadingOFF(); // wyłącz kręciołe
+    
     if( info.editable ) {   
         //console.log('dozwolona');
         setEdycjaDozwolona();        

@@ -272,7 +272,8 @@ class Card extends AppModel {
                             'conditions' => array('Card.' . $this->primaryKey => $id),
                             'fields' => array('Card.id', 'Card.user_id', 'Card.name', 'Card.status'),
                             'contain' => array(
-                                'Order.id', 'Order.nr', 'Order.status'
+                                'Order.id', 'Order.nr', 'Order.status',
+                                'Proof.id', 'Proof.waluta'
                             )
                     );
                     $karta = $this->find('first', $options);

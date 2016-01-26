@@ -31,17 +31,25 @@ class ProofHelper extends AppHelper {
     public function setupJsCode($proof = array(), $karta = array(),
                                 $currency = 'PLN',$wju = array(), $jazyk = 0 ) {
         
-        if( $karta['ksztalt'] ) { //znaczy, że kształt jest niestandardowy
-            $size = null;    }
-        else {
-            $size = $proof['size'];  }
-        if( $proof['id'] ) { // tzn. ze istnieje wpos w bazie
-            $kolory = array('a' => $proof['a_kolor'], 'r' => $proof['r_kolor']);
-            $waluta = $proof['waluta'];
-        }
-        else { // nie, to będzie (ewentualnie) nowy proof
-            $kolory = $this->proofKolor( $karta, $wju, $jazyk);
-            $waluta = $currency; } // waluta z profilu klienta
+        // Założenie: defaultowe wartości pól dla proof'a są null (za wyjątkiem size)
+        if( $proof['size'] ) { // wpis w bazie już istnieje
+            $size = $proof['size']; }
+        else { // $karta['ksztalt'] > 0 znaczy, że kształt jest niestandardowy
+            $size = ( $karta['ksztalt'] ? null : $proof['size']);}
+        $kolory = array();
+        $kolory['a'] = ( $proof['a_kolor'] ? $proof['a_kolor'] : $this->proofKolor('a', $karta, $wju, $jazyk) );
+        $kolory['r'] = ( $proof['r_kolor'] ? $proof['r_kolor'] : $this->proofKolor('r', $karta, $wju, $jazyk) );
+        $waluta = ( $proof['waluta'] ? $proof['waluta'] : $currency);
+        
+        $model = $this->setModel($proof, $karta, $waluta, $kolory, $size);
+        
+        $jcode =  "var model =  " . json_encode( $model );
+        $this->Html->scriptBlock($jcode, array('block' => 'scriptBottom'));
+        echo $this->Html->script(array('proof/proof'), array('block' => 'scriptBottom'));
+    }
+    
+    private function setModel($proof, $karta, $waluta, $kolory, $size) {
+        
         $model = array(
             'Proof' => array(
                 'id'  => $proof['id'],
@@ -57,32 +65,28 @@ class ProofHelper extends AppHelper {
                 'view' => array(),
                 'edit'  => array()
             )
-            ); 
-        
-        $jcode =  "var model =  " . json_encode( $model );
-        $this->Html->scriptBlock($jcode, array('block' => 'scriptBottom'));
-        echo $this->Html->script(array('proof/proof'), array('block' => 'scriptBottom'));
+        ); 
+        return $model;
     }
     
-    private function proofKolor( $card = array(), $vju = array(), $lang = 0) {
+    private function proofKolor( $ar, $card = array(), $vju = array(), $lang = 0) {
         
         $word = ($lang ? 'pantons' : 'pantony');  //$lang != 0 - język angielski
-        $ret = array();
-        
-        $ret['a'] = $vju['x_c']['options'][$card['a_c']].
+        $ret = null;
+        if( $ar == 'a' ) {
+            $ret =  $vju['x_c']['options'][$card['a_c']].
                     $vju['x_m']['options'][$card['a_m']].
                     $vju['x_y']['options'][$card['a_y']].
                     $vju['x_k']['options'][$card['a_k']];
-        if( $card['a_pant'] ) { $ret['a'] .= ", $word: " . $card['a_pant']; }
-        
-        $ret['r'] = $vju['x_c']['options'][$card['r_c']].
+            if( $card['a_pant'] ) { $ret .= ", $word: " . $card['a_pant']; }}
+        else {
+            $ret =  $vju['x_c']['options'][$card['r_c']].
                     $vju['x_m']['options'][$card['r_m']].
                     $vju['x_y']['options'][$card['r_y']].
                     $vju['x_k']['options'][$card['r_k']];        
-        if( $card['r_pant'] ) { $ret['r'] .= ", $word: " . $card['r_pant']; }
-        
+            if( $card['r_pant'] ) { $ret .= ", $word: " . $card['r_pant']; }}
         return $ret;
-    }    
+    }
     
     // górna tabela
     public function topTable( $dane = array()) {
