@@ -1,5 +1,7 @@
 <?php 
-echo $this->element('cards/view/head', array('title' => $card['Card']['name'])); ?>
+echo $this->element('cards/view/head', array(
+    'title' => $card['Card']['name'],
+    'card_id' => $card['Card']['id']    )); ?>
 
 <div id="kartview" class="cards view">
     <?php

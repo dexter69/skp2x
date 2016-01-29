@@ -536,10 +536,24 @@ class CardsController extends AppController {
             );            
             $this->set(array(
                 'answer' => $answer,
-                '_serialize' => 'answer'
+                //'_serialize' => 'answer' //to używamy, gdy nie chcemy view (tu editable.ctp)
             ));
             //sleep(1);
 	} 
+        
+        public function tmp($id = null) {
+            
+            $dane = $this->Card->findCard4proofCheck( $id );
+            
+            $answer = array(
+                'editable' => $this->isEdycjaKartyOK($dane['Card']['user_id'], $dane['Card']['status'], $dane['Order']['status']),
+                //'editable' => false,
+                'uid' => $this->Auth->user('id'),
+                'dane' => $dane
+            );            
+            $this->set(array(
+                'answer' => $answer,));
+	}
         
         private function isEdycjaKartyOK( $c_user_id = null, $c_status = null, $o_status = null ) {
             

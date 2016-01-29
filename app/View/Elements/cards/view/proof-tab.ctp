@@ -1,7 +1,7 @@
 <?php
     // Wygląd podglądu proof'a w zależności od parametrów            
     $par = $this->Proof->parametry( $lang, $locked, $editable);
-    $this->Proof->setupJsCode($proof, $card, $waluta, $vju, $lang);
+    //$this->Proof->setupJsCode($proof, $card, $waluta, $vju, $lang);
     
 ?>
 <div id="proof-preview" <?php echo $par['class']; ?>>

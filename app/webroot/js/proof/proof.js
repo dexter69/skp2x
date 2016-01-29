@@ -1,10 +1,11 @@
 var tenSelektor = '#proof-preview';
+var model = {};
 $(function() {
-    console.log('model = ', model);
+    //console.log('model = ', model);
     //log('start');
     refreshProofData( setEditableOrNot );    
     setKlik4Klodka();
-  });
+});
 
 /* zasysnij swieze dane i gdy sukces, to wywołaj callback function */
 function refreshProofData( callBack ) {
@@ -12,10 +13,10 @@ function refreshProofData( callBack ) {
     /* myBase to zmienna generowana w nagłówku przez $this->webroot 
      pieprzony get robi cache i jak strona się ładuje z cacha, to skurczybyk
      się z serwerem nie kontaktuje i dlatego ten parametr potrzebny */
-    loadingON(); // włącz kręciołe
+    loadingON(); // włącz kręciołę
     var posting = $.post( myBase + "cards/editable.json", { 
         "_": $.now(),
-        "id": model.Proof.card_id
+        "id": card_id
     });
     
     posting.done(function( dane ) {   
@@ -44,9 +45,19 @@ function refreshProofData( callBack ) {
 function updateModel( server_data ) {
     
     var proof = server_data.dane.Proof;
-    
+    var karta = server_data.dane.Card;    
+    var znak = (server_data.dane.Customer['proof-lang'] === '1') ? '.' : ',';
+    var size;
     console.log('dane = ', server_data);
     console.log('proof = ', proof);
+    console.log('karta = ', karta);
+    
+    if( proof['size'] ) { // wpis w bazie już istnieje
+        model.Proof.size = size = proof['size']; }
+    else { // $karta['ksztalt'] > 0 znaczy, że kształt jest niestandardowy
+        model.Proof.size = size = (karta['ksztalt'] !== '0') ? null : "85 x 54 x 0" + znak + "76 mm"; }    
+    
+    
     if( proof.id ) { // znaczy są jakieś dane w bazie
         console.log('jes!');
     } else {

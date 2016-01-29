@@ -31,11 +31,34 @@ class ProofHelper extends AppHelper {
     public function setupJsCode($proof = array(), $karta = array(),
                                 $currency = 'PLN',$wju = array(), $jazyk = 0 ) {
         
+        $string = ($jazyk ? '85 x 54 x 0.76 mm' : '85 x 54 x 0,76 mm');
         // Założenie: defaultowe wartości pól dla proof'a są null (za wyjątkiem size)
         if( $proof['size'] ) { // wpis w bazie już istnieje
             $size = $proof['size']; }
         else { // $karta['ksztalt'] > 0 znaczy, że kształt jest niestandardowy
-            $size = ( $karta['ksztalt'] ? null : $proof['size']);}
+            $size = ( $karta['ksztalt'] ? null : $string);}
+        $kolory = array();
+        $kolory['a'] = ( $proof['a_kolor'] ? $proof['a_kolor'] : $this->proofKolor('a', $karta, $wju, $jazyk) );
+        $kolory['r'] = ( $proof['r_kolor'] ? $proof['r_kolor'] : $this->proofKolor('r', $karta, $wju, $jazyk) );
+        $waluta = ( $proof['waluta'] ? $proof['waluta'] : $currency);
+        
+        /*
+        $model = $this->setModel($proof, $karta, $waluta, $kolory, $size);
+        
+        $jcode =  "var model =  " . json_encode( $model );
+        */
+    }
+    
+    // setup JS code - dane, powiązania dom ze zmiennymi bazy itp.
+    public function setupJsCode2($proof = array(), $karta = array(),
+                                $currency = 'PLN',$wju = array(), $jazyk = 0 ) {
+        
+        $string = ($jazyk ? '85 x 54 x 0.76 mm' : '85 x 54 x 0,76 mm');
+        // Założenie: defaultowe wartości pól dla proof'a są null (za wyjątkiem size)
+        if( $proof['size'] ) { // wpis w bazie już istnieje
+            $size = $proof['size']; }
+        else { // $karta['ksztalt'] > 0 znaczy, że kształt jest niestandardowy
+            $size = ( $karta['ksztalt'] ? null : $string);}
         $kolory = array();
         $kolory['a'] = ( $proof['a_kolor'] ? $proof['a_kolor'] : $this->proofKolor('a', $karta, $wju, $jazyk) );
         $kolory['r'] = ( $proof['r_kolor'] ? $proof['r_kolor'] : $this->proofKolor('r', $karta, $wju, $jazyk) );

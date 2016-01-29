@@ -270,18 +270,32 @@ class Card extends AppModel {
                     $this->Behaviors->attach('Containable');
                     $options = array(
                             'conditions' => array('Card.' . $this->primaryKey => $id),
-                            'fields' => array('Card.id', 'Card.user_id', 'Card.name', 'Card.status'),
+                            'fields' => array(
+                                        'Card.id', 'Card.user_id', 'Card.name',
+                                        'Card.status', 'Card.ksztalt'),
                             'contain' => array(
                                 'Order.id', 'Order.nr', 'Order.status',
-                                'Proof.id', 'Proof.waluta'
+                                'Proof.id', 'Proof.waluta', 'Proof.a_kolor',
+                                'Proof.r_kolor', 'Proof.size', 'Proof.uwagi',
+                                'Customer.proof-lang', 'Customer.waluta'
                             )
                     );
                     $karta = $this->find('first', $options);
+                    $karta['vju'] = $this->setViews4Proof();
                     return $karta;
                 }
-                //return array('hue' => 'kwe');
 		return null;
 	}
+        
+        private function setViews4Proof() {
+            
+            return array(
+                'x_c' => $this->view_options['x_c']['options'],
+                'x_m' => $this->view_options['x_m']['options'],
+                'x_y' => $this->view_options['x_y']['options'],
+                'x_k' => $this->view_options['x_k']['options']
+            );
+        }
 	
 	public function findPropperUploads() {
 		
