@@ -4,7 +4,10 @@ $(function() {
     //console.log('model = ', model);
     //log('start');
     refreshProofData( setEditableOrNot );    
-    setKlik4Klodka();
+    $("#panel > i").click(function(){        
+        //console.log(stanKlodki());
+        refreshProofData( klikService );
+    });
 });
 
 /* zasysnij swieze dane i gdy sukces, to wywołaj callback function */
@@ -13,23 +16,25 @@ function refreshProofData( callBack ) {
     /* myBase to zmienna generowana w nagłówku przez $this->webroot 
      pieprzony get robi cache i jak strona się ładuje z cacha, to skurczybyk
      się z serwerem nie kontaktuje i dlatego ten parametr potrzebny */
+    
     loadingON(); // włącz kręciołę
     var posting = $.post( myBase + "cards/editable.json", { 
         "_": $.now(),
         "id": card_id
     });
     
-    posting.done(function( dane ) {   
-        //console.log('done');        
-        updateModel(dane); // uaktualnij model "proofa" - czyli element łączący kartę/proofa
-        callBack( dane ); // w zależności od stanu ustawiamy możliwość edycji lub jej brak        
+    posting.done(function( answer ) {   
+        //console.log('done');   
+        model = answer.dane.model; // uaktualnij model "proofa" - czyli element łączący kartę/proofa
+        console.log('model = ', model);
+        callBack( answer ); // w zależności od stanu ustawiamy możliwość edycji lub jej brak        
     });
     
-    posting.fail(function( dane ) {
+    posting.fail(function( answer ) {
         //console.log('fail');
     });
     
-    posting.always(function( dane ) {
+    posting.always(function( answer ) {
         loadingOFF();
         //console.log('always');
         //console.log('dane = ', dane)
@@ -38,31 +43,6 @@ function refreshProofData( callBack ) {
             location.assign(myBase + 'users/login');
         }
     });
-    
-}
-
-// uaktualnij js-owy model proofa
-function updateModel( server_data ) {
-    
-    var proof = server_data.dane.Proof;
-    var karta = server_data.dane.Card;    
-    var znak = (server_data.dane.Customer['proof-lang'] === '1') ? '.' : ',';
-    var size;
-    console.log('dane = ', server_data);
-    console.log('proof = ', proof);
-    console.log('karta = ', karta);
-    
-    if( proof['size'] ) { // wpis w bazie już istnieje
-        model.Proof.size = size = proof['size']; }
-    else { // $karta['ksztalt'] > 0 znaczy, że kształt jest niestandardowy
-        model.Proof.size = size = (karta['ksztalt'] !== '0') ? null : "85 x 54 x 0" + znak + "76 mm"; }    
-    
-    
-    if( proof.id ) { // znaczy są jakieś dane w bazie
-        console.log('jes!');
-    } else {
-        console.log('ni ma!');
-    }
 }
 
 // kręcioła
@@ -70,14 +50,6 @@ function updateModel( server_data ) {
 function loadingON() {  $('#proof-preview').addClass('loading'); }
 // wyłącz
 function loadingOFF() { $('#proof-preview').removeClass('loading'); }
-
-function setKlik4Klodka() {
-    
-    $("#panel > i").click(function(){        
-        //console.log(stanKlodki());
-        refreshProofData( klikService );
-    });
-}
 
 function setEditableOrNot( info ) {
     /* info to dane zasysnięte z serwera o stałej strukturze */
@@ -97,19 +69,26 @@ function klikService( info ) {
     // info to dane zasysnięte z serwera o stałej strukturze 
     switch( stanKlodki() ) { // stan klodki na stronie, NIE na serwerze!
         case 'czerwona':  // zamknięta i czerwona
-            if( info.editable ) {
+            if( model.editable ) {
                 // zmień kłudkę na zieloną
                 setEdycjaDozwolona(); 
             }
             break;
         case 'zamknieta': // zamknięta i zielona
-            if( info.editable ) {
-                openTheLock(); // otwiera kłódkę i czyni odpowiednie pola edytowalne
-            } else { // zrób czerwoną
+            if( model.editable ) {
+                openTheLock(); }// otwiera kłódkę i czyni odpowiednie pola edytowalne
+            else { // zrób czerwoną
                 setEdycjaZabroniona(); }
             break; 
         case 'otwarta': // otwarta i zielona
-            if( info.editable ) { // zapisz dane i zamknij kłudkę
+            /* - Sprawdź czy coś zostało zmienione (formularz różny od danych modelu)
+             * - NIE: po prostu zamknij kłudkę
+             * - TAK: 
+             *      - Uzupełnij model danymi z formularza
+             *      - Zapisz model w bazie danych
+             *      - Zamknij kłudkę
+             */
+            if( model.editable ) { // zapisz dane i zamknij kłudkę
                 closeTheLock();
             } else { // zrób czerwoną i komunikat o niemożności zapisania
                 swapLock();
@@ -123,7 +102,12 @@ function klikService( info ) {
 }
 
 function openTheLock() {    
-    swapLock();
+    swapLock(); // Otwórz kłudkę, gdy zamknięta. Zamknij gdy otwarta.
+    setContentEditable(true);
+}
+
+function openTheLockDeprec() {    
+    swapLock(); // Otwórz kłudkę, gdy zamknięta. Zamknij gdy otwarta.
     setContentEditable(true);
 }
 
@@ -134,6 +118,7 @@ function closeTheLock() {
 }
 
 // pola z klasą .pedit ustawiamy na contenteditable=true
+// do wyrzucenia, gdy przejdziemy na formularz
 function setContentEditable(yes_or_no) {
     
     $('#proof-preview .pedit').each(function(){
@@ -141,6 +126,7 @@ function setContentEditable(yes_or_no) {
     });
 }
 
+// Otwórz kłudkę, gdy zamknięta. Zamknij gdy otwarta.
 function swapLock() {
     $('#proof-preview').toggleClass('locked');
     $('#proof-preview').toggleClass('unlocked');
@@ -225,4 +211,33 @@ function setupKlodka() {
     });
 }
 
+// po kliknięciu w kłudkę i odświerzeniu danych Proof'a robimy obsługę tego kliknięcia
+function klikService2( info ) {
+    // info to dane zasysnięte z serwera o stałej strukturze 
+    switch( stanKlodki() ) { // stan klodki na stronie, NIE na serwerze!
+        case 'czerwona':  // zamknięta i czerwona
+            if( info.editable ) {
+                // zmień kłudkę na zieloną
+                setEdycjaDozwolona(); 
+            }
+            break;
+        case 'zamknieta': // zamknięta i zielona
+            if( info.editable ) {
+                openTheLock(); }// otwiera kłódkę i czyni odpowiednie pola edytowalne
+            else { // zrób czerwoną
+                setEdycjaZabroniona(); }
+            break; 
+        case 'otwarta': // otwarta i zielona
+            if( info.editable ) { // zapisz dane i zamknij kłudkę
+                closeTheLock();
+            } else { // zrób czerwoną i komunikat o niemożności zapisania
+                swapLock();
+                setEdycjaZabroniona();
+                console.log('Edycja nie jest dozwolona, nie zapisano danych!');
+            }
+            break;
+        default: // inny przypadek, czyli błąd! - wyświetl komunikat
+            console.log('pieprzony blad!');
+    }
+}
 

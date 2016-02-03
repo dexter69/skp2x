@@ -13,6 +13,7 @@
     </div>
     <?php
         echo $this->Proof->topTable( $comm ); 
+        echo $this->element('cards/view/proof-view');
         // Formularz proofa
         echo $this->element('cards/view/proof-form', array(
             //'card' => $card['Card'],

@@ -536,7 +536,7 @@ class CardsController extends AppController {
             );            
             $this->set(array(
                 'answer' => $answer,
-                //'_serialize' => 'answer' //to używamy, gdy nie chcemy view (tu editable.ctp)
+                //'_serialize' => 'answer' //to używamy, gdy nie chcemy view (tu json/editable.ctp)
             ));
             //sleep(1);
 	} 

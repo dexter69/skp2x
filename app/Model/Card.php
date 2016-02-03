@@ -264,23 +264,27 @@ class Card extends AppModel {
 	}
         
         // do zabawa z pdf - proof'em
+        private $opcje = array(
+            'fields' => array(
+                    'Card.id', 'Card.user_id', 'Card.name',
+                    'Card.status', 'Card.ksztalt',
+                    'Card.a_c', 'Card.a_m', 'Card.a_y', 'Card.a_k',
+                    'Card.r_c', 'Card.r_m', 'Card.r_y', 'Card.r_k',
+                    'Card.a_pant', 'Card.r_pant', 'Card.customer_nr'),
+            'contain' => array(
+                'Order.id', 'Order.nr', 'Order.status',
+                'Proof.id', 'Proof.waluta', 'Proof.a_kolor',
+                'Proof.r_kolor', 'Proof.size', 'Proof.uwagi',
+                'Customer.proof-lang', 'Customer.waluta'
+            )
+        );
+        
         public function findCard4proofCheck( $id = NULL ) {
 		
 		if( $id ) {
-                    $this->Behaviors->attach('Containable');
-                    $options = array(
-                            'conditions' => array('Card.' . $this->primaryKey => $id),
-                            'fields' => array(
-                                        'Card.id', 'Card.user_id', 'Card.name',
-                                        'Card.status', 'Card.ksztalt'),
-                            'contain' => array(
-                                'Order.id', 'Order.nr', 'Order.status',
-                                'Proof.id', 'Proof.waluta', 'Proof.a_kolor',
-                                'Proof.r_kolor', 'Proof.size', 'Proof.uwagi',
-                                'Customer.proof-lang', 'Customer.waluta'
-                            )
-                    );
-                    $karta = $this->find('first', $options);
+                    $this->Behaviors->attach('Containable');                    
+                    $this->opcje['conditions'] = array('Card.' . $this->primaryKey => $id);
+                    $karta = $this->find('first', $this->opcje);
                     $karta['vju'] = $this->setViews4Proof();
                     return $karta;
                 }

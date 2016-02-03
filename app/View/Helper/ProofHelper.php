@@ -27,9 +27,9 @@ class ProofHelper extends AppHelper {
         );
     }
     
-    // setup JS code - dane, powiązania dom ze zmiennymi bazy itp.
-    public function setupJsCode($proof = array(), $karta = array(),
-                                $currency = 'PLN',$wju = array(), $jazyk = 0 ) {
+    // przygotuj model proofa - dane, powiązania dom ze zmiennymi bazy itp.
+    public function skomponujModel($proof = array(), $karta = array(),
+                                $currency = 'PLN', $wju = array(), $jazyk = 0 ) {
         
         $string = ($jazyk ? '85 x 54 x 0.76 mm' : '85 x 54 x 0,76 mm');
         // Założenie: defaultowe wartości pól dla proof'a są null (za wyjątkiem size)
@@ -42,33 +42,9 @@ class ProofHelper extends AppHelper {
         $kolory['r'] = ( $proof['r_kolor'] ? $proof['r_kolor'] : $this->proofKolor('r', $karta, $wju, $jazyk) );
         $waluta = ( $proof['waluta'] ? $proof['waluta'] : $currency);
         
-        /*
-        $model = $this->setModel($proof, $karta, $waluta, $kolory, $size);
         
-        $jcode =  "var model =  " . json_encode( $model );
-        */
-    }
-    
-    // setup JS code - dane, powiązania dom ze zmiennymi bazy itp.
-    public function setupJsCode2($proof = array(), $karta = array(),
-                                $currency = 'PLN',$wju = array(), $jazyk = 0 ) {
+        return $this->setModel($proof, $karta, $waluta, $kolory, $size);
         
-        $string = ($jazyk ? '85 x 54 x 0.76 mm' : '85 x 54 x 0,76 mm');
-        // Założenie: defaultowe wartości pól dla proof'a są null (za wyjątkiem size)
-        if( $proof['size'] ) { // wpis w bazie już istnieje
-            $size = $proof['size']; }
-        else { // $karta['ksztalt'] > 0 znaczy, że kształt jest niestandardowy
-            $size = ( $karta['ksztalt'] ? null : $string);}
-        $kolory = array();
-        $kolory['a'] = ( $proof['a_kolor'] ? $proof['a_kolor'] : $this->proofKolor('a', $karta, $wju, $jazyk) );
-        $kolory['r'] = ( $proof['r_kolor'] ? $proof['r_kolor'] : $this->proofKolor('r', $karta, $wju, $jazyk) );
-        $waluta = ( $proof['waluta'] ? $proof['waluta'] : $currency);
-        
-        $model = $this->setModel($proof, $karta, $waluta, $kolory, $size);
-        
-        $jcode =  "var model =  " . json_encode( $model );
-        $this->Html->scriptBlock($jcode, array('block' => 'scriptBottom'));
-        echo $this->Html->script(array('proof/proof'), array('block' => 'scriptBottom'));
     }
     
     private function setModel($proof, $karta, $waluta, $kolory, $size) {
@@ -97,16 +73,16 @@ class ProofHelper extends AppHelper {
         $word = ($lang ? 'pantons' : 'pantony');  //$lang != 0 - język angielski
         $ret = null;
         if( $ar == 'a' ) {
-            $ret =  $vju['x_c']['options'][$card['a_c']].
-                    $vju['x_m']['options'][$card['a_m']].
-                    $vju['x_y']['options'][$card['a_y']].
-                    $vju['x_k']['options'][$card['a_k']];
+            $ret =  $vju['x_c'][$card['a_c']].
+                    $vju['x_m'][$card['a_m']].
+                    $vju['x_y'][$card['a_y']].
+                    $vju['x_k'][$card['a_k']];
             if( $card['a_pant'] ) { $ret .= ", $word: " . $card['a_pant']; }}
         else {
-            $ret =  $vju['x_c']['options'][$card['r_c']].
-                    $vju['x_m']['options'][$card['r_m']].
-                    $vju['x_y']['options'][$card['r_y']].
-                    $vju['x_k']['options'][$card['r_k']];        
+            $ret =  $vju['x_c'][$card['r_c']].
+                    $vju['x_m'][$card['r_m']].
+                    $vju['x_y'][$card['r_y']].
+                    $vju['x_k'][$card['r_k']];        
             if( $card['r_pant'] ) { $ret .= ", $word: " . $card['r_pant']; }}
         return $ret;
     }
