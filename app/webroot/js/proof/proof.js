@@ -16,7 +16,7 @@ function refreshProofData( callBack ) {
     /* myBase to zmienna generowana w nagłówku przez $this->webroot 
      pieprzony get robi cache i jak strona się ładuje z cacha, to skurczybyk
      się z serwerem nie kontaktuje i dlatego ten parametr potrzebny */
-    
+    console.log('myBase = ', myBase);
     loadingON(); // włącz kręciołę
     var posting = $.post( myBase + "cards/editable.json", { 
         "_": $.now(),
@@ -64,17 +64,23 @@ function setEditableOrNot( info ) {
     } 
 }
 
+function updateView() { // uaktualnij widok danymi z modelu
+    
+}
+
 // po kliknięciu w kłudkę i odświerzeniu danych Proof'a robimy obsługę tego kliknięcia
 function klikService( info ) {
     // info to dane zasysnięte z serwera o stałej strukturze 
     switch( stanKlodki() ) { // stan klodki na stronie, NIE na serwerze!
         case 'czerwona':  // zamknięta i czerwona
+            updateView(); // uaktualnij widok danymi z modelu
             if( model.editable ) {
                 // zmień kłudkę na zieloną
                 setEdycjaDozwolona(); 
             }
             break;
         case 'zamknieta': // zamknięta i zielona
+            updateView(); // uaktualnij widok danymi z modelu
             if( model.editable ) {
                 openTheLock(); }// otwiera kłódkę i czyni odpowiednie pola edytowalne
             else { // zrób czerwoną
