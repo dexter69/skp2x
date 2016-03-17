@@ -151,6 +151,9 @@ if( DS == WIN) { // We are on Windows!
  * 
  */
 
+// Tymczasowo do włączania/wyłączania rozgrzebanego proofa'a
+define('OLD_PDF_PROOF', false);
+
 //MATERIAŁ KART
 define('PVC', 1);    // STANDARD PVC
 define('BIO', 2);    // BIO PVC

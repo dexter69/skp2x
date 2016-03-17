@@ -1,4 +1,7 @@
 <?php 
+/*
+ * To jest jak było w trakcie rzogrzebanej pracy z proofem
+ */
 echo $this->element('cards/view/head', array(
     'title' => $card['Card']['name'],
     'card_id' => $card['Card']['id']    )); ?>
@@ -9,12 +12,10 @@ echo $this->element('cards/view/head', array(
         $comm = $this->Proof->wspolne($card);
     // Ten element dl ?>
     <div id="tabsy">
-        <!--
         <ul>
             <li><a href="#karta-tab">Karta</a></li>
             <li><a href="#proof-tab">Proof</a></li>
         </ul>
-        -->
         <div id="karta-tab">
         <?php
         echo $this->element('cards/view/dl', array(
@@ -44,19 +45,17 @@ echo $this->element('cards/view/head', array(
         $this->Ma->kontrolka($card, $evcontrol);?>
         </div>
         <div id="proof-tab"><?php
-            if( OLD_PDF_PROOF ) {
-                echo $this->element('cards/view/proof-tab', array(
-                    'card' => $card['Card'],
-                    'vju' => $vju,
-                    'comm' => $comm,
-                    'proof' => $card['Proof'],
-                    'lang' => $card['Customer']['proof-lang'],
-                    'waluta' => $card['Customer']['waluta'],
-                    'locked' => true, // to zawsze niech bedzie przy defaultowym ładowaniu
-                    'editable' => false /*zawsze na wszelki wypadek, a po sprawdzeniu ajaxem
-                     zmieniamy to ewentualnie*/
-                ));      
-            }
+            echo $this->element('cards/view/proof-tab', array(
+                'card' => $card['Card'],
+                'vju' => $vju,
+                'comm' => $comm,
+                'proof' => $card['Proof'],
+                'lang' => $card['Customer']['proof-lang'],
+                'waluta' => $card['Customer']['waluta'],
+                'locked' => true, // to zawsze niech bedzie przy defaultowym ładowaniu
+                'editable' => false /*zawsze na wszelki wypadek, a po sprawdzeniu ajaxem
+                 zmieniamy to ewentualnie*/
+            ));      
         ?>    
         </div>
     </div>
@@ -65,10 +64,14 @@ echo $this->element('cards/view/head', array(
 <div id="datepicker"></div><div id="komunikat"></div>
 
 <?php 
-//$this->Proof->printR($card);
+$this->Proof->printR($card);
 //$this->Ma->kontrolka($card, $evcontrol);	?>
 
-
+<script>
+  $(function() {
+    $( "#tabsy" ).tabs({active: 1});
+  });
+</script>
 
 
 

@@ -9,15 +9,18 @@
 //if( empty($card['Proof']) ) { echo 'EMPTY'; } else { echo 'NIE'; }
 //echo '<pre>';	print_r($vju['x_sito']['options']); echo  '</pre>'; 
 
-echo $this->Html->css(array(
-    'card.css?v=328496968',
-    'card-proof',
-    'font-awesome-4.5.0/css/font-awesome.min'),
-    null, array('inline' => false));
+if( OLD_PDF_PROOF ) {
+    $options = array('card.css?v=328496968', 'card-proof', 'font-awesome-4.5.0/css/font-awesome.min'); 
+    $js_arr = array('card-perso', 'proof/proof'); }
+else {
+    $options = array('card.css?v=328496967');
+    $js_arr = array('card-perso');}
+
+echo $this->Html->css( $options, null, array('inline' => false));
 echo $this->Html->script(array('event'), array('inline' => false)); 
 echo $this->Ma->walnijJqueryUI();
 echo $this->Ma->jqueryUItoolTip('.process, .persodate');
-echo $this->Html->script(array('card-perso', 'proof/proof'), array('block' => 'scriptBottom'));
+echo $this->Html->script($js_arr, array('block' => 'scriptBottom'));
 
 $jscode = 'var theurl = "' . $this->Html->url(array('action' => 'addCzasPerso', 'ext' => 'json')) . '";';
 $jscode .= "\n" . 'var myBase = "' . $this->webroot . '";';
