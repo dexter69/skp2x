@@ -276,22 +276,17 @@ class JobsController extends AppController {
 
             //$this->Job->print_r2($this->request->data);
             $res = $this->Job->prepareData($this->request->data);
-
-            /* 
-            $this->Job->print_r2($res);
-            return;
-            */
-            
+            // $this->Job->print_r2($res);  return;
+                        
             //$this->Job->create();
             if( !empty($res['Card']) ) {
-                    if ($this->Job->saveAssociated($res)) {
-                            $this->Session->setFlash(__('Zlecenie zostało zapisane.'));
-                            return $this->redirect(array('action' => 'index'));
-                    } else {
-                            $this->Session->setFlash(__('Zlecenie nie może być zapisane. Proszę, spróbuj ponownie.'));
-                    }			
+                if ($this->Job->saveAssociated($res)) {
+                    $this->Session->setFlash('Zlecenie zostało zapisane.');
+                    return $this->redirect(array('action' => 'view', $this->Job->id)); }
+                else {
+                    $this->Session->setFlash( 'Zlecenie nie może być zapisane. Proszę, spróbuj ponownie.'); }			
             } else {
-                    $this->Session->setFlash(__('MUSISZ WYBRAĆ JAKĄŚ KARTĘ!'));
+                   $this->Session->setFlash('MUSISZ WYBRAĆ JAKĄŚ KARTĘ!');
             }
         }
 
