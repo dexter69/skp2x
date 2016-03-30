@@ -1101,7 +1101,8 @@ class MaHelper extends AppHelper {
 					$par = 'active';
 				break;
 				case 'jobs':
-					$par = 'active';
+                                        if( AuthComponent::user('O_KOR') ) { $par = 'started'; }
+                                        else { $par = 'active'; }                                        
 				break;
 				default:
 					$par = null;
@@ -1551,46 +1552,51 @@ class MaHelper extends AppHelper {
 
 	public function indexFiltry( $kontroler = null, $klasa = array() ) {
 		
-		switch($kontroler) {
-			case 'orders':
-				$retcode =  '<p class="filtry">'.
-					$this->Html->link( 'moje', array( 'controller' => 'orders', 'action' => 'index', 'my'), array('class' => $klasa['my'])) .
-					$this->Html->link( 'przyjęte', array( 'controller' => 'orders', 'action' => 'index', 'accepted'), array('class' => $klasa['accepted'])) .
-					$this->Html->link( 'odrzucone', array( 'controller' => 'orders', 'action' => 'index', 'rejected'), array('class' => $klasa['rejected'])) .
-					$this->Html->link( 'do sprawdzenia', array( 'controller' => 'orders', 'action' => 'index', 'wait4check'), array('class' => $klasa['wait4check'])) .
-					$this->Html->link( 'aktywne', array( 'controller' => 'orders', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .
-					$this->Html->link( 'zakończone', array( 'controller' => 'orders', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
-					$this->Html->link( 'na dziś +', array( 'controller' => 'orders', 'action' => 'index', 'today'), array('class' => $klasa['today'])) .	
-					$this->Html->link( 'wszystkie', array( 'controller' => 'orders', 'action' => 'index'), array('class' => $klasa['wszystkie'])) .
-					'</p>';
-			break;
-			case 'cards':
-				$retcode =
-                                '<p class="filtry">'.
-                                    $this->Html->link( 'DTP?', array( 'controller' => 'cards', 'action' => 'index', 'dtpcheck'), array('class' => $klasa['dtpcheck'])) .
-                                    $this->Html->link( 'PERSO?', array( 'controller' => 'cards', 'action' => 'index', 'persocheck'), array('class' => $klasa['persocheck'])) .
-                                
-                                    $this->Html->link( 'P-ONLY', array( 'controller' => 'cards', 'action' => 'index', 'ponly'), array('class' => $klasa['ponly'])) .
-                                    $this->Html->link( 'P-TODO', array( 'controller' => 'cards', 'action' => 'index', 'ptodo'), array('class' => $klasa['ptodo'])) .
-                                    $this->Html->link( 'P-JUŻ', array( 'controller' => 'cards', 'action' => 'index', 'pover'), array('class' => $klasa['pover'])) .
-                                
-                                    $this->Html->link( 'aktywne', array( 'controller' => 'cards', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .							
-                                    $this->Html->link( 'zakończone', array( 'controller' => 'cards', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
-                                    $this->Html->link( 'wszystkie', array( 'controller' => 'cards', 'action' => 'index', 'all-but-priv'), array('class' => $klasa['all-but-priv'])) .
-                                    $this->Html->link( 'moje', array( 'controller' => 'cards', 'action' => 'index', 'my'), array('class' => $klasa['my'])) .
-				'</p>';
-			break;
-			case 'jobs':
-				$retcode =  '<p class="filtry">'.
-							$this->Html->link( 'aktywne', array( 'controller' => 'jobs', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .							
-							$this->Html->link( 'zakończone', array( 'controller' => 'jobs', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
-							$this->Html->link( 'wszystkie', array( 'controller' => 'jobs', 'action' => 'index', 'all-but-priv'), array('class' => $klasa['all-but-priv'])) .
-							'</p>';
-			break;
-			default:
-			 $retcode = null;
-		}
-		return $retcode;
+            switch($kontroler) {
+                case 'orders':
+                        $retcode =  '<p class="filtry">'.
+                                $this->Html->link( 'moje', array( 'controller' => 'orders', 'action' => 'index', 'my'), array('class' => $klasa['my'])) .
+                                $this->Html->link( 'przyjęte', array( 'controller' => 'orders', 'action' => 'index', 'accepted'), array('class' => $klasa['accepted'])) .
+                                $this->Html->link( 'odrzucone', array( 'controller' => 'orders', 'action' => 'index', 'rejected'), array('class' => $klasa['rejected'])) .
+                                $this->Html->link( 'do sprawdzenia', array( 'controller' => 'orders', 'action' => 'index', 'wait4check'), array('class' => $klasa['wait4check'])) .
+                                $this->Html->link( 'aktywne', array( 'controller' => 'orders', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .
+                                $this->Html->link( 'zakończone', array( 'controller' => 'orders', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
+                                $this->Html->link( 'na dziś +', array( 'controller' => 'orders', 'action' => 'index', 'today'), array('class' => $klasa['today'])) .	
+                                $this->Html->link( 'wszystkie', array( 'controller' => 'orders', 'action' => 'index'), array('class' => $klasa['wszystkie'])) .
+                                '</p>';
+                break;
+                case 'cards':
+                        $retcode =
+                        '<p class="filtry">'.
+                            $this->Html->link( 'DTP?', array( 'controller' => 'cards', 'action' => 'index', 'dtpcheck'), array('class' => $klasa['dtpcheck'])) .
+                            $this->Html->link( 'PERSO?', array( 'controller' => 'cards', 'action' => 'index', 'persocheck'), array('class' => $klasa['persocheck'])) .
+
+                            $this->Html->link( 'P-ONLY', array( 'controller' => 'cards', 'action' => 'index', 'ponly'), array('class' => $klasa['ponly'])) .
+                            $this->Html->link( 'P-TODO', array( 'controller' => 'cards', 'action' => 'index', 'ptodo'), array('class' => $klasa['ptodo'])) .
+                            $this->Html->link( 'P-JUŻ', array( 'controller' => 'cards', 'action' => 'index', 'pover'), array('class' => $klasa['pover'])) .
+
+                            $this->Html->link( 'aktywne', array( 'controller' => 'cards', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .							
+                            $this->Html->link( 'zakończone', array( 'controller' => 'cards', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
+                            $this->Html->link( 'wszystkie', array( 'controller' => 'cards', 'action' => 'index', 'all-but-priv'), array('class' => $klasa['all-but-priv'])) .
+                            $this->Html->link( 'moje', array( 'controller' => 'cards', 'action' => 'index', 'my'), array('class' => $klasa['my'])) .
+                        '</p>';
+                break;
+                case 'jobs':
+                    // filtr tylko widoczny przez koordynatora
+                    if( AuthComponent::user('O_KOR') ) {
+                        $kor_filtr = $this->Html->link( 'startujące', array( 'controller' => 'jobs', 'action' => 'index', 'started'), array('class' => $klasa['started'])); }
+                    else { $kor_filtr = null; }
+                    $retcode =  
+                        '<p class="filtry">'. $kor_filtr .
+                        $this->Html->link( 'aktywne', array( 'controller' => 'jobs', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .							
+                        $this->Html->link( 'zakończone', array( 'controller' => 'jobs', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
+                        $this->Html->link( 'wszystkie', array( 'controller' => 'jobs', 'action' => 'index', 'all-but-priv'), array('class' => $klasa['all-but-priv'])) .
+                        '</p>';
+                break;
+                default:
+                 $retcode = null;
+            }
+            return $retcode;
 	}
         
         

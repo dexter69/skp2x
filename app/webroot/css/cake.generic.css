@@ -1345,30 +1345,7 @@ a.pdflink div {
 	font-weight: normal;
 }
 
-/* FILTRY */
 
-.hfiltry {
-	display: inline-block;
-}
-
-.filtry {
-	display: inline-block;
-	/*padding-left: 1em;*/
-	vertical-align: middle;
-	/*
-	margin-bottom: 0;
-	line-height: 3em;*/
-}
-
-.filtry a {
-	padding: 0.3em 0.5em;
-	margin: 0 0.5em 0 0;
-	/*background-color: orange;*/
-	border-radius: 1em;
-	border: 1px solid #36466b;
-}
-
-.filtry a.swieci { background-color: orange; }
 
 /* GLOBALNIE DO FIXE TABELI 
 */
@@ -1508,4 +1485,33 @@ div#szukanie {	float: right; width: auto;}
     color: white;
 }
 
+/* Nagłówek listingów
+*/
 
+.indexnag { font-weight: 600; }
+
+/* FILTRY */
+
+.hfiltry {
+	display: inline-block;
+}
+
+.filtry {
+	display: inline-block;
+	/*padding-left: 1em;*/
+	vertical-align: middle;
+        margin-left: 1em;
+	/*
+	margin-bottom: 0;
+	line-height: 3em;*/
+}
+
+.filtry a {
+	padding: 0.3em 0.5em;
+	margin: 0 0.5em 0 0;
+	/*background-color: orange;*/
+	border-radius: 1em;
+	border: 1px solid #36466b;
+}
+
+.filtry a.swieci { background-color: orange; }

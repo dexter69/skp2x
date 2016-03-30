@@ -81,7 +81,10 @@ class JobsController extends AppController {
 			break;
 			case 'closed':
 				$opcje = array('Job.status' => KONEC);
-			break;			
+			break;	
+                        case 'started':
+				$opcje = array('Job.status !=' => array(sJ_PROD, KONEC));
+			break;
 			default:
 				$opcje = array();
 		}
@@ -90,7 +93,7 @@ class JobsController extends AppController {
 			$jobs = $this->Paginator->paginate( 'Job', $opcje );			
 		else 
 			$jobs = $this->Paginator->paginate();
-				
+                
 		$this->set(compact('jobs', 'par'));
 	}
 
@@ -170,7 +173,7 @@ class JobsController extends AppController {
 						$submits[eJPUBLI] = 0; //0 oznacza, że komentarz nie wymagany
 					break;
 				case sDTP_REQ:
-					if( $logged_dzial == DTP ) {
+					if( $logged_dzial == DTP || $logged_dzial == SUA) {
 						$submits[eJ_FILE1] = 0;						
 					}
 					break;
@@ -389,17 +392,19 @@ class JobsController extends AppController {
 				}
 			break;
 			case 'index':
-				$upraw = $this->Auth->user('JX');
-				switch($par) {
-					case null:
-						if( $upraw == IDX_ALL || $upraw == IDX_SAL ) return true;
-					break;
-					case  'all-but-priv':
-					case  'active':
-					case  'closed':
-						if( $upraw == IDX_NO_PRIV || $upraw == IDX_ALL || $upraw == IDX_SAL) return true;
-					break;
-				}
+                            $upraw = $this->Auth->user('JX');
+                            switch($par) {
+                                case null:
+                                     if( $upraw == IDX_ALL || $upraw == IDX_SAL ) { return true;}
+                                break;
+                                case  'all-but-priv':
+                                case  'active':
+                                case  'closed':
+                                        if( $upraw == IDX_NO_PRIV || $upraw == IDX_ALL || $upraw == IDX_SAL) { return true; }
+                                break;
+                                case 'started':
+                                    return true;
+                            }
 			break;
 		}
 		return false;

@@ -2,16 +2,16 @@
 //echo '<pre>'; print_r($jobs); echo '</pre>';
 echo $this->Html->css('job',  null, array('inline' => false));
 $this->Ma->displayActions('jobs'); 
-$this->set('title_for_layout', 'Zlecenia');
+$this->set('title_for_layout', 'Produkcyjne');
 
-$klasa = array(	'all-but-priv'=>null, 'my'=>null, 'active'=>null, 'closed'=>null);
+$klasa = array(	'all-but-priv'=>null, 'my'=>null, 'active'=>null, 'closed'=>null, 'started'=>null);
 if( array_key_exists($par, $klasa) )
 	$klasa[$par] = 'swieci';
 
 ?>
 
 <div class="jobs index">
-	<h2><?php echo 'ZLECENIA (P)' . $this->Ma->indexFiltry('jobs', $klasa);; ?></h2>
+	<h2 class="indexnag"><?php echo 'PRODUKCYJNE' . $this->Ma->indexFiltry('jobs', $klasa);; ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
