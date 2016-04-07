@@ -55,135 +55,135 @@ class EventsController extends AppController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
-			//if( $this->request->data['Event'] )
-			//$this->Event->create();
-			
-			$sbstr = substr($this->request->data['Event']['post'], 0, 2);								
-			if( $sbstr  == '#!' ||  $sbstr == '!#' || $sbstr  == '!@' ||  $sbstr == '@!' ) {
-				$this->Event->print_r2($this->request->data);
-				//$this->request->data = $this->Event->prepareData($this->request->data, false);
-				$this->Event->print_r2($this->Event->prepareData($this->request->data, false));
-				return;
-			}
-			$oid = $this->request->data['Event']['order_id'];
-			$jid = $this->request->data['Event']['job_id'];
-			//if ($this->Event->save($this->request->data)) {
-			if ( $this->Event->prepareData($this->request->data, true) ) {
-					
-                            if( $oid ) {
-                                $xyz=$this->e_powiadamiaj($this->request->data['Event']);
-                                //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
-                                //return;
-                                switch( $this->request->data['Event']['co'] ) {
-                                    case p_ov:
-                                        // zakończenie perso -> tak chciał Adam
-                                        return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'ptodo' ));
-                                    case p_no:
-                                    case p_ok:
-                                        return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'persocheck' ));
-                                    default:
-                                        return $this->redirect(array('controller' => 'orders', 'action' => 'view', $oid ));
-                                }
-                                
-                            } else
-                                if( $jid ) {
-                                    $xyz=$this->e_powiadamiaj($this->request->data['Event']);
-                                    //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
-                                    //return;
-                                    //return $this->redirect(array('controller' => 'jobs', 'action' => 'index'));
-                                    return $this->redirect(array('controller' => 'jobs', 'action' => 'view', $jid));
-                                } else
-                                    { return $this->redirect(array('controller' => 'orders', 'action' => 'index')); }
-						
-			} else {
-				if( $this->Event->code != 777) {
-                                $this->Session->setFlash('BŁĄD ('. $this->Event->code .')'); }
-				else {
-                                    $this->Session->setFlash( $this->Event->msg ); }
-				return $this->redirect($this->referer());
-			}
-		}
-		return $this->redirect($this->referer());
-		/*
-		$users = $this->Event->User->find('list');
-		$orders = $this->Event->Order->find('list');
-		$jobs = $this->Event->Job->find('list');
-		$cards = $this->Event->Card->find('list');
-		$this->set(compact('users', 'orders', 'jobs', 'cards'));
-		*/
+            if ($this->request->is('post')) {
+                //if( $this->request->data['Event'] )
+                //$this->Event->create();
+
+                $sbstr = substr($this->request->data['Event']['post'], 0, 2);								
+                if( $sbstr  == '#!' ||  $sbstr == '!#' || $sbstr  == '!@' ||  $sbstr == '@!' ) {
+                        $this->Event->print_r2($this->request->data);
+                        //$this->request->data = $this->Event->prepareData($this->request->data, false);
+                        $this->Event->print_r2($this->Event->prepareData($this->request->data, false));
+                        return;
+                }
+                $oid = $this->request->data['Event']['order_id'];
+                $jid = $this->request->data['Event']['job_id'];
+                //if ($this->Event->save($this->request->data)) {
+                if ( $this->Event->prepareData($this->request->data, true) ) {
+
+                    if( $oid ) {
+                        $xyz=$this->e_powiadamiaj($this->request->data['Event']);
+                        //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
+                        //return;
+                        switch( $this->request->data['Event']['co'] ) {
+                            case p_ov:
+                                // zakończenie perso -> tak chciał Adam
+                                return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'ptodo' ));
+                            case p_no:
+                            case p_ok:
+                                return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'persocheck' ));
+                            default:
+                                return $this->redirect(array('controller' => 'orders', 'action' => 'view', $oid ));
+                        }
+
+                    } else
+                        if( $jid ) {
+                            $xyz=$this->e_powiadamiaj($this->request->data['Event']);
+                            //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
+                            //return;
+                            //return $this->redirect(array('controller' => 'jobs', 'action' => 'index'));
+                            return $this->redirect(array('controller' => 'jobs', 'action' => 'view', $jid));
+                        } else
+                            { return $this->redirect(array('controller' => 'orders', 'action' => 'index')); }
+
+                } else {
+                        if( $this->Event->code != 777) {
+                        $this->Session->setFlash('BŁĄD ('. $this->Event->code .')'); }
+                        else {
+                            $this->Session->setFlash( $this->Event->msg ); }
+                        return $this->redirect($this->referer());
+                }
+            }
+            return $this->redirect($this->referer());
+            /*
+            $users = $this->Event->User->find('list');
+            $orders = $this->Event->Order->find('list');
+            $jobs = $this->Event->Job->find('list');
+            $cards = $this->Event->Card->find('list');
+            $this->set(compact('users', 'orders', 'jobs', 'cards'));
+            */
 	}
 
 	
 	private function e_powiadamiaj( $eventtab = array()) {
 		
-		if( !empty($eventtab) ) {
-			if( $eventtab['order_id'] ) {
-				$value = $this->Event->Order->find('first', array(
-					'conditions' => array('Order.id' => $eventtab['order_id'])
-				));
-				$temat = 'ZAM ' .
-                                    $this->bnr2nrh2($value['Order']['nr'],$value['User']['inic'],false);
-				$linktab = array('controller' => 'orders', 'action' => 'view', $eventtab['order_id']);
-			} else {
-				$value = $this->Event->Job->find('first', array(
-					'conditions' => array('Job.id' => $eventtab['job_id'])
-				));
-				$temat = 'ZLE ' .
-						$this->bnr2nrj2($value['Job']['nr'],$value['User']['inic'],false);
-				$linktab = array('controller' => 'jobs', 'action' => 'view', $eventtab['job_id']);
-			}
-			$theEvent = end($value['Event']);
-			$temat .=	', ' . $this->Auth->user('name'). ' ' .
-						$this->evtext2[$eventtab['co']][$this->Auth->user('k')];
-						
-			if($eventtab['card_id'])	{
-					if( $eventtab['co'] == put_kom ) $temat .= ' odnośnie karty:';
-					foreach( $value['Card'] as $karta )
-						if( $karta['id'] == $eventtab['card_id'] )
-							$temat .= ' ' . $karta['name'];
-			}
-			
-			$tresc = $eventtab['post'];
-			
-			foreach( $value['Event'] as $ewent ) {
-				$uids[$ewent['user_id']] = 1; //przypisz na razie cokolwiek	
+            if( !empty($eventtab) ) {
+                    if( $eventtab['order_id'] ) {
+                            $value = $this->Event->Order->find('first', array(
+                                    'conditions' => array('Order.id' => $eventtab['order_id'])
+                            ));
+                            $temat = 'ZAM ' .
+                                $this->bnr2nrh2($value['Order']['nr'],$value['User']['inic'],false);
+                            $linktab = array('controller' => 'orders', 'action' => 'view', $eventtab['order_id']);
+                    } else {
+                            $value = $this->Event->Job->find('first', array(
+                                    'conditions' => array('Job.id' => $eventtab['job_id'])
+                            ));
+                            $temat = 'ZLE ' .
+                                            $this->bnr2nrj2($value['Job']['nr'],$value['User']['inic'],false);
+                            $linktab = array('controller' => 'jobs', 'action' => 'view', $eventtab['job_id']);
+                    }
+                    $theEvent = end($value['Event']);
+                    $temat .=	', ' . $this->Auth->user('name'). ' ' .
+                                            $this->evtext2[$eventtab['co']][$this->Auth->user('k')];
+
+                    if($eventtab['card_id'])	{
+                                    if( $eventtab['co'] == put_kom ) $temat .= ' odnośnie karty:';
+                                    foreach( $value['Card'] as $karta )
+                                            if( $karta['id'] == $eventtab['card_id'] )
+                                                    $temat .= ' ' . $karta['name'];
+                    }
+
+                    $tresc = $eventtab['post'];
+
+                    foreach( $value['Event'] as $ewent ) {
+                            $uids[$ewent['user_id']] = 1; //przypisz na razie cokolwiek	
+                    }
+                    if( $eventtab['job_id'] ) { //zlecenie, trza też handlowcom wyslac
+                            foreach( $value['Card'] as $karta )
+                                    $uids[$karta['user_id']] = 1; //przypisz na razie cokolwiek					
+                    }
+                    $uids[4] = 1; // Jola zawsze dostaje			
+                    unset($uids[$this->Auth->user('id')]); // generujący zdarzenie nie dostaje maila
+                    $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
+                    $tab = array();
+                    foreach( $uids as $key => $wartosc) { $tab[] = $key; }
+
+                    $ludziki = $this->Event->User->find('all', array(
+                            'conditions' => array('User.id' => $tab),
+                            'recursive' => 0
+                    ));
+                    $odbiorcy = array();
+                    foreach( $ludziki as $ludz) {
+                            if( $ludz['User']['enotif'] != null )
+                                    $odbiorcy[] = $ludz['User']['enotif'];
+                    }
+                    if( $eventtab['co'] == p_ov ) { 
+                    // w wypadku zakończenia perso, dodatkowo dostaje Krysia
+                        $odbiorcy[] = 'info@polskiekarty.pl';
+                    }
+                    // Frank nie chce tych powiadomień...
+                    if( $eventtab['co'] == p_ov || $eventtab['co'] == send_o ) {
+                        $klucz = array_search('grafik@polskiekarty.pl',  $odbiorcy);
+                        if( $klucz != false ) {
+                            unset( $odbiorcy[$klucz] );
                         }
-			if( $eventtab['job_id'] ) { //zlecenie, trza też handlowcom wyslac
-				foreach( $value['Card'] as $karta )
-					$uids[$karta['user_id']] = 1; //przypisz na razie cokolwiek					
-			}
-			$uids[4] = 1; // Jola zawsze dostaje			
-			unset($uids[$this->Auth->user('id')]); // generujący zdarzenie nie dostaje maila
-			//$uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
-			$tab = array();
-                        foreach( $uids as $key => $wartosc) { $tab[] = $key; }
-			
-			$ludziki = $this->Event->User->find('all', array(
-                                'conditions' => array('User.id' => $tab),
-                                'recursive' => 0
-			));
-			$odbiorcy = array();
-			foreach( $ludziki as $ludz) {
-				if( $ludz['User']['enotif'] != null )
-					$odbiorcy[] = $ludz['User']['enotif'];
-                        }
-			if( $eventtab['co'] == p_ov ) { 
-                        // w wypadku zakończenia perso, dodatkowo dostaje Krysia
-                            $odbiorcy[] = 'info@polskiekarty.pl';
-                        }
-                        // Frank nie chce tych powiadomień...
-                        if( $eventtab['co'] == p_ov || $eventtab['co'] == send_o ) {
-                            $klucz = array_search('grafik@polskiekarty.pl',  $odbiorcy);
-                            if( $klucz != false ) {
-                                unset( $odbiorcy[$klucz] );
-                            }
-                        }
-			$this->piknij($odbiorcy, $temat, $tresc, $linktab, $theEvent['id']);
-			
-			return true;
-		}
-		return false;
+                    }
+                    $this->piknij($odbiorcy, $temat, $tresc, $linktab, $theEvent['id']);
+
+                    return true;
+            }
+            return false;
 	}
         
         
