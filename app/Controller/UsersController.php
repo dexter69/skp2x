@@ -70,14 +70,22 @@ class UsersController extends AppController {
             }
             return true;
         }
-	
-	/* Poniższe potrzebne, by móc dodać użytkownika bez loggowania (gdy nie ma jeszcze żadnego)
-	
+        
+        private $nie_ten_dzial = true;
+        
 	public function beforeFilter() {
-    	parent::beforeFilter();
-    	// Allow users to register and logout.
-    	$this->Auth->allow('add', 'logout');
-	}*/
+            parent::beforeFilter();
+            // Poniższe potrzebne, by móc dodać użytkownika bez loggowania (gdy nie ma jeszcze żadnego)            
+            //$this->Auth->allow('add', 'logout'); // Allow users to register and logout.
+            
+            // a teraz chcemy, aby nikt poza SUA nie mógł wykonywać pewnych akcji
+            $this->nie_ten_dzial = ( $this->Auth->user('dzial') != SUA );
+            $nie_ta_akcja = in_array($this->request->params['action'], array('view', 'edit', 'delete'));
+            if( $this->nie_ten_dzial && $nie_ta_akcja ) {
+                $this->Session->setFlash( 'Nie da rady...');
+                return $this->redirect(array('action' => 'index'));
+            } 
+	}
 
 	public function login() {
             if ($this->request->is('post')) {
@@ -105,7 +113,13 @@ class UsersController extends AppController {
  */
 	public function index() {
 		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate());
+                //$arr = $this->request->params;
+                //$arr['ekstra'] = $this->testek;
+                
+                $users = $this->Paginator->paginate();                
+		//$this->set('users', $this->Paginator->paginate());
+                $short = $this->nie_ten_dzial;
+                $this->set(compact(array('users', 'short')));
 	}
 
 /**
