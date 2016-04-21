@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Test algorytmu do obliczania składanek w jscript, rekurencja
+-->
+<html>
+    <head>
+        <title>Rekurencja</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/algo/algo.js"></script>
+    </head>
+    <body>
+        <div>Test algorytmu do składanek, rekurencja</div>
+        <p id="one"></p>
+        <p id="two"></p>
+        <p id="three"></p>
+        <p id="tmp"></p>
+        <p id="tmp1"></p>
+        <p id="tmp2"></p>
+        <p id="tmp3" style="color:red"></p>
+        <p id="final" style="color:green; font-weight: bold; font-size: 200%;"></p>
+        <script>
+            //console.log('Gibon!');
+            //console.log( make_results ([], [2.4, 5.67, 8.89]));
+            
+            var theFloats = [2.4, 5.67, 8.123];
+            var theSource = makeSource( theFloats );
+            console.log( theSource );
+            var xyz = wszystkie_kombinacje_test([], [ [2,3,4], [7,8,9] ]);
+            //var xyz = wszystkie_kombinacje([], theSource);
+            //console.log( theSource );
+            console.log( xyz );
+            document.getElementById("final").innerHTML = 'Rezultat = ' + JSON.stringify(xyz);
+        </script>
+    </body>
+</html>

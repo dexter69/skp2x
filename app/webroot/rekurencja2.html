@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+    Test algorytmu do obliczania składanek w jscript, rekurencja2, wersja poprawiona
+-->
+<html>
+    <head>
+        <title>Rekurencja 2!</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/algo/algo2.js"></script>
+    </head>
+    <body>
+        <div>Test algorytmu do składanek, rekurencja 2</div>
+        <p id="final" style="color:green; font-weight: bold; font-size: 200%;"></p>
+        <script>
+            // Przykładowe dane wejściowe
+            var theFloats = [2.34, 6.67];
+            //var theFloats = [2.4, 5.67, 8.123];
+            var theSource = makeSource( theFloats );
+            console.log( 'wejście = ', theFloats );
+            console.log( 'source = ', theSource );
+            var xyz = kombinuj([], theSource);            
+            
+            console.log( 'xyz = ', xyz );
+            document.getElementById("final").innerHTML = 'Rezultat = ' + JSON.stringify(xyz);
+        </script>
+    </body>
+</html>
