@@ -14,15 +14,7 @@ if( $order['Order']['nr'] ) {
 } else {
     $this->set('title_for_layout', 'Zamówienie (H)');     
 }
-//echo '<pre>';	print_r($evcontrol); echo  '</pre>';
-//echo count($order['Card']).'<br>';
-//echo '<pre>';	print_r($order); echo  '</pre>';
-//echo '<pre>';	print_r($ludz); echo  '</pre>';
-//echo '<pre>';	print_r($order['Event']); echo  '</pre>';
-//echo '<pre>';	print_r($links); echo  '</pre>';
-//echo '<pre>';	print_r($evcontrol['ile']); echo  '</pre>';
-//echo '<pre>';	print_r($vju); echo  '</pre>';
-//echo date('Y-m-d');
+
 ?>
 <div class="orders view">
 
@@ -52,12 +44,13 @@ if( $order['Order']['nr'] ) {
 				//echo $this->Html->link($order['User']['name'], array('controller' => 'users', 'action' => 'view', $order['User']['id'])); ?>
 			&nbsp;
 		</dd>
-		
+		<!--
 		<dt><?php echo 'Złożone'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->md($order['Order']['data_publikacji']); ?>
 			&nbsp;
 		</dd>
+                -->
 		<dt><?php echo 'Przedpłata' ?></dt>
 		<dd>
 			<?php echo $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
