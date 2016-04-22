@@ -4,7 +4,8 @@
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
 //echo $this->Html->url('/css/order-pdf.css', true);
 
-echo $this->Html->css('order', array('inline' => false));
+echo $this->Html->css(array('order', 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
+echo $this->Html->css('order/order.css?v=' . time(), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view'), array('inline' => false)); 
 $this->Ma->displayActions('orders');
 
@@ -24,28 +25,21 @@ if( $order['Order']['nr'] ) {
 //echo date('Y-m-d');
 ?>
 <div class="orders view">
-<h2 class="oj-naglowek">
-    <?php echo //'Zamówienie '. 
-        '<strong>'.
-        $this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic'], false) .
-        '</strong>' .
-        $this->Ma->editlink('order', $order['Order']['id']) 
-        . $this->Ma->pdflink('order', $order['Order']['id'])
-        ; 
-    ?>
-</h2>
+
+<?php   
+        $nr = $this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic'], false);
+        if( $order['Order']['isekspres'] ) {
+            $nr .= ' <span class="ekspres">EKSPRES</span>';
+        }
+        echo $this->element('orders/view/naglowek', array(
+                'id' => $order['Order']['id'],
+                'numer' => $nr,
+                'termin' => $this->Ma->md($order['Order']['stop_day'])
+        )); ?>
+    
 	<?php //$this->Ma->nawiguj( $links, $order['Order']['id'] ); //nawigacyjne do dodaj, usuń, edycja itp. ?>
-	<dl id="dexview">
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($order['Order']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Numer'); ?></dt>
-		<dd class="corenr">
-			<?php echo $this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic']); ?>
-			&nbsp;
-		</dd>
+	<dl id="dexview" class="in-order">
+		
 		<dt><?php echo __('Klient'); ?></dt>
 		<dd>
 			<?php echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id'])); ?>
@@ -62,26 +56,6 @@ if( $order['Order']['nr'] ) {
 		<dt><?php echo 'Złożone'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->md($order['Order']['data_publikacji']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo 'Data Zakończenia'; ?></dt>
-		<dd>
-			<?php echo $this->Ma->md($order['Order']['stop_day']); ?>
-			&nbsp;
-			<?php if( $order['Order']['isekspres'] )
-					echo '<span class="ekspres">EKSPRES</span>'; ?>
-			&nbsp;
-		</dd>
-		
-
-		<dt><?php echo __('Osoba Kontaktowa'); ?></dt>
-		<dd>
-			<?php echo $order['Order']['osoba_kontaktowa']; ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Telefon'); ?></dt>
-		<dd>
-			<?php echo h($order['Order']['tel']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo 'Przedpłata' ?></dt>
@@ -102,12 +76,7 @@ if( $order['Order']['nr'] ) {
 			&nbsp;
 		</dd>
 		<dt><?php echo 'Waluta'; ?></dt>
-		<dd><?php echo $order['Customer']['waluta']; ?></dd>
-		<dt><?php echo 'Uwagi'; ?></dt>
-		<dd>
-			<?php echo nl2br($order['Order']['comment']); ?>
-			&nbsp;
-		</dd>
+		<dd><?php echo $order['Customer']['waluta']; ?></dd>		
 		<dt><?php echo __('Status'); ?></dt>
 		<dd><?php echo $this->Ma->status_zamow($order['Order']['status']);	?>
 			&nbsp;			
@@ -116,7 +85,14 @@ if( $order['Order']['nr'] ) {
 		<dd><?php echo $this->Ma->adresFaktury($order); ?> &nbsp;</dd>
 		<dt><?php echo 'Adres dostawy'; ?></dt>
 		<dd><?php echo $this->Ma->adresDostawy($order); ?>&nbsp;</dd>
-		
+		<dt><?php echo __('Kontakt'); ?></dt>
+		<dd>
+			<?php echo $order['Order']['osoba_kontaktowa']; ?>
+			&nbsp;
+                        <?php echo '<br>tel. ' . h($order['Order']['tel']); ?>
+			&nbsp;
+             
+		</dd>		
 		<!--
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
@@ -130,6 +106,10 @@ if( $order['Order']['nr'] ) {
 		</dd>
 		-->
 	</dl>
+        <div class="order-uwagi">
+            <p>Uwagi:</p>
+            <?php echo nl2br($order['Order']['comment']); ?>&nbsp;
+        </div>
 </div>
 
 
@@ -385,4 +365,7 @@ if( $order['Order']['nr'] ) {
 		</ul>
 	</div>-->
 <!--</div>-->
+
+<?php
+echo '<pre>';	print_r($order); echo  '</pre>';
 
