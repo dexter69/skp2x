@@ -367,5 +367,5 @@ if( $order['Order']['nr'] ) {
 <!--</div>-->
 
 <?php
-echo '<pre>';	print_r($order); echo  '</pre>';
+//echo '<pre>';	print_r($order); echo  '</pre>';
 
