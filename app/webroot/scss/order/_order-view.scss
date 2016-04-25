@@ -2,6 +2,10 @@
 Dotyczy widoku handlowego.
 */
 
+// Kwestie>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 .new-type-header { 
     position: relative;
 }
@@ -45,10 +49,18 @@ Dotyczy widoku handlowego.
 
 .numer-handlowy {
     font-size: 200%;
+    margin-bottom: 0.8em;
 }
 
 .daty-handlowe {
     font-size: 180%;
+    color: lightseagreen;
+    margin: 0;
+}
+.daty-handlowe > span {
+    font-size: 50%;
+    display: block;
+    color: black;
 }
 
 .numer-handlowy > span {

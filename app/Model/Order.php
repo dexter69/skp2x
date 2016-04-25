@@ -502,80 +502,85 @@ class Order extends AppModel {
 
 	// formatowania do views
 	public $view_options = 
-		array (
-			'stop_day' => array( 
-							'label' => 'Data zakończenia',
-							'dateFormat' => 'DMY',
-							'monthNames' => array(
-										'01'=>'Styczeń',
-										'02'=>'Luty',
-										'03'=>'Marzec',
-										'04'=>'Kwiecień',
-										'05'=>'Maj',
-										'06'=>'Czerwiec',
-										'07'=>'Lipiec',
-										'08'=>'Sierpień',
-										'09'=>'Wrzesień',
-										'10'=>'Październik',
-										'11'=>'Listopad',
-										'12'=>'Grudzień'
-								)/**/
-						
-							),
-			/**/
-			'forma_zaliczki'=>	array( 
-								'label' => 'Zaliczka?',
-							 	'options' => array(null => '- WYBIERZ -', NIE=>'NIE', PRZE=>'PRZELEW', CASH=>'GOTÓWKA', LAC=>'UWAGI'),
-								'default' => DEF_ZAL_FORM, 
-								'disabled' => true
-							),							
-														
-			'procent_zaliczki'=>	array( 
-								'label' => '%',
-								//'disabled' => true,
-							 	'div' => array('class' => 'platnosci2 input number', 'id' => 'procent'),
-								'default' => DEF_ZAL_PROC, //defaultowo 100%
-								'disabled' => true
-							),							
-			'forma_platnosci'=>	array( 
-								'label' => 'Płatność',
-							 	//'div' => array( 'id' => 'xxx'),
-								'options' => array(
-									PRZE=>'PRZELEW', PAY_FORM=>'BRAK', 
-									CASH=>'GOTÓWKA', POB=>'POBRANIE', LAC=>'UWAGI'),
-								'default' => PAY_FORM //defaultowo nie, bo zaliczka 100%
-							),
-			'termin_platnosci'=> array( 
-								'label' => 'Termin (dni)',
-							 	'div' => array('class' => 'platnosci2 input number', 'id' => 'payterm'),
-								'required' => true,
-								'default' => PAY_TIME //defaultowo 0 dni, bo zaliczka 100%
-							),
-			'sposob_dostawy'	=>	array( 
-								'label' => 'Adres dostawy',
-								//'label' => false,
-								'options' => array(	NAF => 'NA ADRES FAKTURY',
-													IA => 'INNY ADRES', OO => 'ODBIÓR OSOBISTY',
-													PAU => 'PATRZ UWAGI'),
-							 	'div' => array('id' => 'dostava_div')
-							 	//'div' => false
-								//'default' => 7 //defaultowo ile dni
-							),
-			'osoba_kontaktowa'	=>	array( 
-								//'label' => '...',
-								
-							),
-			'tel'=>	array( 
-								'label' => 'Telefon'
-								
-							),
-			'comment'=>	array( 
-								'label' => false
-								
-							)				
-							 	
-			
-		);
+            array (
+                'stop_day' => array( 
+                    'label' => 'Data zakończenia',
+                    'dateFormat' => 'DMY',
+                    'monthNames' => array(
+                                    '01'=>'Styczeń',
+                                    '02'=>'Luty',
+                                    '03'=>'Marzec',
+                                    '04'=>'Kwiecień',
+                                    '05'=>'Maj',
+                                    '06'=>'Czerwiec',
+                                    '07'=>'Lipiec',
+                                    '08'=>'Sierpień',
+                                    '09'=>'Wrzesień',
+                                    '10'=>'Październik',
+                                    '11'=>'Listopad',
+                                    '12'=>'Grudzień'
+                    )/**/
+
+                ),
+                    /**/
+                'forma_zaliczki'    =>	array( 
+                    'label' => 'Zaliczka?',
+                    'options' => array(
+                                        null => '- WYBIERZ -',
+                                        NIE=>'NIE',
+                                        PRZE=>'PRZELEW',
+                                        CASH=>'GOTÓWKA',
+                                        LAC=>'UWAGI'),
+                    'default' => DEF_ZAL_FORM, 
+                    'disabled' => true
+                ),							
+
+                    'procent_zaliczki'=>	array( 
+                                                            'label' => '%',
+                                                            //'disabled' => true,
+                                                            'div' => array('class' => 'platnosci2 input number', 'id' => 'procent'),
+                                                            'default' => DEF_ZAL_PROC, //defaultowo 100%
+                                                            'disabled' => true
+                                                    ),							
+                    'forma_platnosci'=>	array( 
+                                                            'label' => 'Płatność',
+                                                            //'div' => array( 'id' => 'xxx'),
+                                                            'options' => array(
+                                                                    PRZE=>'PRZELEW', PAY_FORM=>'BRAK', 
+                                                                    CASH=>'GOTÓWKA', POB=>'POBRANIE', LAC=>'UWAGI'),
+                                                            'default' => PAY_FORM //defaultowo nie, bo zaliczka 100%
+                                                    ),
+                    'termin_platnosci'=> array( 
+                                                            'label' => 'Termin (dni)',
+                                                            'div' => array('class' => 'platnosci2 input number', 'id' => 'payterm'),
+                                                            'required' => true,
+                                                            'default' => PAY_TIME //defaultowo 0 dni, bo zaliczka 100%
+                                                    ),
+                    'sposob_dostawy'	=>	array( 
+                                                            'label' => 'Adres dostawy',
+                                                            //'label' => false,
+                                                            'options' => array(	NAF => 'NA ADRES FAKTURY',
+                                                                                                    IA => 'INNY ADRES', OO => 'ODBIÓR OSOBISTY',
+                                                                                                    PAU => 'PATRZ UWAGI'),
+                                                            'div' => array('id' => 'dostava_div')
+                                                            //'div' => false
+                                                            //'default' => 7 //defaultowo ile dni
+                                                    ),
+                    'osoba_kontaktowa'	=>	array( 
+                                                            //'label' => '...',
+
+                                                    ),
+                    'tel'=>	array( 
+                                                            'label' => 'Telefon'
+
+                                                    ),
+                    'comment'=>	array( 
+                                                            'label' => false
+
+                                                    )				
+
+
+            );
 		
 
 //The Associations below have been created with all possible keys, those that are not needed can be removed

@@ -23,10 +23,13 @@ if( $order['Order']['nr'] ) {
         if( $order['Order']['isekspres'] ) {
             $nr .= ' <span class="ekspres">EKSPRES</span>';
         }
+        
+        $zlozone = $this->Ma->md($order['Order']['data_publikacji']);
         echo $this->element('orders/view/naglowek', array(
                 'id' => $order['Order']['id'],
                 'numer' => $nr,
-                'termin' => $this->Ma->md($order['Order']['stop_day'])
+                'termin' => $this->Ma->md($order['Order']['stop_day']),
+                'zlozone' => $zlozone
         )); ?>
     
 	<?php //$this->Ma->nawiguj( $links, $order['Order']['id'] ); //nawigacyjne do dodaj, usuń, edycja itp. ?>
@@ -44,20 +47,23 @@ if( $order['Order']['nr'] ) {
 				//echo $this->Html->link($order['User']['name'], array('controller' => 'users', 'action' => 'view', $order['User']['id'])); ?>
 			&nbsp;
 		</dd>
-		<!--
-		<dt><?php echo 'Złożone'; ?></dt>
-		<dd>
-			<?php echo $this->Ma->md($order['Order']['data_publikacji']); ?>
-			&nbsp;
-		</dd>
-                -->
-		<dt><?php echo 'Przedpłata' ?></dt>
-		<dd>
-			<?php echo $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
-			if( $order['Order']['procent_zaliczki'] )
-				echo ', ' . $order['Order']['procent_zaliczki'] . '%';
-			?>
-			&nbsp;
+                <dt><?php echo 'Przedpłata' ?></dt>
+		<dd class="pre-paid">
+                    <?php 
+                        echo $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
+                        if( $order['Order']['procent_zaliczki'] ) {
+                            echo ', ' . $order['Order']['procent_zaliczki'] . '%'; }
+                    ?>
+                    &nbsp;
+                    <!-- <i class="fa fa-spinner fa-pulse"></i> -->
+                    <!--
+                    <p class="pay-info">
+                        
+                        
+                        <span class="zero"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                        <span class="one"></span>
+                        <span class="two"></span>
+                    </p> -->
 		</dd>
 		<dt><?php echo 'Forma Płatnosci'; ?></dt>
 		<dd>

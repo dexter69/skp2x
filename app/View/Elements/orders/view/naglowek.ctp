@@ -26,5 +26,10 @@
         ?>
         </span>
     </p>
-    <p class="daty-handlowe"><label>termin:</label><?php    echo $termin; ?></p>
+    <p class="daty-handlowe">
+        <label>termin:</label>
+            <?php echo $termin; ?>
+            <span>(złożone: <b><?php echo $zlozone; ?></b>)</span>
+            
+    </p>
 </div>
