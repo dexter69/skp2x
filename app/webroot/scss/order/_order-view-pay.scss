@@ -2,12 +2,12 @@
 Kwestie związane z przedpłatą
 */
 
-dl > dd.pre-paid { //to dd w której wyświetlane są przedpłaty
+dl > #the-dd { //to dd w której wyświetlane są przedpłaty
     //background-color: red;
     position: relative;
 }
 
-.pay-info {
+dl > #the-dd .pay-info {
     //
     display: inline-block;
     margin: 0;
@@ -17,7 +17,7 @@ dl > dd.pre-paid { //to dd w której wyświetlane są przedpłaty
     //height: 3em;
 }
 
-.pay-info > span {
+dl > #the-dd .pay-info > span {
     //border-bottom: 1px solid violet;
     display: block;
     width: 2.5em;
@@ -27,8 +27,31 @@ dl > dd.pre-paid { //to dd w której wyświetlane są przedpłaty
     border-radius: 2px;
 }
 
-.pay-info > span.zero { background-color: red; }
-.pay-info > span.one { background-color: orange; }
-.pay-info > span.two { background-color: green; }
+// sytuacja, gdy płatność nie ruszona
+dl > #the-dd.null .pay-info > #span1 { background-color: red; }
+dl > #the-dd.null .pay-info > #span2 { background-color: orange; }
+dl > #the-dd.null .pay-info > #span3 { background-color: green; }
 
+// sytuacja, gdy mamy potwierdzenie wpłaty
+dl > #the-dd.confirmed .pay-info > #span1 { background-color: orange; }
+dl > #the-dd.confirmed .pay-info > #span2 { background-color: green; }
+dl > #the-dd.confirmed .pay-info > #span3 { background-color: red; }
 
+// sytuacja, gdy mamy potwierdzenie wpłaty
+dl > #the-dd.money .pay-info > #span1 { background-color: green; }
+dl > #the-dd.money .pay-info > #span2 { background-color: red; }
+dl > #the-dd.money .pay-info > #span3 { background-color: orange; }
+
+dl > #the-dd .pay-info > #span2,
+dl > #the-dd .pay-info > #span3 { visibility: hidden; }
+
+dl > #the-dd.open .pay-info > #span2,
+dl > #the-dd.open .pay-info > #span3 { visibility: visible; }
+
+dl > #the-dd.open .pay-info > span {
+    cursor: pointer;
+}
+
+dl > #the-dd .pay-info > #span1 > i { visibility: hidden; }
+dl > #the-dd.clickable .pay-info > #span1 > i { visibility: visible;}
+dl > #the-dd.clickable .pay-info > #span1 { cursor: pointer; }

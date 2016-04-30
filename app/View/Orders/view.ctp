@@ -6,7 +6,7 @@
 
 echo $this->Html->css(array('order', 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
 echo $this->Html->css('order/order.css?v=' . time(), array('inline' => false));
-echo $this->Html->script(array('event', 'order-view'), array('inline' => false)); 
+echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 
 $this->Ma->displayActions('orders');
 
 if( $order['Order']['nr'] ) {
@@ -14,6 +14,11 @@ if( $order['Order']['nr'] ) {
 } else {
     $this->set('title_for_layout', 'Zamówienie (H)');     
 }
+
+// kwestie przedpłaty
+$prepaid = $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
+if( $order['Order']['procent_zaliczki'] ) {
+    $prepaid .= ', ' . $order['Order']['procent_zaliczki'] . '%'; }
 
 ?>
 <div class="orders view">
@@ -47,24 +52,14 @@ if( $order['Order']['nr'] ) {
 				//echo $this->Html->link($order['User']['name'], array('controller' => 'users', 'action' => 'view', $order['User']['id'])); ?>
 			&nbsp;
 		</dd>
-                <dt><?php echo 'Przedpłata' ?></dt>
-		<dd class="pre-paid">
-                    <?php 
-                        echo $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
-                        if( $order['Order']['procent_zaliczki'] ) {
-                            echo ', ' . $order['Order']['procent_zaliczki'] . '%'; }
-                    ?>
-                    &nbsp;
-                    <!-- <i class="fa fa-spinner fa-pulse"></i> -->
-                    <!--
-                    <p class="pay-info">
-                        
-                        
-                        <span class="zero"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                        <span class="one"></span>
-                        <span class="two"></span>
-                    </p> -->
-		</dd>
+                
+                <?php echo $this->element('orders/view/pre-dt-dd', array(
+                        'prepaid' => $prepaid,
+                        'stan_zaliczki' => $order['Order']['stan_zaliczki'],
+                        'clickable' => $order['Order']['zal_clickable'],
+                        'id' => $order['Order']['id']
+                )); ?>
+                
 		<dt><?php echo 'Forma Płatnosci'; ?></dt>
 		<dd>
 			<?php echo $vju['forma_platnosci']['options'][$order['Order']['forma_platnosci']];
@@ -317,54 +312,12 @@ if( $order['Order']['nr'] ) {
 	</ul>
 </div>
 
-
-<!--
-<div class="related">-->
-<!--
-	<h3><?php echo __('Related Events'); ?></h3>
-	<?php if (!empty($order['Event'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('User Id'); ?></th>
-		<th><?php echo __('Order Id'); ?></th>
-		<th><?php echo __('Job Id'); ?></th>
-		<th><?php echo __('Card Id'); ?></th>
-		<th><?php echo __('Co'); ?></th>
-		<th><?php echo __('Post'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($order['Event'] as $event): ?>
-		<tr>
-			<td><?php echo $event['id']; ?></td>
-			<td><?php echo $event['user_id']; ?></td>
-			<td><?php echo $event['order_id']; ?></td>
-			<td><?php echo $event['job_id']; ?></td>
-			<td><?php echo $event['card_id']; ?></td>
-			<td><?php echo $event['co']; ?></td>
-			<td><?php echo $event['post']; ?></td>
-			<td><?php echo $event['created']; ?></td>
-			<td><?php echo $event['modified']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'events', 'action' => 'view', $event['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'events', 'action' => 'edit', $event['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'events', 'action' => 'delete', $event['id']), null, __('Are you sure you want to delete # %s?', $event['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
-	-->
-	<!--
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Event'), array('controller' => 'events', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>-->
-<!--</div>-->
-
+<template name="pre-paid">
 <?php
-//echo '<pre>';	print_r($order); echo  '</pre>';
+    echo $this->element('orders/view/pre-paid-tpl', array( 'prepaid' => $prepaid )); ?>
+</template>
+<?php
+    echo '<pre>';	print_r($order); echo  '</pre>';
+
+
 

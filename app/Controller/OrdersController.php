@@ -26,12 +26,31 @@ class OrdersController extends AppController {
         );
 	
 	public function beforeFilter() {
-    	parent::beforeFilter();
-    	//$this->actionAllowed();
-    	$this->links = array( nORD_LIST, nORD_ADD, nORD_EDIT, nORD_DEL );
-    	$this->set('links', $this->links );
+            parent::beforeFilter();
+            //$this->actionAllowed();
+            $this->links = array( nORD_LIST, nORD_ADD, nORD_EDIT, nORD_DEL );
+            $this->set('links', $this->links );
 	}	
-
+/*
+ *      Ajax - sprawdzanie kwestii płatności
+ */
+        
+        public function prepaid() {
+            
+            $answer = array(
+                'id' => $this->request->data['id'],
+                'stan' => null,
+                'toa' => '2016',
+                'clickable' => false
+            );
+            $this->set(array(
+                'answer' => $answer,
+                '_serialize' => 'answer' //to używamy, gdy nie chcemy view
+            ));
+            //sleep(1);
+	
+        }
+        
 	private function zakoncz_zamowienie($id = null) {
 		
 		
@@ -246,6 +265,12 @@ class OrdersController extends AppController {
 		$this->set( compact('orders', 'par' ) );
 	}
 
+        // czy dany użytkownik, któremu się wyświetla handlowe, może klikać w zaliczkę
+        private function is_prepaid_clickable() {
+            
+            return true;
+            //return false;
+        }
 /**
  * view method
  *
@@ -260,7 +285,9 @@ class OrdersController extends AppController {
 		}
 		$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
 		$order = $this->Order->find('first', $options);
-		
+		// kwestia czy można klikać i (co za tym idzie) zmieniać stan zaliczki
+                $order['Order']['zal_clickable'] = $this->is_prepaid_clickable();
+                
 		if( !$this->akcjaOK($order['Order'], 'view') ) {
 			$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
 			return $this->redirect($this->referer());
