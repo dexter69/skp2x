@@ -52,8 +52,9 @@ if( $order['Order']['procent_zaliczki'] ) {
 				//echo $this->Html->link($order['User']['name'], array('controller' => 'users', 'action' => 'view', $order['User']['id'])); ?>
 			&nbsp;
 		</dd>
-                
-                <?php echo $this->element('orders/view/pre-dt-dd', array(
+                <?php
+                // PRZEDPŁATA
+                 echo $this->element('orders/view/pre-dt-dd', array(
                         'prepaid' => $prepaid,
                         'stan_zaliczki' => $order['Order']['stan_zaliczki'],
                         'clickable' => $order['Order']['zal_clickable'],

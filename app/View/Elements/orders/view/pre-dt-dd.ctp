@@ -21,9 +21,11 @@ if( $clickable ) { $klasa_ext .= ' clickable'; }
           ?>"
     >
     <?php echo $prepaid; ?>&nbsp;
+    <!--
     <p class="pay-info">
         <span id="span1"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
         <span id="span2"></span>
         <span id="span3"></span>
     </p>
+    -->
 </dd>
