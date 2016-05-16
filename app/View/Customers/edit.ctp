@@ -1,6 +1,6 @@
 <?php 
 // do sekcji head zostanie dodany customer.css
-$this->Html->css(array(/**/'customer'), null, array('inline' => false));
+$this->Html->css(array(/**/'customer.css?v=328526834'), null, array('inline' => false));
 echo $this->Html->script( array('jquery', /* 'common',*/ 'customer'), array('inline' => false)); 
 
 $code = "var pay = " . json_encode( array( PRZE, CASH ) ) . ";\n" .
@@ -10,7 +10,7 @@ $code = "var pay = " . json_encode( array( PRZE, CASH ) ) . ";\n" .
 		
 echo $this->Html->scriptBlock( $code, array('block' => 'scriptBottom') );
 
-//echo '<pre>'; echo print_r($vju); echo '</pre>';
+//echo '<pre>'; echo print_r($users); echo '</pre>';
 //echo '<pre>'; print_r($links); echo '</pre>';
 //echo '<pre>'; echo print_r($this->request->data); echo '</pre>';
 
@@ -27,7 +27,13 @@ $this->Ma->displayActions($links);
 
 	<?php
 		echo $this->Form->hidden('id');
-		echo $this->Form->input('name',$vju['name']);
+                
+                $markup =   $this->Form->input('name',$vju['name']) .
+                            $this->Form->input('user_id', array(
+                                'label' => array('text' => 'Opiekun'
+                            )));
+                $this->Ma->responsive_divs( $markup, 'name_opiekun');
+                
 		echo $this->Form->hidden('owner_id',$vju['owner_id']);
 		
 		echo $this->Form->hidden('AdresSiedziby.id');

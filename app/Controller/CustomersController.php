@@ -159,6 +159,7 @@ class CustomersController extends AppController {
 			throw new NotFoundException(__('Invalid customer'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+                    $this->request->data['Customer']['owner_id'] = $this->request->data['Customer']['user_id'];
                     //$this->Customer->print_r2($this->request->data);
                     //return;
                     if( $this->Customer->NIPisOK($this->request->data) )	{
@@ -184,7 +185,11 @@ class CustomersController extends AppController {
 		}
 		//if( $this->request->data['Customer']['procent_zaliczki'] == null )
 		//	$this->request->data['Customer']['procent_zaliczki'] = 33;
-		$users = $this->Customer->Creator->find('list');
+                
+                // użytkownicy, coby opiekuna mozna zmienić
+		$users = $this->Customer->Creator->find('list', array(
+                    'conditions' => array('dzial <' => 3)
+                ));
 		$vju = $this->Customer->get_view_options($this->request->data['Customer']);
 		$links = $this->links;
 		$this->set(compact('users','vju', 'links'));

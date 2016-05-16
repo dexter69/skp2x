@@ -2,6 +2,10 @@
 /*
 div.wrapit { border: 1px solid blue; }
 */
+#name_div { width: 86%;
+    
+}
+
 #nr_budynku_div, #kraj_div, #cr_div, #tel_div {	width: 27%;  }
 #osoba_kontaktowa_div { width: 38%; }
 #nr_budynku_div  > input, #kraj_div  > input,
