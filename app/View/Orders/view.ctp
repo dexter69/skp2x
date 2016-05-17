@@ -318,7 +318,7 @@ if( $order['Order']['procent_zaliczki'] ) {
     echo $this->element('orders/view/pre-paid-tpl', array( 'prepaid' => $prepaid )); ?>
 </template>
 <?php
-    echo '<pre>';	print_r($order); echo  '</pre>';
+    //echo '<pre>';	print_r($order); echo  '</pre>';
 
 
 
