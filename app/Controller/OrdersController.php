@@ -41,7 +41,7 @@ class OrdersController extends AppController {
                 'id' => $this->request->data['id'],
                 'stan' => null,
                 'toa' => '2016',
-                'clickable' => false
+                'clickable' => true
             );
             $this->set(array(
                 'answer' => $answer,
@@ -265,12 +265,7 @@ class OrdersController extends AppController {
 		$this->set( compact('orders', 'par' ) );
 	}
 
-        // czy dany użytkownik, któremu się wyświetla handlowe, może klikać w zaliczkę
-        private function is_prepaid_clickable() {
-            
-            return true;
-            //return false;
-        }
+
 /**
  * view method
  *
@@ -332,6 +327,12 @@ class OrdersController extends AppController {
 		//$this -> render('druknij');
 	}
 
+        // czy dany użytkownik, któremu się wyświetla handlowe, może klikać w zaliczkę
+        private function is_prepaid_clickable() {
+            
+            return true;
+            //return false;
+        }
 
 	public function prepareSubmits($order) {
 		

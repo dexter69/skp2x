@@ -15,7 +15,7 @@ if( $order['Order']['nr'] ) {
     $this->set('title_for_layout', 'Zamówienie (H)');     
 }
 
-// kwestie przedpłaty
+// kwestie przedpłaty, wartość wyświetlana
 $prepaid = $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
 if( $order['Order']['procent_zaliczki'] ) {
     $prepaid .= ', ' . $order['Order']['procent_zaliczki'] . '%'; }
@@ -30,11 +30,20 @@ if( $order['Order']['procent_zaliczki'] ) {
         }
         
         $zlozone = $this->Ma->md($order['Order']['data_publikacji']);
+        // PRZEDPŁATA
+        $prepaid_table = array(
+            'prepaid' => $prepaid,
+            'jest_zaliczka' => ($order['Order']['forma_zaliczki'] > 1),            
+            'stan_zaliczki' => $order['Order']['stan_zaliczki'],
+            'clickable' => $order['Order']['zal_clickable'],
+            'id' => $order['Order']['id']
+        );
         echo $this->element('orders/view/naglowek', array(
                 'id' => $order['Order']['id'],
                 'numer' => $nr,
                 'termin' => $this->Ma->md($order['Order']['stop_day']),
-                'zlozone' => $zlozone
+                'zlozone' => $zlozone,
+                'ppl' => $prepaid_table
         )); ?>
     
 	<?php //$this->Ma->nawiguj( $links, $order['Order']['id'] ); //nawigacyjne do dodaj, usuń, edycja itp. ?>
@@ -54,19 +63,14 @@ if( $order['Order']['procent_zaliczki'] ) {
 		</dd>
                 <?php
                 // PRZEDPŁATA
-                 echo $this->element('orders/view/pre-dt-dd', array(
-                        'prepaid' => $prepaid,
-                        'stan_zaliczki' => $order['Order']['stan_zaliczki'],
-                        'clickable' => $order['Order']['zal_clickable'],
-                        'id' => $order['Order']['id']
-                )); ?>
+                 echo $this->element('orders/view/pre-dt-dd', $prepaid_table ); ?>
                 
 		<dt><?php echo 'Forma Płatnosci'; ?></dt>
-		<dd>
-			<?php echo $vju['forma_platnosci']['options'][$order['Order']['forma_platnosci']];
-			if( ($order['Order']['forma_platnosci'] == PRZE || $order['Order']['forma_platnosci'] == CASH)
-					&& $order['Order']['termin_platnosci'] )
-						echo ', ' . $order['Order']['termin_platnosci'] . ' dni';
+		<dd><?php 
+                    echo $vju['forma_platnosci']['options'][$order['Order']['forma_platnosci']];
+                    if( ($order['Order']['forma_platnosci'] == PRZE || $order['Order']['forma_platnosci'] == CASH)
+                        && $order['Order']['termin_platnosci'] )
+                        { echo ', ' . $order['Order']['termin_platnosci'] . ' dni'; }
 			?>
 			&nbsp;
 		</dd>
@@ -107,8 +111,10 @@ if( $order['Order']['procent_zaliczki'] ) {
         </div>
 </div>
 
+<?php
+echo '<pre>';	print_r($order); echo  '</pre>';
+?>
 
-<!-- <?php $this->Ma->kontrolka_ord($order, $evcontrol);	?>	-->
 	
 <div class="related">
 	<!--<h3>-->

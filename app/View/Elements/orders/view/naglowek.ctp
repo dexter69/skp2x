@@ -1,3 +1,17 @@
+<?php 
+
+if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
+    switch( $ppl['stan_zaliczki'] ) {
+        case null: $klasa_ext = 'null red'; break; // brak jakiegokolwiek wpisu
+        case 'confirmed': $klasa_ext = 'confirmed ora'; break; // potwierdzona wpłata
+        case 'money': $klasa_ext = 'money gre'; break; // są pieniądze na koncie
+    }
+    if( $ppl['clickable'] ) { $klasa_ext .= ' clickable'; }
+} else { // bez zaliczki - z defincji płatność uregulowana
+    $klasa_ext .= 'null gre'; // zielone
+}
+?>
+
 <div class="new-type-header">
     <p class="numer-handlowy">
         <label>
@@ -24,6 +38,15 @@
                 array('class' => 'pdflink',  'escape' =>false)
             );
         ?>
+        </span>
+        <span id="the-dd-2"
+              class="pay-span <?php echo $klasa_ext?>" 
+              base="<?php echo $this->webroot; /*info o url*/ ?>"  
+              order_id="<?php echo $id; /*id zamówienia*/ ?>" >
+                <i class="fa fa-usd" aria-hidden="true" dolar="one"></i>
+                <i class="fa fa-caret-right" aria-hidden="true" dolar="one"></i>
+                <i class="fa fa-usd drugi" aria-hidden="true" dolar="two"></i>
+                <i class="fa fa-usd trzeci" aria-hidden="true" dolar="three"></i>
         </span>
     </p>
     <p class="daty-handlowe">

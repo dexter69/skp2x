@@ -1,57 +1,38 @@
-/*
-Kwestie związane z przedpłatą
+/* 
+    Prepaid po nowemu
 */
 
-dl > #the-dd { //to dd w której wyświetlane są przedpłaty
-    //background-color: red;
-    position: relative;
-}
+#the-dd-2  {  font-size: 83%; padding: 6px 4.31px 0 10px;}
 
-dl > #the-dd .pay-info {
-    //
-    display: inline-block;
-    margin: 0;
-    position: absolute;
-    right: 0;
-    //padding: 0 0.5em;
-    //height: 3em;
-}
+#the-dd-2.clickable > i {  cursor: pointer; }
 
-dl > #the-dd .pay-info > span {
-    //border-bottom: 1px solid violet;
-    display: block;
-    width: 2.5em;
-    height: 2em;    
-    text-align: center;
-    //padding-right: 0.5em;
-    border-radius: 2px;
-}
+// bez klasy .clickable oraz gdy widżet jest otwarty - chcemy by kareta nie była widoczna
+#the-dd-2 .fa-caret-right, #the-dd-2.clickable.open .fa-caret-right { display: none; }
 
-// sytuacja, gdy płatność nie ruszona
-dl > #the-dd.null .pay-info > #span1 { background-color: red; }
-dl > #the-dd.null .pay-info > #span2 { background-color: orange; }
-dl > #the-dd.null .pay-info > #span3 { background-color: green; }
+// da się kliknąć, więc pokazujemy karetę
+#the-dd-2.clickable  .fa-caret-right {  display: inline-block;  font-size: 150%; }
 
-// sytuacja, gdy mamy potwierdzenie wpłaty
-dl > #the-dd.confirmed .pay-info > #span1 { background-color: orange; }
-dl > #the-dd.confirmed .pay-info > #span2 { background-color: green; }
-dl > #the-dd.confirmed .pay-info > #span3 { background-color: red; }
+// gdy nie ma klasy .open (widżet zamknięty), to dwa ostatnie dolary niewidoczne
+#the-dd-2 .drugi, #the-dd-2 .trzeci { display: none; }
 
-// sytuacja, gdy mamy potwierdzenie wpłaty
-dl > #the-dd.money .pay-info > #span1 { background-color: green; }
-dl > #the-dd.money .pay-info > #span2 { background-color: red; }
-dl > #the-dd.money .pay-info > #span3 { background-color: orange; }
+// .open - widżet otwarty
+#the-dd-2.open .drugi, #the-dd-2.open .trzeci { 
+    display: inline-block; 
+    margin-left: 0.3em;}
 
-dl > #the-dd .pay-info > #span2,
-dl > #the-dd .pay-info > #span3 { visibility: hidden; }
+/* Kolory dolarów */
 
-dl > #the-dd.open .pay-info > #span2,
-dl > #the-dd.open .pay-info > #span3 { visibility: visible; }
+// pierwszy CZERWONY
+#the-dd-2.red i.fa-usd:first-child { color: red; }
+#the-dd-2.red i.fa-usd:nth-child(3)  { color: orange; }
+#the-dd-2.red i.fa-usd:last-child { color: green; }
 
-dl > #the-dd.open .pay-info > span {
-    cursor: pointer;
-}
+// pierwszy POMARAŃCZOWY
+#the-dd-2.ora i.fa-usd:first-child { color: orange; }
+#the-dd-2.ora i.fa-usd:nth-child(3)  { color: green; }
+#the-dd-2.ora i.fa-usd:last-child { color: red; }
 
-dl > #the-dd .pay-info > #span1 > i { visibility: hidden; }
-dl > #the-dd.clickable .pay-info > #span1 > i { visibility: visible;}
-dl > #the-dd.clickable .pay-info > #span1 { cursor: pointer; }
+// pierwszy ZIELONY
+#the-dd-2.gre i.fa-usd:first-child { color: green; }
+#the-dd-2.gre i.fa-usd:nth-child(3)  { color: red; }
+#the-dd-2.gre i.fa-usd:last-child { color: orange; }

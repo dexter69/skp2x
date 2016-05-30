@@ -159,6 +159,7 @@ class CustomersController extends AppController {
 			throw new NotFoundException(__('Invalid customer'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+                    // coby ewentualnie zmienić opiekuna
                     $this->request->data['Customer']['owner_id'] = $this->request->data['Customer']['user_id'];
                     //$this->Customer->print_r2($this->request->data);
                     //return;
