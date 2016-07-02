@@ -12,6 +12,21 @@ class Order extends AppModel {
 	
 	// tu wpisujemy kody po jakiejś akcji
 	public $OrderError = 0;
+        
+        // zwróć status przedpłaty
+        public function prepaidStatus( $id = null ) {
+            //$result = array();
+            
+            //$this->Behaviors->attach('Containable');
+            $result = $this->find('first', array(
+                'conditions' => array('Order.id' => $id ),
+                'fields' => array('Order.id', 'Order.forma_zaliczki', 'Order.stan_zaliczki'),
+                'recursive' => 0
+                //'contain' => array('Card.id', 'Card.status', 'Card.remstatus')
+            ));
+            
+            return $result;	
+        }
 	
 	/*	ZNAJDŹ MI ZAMÓWIENIE i WSZYSTKIE JEGO KARTY,
 	INTERESUJĄ NAS TYLKO POLA status */

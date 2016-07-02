@@ -43,6 +43,7 @@ if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
               class="pay-span <?php echo $klasa_ext?>" 
               base="<?php echo $this->webroot; /*info o url*/ ?>"  
               order_id="<?php echo $id; /*id zamówienia*/ ?>" >
+                <i class="fa fa-spinner fa-pulse"></i>
                 <i class="fa fa-usd" aria-hidden="true" dolar="one"></i>
                 <i class="fa fa-caret-right" aria-hidden="true" dolar="one"></i>
                 <i class="fa fa-usd drugi" aria-hidden="true" dolar="two"></i>

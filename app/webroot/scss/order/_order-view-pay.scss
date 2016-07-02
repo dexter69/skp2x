@@ -4,7 +4,7 @@
 
 #the-dd-2  {  font-size: 83%; padding: 6px 4.31px 0 10px;}
 
-#the-dd-2.clickable > i {  cursor: pointer; }
+#the-dd-2.clickable > i.fa-usd {  cursor: pointer; }
 
 // bez klasy .clickable oraz gdy widżet jest otwarty - chcemy by kareta nie była widoczna
 #the-dd-2 .fa-caret-right, #the-dd-2.clickable.open .fa-caret-right { display: none; }
@@ -20,19 +20,26 @@
     display: inline-block; 
     margin-left: 0.3em;}
 
+#the-dd-2.waiting > i[dolar=one], 
+#the-dd-2.waiting > i[dolar=two],
+#the-dd-2.waiting > i[dolar=three] {display: none;}
+
 /* Kolory dolarów */
 
+#the-dd-2 i.fa-spinner { display: none;}  //kręcioła
+#the-dd-2.waiting i.fa-spinner { display: inline-block; color: grey;}  //kręcioła
+
 // pierwszy CZERWONY
-#the-dd-2.red i.fa-usd:first-child { color: red; }
-#the-dd-2.red i.fa-usd:nth-child(3)  { color: orange; }
-#the-dd-2.red i.fa-usd:last-child { color: green; }
+#the-dd-2.red i.fa-usd { color: red; }
+#the-dd-2.red i.fa-usd.drugi  { color: orange; }
+#the-dd-2.red i.fa-usd.trzeci { color: green; }
 
 // pierwszy POMARAŃCZOWY
-#the-dd-2.ora i.fa-usd:first-child { color: orange; }
-#the-dd-2.ora i.fa-usd:nth-child(3)  { color: green; }
-#the-dd-2.ora i.fa-usd:last-child { color: red; }
+#the-dd-2.ora i.fa-usd { color: orange; }
+#the-dd-2.ora i.fa-usd.drugi  { color: green; }
+#the-dd-2.ora i.fa-usd.trzeci { color: red; }
 
 // pierwszy ZIELONY
-#the-dd-2.gre i.fa-usd:first-child { color: green; }
-#the-dd-2.gre i.fa-usd:nth-child(3)  { color: red; }
-#the-dd-2.gre i.fa-usd:last-child { color: orange; }
+#the-dd-2.gre i.fa-usd { color: green; }
+#the-dd-2.gre i.fa-usd.drugi  { color: red; }
+#the-dd-2.gre i.fa-usd.trzeci { color: orange; }

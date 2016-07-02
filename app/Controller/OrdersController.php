@@ -31,25 +31,7 @@ class OrdersController extends AppController {
             $this->links = array( nORD_LIST, nORD_ADD, nORD_EDIT, nORD_DEL );
             $this->set('links', $this->links );
 	}	
-/*
- *      Ajax - sprawdzanie kwestii płatności
- */
-        
-        public function prepaid() {
-            
-            $answer = array(
-                'id' => $this->request->data['id'],
-                'stan' => null,
-                'toa' => '2016',
-                'clickable' => true
-            );
-            $this->set(array(
-                'answer' => $answer,
-                '_serialize' => 'answer' //to używamy, gdy nie chcemy view
-            ));
-            //sleep(1);
-	
-        }
+
         
 	private function zakoncz_zamowienie($id = null) {
 		
@@ -296,14 +278,14 @@ class OrdersController extends AppController {
 		
 		foreach( $order['Card'] as &$card) {
 			if( $card['job_id'] ) {
-				$job = $this->Order->Card->Job->find('first', array(
-					'conditions' => array('Job.id' => $card['job_id']),
-					'fields' => array('id', 'nr')
-				));
-				$card['job_nr'] = $job['Job']['nr'];
+                            $job = $this->Order->Card->Job->find('first', array(
+                                    'conditions' => array('Job.id' => $card['job_id']),
+                                    'fields' => array('id', 'nr')
+                            ));
+                            $card['job_nr'] = $job['Job']['nr'];
 			}
-			else
-				$card['job_nr'] = 0;
+			else    {
+                            $card['job_nr'] = 0; }
 		}
 		$vju = $this->Order->get_view_options();
 		foreach( $users as $value) {
@@ -332,6 +314,31 @@ class OrdersController extends AppController {
             
             return true;
             //return false;
+        }
+        
+        /*
+ *      Ajax - sprawdzanie kwestii płatności
+ */
+        
+        public function prepaid() {
+            
+            $result = $this->Order->prepaidStatus($this->request->data['id']);
+            $answer = $result['Order'];
+            $answer['clickable'] = $this->is_prepaid_clickable();
+            $answer['before'] = array(
+                    'id' => $this->request->data['id'],
+                    'stan' => null,
+                    'toa' => '2016',
+                    'clickable' => $answer['clickable'],
+                    'extra' => 'HauMiauMuu'
+            );
+            
+            $this->set(array(
+                'answer' => $answer,
+                '_serialize' => 'answer' //to używamy, gdy nie chcemy view
+            ));
+            //sleep(1);
+	
         }
 
 	public function prepareSubmits($order) {

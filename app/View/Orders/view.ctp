@@ -16,9 +16,9 @@ if( $order['Order']['nr'] ) {
 }
 
 // kwestie przedpłaty, wartość wyświetlana
-$prepaid = $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
+$prepaidTxt = $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
 if( $order['Order']['procent_zaliczki'] ) {
-    $prepaid .= ', ' . $order['Order']['procent_zaliczki'] . '%'; }
+    $prepaidTxt .= ', ' . $order['Order']['procent_zaliczki'] . '%'; }
 
 ?>
 <div class="orders view">
@@ -32,7 +32,7 @@ if( $order['Order']['procent_zaliczki'] ) {
         $zlozone = $this->Ma->md($order['Order']['data_publikacji']);
         // PRZEDPŁATA
         $prepaid_table = array(
-            'prepaid' => $prepaid,
+            'prepaid' => $prepaidTxt,
             'jest_zaliczka' => ($order['Order']['forma_zaliczki'] > 1),            
             'stan_zaliczki' => $order['Order']['stan_zaliczki'],
             'clickable' => $order['Order']['zal_clickable'],
@@ -321,7 +321,7 @@ echo '<pre>';	print_r($order); echo  '</pre>';
 
 <template name="pre-paid">
 <?php
-    echo $this->element('orders/view/pre-paid-tpl', array( 'prepaid' => $prepaid )); ?>
+    echo $this->element('orders/view/pre-paid-tpl', array( 'prepaid' => $prepaidTxt )); ?>
 </template>
 <?php
     //echo '<pre>';	print_r($order); echo  '</pre>';

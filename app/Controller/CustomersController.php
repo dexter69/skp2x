@@ -220,46 +220,46 @@ class CustomersController extends AppController {
 	private function akcjaOK( $dane = array(), $akcja = null, $par = null ) {
 		
 		switch($akcja) {
-				case 'view':
-					$customer = $dane;
-					switch( $this->Auth->user('CV') ) {
-						case VIEW_OWN:
-							if( $this->Auth->user('id') == $customer['user_id'] ) return true;
-							break;
-						case VIEW_ALL:
-						case VIEW_SAL:
-							return true;
-							break;
-					}
-					break;
-				case 'edit':
-						$customer = $dane;
-						switch( $this->Auth->user('CE') ) {
-							case EDIT_OWN:
-								if( $this->Auth->user('id') == $customer['user_id'] ) return true;
-								break;
-							case EDIT_ALL:
-							case EDIT_SAL:
-								return true;
-								break;
-						}							
-						return false;
-						break;
-				case 'index':
-						$upraw = $this->Auth->user('CX');
-						switch($par) {
-							case null:
-								if( $upraw == IDX_ALL || $upraw == IDX_SAL ) return true;
-								break;
-							case 'my':
-								switch($upraw) {
-									case IDX_OWN: case IDX_ALL: case IDX_SAL:
-									return true;
-									break;
-								}
-								break;
-						}
-						break;
+                    case 'view':
+                            $customer = $dane;
+                            switch( $this->Auth->user('CV') ) {
+                                    case VIEW_OWN:
+                                            if( $this->Auth->user('id') == $customer['user_id'] ) return true;
+                                            break;
+                                    case VIEW_ALL:
+                                    case VIEW_SAL:
+                                            return true;
+                                            break;
+                            }
+                            break;
+                    case 'edit':
+                                    $customer = $dane;
+                                    switch( $this->Auth->user('CE') ) {
+                                            case EDIT_OWN:
+                                                    if( $this->Auth->user('id') == $customer['user_id'] ) return true;
+                                                    break;
+                                            case EDIT_ALL:
+                                            case EDIT_SAL:
+                                                    return true;
+                                                    break;
+                                    }							
+                                    return false;
+                                    break;
+                    case 'index':
+                                    $upraw = $this->Auth->user('CX');
+                                    switch($par) {
+                                            case null:
+                                                    if( $upraw == IDX_ALL || $upraw == IDX_SAL ) return true;
+                                                    break;
+                                            case 'my':
+                                                    switch($upraw) {
+                                                            case IDX_OWN: case IDX_ALL: case IDX_SAL:
+                                                            return true;
+                                                            break;
+                                                    }
+                                                    break;
+                                    }
+                                    break;
 		}
 		return false;
 	}
