@@ -2,7 +2,7 @@
  *  Obsług przedpłaty po nowemu
  * 
  */
-
+/* Tymczasowy sobie test */
 // obsługa otwierania i zamykania widżetu
 
 var theSpan = ".ikony-handlowe > #the-dd-2"; //interesujący nas span z dolarami
