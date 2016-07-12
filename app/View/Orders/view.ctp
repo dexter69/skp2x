@@ -15,7 +15,7 @@ if( $order['Order']['nr'] ) {
     $this->set('title_for_layout', 'Zamówienie (H)');     
 }
 
-// kwestie przedpłaty, wartość wyświetlana
+// kwestie przedpłaty - wartość wyświetlana
 $prepaidTxt = $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
 if( $order['Order']['procent_zaliczki'] ) {
     $prepaidTxt .= ', ' . $order['Order']['procent_zaliczki'] . '%'; }
@@ -30,7 +30,7 @@ if( $order['Order']['procent_zaliczki'] ) {
         }
         
         $zlozone = $this->Ma->md($order['Order']['data_publikacji']);
-        // PRZEDPŁATA
+        // PRZEDPŁATA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         $prepaid_table = array(
             'prepaid' => $prepaidTxt,
             'jest_zaliczka' => ($order['Order']['forma_zaliczki'] > 1),            

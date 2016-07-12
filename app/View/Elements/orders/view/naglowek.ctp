@@ -8,7 +8,7 @@ if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
     }
     if( $ppl['clickable'] ) { $klasa_ext .= ' clickable'; }
 } else { // bez zaliczki - z defincji płatność uregulowana
-    $klasa_ext .= 'null gre'; // zielone
+    $klasa_ext = 'null gre'; // zielone
 }
 ?>
 

@@ -324,6 +324,8 @@ class OrdersController extends AppController {
             
             $result = $this->Order->prepaidStatus($this->request->data['id']);
             $answer = $result['Order'];
+            //$answer['stan_zaliczki'] = 'money'; // dla testow
+            $answer['jest_zaliczka'] = $answer['forma_zaliczki'] > 1;
             $answer['clickable'] = $this->is_prepaid_clickable();
             $answer['before'] = array(
                     'id' => $this->request->data['id'],
