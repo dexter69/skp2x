@@ -316,7 +316,7 @@ class OrdersController extends AppController {
             //return false;
         }
         
-        /*
+ /*
  *      Ajax - sprawdzanie kwestii płatności
  */
         
@@ -341,6 +341,18 @@ class OrdersController extends AppController {
             ));
             //sleep(1);
 	
+        }
+/*
+ *      Ajax - Ustaw nowy stan zaliczki
+ */        
+        public function setPrePaidState() {
+            
+            $zwrotka = $this->Order->setPrepaidStatus($this->request->data);            
+            $this->set(array(
+                'zwrotka' => $zwrotka,
+                '_serialize' => 'zwrotka' //to używamy, gdy nie chcemy view
+            ));
+            //sleep(3);
         }
 
 	public function prepareSubmits($order) {

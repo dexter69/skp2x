@@ -27,6 +27,26 @@ class Order extends AppModel {
             
             return $result;	
         }
+        
+        // zapisz status przedpłaty
+        public function setPrepaidStatus( $rqdata = array() ) {
+            
+            $errno = 4;
+            if ( isset($rqdata['id'], $rqdata['stan_zaliczki']) ) { // zapisz w bazie
+                
+                if ( $this->exists($rqdata['id'])) { // jest taki rekord
+                   // nie wiem jak i czy można transportować wartość null json, dlatego tak
+                    if( $rqdata['stan_zaliczki'] == 'red' ) { $rqdata['stan_zaliczki'] = null; }                    
+                    $dane['Order'] = $rqdata; // prawidłowy format dla save
+                    if( $this->save($dane) ) { $errno = 0; }
+                    else { $errno = 1; }
+                } else { $errno = 3; }    
+            } else {
+                $errno = 2;
+            }
+            $rqdata['errno'] = $errno;
+            return $rqdata;
+        }
 	
 	/*	ZNAJDŹ MI ZAMÓWIENIE i WSZYSTKIE JEGO KARTY,
 	INTERESUJĄ NAS TYLKO POLA status */

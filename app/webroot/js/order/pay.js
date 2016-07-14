@@ -27,25 +27,6 @@ function klikanieDolarka() {
     });
 }
 
-// jak już się skomunikujemy z serwerem i uaktualnimy faktyczną sytuację
-// to dopiero robimy resztę w temacie kliknięcia
-function restOfDolarek(obj) {
-    
-    if( moznaKlikacWidzet() ) { // widżet działa tylko gdy jest clickable
-        if( widzetJestOtwarty() ) { // znaczy klikniecie nastąpiło przy otwartym
-            // czyli mamy albo zamknięcie, albo zmianę koloru dolara                
-            if( klikDrugiLubTrzeci(obj) ) { //zmiana koloru
-              var new_color = getNewColor(obj);
-              console.log(new_color);
-              ustawNowyKolor(new_color);
-            } 
-            zamknijWidget(); // zamknij tak czy siak
-        } else { // klikniecie nastąpiło przy zamkniętym - więc kwestia tylko otwarcia jest
-            otworzWidget();
-        }
-    } 
-}
-
 // Sprawdzamy stan na serwerze, obj - technicznie, obiekt reprezentujący kliknięty dolarek
 function getPeymentInfo(obj, cblFunction) {
     
@@ -67,19 +48,78 @@ function getPeymentInfo(obj, cblFunction) {
         updateDOM(answer, obj, cblFunction); 
     });
     
-    posting.fail(function( answer ) { // błąd, coś poszło nie tak        
+    posting.fail(function( /*answer*/ ) { // błąd, coś poszło nie tak        
         if( posting.status === 403) { // traktujemy to, że użytkownik nie jest zalogowany
             // przekierowujemy do logowania
             location.assign(base + 'users/login');
-        } else { console.log("FAIL"); }
+        } else { console.log("FAIL"); spinerOFF(); } //inny błąd
     });
     
-    posting.always(function( answer ) { // kod wykonywany zawsze
-        spinerOFF(); // wyłącz kręciołę
+    posting.always(function( /*answer*/ ) { // kod wykonywany zawsze
+        //spinerOFF(); // wyłącz kręciołę
         //cblFunction(obj);
     });
     
     return {};
+}
+
+// jak już się skomunikujemy z serwerem i uaktualnimy faktyczną sytuację
+// to dopiero robimy resztę w temacie kliknięcia
+function restOfDolarek(obj) {
+    
+    if( moznaKlikacWidzet() ) { // widżet działa tylko gdy jest clickable
+        if( widzetJestOtwarty() ) { // znaczy klikniecie nastąpiło przy otwartym
+            // czyli mamy albo zamknięcie, albo zmianę koloru dolara                
+            if( klikDrugiLubTrzeci(obj) ) { //zmiana koloru i stanu przedpłaty              
+              // zapisz na serwerze nowy stan i uaktualnij DOM
+              setNewState(getNewColor(obj));
+            } else {
+                spinerOFF();
+                zamknijWidget(); // zamknij, gdy tylko zamknięcie         
+            }
+        } else { // klikniecie nastąpiło przy zamkniętym - więc kwestia tylko otwarcia jest
+            spinerOFF();
+            otworzWidget();
+        }
+    } else { spinerOFF(); }
+}
+
+function setNewState(nowyKolorStr) {
+    
+    var nowyStan = kolor2Stan(nowyKolorStr);
+    var base = $(theSpan).attr("base");
+    var url = base + "orders/setPrePaidState.json";
+    var order_id = $(theSpan).attr("order_id");
+    
+    // Uaktualnij na serwerze nowy stan
+    var posting = $.post( url, {         
+        "id": order_id,
+        "stan_zaliczki": nowyStan
+    });
+    
+    posting.done(function( answer ) { // sukces, komunikacja udana        
+        console.log(answer);        
+        if(answer.errno === 0) { // jeżeli nie ma błędu dane udało się zapisać
+            ustawNowyKolor(nowyKolorStr);
+        } else {
+            console.log("errno = " + answer.errno);
+        }
+        spinerOFF();
+        zamknijWidget(); // zamknij, tak czy siak        
+    });
+    
+    posting.fail(function() { // błąd, coś poszło nie tak        
+        if( posting.status === 403) { // traktujemy to, że użytkownik nie jest zalogowany
+            // przekierowujemy do logowania
+            location.assign(base + 'users/login');
+        } else { console.log("FAIL - setNewState"); spinerOFF(); zamknijWidget(); } //inny błąd
+    });
+    
+    posting.always(function( ) { // kod wykonywany zawsze
+        console.log("ALWAYS - setNewState");        
+    });
+    
+        
 }
 
 /*
@@ -91,9 +131,9 @@ function updateDOM(info, obj, funkcjaKolbek) {
     // Tu uaktualniamy stan strony do serwera
     
     console.log(info);
-    var klasa_ext = prepareClass(info);
-    console.log(klasa_ext);
-    uaktualnijDOM(klasa_ext, obj, funkcjaKolbek);
+    //var klasa_ext = prepareClass(info);
+    //console.log(klasa_ext);
+    uaktualnijDOM(prepareClass(info), obj, funkcjaKolbek);
     
 }
 /* Uaktualnij DOM 
@@ -104,8 +144,9 @@ function updateDOM(info, obj, funkcjaKolbek) {
  */
 function uaktualnijDOM(stringKlas, dolar, mojKolbek) {
     
-    $( theSpan ).removeClass( "null confirmed money red ora gre clickable" );
-    $( theSpan ).addClass( stringKlas );
+    console.log(stringKlas);
+    $( theSpan ).removeClass( "null confirmed money red ora gre clickable" ); //czyścimy
+    $( theSpan ).addClass( stringKlas ); // i nadajemy własciwe
     mojKolbek(dolar);
 }
 
@@ -130,6 +171,20 @@ function prepareClass(infoObj) {
     return klasa_ext;
 }
 
+/*
+ * Konweryjemy kolor dolarka na wartość do zapisania w bazie
+ * @param {string} str
+ * @returns {String or null}
+ */
+function kolor2Stan(str) {
+  
+    switch( str ) { 
+        case 'red': return 'red';
+        case 'ora': return 'confirmed';
+        case 'gre': return 'money';
+    }
+}
+
 // na czas komunikacji z serwerem włączamy kręciołe
 function spinerON() { $( theSpan ).addClass( "waiting" ); }
 // po otrzymaniu odpowiedzi wyłączamy
@@ -148,7 +203,7 @@ function checkPeymenCondition() {
 
 // zmienia kolor theSpan na "nowy"
 function ustawNowyKolor( nowy ) {
-    
+    console.log(nowy);
     $( theSpan ).removeClass( "red ora gre" );
     $( theSpan ).addClass( nowy );
 }
