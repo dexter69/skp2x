@@ -22,8 +22,8 @@ function klikanieDolarka() {
     $(theSpan + " > i.fa-usd").click( function(){        
         // sprawdz aktualny stan na serwerze, po otrzymaniu danych,
         // uaktualnij i działaj dalej
-        var payObj = getPeymentInfo(this, restOfDolarek);
-        
+        removeErrInfo(); // na wszelki wypadek
+        getPeymentInfo(this, restOfDolarek);
     });
 }
 
@@ -38,7 +38,7 @@ function getPeymentInfo(obj, cblFunction) {
     
     // Używamy POST, bo nie jest cach'owane
     var posting = $.post( url, { 
-        "_": $.now(),
+        //"_": $.now(),
         "id": order_id
     });
     
@@ -52,15 +52,26 @@ function getPeymentInfo(obj, cblFunction) {
         if( posting.status === 403) { // traktujemy to, że użytkownik nie jest zalogowany
             // przekierowujemy do logowania
             location.assign(base + 'users/login');
-        } else { console.log("FAIL"); spinerOFF(); } //inny błąd
+        } else { console.log("FAIL"); spinerOFF(); printErr(123);} //inny błąd
     });
+}
+
+// wydrukuj info o błędzie
+function printErr(nr) {
     
-    posting.always(function( /*answer*/ ) { // kod wykonywany zawsze
-        //spinerOFF(); // wyłącz kręciołę
-        //cblFunction(obj);
+    var html =
+            '<p id="pay-err">Ooops..., coś poszło nie tak. Nr błędu: <b>'
+            + nr + '</b><i class="fa fa-times" aria-hidden="true"></i></p>';
+    
+    $( ".ikony-handlowe" ).after( html );
+    $("#pay-err").click( function(){        
+        removeErrInfo();
     });
-    
-    return {};
+}
+
+// Usuwa komunikat o błędzie
+function removeErrInfo() {
+    $( "#pay-err" ).remove();
 }
 
 // jak już się skomunikujemy z serwerem i uaktualnimy faktyczną sytuację
@@ -103,6 +114,7 @@ function setNewState(nowyKolorStr) {
             ustawNowyKolor(nowyKolorStr);
         } else {
             console.log("errno = " + answer.errno);
+            printErr("sNS + " + answer.errno);
         }
         spinerOFF();
         zamknijWidget(); // zamknij, tak czy siak        
@@ -112,7 +124,11 @@ function setNewState(nowyKolorStr) {
         if( posting.status === 403) { // traktujemy to, że użytkownik nie jest zalogowany
             // przekierowujemy do logowania
             location.assign(base + 'users/login');
-        } else { console.log("FAIL - setNewState"); spinerOFF(); zamknijWidget(); } //inny błąd
+        } else { 
+            console.log("FAIL - setNewState");
+            spinerOFF();
+            zamknijWidget();
+            printErr("321 + " + posting.status); } //inny błąd
     });
     
     posting.always(function( ) { // kod wykonywany zawsze

@@ -1,4 +1,5 @@
 <?php
+$pokaz = false; // decyduje o wyswietlaniu w linii 115
 //echo '<pre>';	print_r($order['Event']); echo  '</pre>';
 //echo '<pre>';	print_r($order); echo  '</pre>';
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
@@ -112,7 +113,7 @@ if( $order['Order']['procent_zaliczki'] ) {
 </div>
 
 <?php
-//echo '<pre>';	print_r($order); echo  '</pre>';
+if( $pokaz ) { echo '<pre>';	print_r($order); echo  '</pre>'; }
 ?>
 
 	

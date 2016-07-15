@@ -43,3 +43,21 @@
 #the-dd-2.gre i.fa-usd { color: green; }
 #the-dd-2.gre i.fa-usd.drugi  { color: red; }
 #the-dd-2.gre i.fa-usd.trzeci { color: orange; }
+
+//obsługa błędów
+#pay-err {
+    font-size: 120%;
+    margin: 0 1em;
+    padding: 1em 2em;
+    background-color: #ffa5bc;
+    position: relative;
+    cursor: pointer;
+}
+
+#pay-err > i {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 80%;
+}
