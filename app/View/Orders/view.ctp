@@ -32,10 +32,15 @@ if( $order['Order']['procent_zaliczki'] ) {
         
         $zlozone = $this->Ma->md($order['Order']['data_publikacji']);
         // PRZEDPŁATA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        if( $order['Order']['stan_zaliczki'] == 'money') {
+            $czas = $this->Ma->md($order['Order']['zaliczka_toa'], true);
+        } else {
+            $czas = null; }
         $prepaid_table = array(
             'prepaid' => $prepaidTxt,
             'jest_zaliczka' => ($order['Order']['forma_zaliczki'] > 1),            
             'stan_zaliczki' => $order['Order']['stan_zaliczki'],
+            'czas' => $czas,
             'clickable' => $order['Order']['zal_clickable'],
             'id' => $order['Order']['id']
         );

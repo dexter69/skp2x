@@ -20,7 +20,7 @@ class Order extends AppModel {
             //$this->Behaviors->attach('Containable');
             $result = $this->find('first', array(
                 'conditions' => array('Order.id' => $id ),
-                'fields' => array('Order.id', 'Order.forma_zaliczki', 'Order.stan_zaliczki'),
+                'fields' => array('Order.id', 'Order.forma_zaliczki', 'Order.stan_zaliczki', 'Order.zaliczka_toa'),
                 'recursive' => 0
                 //'contain' => array('Card.id', 'Card.status', 'Card.remstatus')
             ));
@@ -36,7 +36,11 @@ class Order extends AppModel {
                 
                 if ( $this->exists($rqdata['id'])) { // jest taki rekord
                    // nie wiem jak i czy można transportować wartość null json, dlatego tak
-                    if( $rqdata['stan_zaliczki'] == 'red' ) { $rqdata['stan_zaliczki'] = null; }                    
+                    if( $rqdata['stan_zaliczki'] == 'red' ) {
+                        $rqdata['stan_zaliczki'] = null; 
+                        $rqdata['zaliczka_toa'] = null; // czerwone, to tak jakby nic nie był robione
+                    }   else {
+                        $rqdata['zaliczka_toa'] = date("Y-m-d H:i:s"); }
                     $dane['Order'] = $rqdata; // prawidłowy format dla save
                     if( $this->save($dane) ) { $errno = 0; }
                     else { $errno = 1; }

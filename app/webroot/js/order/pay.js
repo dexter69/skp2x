@@ -37,10 +37,7 @@ function getPeymentInfo(obj, cblFunction) {
     spinerON(); //Włącze kręciołe
     
     // Używamy POST, bo nie jest cach'owane
-    var posting = $.post( url, { 
-        //"_": $.now(),
-        "id": order_id
-    });
+    var posting = $.post( url, { "id": order_id } );
     
     posting.done(function( answer ) { // sukces, dostaliśmy dane        
         // uaktualnij stan faktyczny i wygląd na stronie, a następnie przekaż obsługe 
@@ -94,6 +91,31 @@ function restOfDolarek(obj) {
         }
     } else { spinerOFF(); }
 }
+/*
+ * Konwertujemy datę na bardziej miły format
+ * @param {string} dateStr - zakłada, że string z datą jest w formacie typu:
+ * 2016-07-09 (9 lip 2016)
+ */
+function konwertujDate( dateStr ) {
+    
+    var rok = dateStr.substr(0,4);
+    var mie = dateStr.substr(5,2);
+    var dzi = dateStr.substr(8,2);
+    
+    return dzi + " " + dataShort.miesiace[parseInt(mie)-1] + " " + rok;
+}
+
+
+function setDateZaliczki( answer ) {
+    
+    var datka;
+    
+    if( answer.stan_zaliczki === 'money' ) {
+        datka = konwertujDate( answer.zaliczka_toa.substr(0,10) );
+        $('#the-dd > span').text(datka); }
+    else { 
+        $('#the-dd > span').text(""); }
+}
 
 function setNewState(nowyKolorStr) {
     
@@ -101,6 +123,7 @@ function setNewState(nowyKolorStr) {
     var base = $(theSpan).attr("base");
     var url = base + "orders/setPrePaidState.json";
     var order_id = $(theSpan).attr("order_id");
+    var datka;
     
     // Uaktualnij na serwerze nowy stan
     var posting = $.post( url, {         
@@ -112,6 +135,7 @@ function setNewState(nowyKolorStr) {
         console.log(answer);        
         if(answer.errno === 0) { // jeżeli nie ma błędu dane udało się zapisać
             ustawNowyKolor(nowyKolorStr);
+            setDateZaliczki(answer);
         } else {
             console.log("errno = " + answer.errno);
             printErr("sNS + " + answer.errno);
@@ -146,23 +170,25 @@ function setNewState(nowyKolorStr) {
 function updateDOM(info, obj, funkcjaKolbek) {
     // Tu uaktualniamy stan strony do serwera
     
-    console.log(info);
-    //var klasa_ext = prepareClass(info);
-    //console.log(klasa_ext);
-    uaktualnijDOM(prepareClass(info), obj, funkcjaKolbek);
+    
+    uaktualnijDOM(info , obj, funkcjaKolbek);
     
 }
 /* Uaktualnij DOM 
- * @param {string} stringKlas - obliczone klasy do naszego span'a
+ * @param {obkect} info - obiet zwrócony z serwera z danymi o przedpłacie
  * @param {object} dolar - nasz kliknięty dolarek
  * @param {object} mojKolbek - funkcja do wywołania, która zajmuje się obsługą dolarków
  * @returns {undefined}
  */
-function uaktualnijDOM(stringKlas, dolar, mojKolbek) {
+function uaktualnijDOM(info, dolar, mojKolbek) {
     
+    var stringKlas = prepareClass(info);
+    
+    console.log(info);
     console.log(stringKlas);
     $( theSpan ).removeClass( "null confirmed money red ora gre clickable" ); //czyścimy
     $( theSpan ).addClass( stringKlas ); // i nadajemy własciwe
+    setDateZaliczki(info);
     mojKolbek(dolar);
 }
 

@@ -2,8 +2,14 @@
 Dotyczy widoku handlowego.
 */
 
-// Kwestie>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Wyświetlanie czasu przedpłaty >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#the-dd { position: relative; }
 
+#the-dd > span {
+    position: absolute;
+    right: 0.5em;
+    color: green;
+}
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 .new-type-header { 

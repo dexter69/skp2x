@@ -20,5 +20,6 @@ if( $clickable ) { $klasa_ext .= ' clickable'; }
                 echo $id; // id zamówienia
           ?>"
     >
-    <?php echo $prepaid; ?>&nbsp;    
+    <?php echo $prepaid; ?>&nbsp;
+    <span><?php echo $czas; ?></span>
 </dd>

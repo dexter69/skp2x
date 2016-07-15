@@ -1,3 +1,11 @@
+var dataShort = {
+       miesiace : [
+           "sty", "luty", "marz", "kwie", "maj", "cze", "lip",
+           "sie", "wrze", "paź", "lis", "gru"
+       ],
+       dni : [ "Ni", "Po", "Wt", "Śr", "Cz", "Pt", "So"]
+};
+ 
 // do pomiaru szerokości
 function checkSize() {
 
