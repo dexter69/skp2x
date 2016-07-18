@@ -6,8 +6,15 @@
 // obsługa otwierania i zamykania widżetu
 
 var theSpan = ".ikony-handlowe > #the-dd-2"; //interesujący nas span z dolarami
+var base, url, url2, order_id;
 
 $( document ).ready(function() {
+    
+    // dane do ajax
+    base = $(theSpan).attr("base");
+    url = base + "orders/prepaid.json";
+    url2 = base + "orders/setPrePaidState.json";
+    order_id = $(theSpan).attr("order_id");
    
    klikanieDolarka();       // zamontuj obsługę klikania w dolar
    checkPeymenCondition();  // sprawdź aktualny stan i uaktualnij DOM
@@ -27,12 +34,14 @@ function klikanieDolarka() {
     });
 }
 
+/*
+ Sprawdzamy stan na serwerze i aktualizujemy DOM */
+function checkPeymenCondition() {
+    
+}
+
 // Sprawdzamy stan na serwerze, obj - technicznie, obiekt reprezentujący kliknięty dolarek
 function getPeymentInfo(obj, cblFunction) {
-    
-    var base = $(theSpan).attr("base");
-    var url = base + "orders/prepaid.json";
-    var order_id = $(theSpan).attr("order_id");
     
     spinerON(); //Włącze kręciołe
     
@@ -42,7 +51,7 @@ function getPeymentInfo(obj, cblFunction) {
     posting.done(function( answer ) { // sukces, dostaliśmy dane        
         // uaktualnij stan faktyczny i wygląd na stronie, a następnie przekaż obsługe 
         // do cblFunction
-        updateDOM(answer, obj, cblFunction); 
+        uaktualnijDOM(answer, obj, cblFunction); 
     });
     
     posting.fail(function( /*answer*/ ) { // błąd, coś poszło nie tak        
@@ -119,14 +128,11 @@ function setDateZaliczki( answer ) {
 
 function setNewState(nowyKolorStr) {
     
-    var nowyStan = kolor2Stan(nowyKolorStr);
-    var base = $(theSpan).attr("base");
-    var url = base + "orders/setPrePaidState.json";
-    var order_id = $(theSpan).attr("order_id");
+    var nowyStan = kolor2Stan(nowyKolorStr);    
     var datka;
     
     // Uaktualnij na serwerze nowy stan
-    var posting = $.post( url, {         
+    var posting = $.post( url2, {         
         "id": order_id,
         "stan_zaliczki": nowyStan
     });
@@ -162,20 +168,8 @@ function setNewState(nowyKolorStr) {
         
 }
 
-/*
- * info - obiekt otrzymany z serwera z aktualnym stanem
- * obj  - technicznie, obiekt reprezentujący kliknięty dolarek
- * funkcjaKolbek - funkcja do wywołania, po aktualizacji DOM'a
- */
-function updateDOM(info, obj, funkcjaKolbek) {
-    // Tu uaktualniamy stan strony do serwera
-    
-    
-    uaktualnijDOM(info , obj, funkcjaKolbek);
-    
-}
 /* Uaktualnij DOM 
- * @param {obkect} info - obiet zwrócony z serwera z danymi o przedpłacie
+ * @param {object} info - obiet zwrócony z serwera z danymi o przedpłacie
  * @param {object} dolar - nasz kliknięty dolarek
  * @param {object} mojKolbek - funkcja do wywołania, która zajmuje się obsługą dolarków
  * @returns {undefined}
@@ -231,13 +225,6 @@ function kolor2Stan(str) {
 function spinerON() { $( theSpan ).addClass( "waiting" ); }
 // po otrzymaniu odpowiedzi wyłączamy
 function spinerOFF() { $( theSpan ).removeClass( "waiting" ); }
-
-/*
- Sprawdzamy stan na serwerze i aktualizujemy DOM */
-function checkPeymenCondition() {
-    
-}
-
 
 
 /*  Funkcje typu tools
