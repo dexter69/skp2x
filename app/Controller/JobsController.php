@@ -167,101 +167,101 @@ class JobsController extends AppController {
 		
 		if( count($job['Card']) ) { //zlecenie musi miec jakies karty
 			
-			switch( $status ) {
-				case sPRIVJ:
-					if( $logged_user == $tworca )
-						$submits[eJPUBLI] = 0; //0 oznacza, że komentarz nie wymagany
-					break;
-				case sDTP_REQ:
-					if( $logged_dzial == DTP || $logged_dzial == SUA) {
-						$submits[eJ_FILE1] = 0;						
-					}
-					break;
-				case sHAS_F1:
-				case sHAS_F2:
-					if( $logged_user == $tworca ) {
-						$submits[eJF_OK] = 0;
-						$submits[eJF_BACK] = 1;
-					}					
-				break;	
-				case sDTP2FIX:
-					if( $logged_dzial == DTP ) {
-						$submits[eJ_FILE2] = 0;						
-					}
-				break;	
-				case sW4B:
-				case sW4B2:
-					if( $logged_dzial == KIP ) {
-						$submits[eJ_ACC] = 0;
-						//$submits[eB_REJ] = 1;						
-						$submits[eJ_B2KOR] = 1;
-						$submits[eJ_B2DTP] = 1;
-					}
-				break;	
-				case sDTP2FIX2:
-					if( $logged_dzial == DTP ) {
-						$submits[eJ_FILE3] = 0;						
-					}
-				break;
-				case sKOR2FIX:
-					if( $logged_user == $tworca ) {
-						$submits[eJ_KOR2DTP] = 1;
-						$submits[eJ_KOR2B] = 0;
-					}
-				break;
-				case sJ_PROD:
-					if( $logged_dzial == KIP ) {
-						$submits[eJ_COF2KOR] = 1;
-						$submits[eJ_COF2DTP] = 1;
-					}
-				break;
-				case sPAUSE4K:
-					if( $logged_user == $tworca ) {
-						$submits[eJ_KBACK] = 0;	
-                                                $submits[eJ_KOR2DTP] = 1;
-					}
-				break;
-				case sPAUSE4D:
-					if( $logged_dzial == DTP ) {
-						$submits[eJ_DBACK] = 0;						
-					}
-				break;
-				case sBACK2B:
-					if( $logged_dzial == KIP ) {
-						$submits[eJ_COF2KOR] = 1;
-						$submits[eJ_COF2DTP] = 1;
-						$submits[eJB_UNPAUSE] = 0;
-					}
-				break;
-					
-					
-					
-					
-					
-				case sDAFC:
-					if( $logged_user == $tworca )
-						$submits[eKOR_POP] = 0;
-					break;
-				
-				
-				case sASKOR:
-					if( $logged_user == $tworca ) {
-						$submits[eK_POP4B] = 0;
-						$submits[eK_PUSHDTP] = 0;
-					}
-				break;
-				
-				case sB_REJ:
-					if( $logged_user == $tworca ) {
-						$submits[eKOR_POP] = 0;
-					}
-					if( $logged_dzial == DTP ) {
-						$submits[eJ_FILE] = 0;
-					}
-				break;
-			}
-			if( $status != sPRIVJ )
-				$submits[eJKOM] = 1; // Nie można skomentować bez komentarza :-)
+                    switch( $status ) {
+                        case sPRIVJ:
+                                if( $logged_dzial == SUA || $logged_user == $tworca ) {
+                                    $submits[eJPUBLI] = 0; }//0 oznacza, że komentarz nie wymagany
+                                break;
+                        case sDTP_REQ:
+                                if( $logged_dzial == DTP || $logged_dzial == SUA) {
+                                        $submits[eJ_FILE1] = 0;						
+                                }
+                                break;
+                        case sHAS_F1:
+                        case sHAS_F2:
+                                if( $logged_user == $tworca ) {
+                                        $submits[eJF_OK] = 0;
+                                        $submits[eJF_BACK] = 1;
+                                }					
+                        break;	
+                        case sDTP2FIX:
+                                if( $logged_dzial == DTP ) {
+                                        $submits[eJ_FILE2] = 0;						
+                                }
+                        break;	
+                        case sW4B:
+                        case sW4B2:
+                                if( $logged_dzial == KIP ) {
+                                        $submits[eJ_ACC] = 0;
+                                        //$submits[eB_REJ] = 1;						
+                                        $submits[eJ_B2KOR] = 1;
+                                        $submits[eJ_B2DTP] = 1;
+                                }
+                        break;	
+                        case sDTP2FIX2:
+                                if( $logged_dzial == DTP ) {
+                                        $submits[eJ_FILE3] = 0;						
+                                }
+                        break;
+                        case sKOR2FIX:
+                                if( $logged_user == $tworca ) {
+                                        $submits[eJ_KOR2DTP] = 1;
+                                        $submits[eJ_KOR2B] = 0;
+                                }
+                        break;
+                        case sJ_PROD:
+                                if( $logged_dzial == KIP ) {
+                                        $submits[eJ_COF2KOR] = 1;
+                                        $submits[eJ_COF2DTP] = 1;
+                                }
+                        break;
+                        case sPAUSE4K:
+                                if( $logged_user == $tworca ) {
+                                        $submits[eJ_KBACK] = 0;	
+                                        $submits[eJ_KOR2DTP] = 1;
+                                }
+                        break;
+                        case sPAUSE4D:
+                                if( $logged_dzial == DTP ) {
+                                        $submits[eJ_DBACK] = 0;						
+                                }
+                        break;
+                        case sBACK2B:
+                                if( $logged_dzial == KIP ) {
+                                        $submits[eJ_COF2KOR] = 1;
+                                        $submits[eJ_COF2DTP] = 1;
+                                        $submits[eJB_UNPAUSE] = 0;
+                                }
+                        break;
+
+
+
+
+
+                        case sDAFC:
+                                if( $logged_user == $tworca )
+                                        $submits[eKOR_POP] = 0;
+                                break;
+
+
+                        case sASKOR:
+                                if( $logged_user == $tworca ) {
+                                        $submits[eK_POP4B] = 0;
+                                        $submits[eK_PUSHDTP] = 0;
+                                }
+                        break;
+
+                        case sB_REJ:
+                                if( $logged_user == $tworca ) {
+                                        $submits[eKOR_POP] = 0;
+                                }
+                                if( $logged_dzial == DTP ) {
+                                        $submits[eJ_FILE] = 0;
+                                }
+                        break;
+                    }
+                    if( $status != sPRIVJ ) {
+                        $submits[eJKOM] = 1; } // Nie można skomentować bez komentarza :-)
 			
 		}
 		return $submits;

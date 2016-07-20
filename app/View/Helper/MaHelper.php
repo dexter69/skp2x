@@ -708,13 +708,14 @@ class MaHelper extends AppHelper {
 		
 		function plikoza($przyciski = array()) {
 			
-			if( !empty($przyciski) )
-				if	( 	array_key_exists(eJ_FILE1, $przyciski) ||
-						array_key_exists(eJ_FILE2, $przyciski) ||
-						array_key_exists(eJ_FILE3, $przyciski) ||
-						array_key_exists(eJ_DBACK, $przyciski))
-				return true;
-			return false;
+                    if( !empty($przyciski) ) {
+                        if  ( 	array_key_exists(eJ_FILE1, $przyciski) ||
+                                array_key_exists(eJ_FILE2, $przyciski) ||
+                                array_key_exists(eJ_FILE3, $przyciski) ||
+                                array_key_exists(eJ_DBACK, $przyciski)) {
+                                return true; }
+                    }
+                    return false;
 		}
 		
 		if(count($submity))	{

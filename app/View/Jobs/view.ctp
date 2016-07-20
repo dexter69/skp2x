@@ -8,8 +8,7 @@
         //echo '<pre>';	print_r($job); echo  '</pre>';
         
         
-        if( AuthComponent::user('id') == 1 ) {
-        }
+        //if( AuthComponent::user('id') == 1 ) { }
         
 	$this->Ma->displayActions($links);
         
