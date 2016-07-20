@@ -326,14 +326,7 @@ class OrdersController extends AppController {
             $answer = $result['Order'];
             //$answer['stan_zaliczki'] = 'money'; // dla testow
             $answer['jest_zaliczka'] = $answer['forma_zaliczki'] > 1;
-            $answer['clickable'] = $this->is_prepaid_clickable();
-            $answer['before'] = array(
-                    'id' => $this->request->data['id'],
-                    'stan' => null,
-                    'toa' => '2016',
-                    'clickable' => $answer['clickable'],
-                    'extra' => 'HauMiauMuu'
-            );
+            $answer['clickable'] = $this->is_prepaid_clickable();            
             
             $this->set(array(
                 'answer' => $answer,

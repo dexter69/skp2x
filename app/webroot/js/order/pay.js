@@ -37,7 +37,24 @@ function klikanieDolarka() {
 /*
  Sprawdzamy stan na serwerze i aktualizujemy DOM */
 function checkPeymenCondition() {
+   
+    var posting = $.post( url, { "id": order_id } );
     
+    posting.done(function( answer ) { // sukces, dostaliśmy dane        
+        // uaktualnij stan faktyczny i wygląd na stronie
+        var stringKlas = prepareClass(answer);
+    
+        $( theSpan ).removeClass( "null confirmed money red ora gre clickable" ); //czyścimy
+        $( theSpan ).addClass( stringKlas ); // i nadajemy własciwe
+        setDateZaliczki(answer);
+    });
+    
+    posting.fail(function() { // błąd, coś poszło nie tak        
+        if( posting.status === 403) { // traktujemy to, że użytkownik nie jest zalogowany
+            // przekierowujemy do logowania
+            location.assign(base + 'users/login');
+        } else { console.log("FAIL-X"); printErr(4123);} //inny błąd
+    });
 }
 
 // Sprawdzamy stan na serwerze, obj - technicznie, obiekt reprezentujący kliknięty dolarek
