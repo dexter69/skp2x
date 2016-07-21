@@ -480,6 +480,7 @@ define('update_o', 19); // o, po uzupełnieniu handlowiec wciska
 define('unlock_again', 20); // czyli uzupełnione źle, z powrotem do handlowca
 define('klepnij', 23); // jest ok wrcamy do produkcji
 define('push4checking', 24); // daj Frankowi i/lub Adamowi do sprawdzenia
+define('pp_update', 25); // prepaid update - zdarzenie aktualizacji przedpłaty
 
 /* DEPREC - nie ma takich w bazie na apacz 12 maj 2015
 define('kor_no1', 2); // o

@@ -44,6 +44,13 @@ class Order extends AppModel {
         
         // zapisz, zakładamy, że rqdata jest OK (przygotowane wyżej
         private function savePrePaidInDB( $rqdata = array() ) {
+            // teraz dane o zdrzeniu  - prawidłowy format w relacji hasMany          
+            $dane['Event'] = array( array(
+                'user_id' => AuthComponent::user('id'),
+                'order_id' => $rqdata['id'],
+                'co' => pp_update,
+                'post' => $rqdata['stan_zaliczki']
+            ));
             // nie wiem jak i czy można transportować wartość null json, dlatego tak
             if( $rqdata['stan_zaliczki'] == 'red' ) {
                 $rqdata['stan_zaliczki'] = null; 
@@ -51,7 +58,8 @@ class Order extends AppModel {
             }   else {
                 $rqdata['zaliczka_toa'] = date("Y-m-d H:i:s"); }
             $dane['Order'] = $rqdata; // prawidłowy format dla save
-            if( $this->save($dane) ) { 
+            
+            if( $this->saveAssociated($dane) ) { 
                 $rqdata['errno'] = 0; }
             else { 
                 $rqdata['errno'] =  1; }            
