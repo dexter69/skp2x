@@ -46,7 +46,7 @@ function checkPeymenCondition() {
     
         $( theSpan ).removeClass( "null confirmed money red ora gre clickable" ); //czyścimy
         $( theSpan ).addClass( stringKlas ); // i nadajemy własciwe
-        setDateZaliczki(answer);
+        setDateZaliczkiOnDOM(answer);
     });
     
     posting.fail(function() { // błąd, coś poszło nie tak        
@@ -132,10 +132,10 @@ function konwertujDate( dateStr ) {
 }
 
 
-function setDateZaliczki( answer ) {
+function setDateZaliczkiOnDOM( answer ) {
     
     var datka;
-    
+    console.log("setDateZaliczkiOnDOM", answer);
     if( answer.stan_zaliczki === 'money' ) {
         datka = konwertujDate( answer.zaliczka_toa.substr(0,10) );
         $('#the-dd > span').text(datka); }
@@ -155,10 +155,10 @@ function setNewState(nowyKolorStr) {
     });
     
     posting.done(function( answer ) { // sukces, komunikacja udana        
-        console.log(answer);        
+        console.log("setNewState + done", answer);        
         if(answer.errno === 0) { // jeżeli nie ma błędu dane udało się zapisać
             ustawNowyKolor(nowyKolorStr);
-            setDateZaliczki(answer);
+            setDateZaliczkiOnDOM(answer);
         } else {
             console.log("errno = " + answer.errno);
             printErr("sNS + " + answer.errno);
@@ -177,11 +177,6 @@ function setNewState(nowyKolorStr) {
             zamknijWidget();
             printErr("321 + " + posting.status); } //inny błąd
     });
-    
-    posting.always(function( ) { // kod wykonywany zawsze
-        console.log("ALWAYS - setNewState");        
-    });
-    
         
 }
 
@@ -195,11 +190,11 @@ function uaktualnijDOM(info, dolar, mojKolbek) {
     
     var stringKlas = prepareClass(info);
     
-    console.log(info);
-    console.log(stringKlas);
+    console.log("uaktualnijDOM", info);
+    //console.log(stringKlas);
     $( theSpan ).removeClass( "null confirmed money red ora gre clickable" ); //czyścimy
     $( theSpan ).addClass( stringKlas ); // i nadajemy własciwe
-    setDateZaliczki(info);
+    setDateZaliczkiOnDOM(info);
     mojKolbek(dolar);
 }
 

@@ -31,24 +31,30 @@ class Order extends AppModel {
         // zapisz status przedpłaty
         public function setPrepaidStatus( $rqdata = array() ) {
             
-            $errno = 4;
-            if ( isset($rqdata['id'], $rqdata['stan_zaliczki']) ) { // zapisz w bazie
+            if ( isset($rqdata['id'], $rqdata['stan_zaliczki']) ) { // zapisz w bazie                
                 
-                if ( $this->exists($rqdata['id'])) { // jest taki rekord
-                   // nie wiem jak i czy można transportować wartość null json, dlatego tak
-                    if( $rqdata['stan_zaliczki'] == 'red' ) {
-                        $rqdata['stan_zaliczki'] = null; 
-                        $rqdata['zaliczka_toa'] = null; // czerwone, to tak jakby nic nie był robione
-                    }   else {
-                        $rqdata['zaliczka_toa'] = date("Y-m-d H:i:s"); }
-                    $dane['Order'] = $rqdata; // prawidłowy format dla save
-                    if( $this->save($dane) ) { $errno = 0; }
-                    else { $errno = 1; }
-                } else { $errno = 3; }    
+                if ( $this->exists($rqdata['id'])) { // jest taki rekord                    
+                    $rqdata = $this->savePrePaidInDB($rqdata); }
+                else {
+                    $rqdata['errno'] = 3; }
             } else {
-                $errno = 2;
-            }
-            $rqdata['errno'] = $errno;
+                $rqdata['errno'] = 2; }
+            return $rqdata;
+        }
+        
+        // zapisz, zakładamy, że rqdata jest OK (przygotowane wyżej
+        private function savePrePaidInDB( $rqdata = array() ) {
+            // nie wiem jak i czy można transportować wartość null json, dlatego tak
+            if( $rqdata['stan_zaliczki'] == 'red' ) {
+                $rqdata['stan_zaliczki'] = null; 
+                $rqdata['zaliczka_toa'] = null; // czerwone, to tak jakby nic nie był robione
+            }   else {
+                $rqdata['zaliczka_toa'] = date("Y-m-d H:i:s"); }
+            $dane['Order'] = $rqdata; // prawidłowy format dla save
+            if( $this->save($dane) ) { 
+                $rqdata['errno'] = 0; }
+            else { 
+                $rqdata['errno'] =  1; }            
             return $rqdata;
         }
 	
