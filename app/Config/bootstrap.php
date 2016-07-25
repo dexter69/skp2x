@@ -247,6 +247,8 @@ define('KOR',2); //koordynator
 define('KIP',3); //kierownik produkcji (Becia)
 define('DTP',4); //dtp - Frank
 define('PER',5); //peronalizacja
+define('SEK',6); //sekretarka
+
 
 //KARTY
 

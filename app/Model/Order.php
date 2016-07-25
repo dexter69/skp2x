@@ -20,7 +20,7 @@ class Order extends AppModel {
             //$this->Behaviors->attach('Containable');
             $result = $this->find('first', array(
                 'conditions' => array('Order.id' => $id ),
-                'fields' => array('Order.id', 'Order.forma_zaliczki', 'Order.stan_zaliczki', 'Order.zaliczka_toa'),
+                'fields' => array('Order.id', 'Order.forma_zaliczki', 'Order.stan_zaliczki', 'Order.zaliczka_toa', 'Order.status'),
                 'recursive' => 0
                 //'contain' => array('Card.id', 'Card.status', 'Card.remstatus')
             ));

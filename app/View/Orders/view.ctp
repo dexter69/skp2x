@@ -1,12 +1,11 @@
 <?php
-$pokaz = false; // decyduje o wyswietlaniu w linii 115
+$pokaz = false; // decyduje o wyswietlaniu w linii ~121
 //echo '<pre>';	print_r($order['Event']); echo  '</pre>';
 //echo '<pre>';	print_r($order); echo  '</pre>';
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
 //echo $this->Html->url('/css/order-pdf.css', true);
 
-echo $this->Html->css(array('order', 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
-echo $this->Html->css('order/order.css?v=' . time(), array('inline' => false));
+echo $this->Html->css(array('order.css?v='  . time(), 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 
 $this->Ma->displayActions('orders');
 
@@ -42,6 +41,7 @@ if( $order['Order']['procent_zaliczki'] ) {
             'stan_zaliczki' => $order['Order']['stan_zaliczki'],
             'czas' => $czas,
             'clickable' => $order['Order']['zal_clickable'],
+            'visible' =>  $order['Order']['zal_visible'], // nie wszystkim wyświetlamy
             'id' => $order['Order']['id']
         );
         echo $this->element('orders/view/naglowek', array(
@@ -118,7 +118,7 @@ if( $order['Order']['procent_zaliczki'] ) {
 </div>
 
 <?php
-if( $pokaz ) { echo '<pre>';	print_r($order); echo  '</pre>'; }
+if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
 ?>
 
 	

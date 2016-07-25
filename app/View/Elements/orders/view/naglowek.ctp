@@ -39,16 +39,20 @@ if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
             );
         ?>
         </span>
+        
         <span id="the-dd-2"
               class="pay-span <?php echo $klasa_ext?>" 
               base="<?php echo $this->webroot; /*info o url*/ ?>"  
               order_id="<?php echo $id; /*id zamówienia*/ ?>" >
+            <?php if( $ppl['visible'] ) { /*Nie wszystkim wyświetlamay*/ ?>
                 <i class="fa fa-spinner fa-pulse"></i>
                 <i class="fa fa-usd" aria-hidden="true" dolar="one"></i>
                 <i class="fa fa-caret-right" aria-hidden="true" dolar="one"></i>
                 <i class="fa fa-usd drugi" aria-hidden="true" dolar="two"></i>
                 <i class="fa fa-usd trzeci" aria-hidden="true" dolar="three"></i>
+            <?php } ?>
         </span>
+        
     </p>
     <p class="daty-handlowe">
         <label>termin:</label>

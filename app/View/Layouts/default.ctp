@@ -31,7 +31,7 @@ $cakeDescription = __d('cake_dev', 'SKP');
             //echo $this->Html->script(array('jquery', 'funkcje')); 
             echo $this->Html->script(array('lib/jquery-2.1.4.min', 'funkcje')); 
             echo $this->Html->script('common', array('block' => 'scriptBottom'));
-            echo $this->Html->css('cake.generic.css?v=328576834');
+            echo $this->Html->css('cake.generic.css?v=4567456');
             //echo $this->Html->css('dex');
 
             echo $this->fetch('meta');

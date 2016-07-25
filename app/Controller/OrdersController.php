@@ -262,8 +262,6 @@ class OrdersController extends AppController {
 		}
 		$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
 		$order = $this->Order->find('first', $options);
-		// kwestia czy można klikać i (co za tym idzie) zmieniać stan zaliczki
-                $order['Order']['zal_clickable'] = $this->is_prepaid_clickable();
                 
 		if( !$this->akcjaOK($order['Order'], 'view') ) {
 			$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
@@ -304,16 +302,36 @@ class OrdersController extends AppController {
                                     'portrait',
                     'filename' => /*'Zamowienie_' . */$this->bnr2nrh2($order['Order']['nr'],$order['User']['inic'],false, '-')
                  );
-		
+                
+		/* kwestia czy wyświetlać danemu użytkownikowi info o przedpłacie
+                 * oraz czy można klikać i (co za tym idzie) zmieniać stan zaliczki                 * 
+                 */
+                $order['Order'] = $this->add_prepaid_data($order['Order']);
+                //$order['Order']['zal_clickable'] = $this->is_prepaid_clickable();
+                
 		$this->set( compact('order', 'evcontrol', 'users', 'ludz', 'vju', 'evtext') );
 		//$this -> render('druknij');
 	}
 
-        // czy dany użytkownik, któremu się wyświetla handlowe, może klikać w zaliczkę
-        private function is_prepaid_clickable() {
+        // czy wyświetlać danemu użytkownikowi czy dany użytkownik,
+        // któremu się wyświetla handlowe, może klikać w zaliczkę
+        private function add_prepaid_data( $order_arr = array()) {
             
-            return true;
-            //return false;
+            $order_arr['zal_clickable'] = $this->is_prepaid_clickable($order_arr['status']);
+            // superadmin, handlowcy, koordynator i sekretarka potrzebują przedpłaty
+            if( $this->Auth->user('dzial') <= KOR ||  $this->Auth->user('dzial') == SEK ) {
+                $order_arr['zal_visible'] = true;
+            } else {
+                $order_arr['zal_visible'] = false;
+            }
+            return $order_arr;
+        }
+        
+        private function is_prepaid_clickable( $status = null ) { 
+            return 
+                ($this->Auth->user('dzial') <= KOR) && // odpowiedni uzytkownik
+                $status != PRIV && $status != KONEC; // odpowiedni status zamówienia
+            
         }
         
  /*
@@ -326,7 +344,7 @@ class OrdersController extends AppController {
             $answer = $result['Order'];
             //$answer['stan_zaliczki'] = 'money'; // dla testow
             $answer['jest_zaliczka'] = $answer['forma_zaliczki'] > 1;
-            $answer['clickable'] = $this->is_prepaid_clickable();            
+            $answer['clickable'] = $this->is_prepaid_clickable($answer['status']);            
             
             $this->set(array(
                 'answer' => $answer,
