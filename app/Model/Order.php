@@ -44,21 +44,28 @@ class Order extends AppModel {
         
         // zapisz, zakładamy, że rqdata jest OK (przygotowane wyżej
         private function savePrePaidInDB( $rqdata = array() ) {
+            
+            switch( $rqdata['stan_zaliczki'] ) {
+                case 'red': // nie wiem jak i czy można transportować wartość null json, dlatego tak
+                    $rqdata['stan_zaliczki'] = null; 
+                    $rqdata['zaliczka_toa'] = null;
+                    $co = pp_red; break;
+                case 'confirmed':
+                    $rqdata['zaliczka_toa'] = date("Y-m-d H:i:s");
+                    $co = pp_ora; break;
+                case 'money':
+                    $rqdata['zaliczka_toa'] = date("Y-m-d H:i:s");
+                    $co = pp_gre; break;
+                default:
+                    $co = null;                
+            }
             // teraz dane o zdrzeniu  - prawidłowy format w relacji hasMany          
             $dane['Event'] = array( array(
                 'user_id' => AuthComponent::user('id'),
                 'order_id' => $rqdata['id'],
-                'co' => pp_update,
-                'post' => $rqdata['stan_zaliczki']
+                'co' => $co 
             ));
-            // nie wiem jak i czy można transportować wartość null json, dlatego tak
-            if( $rqdata['stan_zaliczki'] == 'red' ) {
-                $rqdata['stan_zaliczki'] = null; 
-                $rqdata['zaliczka_toa'] = null; // czerwone, to tak jakby nic nie był robione
-            }   else {
-                $rqdata['zaliczka_toa'] = date("Y-m-d H:i:s"); }
-            $dane['Order'] = $rqdata; // prawidłowy format dla save
-            
+            $dane['Order'] = $rqdata; // prawidłowy format dla save            
             if( $this->saveAssociated($dane) ) { 
                 $rqdata['errno'] = 0; }
             else { 

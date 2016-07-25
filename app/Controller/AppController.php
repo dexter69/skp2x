@@ -254,7 +254,17 @@ class AppController extends Controller {
                     'zwróciła do DTP','class' => 'czer'),
             eJ_ACC => array(
                     'zatwierdził',
-                    'zatwierdziła','class' => 'ziel')
+                    'zatwierdziła','class' => 'ziel'),
+            // zdarzenia przedpłaty
+            pp_red => array(
+                    'BRAK WPŁATY',
+                    'BRAK WPŁATY','class' => 'czer'),
+            pp_ora => array(
+                    'JEST POTWIERDZENIE',
+                    'JEST POTWIERDZENIE','class' => 'pom'),
+            pp_gre => array(
+                    'JEST WPŁATA',
+                    'JEST WPŁATA','class' => 'ziel')
 
     );	
 
