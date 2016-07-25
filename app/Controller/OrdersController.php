@@ -567,19 +567,20 @@ class OrdersController extends AppController {
 			return $ret_tab;
 	}
 
-	private function plant_ODBLOKUJ( $button_tab = array(), $karty_ok = false ) {
-			
+	private function plant_ODBLOKUJ( $button_tab = array(), $karty_ok = false ) {			
 		
-			$ret_tab = $button_tab;
-			switch( $this->Auth->user('O_KOR') || $this->Auth->user('dzial') == KIP) { 
-				// uprawnienia do działań koordynacyjnych + dla pani Beci
-				case r_ALL:
-				case r_SAL:
-					$ret_tab['bcontr'][unlock_o] = 1;
-					$ret_tab['ile']++;
-				break;
-			}
-			return $ret_tab;
+            $ret_tab = $button_tab;
+            switch( $this->Auth->user('O_KOR')  
+                    // || $this->Auth->user('dzial') == KIP // panią Becię wyłączamy
+                    ) { 
+                    // uprawnienia do działań koordynacyjnych + dla pani Beci
+                    case r_ALL:
+                    case r_SAL:
+                            $ret_tab['bcontr'][unlock_o] = 1;
+                            $ret_tab['ile']++;
+                    break;
+            }
+            return $ret_tab;
 	}
 	
 	private function plant_UPDATE( $button_tab = array(), $tworca = false ) {
@@ -606,7 +607,9 @@ class OrdersController extends AppController {
 	private function plant_DEALWITHUZUPED( $button_tab = array(), $tworca = false, $norejcard = true ) {
 		
 		$ret_tab = $button_tab;
-		switch( $this->Auth->user('O_KOR') || $this->Auth->user('dzial') == KIP ) { 
+		switch( $this->Auth->user('O_KOR') 
+                        // || $this->Auth->user('dzial') == KIP // panią Becię wyłączamy
+                        ) { 
 			// uprawnienia do działań koordynacyjnych +ukłon dla pani Beci
 				case r_ALL:
 				case r_SAL:
