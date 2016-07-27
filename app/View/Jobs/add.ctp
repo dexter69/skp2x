@@ -1,8 +1,8 @@
 <?php
 //echo '<pre>';	print_r($kartki); echo  '</pre>';
 //echo '<pre>';	print_r($orders); echo  '</pre>';
-//echo '<pre>';	print_r($cards); echo  '</pre>';
-echo $this->Html->css('job', null, array('inline' => false));
+//echo $this->Html->css('job', null, array('inline' => false));
+echo $this->Html->css(array('job.css?v=' . time(), 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
 echo $this->Html->script(array('job'/*, 'common', 'jquery'*/), array('inline' => false)); 
 $this->Ma->displayActions($links);
 ?>
@@ -30,4 +30,4 @@ $this->Ma->displayActions($links);
 	</fieldset>
 <?php echo $this->Form->end(__('Zapisz')); ?>
 </div>
-
+<?php //echo '<pre>';	print_r($cards); echo  '</pre>';

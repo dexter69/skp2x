@@ -1,0 +1,16 @@
+/* 
+    Created on : 2016-07-27, 10:43:20
+    Dodatki do listy handlowych w związku z prepaid info
+*/
+
+//.lista-handlowych - klasa tabeli
+.lista-handlowych .dolar { width: 0.8em; text-align: center;} // wskaźnik przedpłaty
+// kolorki dolarów
+.lista-handlowych .dolar.gre { color: green; }
+.lista-handlowych .dolar.ora { color: orange; }
+.lista-handlowych .dolar.red { color: red; }
+
+.lista-handlowych .nr { width: 7em; } // nr handlowego
+
+.lista-handlowych .termin { width: 11em; } // termin wykonania
+.lista-handlowych .status { width: 9em; } // status handlowego

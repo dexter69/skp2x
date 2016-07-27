@@ -4,8 +4,8 @@
 //echo microtime(true) - $time_start;
 //$time_start2 = microtime(true);
 //echo $par;
-$this->set('title_for_layout', 'Zamówienia');
-echo $this->Html->css('order',  null, array('inline' => false));
+$this->set('title_for_layout', 'Handlowe');
+echo $this->Html->css(array('order', 'order/order-index.css?v=' . time(), 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
 //echo $this->Html->script(array('jquery', 'common'), array('inline' => false)); 
 $this->Ma->displayActions('orders');
 $klasa = array(
@@ -20,94 +20,61 @@ else
 ?>
 
 <div class="orders index">
-	<h2 class="hfiltry"><?php echo __('ZAMÓWIENIA (H)'); 
-		echo $this->Ma->indexFiltry('orders', $klasa);
-	?>
-		
-	</h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('nr', 'Numer'); ?></th>
-			<!--<th><?php echo $this->Paginator->sort('user_id', 'Opiekun'); ?></th>-->
-			<th><?php echo $this->Paginator->sort('Customer.name', 'Klient'); ?></th>
-			<!--<th><?php echo $this->Paginator->sort('offset'); ?></th>-->
-			<th><?php echo $this->Paginator->sort('stop_day', 'Data zakończenia'); ?></th>
-			<th><?php echo $this->Paginator->sort('status', 'STATUS'); ?></th><!--
-			<th><?php echo $this->Paginator->sort('inny_adres'); ?></th>
-			<th><?php echo $this->Paginator->sort('fullname'); ?></th>
-			<th><?php echo $this->Paginator->sort('ulica'); ?></th>
-			<th><?php echo $this->Paginator->sort('nr_budynku'); ?></th>
-			<th><?php echo $this->Paginator->sort('miasto'); ?></th>
-			<th><?php echo $this->Paginator->sort('kod'); ?></th>--><!--
-			<th><?php echo $this->Paginator->sort('osoba_kontaktowa'); ?></th>
-			<th><?php echo $this->Paginator->sort('tel'); ?></th>
-			<th><?php echo $this->Paginator->sort('kraj'); ?></th>
-			<th><?php echo $this->Paginator->sort('is_zaliczka'); ?></th>
-			<th><?php echo $this->Paginator->sort('wartosc_zaliczki'); ?></th>
-			<th><?php echo $this->Paginator->sort('platnosc'); ?></th>
-			<th><?php echo $this->Paginator->sort('termin_platnosci'); ?></th>
-			<th><?php echo $this->Paginator->sort('comment'); ?></th>
-			<th><?php echo $this->Paginator->sort('status'); ?></th>
-			<th><?php echo $this->Paginator->sort('created'); ?></th>
-			<th><?php echo $this->Paginator->sort('modified'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>-->
-			<th class="ebutt"></th>
-			
-	</tr>
-	<?php foreach ($orders as $order): ?>
-	<tr>
-		<!--<td><?php echo h($order['Order']['id']); ?>&nbsp;</td>-->
-		<td class="idcolnobold"><?php 
-			//if( $order['Order']['nr'] ) // zlecenie ma numer to po prostu id
-			//	echo $order['Order']['id'];
-			//else // w przeciwnym wypadku z linkiem
-				echo $this->Html->link( $order['Order']['id'], array('action' => 'view', $order['Order']['id'])); 
-		?>&nbsp;</td>
-		
-		<!--<td><?php echo h($order['Order']['id'].'/'.NR_SUFIX.'H'); ?>&nbsp;</td>-->
-		<td>
-			<?php 
-			
-			//echo $this->Html->link(__($order['Order']['id'].'/'.NR_SUFIX.'H'), array('action' => 'view', $order['Order']['id'])); 
-			echo $this->Html->link($this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic']), array('action' => 'view', $order['Order']['id']), array('escape' => false)); 
-			?>
-		</td><!--	
-		<td>
-			<?php  echo $order['User']['name'];
-			//echo $this->Html->link($order['User']['name'], array('controller' => 'users', 'action' => 'view', $order['User']['id'])); ?>
-		</td>-->
-		<td>
-			<?php echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id']), array('title' => $order['Customer']['name'])); ?>
-		</td>
-		<!--<td><?php echo h($order['Order']['offset']); ?>&nbsp;</td>-->
-		<td><?php echo $this->Ma->md($order['Order']['stop_day']); ?>&nbsp;</td>
-		
-		<td><?php echo $this->Ma->status_zamow( $order['Order']['status'] ); ?>&nbsp;</td>
-		
-		<td class="ebutt"><?php echo $this->Html->link('<div></div>', array('action' => 'edit', $order['Order']['id']), array('class' => 'ebutt',  'escape' =>false)); ?></td>
-		
-		
-	</tr>
+    <h2 class="hfiltry"><?php echo 'HANDLOWE'; 
+            echo $this->Ma->indexFiltry('orders', $klasa);
+    ?>
+
+    </h2>
+    <table cellpadding="0" cellspacing="0" class="lista-handlowych">
+    <tr>
+        <th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
+        <th class="dolar"></th>
+        <th class="nr"><?php echo $this->Paginator->sort('nr', 'Numer'); ?></th>            
+        <th><?php echo $this->Paginator->sort('Customer.name', 'Klient'); ?></th>            
+        <th class="termin"><?php echo $this->Paginator->sort('stop_day', 'Data zakończenia'); ?></th>
+        <th class="status"><?php echo $this->Paginator->sort('status', 'STATUS'); ?></th>
+        <th class="ebutt"></th>
+
+    </tr>
+    <?php foreach ($orders as $order): ?>
+    <tr>
+            <td class="idcolnobold id"><?php
+                echo $this->Html->link( $order['Order']['id'], array('action' => 'view', $order['Order']['id'])); ?>
+            &nbsp;</td>
+            <?php 
+                $klasaDolara = $this->Ma->klasaDolara($order['Order']['forma_zaliczki'], $order['Order']['stan_zaliczki']); ?>
+            <td class="<?php echo $klasaDolara ?>"><i class="fa fa-usd" aria-hidden="true"></i></td>            
+            <td class="nr"><?php 
+                echo $this->Html->link($this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic']), array('action' => 'view', $order['Order']['id']), array('escape' => false)); ?>
+            </td>
+            <td>
+                    <?php echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id']), array('title' => $order['Customer']['name'])); ?>
+            </td>            
+            <td class="termin"><?php echo $this->Ma->md($order['Order']['stop_day']); ?>&nbsp;</td>
+
+            <td class="status"><?php echo $this->Ma->status_zamow( $order['Order']['status'] ); ?>&nbsp;</td>
+
+            <td class="ebutt"><?php echo $this->Html->link('<div></div>', array('action' => 'edit', $order['Order']['id']), array('class' => 'ebutt',  'escape' =>false)); ?></td>
+
+
+    </tr>
 <?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));	
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-		
-	?>
-	</div>
+    </table>
+    <p>
+    <?php
+    echo $this->Paginator->counter(array(
+    'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+    ));	
+    ?>	</p>
+    <div class="paging"><?php
+        echo $this->Paginator->prev('< ' . __('poprzedni'), array(), null, array('class' => 'prev disabled'));
+        echo $this->Paginator->numbers(array('separator' => ''));
+        echo $this->Paginator->next(__('następny') . ' >', array(), null, array('class' => 'next disabled')); ?>
+    </div>
 </div>
 <?php
 //echo microtime(true) - $time_start2; 
+echo '<pre>'; print_r($orders); echo '</pre>';
 ?>
 
 

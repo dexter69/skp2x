@@ -799,6 +799,11 @@ class MaHelper extends AppHelper {
                 $jobid = $this->Form->hidden('Card.'.$k.'.job_id',array('default' => $row['Card']['job_id']));
 
                 $cbox = array($cidin.$jobid.$input, array('class' => 'cbox'));
+                
+                //info o płatności
+                $klasa_dolarka = $this->klasaDolara($row['Order']['forma_zaliczki'], $row['Order']['stan_zaliczki']);
+                
+                $dolar = array('<i class="fa fa-usd" aria-hidden="true" dolar="one"></i>', array('class' => $klasa_dolarka));
 
                 $cardname = array($this->Html->link($row['Card']['name'], array('controller' => 'cards', 'action' => 'view', $row['Card']['id'])), array('class' => 'karta'));
 
@@ -836,7 +841,7 @@ class MaHelper extends AppHelper {
 
                 $ikna = array($input, array('class' => 'ikna'));
 
-                $table[] = array( $cbox, $cardname, $utech, $nr_zam, $klient, $handlowiec, $ilosc, $ikna, $termin );
+                $table[] = array( $cbox, $dolar, $cardname, $utech, $nr_zam, $klient, $handlowiec, $ilosc, $ikna, $termin );
 
 
 
@@ -853,6 +858,7 @@ class MaHelper extends AppHelper {
 
                     echo $this->Html->tableHeaders( array(
                             array('' => array('class' => 'cbox')),
+                            array(''  => array('class' => 'dolar')),
                             array('Karta'  => array('class' => 'karta')),
                             array(''  => array('class' => 'utech')),
                             array('Nr (H)' => array('class' => 'nr')),
@@ -872,6 +878,20 @@ class MaHelper extends AppHelper {
 
 			
 	}
+        
+        // ustalamy jaki kolor powinien mieć dolarek
+        public function klasaDolara( $formaZaliczki = null, $stanZaliczki = null) {
+            
+            if( $formaZaliczki > 1 ) { // jest zaliczka
+                    switch( $stanZaliczki ) {
+                        case null: $klasa_dol = 'dolar red'; break; // brak jakiegokolwiek wpisu
+                        case 'confirmed': $klasa_dol = 'dolar ora'; break; // potwierdzona wpłata
+                        case 'money': $klasa_dol = 'dolar gre'; break; // są pieniądze na koncie
+                    }
+            } else {                    
+                $klasa_dol = 'dolar gre'; }
+            return $klasa_dol;
+        }
 	
 	//Status kart (cards)
 	public $card_stat = array(

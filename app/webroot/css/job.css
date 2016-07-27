@@ -9,7 +9,13 @@ table.j-add td, table.j-add th {
 }
 
 /*table.j-add th.karta, table.j-add td.karta { width: 10em;  }*/
-table.j-add th.cbox, table.j-add td.cbox { width: 1.5em; }
+table.j-add th.cbox, table.j-add td.cbox { width: 1.5em;}
+table.j-add th.dolar, table.j-add td.dolar { width: 0.8em;  text-align: center; color: pink;}
+/* kolorki dolarów */
+table.j-add td.dolar.red { color: red;}
+table.j-add td.dolar.ora { color: orange;}
+table.j-add td.dolar.gre { color: green;}
+
 table.j-add th.klient, table.j-add td.klient { width: 8em }
 table.j-add th.handel, table.j-add td.handel { width: 5em }
 table.j-add th.nr, table.j-add td.nr { width: 6.7em }
