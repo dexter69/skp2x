@@ -74,7 +74,7 @@ else
 </div>
 <?php
 //echo microtime(true) - $time_start2; 
-echo '<pre>'; print_r($orders); echo '</pre>';
+//echo '<pre>'; print_r($orders); echo '</pre>';
 ?>
 
 
