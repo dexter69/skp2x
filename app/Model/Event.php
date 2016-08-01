@@ -230,10 +230,6 @@ class Event extends AppModel {
 		$rqdata['Event']['user_id'] = AuthComponent::user('id');
 		$event = $rqdata['Event']['co'];
 		
-		//echo '<pre>';	print_r($inne_k); echo  '</pre>';
-		//return;
-		//przygotowanie danych	
-		//$zapisz = null;
 		switch ($event) {
                     //handlowiec opublikował zamówienie
                     case publi: 

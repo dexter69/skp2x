@@ -56,63 +56,67 @@ class EventsController extends AppController {
  */
 	public function add() {
             if ($this->request->is('post')) {
-                //if( $this->request->data['Event'] )
-                //$this->Event->create();
-
-                $sbstr = substr($this->request->data['Event']['post'], 0, 2);								
-                if( $sbstr  == '#!' ||  $sbstr == '!#' || $sbstr  == '!@' ||  $sbstr == '@!' ) {
-                        $this->Event->print_r2($this->request->data);
-                        //$this->request->data = $this->Event->prepareData($this->request->data, false);
-                        $this->Event->print_r2($this->Event->prepareData($this->request->data, false));
-                        return;
-                }
-                $oid = $this->request->data['Event']['order_id'];
-                $jid = $this->request->data['Event']['job_id'];
-                //if ($this->Event->save($this->request->data)) {
+                if( $this->displayIT($this->request->data) ) { return; }
+                
                 if ( $this->Event->prepareData($this->request->data, true) ) {
-
-                    if( $oid ) {
-                        $xyz=$this->e_powiadamiaj($this->request->data['Event']);
-                        //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
-                        //return;
-                        switch( $this->request->data['Event']['co'] ) {
-                            case p_ov:
-                                // zakończenie perso -> tak chciał Adam
-                                return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'ptodo' ));
-                            case p_no:
-                            case p_ok:
-                                return $this->redirect(array('controller' => 'cards', 'action' => 'index', 'persocheck' ));
-                            default:
-                                return $this->redirect(array('controller' => 'orders', 'action' => 'view', $oid ));
-                        }
-
-                    } else
-                        if( $jid ) {
-                            $xyz=$this->e_powiadamiaj($this->request->data['Event']);
-                            //echo '<pre>'; $this->Event->print_r2($xyz); echo '</pre>';
-                            //return;
-                            //return $this->redirect(array('controller' => 'jobs', 'action' => 'index'));
-                            return $this->redirect(array('controller' => 'jobs', 'action' => 'view', $jid));
-                        } else
-                            { return $this->redirect(array('controller' => 'orders', 'action' => 'index')); }
-
-                } else {
-                        if( $this->Event->code != 777) {
-                        $this->Session->setFlash('BŁĄD ('. $this->Event->code .')'); }
-                        else {
-                            $this->Session->setFlash( $this->Event->msg ); }
-                        return $this->redirect($this->referer());
-                }
+                    $this->serveEventMailing( $this->request->data ); }
+                else {
+                    $this->serveErr(); }
             }
             return $this->redirect($this->referer());
-            /*
-            $users = $this->Event->User->find('list');
-            $orders = $this->Event->Order->find('list');
-            $jobs = $this->Event->Job->find('list');
-            $cards = $this->Event->Card->find('list');
-            $this->set(compact('users', 'orders', 'jobs', 'cards'));
-            */
 	}
+        
+        // w przypadku niepomyślnego zapisania zdarzenia
+        private function serveErr() {
+        
+            if( $this->Event->code != 777) {
+                $this->Session->setFlash('BŁĄD ('. $this->Event->code .')'); }
+            else {
+              $this->Session->setFlash( $this->Event->msg ); }
+            return $this->redirect($this->referer());
+        }
+        
+        // $rqdata - $this->request->data
+        private function serveEventMailing( $rqdata = array()) {
+            
+            $oid = $rqdata['Event']['order_id'];
+            $jid = $rqdata['Event']['job_id'];
+            
+            if( $oid ) {
+                $this->e_powiadamiaj($rqdata['Event']); 
+                switch( $rqdata['Event']['co'] ) {
+                    case p_ov:
+                        // zakończenie perso -> tak chciał Adam
+                        $arr = array('controller' => 'cards', 'action' => 'index', 'ptodo' ); break;
+                    case p_no:
+                    case p_ok:
+                        $arr =  array('controller' => 'cards', 'action' => 'index', 'persocheck' ); break;
+                    default:
+                        $arr = array('controller' => 'orders', 'action' => 'view', $oid );
+                }
+            } 
+            if( $jid ) {
+                $this->e_powiadamiaj($rqdata['Event']);                            
+                $arr = array('controller' => 'jobs', 'action' => 'view', $jid);
+            } else { 
+                $arr = array('controller' => 'orders', 'action' => 'index'); }
+            return $this->redirect($arr);
+        }
+        
+        
+        /* Wyświetlamy zawartość tablicy z danymi 
+            szukamy charaktarystycznych ciągów znaków w Event['post']
+            Jeżeli są obecne, to wyświetlamy info zwracamy true  */
+        private function displayIT( $rqdata = array()) {
+            
+            $sbstr = substr($rqdata['Event']['post'], 0, 2);
+            if( $sbstr  == '#!' ||  $sbstr == '!#' || $sbstr  == '!@' ||  $sbstr == '@!' ) {
+                    $this->Event->print_r2($rqdata);
+                    $this->Event->print_r2($this->Event->prepareData($rqdata, false));
+                    return true;
+            }
+            return false;
+        }
 
 	
 	private function e_powiadamiaj( $eventtab = array()) {
