@@ -182,7 +182,7 @@ class Event extends AppModel {
 		
 	}
 	
-	// Przygotuj format danych, usuń zbędne itp.
+	// Przygotuj format danych, usuń zbędne itp. i ewentualnie zapisz
 	public function prepareData( $rqdata = array(), $sav=false ) {
 		
 	
@@ -552,98 +552,101 @@ class Event extends AppModel {
 			unset($rqdata['Upload']);
 
 		if( $sav ) {
-			$this->code=1;
-			//if( $event != eJ_FILE1 && $event != eJ_FILE2  && $event != eJ_FILE3 && $event != eJ_DBACK) {
-			if( !in_array( $event, array(send_o, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK) ) ) {
-				if ( array_key_exists( 'Order', $rqdata ) ) {
-					$this->code=55;
-				    if( $this->Order->saveAssociated($rqdata) ) {
-						if( $event == publi ) { // w wypadku publikacji potrzebujemy nadać numer zamówieniu
-								if( $this->Order->set_order_number() )
-									return true;
-								else {
-									$this->code=2;
-									return false;
-								}								
-						}	
-						return true;								
-					} else
-						$this->code=56;
-				} elseif ( array_key_exists( 'Job', $rqdata ) ) {
-				    if( $this->Job->saveAssociated($rqdata) ) {//
-				    	if( $event == eJPUBLI ) { // w wypadku publikacji potrzebujemy nadać numer zleceniu
-								if( $this->Job->set_job_number() )
-									return true;
-								else {
-									$this->code=12;
-									return false;
-								}								
-						}
-				    	return true;
-				    }
-				} elseif ( array_key_exists( 'Card', $rqdata ) ) {
-					$this->code=89;
-				    if( $this->Card->saveAssociated($rqdata) ) return true;
-				} else {
-				    if( $this->save($rqdata) ) return true;
-				}
-				
-				
-			} else {
-				switch ($event) {
-					case send_o:
-						if( $this->save($rqdata) ) {
-							$wynik = $this->zakoncz_order($rqdata['Event']['order_id']);
-							if( $wynik['ok'] ) return true;
-							else
-							 $this->code=215;
-						} else {
-							$this->code=123;
-						}
-					break;
-					case eB_REJ2KOR:
-					case eB_REJ2DTP:
-					case eJ_ACC:
-						if( $this->Job->saveAssociated($rqdata) ) 
-							return true;
-						else
-							return false;
-						break;
-					case eJ_FILE1:
-					case eJ_FILE2:
-					case eJ_FILE3:
-					case eJ_DBACK:
-						//$rqdata = array( 'Event' => $rqdata['Event'] );
-						//unset($rqdata['Event']);
-						if( !empty($rqdata['Upload']) || $event == eJ_FILE3 || $event == eJ_DBACK ) {
-							$evrecord = array( 'Event' => $rqdata['Event'] );
-							unset($rqdata['Event']);
-							$this->create();
-							if( $this->save($evrecord) ) {
-								$evid = $this->id;
-								foreach( $rqdata['Upload'] as &$plikdata )
-									$plikdata['event_id'] = $evid;
-								if( $this->Job->saveAssociated($rqdata) ) 
-									return true;
-								else
-									return false;
-							}
-							else
-								return false;
-						}
-						else
-							return false;
-						break;
-				}
-				
-				
-			}
-			return false;
+                    return $this->saveStuff( $event, $rqdata ); 
 		}
 		return $rqdata;
 	}
 
-	
+	private function saveStuff( $event, $rqdata = array() ) {
+            
+            $this->code=1;
+            
+            if( !in_array( $event, array(send_o, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK) ) ) {
+                if ( array_key_exists( 'Order', $rqdata ) ) {
+                    $this->code=55;
+                    if( $this->Order->saveAssociated($rqdata) ) {
+                        if( $event == publi ) { // w wypadku publikacji potrzebujemy nadać numer zamówieniu
+                            if( $this->Order->set_order_number() )
+                                    return true;
+                            else {
+                                    $this->code=2;
+                                    return false;
+                            }								
+                        }	
+                        return true;								
+                    } else { $this->code=56; }
+                } elseif ( array_key_exists( 'Job', $rqdata ) ) {
+                    if( $this->Job->saveAssociated($rqdata) ) {//
+                        if( $event == eJPUBLI ) { // w wypadku publikacji potrzebujemy nadać numer zleceniu
+                            if( $this->Job->set_job_number() )
+                                    return true;
+                            else {
+                                    $this->code=12;
+                                    return false;
+                            }								
+                        }
+                        return true;
+                    }
+                } elseif ( array_key_exists( 'Card', $rqdata ) ) {
+                        $this->code=89;
+                    if( $this->Card->saveAssociated($rqdata) ) return true;
+                } else {
+                    if( $this->save($rqdata) ) return true;
+                }
+
+
+            } else {
+                switch ($event) {
+                    case send_o:
+                            if( $this->save($rqdata) ) {
+                                    $wynik = $this->zakoncz_order($rqdata['Event']['order_id']);
+                                    if( $wynik['ok'] ) return true;
+                                    else
+                                     $this->code=215;
+                            } else {
+                                    $this->code=123;
+                            }
+                    break;
+                    case eB_REJ2KOR:
+                    case eB_REJ2DTP:
+                    case eJ_ACC:
+                            if( $this->Job->saveAssociated($rqdata) ) 
+                                    return true;
+                            else
+                                    return false;
+                            break;
+                    case eJ_FILE1:
+                    case eJ_FILE2:
+                    case eJ_FILE3:
+                    case eJ_DBACK:
+                            //$rqdata = array( 'Event' => $rqdata['Event'] );
+                            //unset($rqdata['Event']);
+                            if( !empty($rqdata['Upload']) || $event == eJ_FILE3 || $event == eJ_DBACK ) {
+                                    $evrecord = array( 'Event' => $rqdata['Event'] );
+                                    unset($rqdata['Event']);
+                                    $this->create();
+                                    if( $this->save($evrecord) ) {
+                                            $evid = $this->id;
+                                            foreach( $rqdata['Upload'] as &$plikdata )
+                                                    $plikdata['event_id'] = $evid;
+                                            if( $this->Job->saveAssociated($rqdata) ) 
+                                                    return true;
+                                            else
+                                                    return false;
+                                    }
+                                    else
+                                            return false;
+                            }
+                            else
+                                    return false;
+                            break;
+                }
+
+
+            }
+            return false;
+        }
+        
 	public $saveEventError;
 	
 	public function saveEventAndRelated( $ds = array() ) {
