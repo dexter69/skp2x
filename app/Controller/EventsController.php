@@ -81,6 +81,7 @@ class EventsController extends AppController {
             
             $oid = $rqdata['Event']['order_id'];
             $jid = $rqdata['Event']['job_id'];
+            $arr = array('controller' => 'orders', 'action' => 'index');
             
             if( $oid ) {
                 $this->e_powiadamiaj($rqdata['Event']); 
@@ -94,12 +95,12 @@ class EventsController extends AppController {
                     default:
                         $arr = array('controller' => 'orders', 'action' => 'view', $oid );
                 }
-            } 
-            if( $jid ) {
-                $this->e_powiadamiaj($rqdata['Event']);                            
-                $arr = array('controller' => 'jobs', 'action' => 'view', $jid);
-            } else { 
-                $arr = array('controller' => 'orders', 'action' => 'index'); }
+            } else {
+                if( $jid ) {
+                    $this->e_powiadamiaj($rqdata['Event']);                            
+                    $arr = array('controller' => 'jobs', 'action' => 'view', $jid);
+                } 
+            }            
             return $this->redirect($arr);
         }
         
@@ -118,78 +119,92 @@ class EventsController extends AppController {
             return false;
         }
 
-	
+	/* przygotuj i wyślij maila do odpowiednich osób */
 	private function e_powiadamiaj( $eventtab = array()) {
 		
             if( !empty($eventtab) ) {
-                    if( $eventtab['order_id'] ) {
-                            $value = $this->Event->Order->find('first', array(
-                                    'conditions' => array('Order.id' => $eventtab['order_id'])
-                            ));
-                            $temat = 'ZAM ' .
-                                $this->bnr2nrh2($value['Order']['nr'],$value['User']['inic'],false);
-                            $linktab = array('controller' => 'orders', 'action' => 'view', $eventtab['order_id']);
-                    } else {
-                            $value = $this->Event->Job->find('first', array(
-                                    'conditions' => array('Job.id' => $eventtab['job_id'])
-                            ));
-                            $temat = 'ZLE ' .
-                                            $this->bnr2nrj2($value['Job']['nr'],$value['User']['inic'],false);
-                            $linktab = array('controller' => 'jobs', 'action' => 'view', $eventtab['job_id']);
-                    }
-                    $theEvent = end($value['Event']);
-                    $temat .=	', ' . $this->Auth->user('name'). ' ' .
-                                            $this->evtext2[$eventtab['co']][$this->Auth->user('k')];
-
-                    if($eventtab['card_id'])	{
-                                    if( $eventtab['co'] == put_kom ) $temat .= ' odnośnie karty:';
-                                    foreach( $value['Card'] as $karta )
-                                            if( $karta['id'] == $eventtab['card_id'] )
-                                                    $temat .= ' ' . $karta['name'];
-                    }
-
-                    $tresc = $eventtab['post'];
-
-                    foreach( $value['Event'] as $ewent ) {
-                            $uids[$ewent['user_id']] = 1; //przypisz na razie cokolwiek	
-                    }
-                    if( $eventtab['job_id'] ) { //zlecenie, trza też handlowcom wyslac
-                            foreach( $value['Card'] as $karta )
-                                    $uids[$karta['user_id']] = 1; //przypisz na razie cokolwiek					
-                    }
-                    $uids[4] = 1; // Jola zawsze dostaje			
-                    unset($uids[$this->Auth->user('id')]); // generujący zdarzenie nie dostaje maila
-                    $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
-                    $tab = array();
-                    foreach( $uids as $key => $wartosc) { $tab[] = $key; }
-
-                    $ludziki = $this->Event->User->find('all', array(
-                            'conditions' => array('User.id' => $tab),
-                            'recursive' => 0
-                    ));
-                    $odbiorcy = array();
-                    foreach( $ludziki as $ludz) {
-                            if( $ludz['User']['enotif'] != null )
-                                    $odbiorcy[] = $ludz['User']['enotif'];
-                    }
-                    if( $eventtab['co'] == p_ov ) { 
-                    // w wypadku zakończenia perso, dodatkowo dostaje Krysia
-                        $odbiorcy[] = 'info@polskiekarty.pl';
-                    }
-                    // Frank nie chce tych powiadomień...
-                    if( $eventtab['co'] == p_ov || $eventtab['co'] == send_o ) {
-                        $klucz = array_search('grafik@polskiekarty.pl',  $odbiorcy);
-                        if( $klucz != false ) {
-                            unset( $odbiorcy[$klucz] );
-                        }
-                    }
-                    $this->piknij($odbiorcy, $temat, $tresc, $linktab, $theEvent['id']);
-
-                    return true;
+                    
+                // przygotuj temat, treść i link wiadomosci
+                $eArr = $this->temTrescLink( $eventtab );
+                // przygotuj tablicę z odbiorcami wiadomosci
+                $odbiorcy = $this->ludziki( $eArr['value'], $eventtab);                
+                $theEvent = end($eArr['value']['Event']);
+                $this->piknij($odbiorcy, $eArr['temat'], $eArr['tresc'], $eArr['link'], $theEvent['id']);
+                return true;
             }
             return false;
 	}
         
+        /* Przygotuj tablicę z odbiorcami e-maila */
+        private function ludziki( $value = array(), $eventtab = array() ) {
+            
+            foreach( $value['Event'] as $ewent ) {
+                    $uids[$ewent['user_id']] = 1; //przypisz na razie cokolwiek	
+            }
+            if( $eventtab['job_id'] ) { //zlecenie, trza też handlowcom wyslac
+                foreach( $value['Card'] as $karta ) {
+                    $uids[$karta['user_id']] = 1; } //przypisz na razie cokolwiek					
+            }
+            $uids[4] = 1; // Jola zawsze dostaje			
+            unset($uids[$this->Auth->user('id')]); // generujący zdarzenie nie dostaje maila
+            $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
+            $tab = array();
+            foreach( $uids as $key => $wartosc) { $tab[] = $key; }
+
+            $ludziki = $this->Event->User->find('all', array(
+                    'conditions' => array('User.id' => $tab),
+                    'recursive' => 0
+            ));
+            $odbiorcy = array();
+            
+            foreach( $ludziki as $ludz) {
+                if( $ludz['User']['enotif'] != null ) {
+                    $odbiorcy[] = $ludz['User']['enotif']; }
+            }
+            if( $eventtab['co'] == p_ov ) { 
+                // w wypadku zakończenia perso, dodatkowo dostaje Krysia
+                $odbiorcy[] = 'info@polskiekarty.pl';
+            }
+            // Frank nie chce tych powiadomień...
+            if( $eventtab['co'] == p_ov || $eventtab['co'] == send_o ) {
+                $klucz = array_search('grafik@polskiekarty.pl',  $odbiorcy);
+                if( $klucz != false ) {
+                    unset( $odbiorcy[$klucz] );
+                }
+            }
+            return $odbiorcy;
+        }
+        
+        /* Przygotuj temat, treść i link e-maila */
+        private function temTrescLink( $eventtab = array() ) {
+            
+            if( $eventtab['order_id'] ) { // do handlowego
+                $value = $this->Event->Order->find('first', array(
+                        'conditions' => array('Order.id' => $eventtab['order_id'])
+                ));
+                $temat = 'ZAM ' . $this->bnr2nrh2($value['Order']['nr'],$value['User']['inic'],false);
+                $linktab = array('controller' => 'orders', 'action' => 'view', $eventtab['order_id']);
+            } else { // do produkcyjnego
+                $value = $this->Event->Job->find('first', array(
+                    'conditions' => array('Job.id' => $eventtab['job_id'])
+                ));
+                $temat = 'ZLE ' .  $this->bnr2nrj2($value['Job']['nr'],$value['User']['inic'],false);
+                $linktab = array('controller' => 'jobs', 'action' => 'view', $eventtab['job_id']);
+            }
+            //$theEvent = end($value['Event']);
+            $temat .=	', ' . $this->Auth->user('name'). ' ' .
+                        $this->evtext2[$eventtab['co']][$this->Auth->user('k')];
+
+            if($eventtab['card_id'])	{
+                if( $eventtab['co'] == put_kom ) { $temat .= ' odnośnie karty:'; }
+                foreach( $value['Card'] as $karta ) {
+                    if( $karta['id'] == $eventtab['card_id'] ) { $temat .= ' ' . $karta['name']; }
+                }
+            }            
+            return array('temat' => $temat, 'tresc' => $eventtab['post'], 'link' => $linktab,
+                         'value' => $value //, 'theEvent' => end($value['Event'])
+                );
+        }
         
         private function piknij( $odbiorcy = array(), $temat = null, $tresc = null, $linktab = array(), $event_id = 0) {
 			
