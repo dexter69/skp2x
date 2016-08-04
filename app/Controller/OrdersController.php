@@ -589,11 +589,10 @@ class OrdersController extends AppController {
 		
 		switch( $this->Auth->user('O_PUB') ) { // uprawnienia publikowania zamówień
 			case r_OWN:
-				if( $tworca ) {
-					$ret_tab['bcontr'][update_o] = 1;
-					$ret_tab['ile']++;
-				}
-			break;
+                            if( $tworca ) {
+                                    $ret_tab['bcontr'][update_o] = 1;
+                                    $ret_tab['ile']++; }
+                            break;
 			case r_ALL:
 			case r_SAL:
 				$ret_tab['bcontr'][update_o] = 1;

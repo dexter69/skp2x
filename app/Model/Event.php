@@ -229,7 +229,9 @@ class Event extends AppModel {
 		
 		$rqdata['Event']['user_id'] = AuthComponent::user('id');
 		$event = $rqdata['Event']['co'];
-		
+                /* Mała poprawka w związku ze zmianą sposobu wysyłania e-mail powiadomień */
+                if( !array_key_exists('order_id', $rqdata['Event']) ) { }
+                
 		switch ($event) {
                     //handlowiec opublikował zamówienie
                     case publi: 
@@ -541,26 +543,37 @@ class Event extends AppModel {
 		
 		if( !in_array($event, array(unlock_again)) ) { 
 		// chcemy się pozbyć tego poniżej i robić wszystko powyżej, więc tu wrunek, co bez nowych			//
-			if( in_array($event, array(put_kom, eJKOM, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK, send_o, unlock_o)) )
-				unset($rqdata['Card']);
+			if( in_array($event, array(put_kom, eJKOM, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK, send_o, unlock_o)) ) {
+                            unset($rqdata['Card']); }
 			else {
 				$rqdata['Event'] = array( $rqdata['Event'] );
 			}
 		}
 			
-		if( $event != eJ_FILE1 && $event != eJ_FILE2 && $event != eJ_FILE3 && $event != eJ_DBACK)
-			unset($rqdata['Upload']);
-
+		if( $event != eJ_FILE1 && $event != eJ_FILE2 && $event != eJ_FILE3 && $event != eJ_DBACK) {
+                    unset($rqdata['Upload']); }
+                
 		if( $sav ) {
                     return $this->saveStuff( $event, $rqdata ); 
 		}
-		return $rqdata;
+		return $rqdata;                
 	}
+        
 
 	private function saveStuff( $event, $rqdata = array() ) {
             
             $this->code=1;
-            
+            /*  Chcemy uzupełnić rgdata o dane do powiadomień e-mail */
+            $this->prepEmailData($rqdata['Event']);
+            if(array_key_exists(0, $rqdata['Event'])) { // znaczy wersja dla hasMany
+                $rqdata['Event'][0]['odbiorcy'] = $this->e_data['odbiorcy'];
+                $rqdata['Event'][0]['temat'] = $this->e_data['temat'];
+                $rqdata['Event'][0]['url'] = Router::url($this->e_data['linktab'], true);
+            } else {
+                $rqdata['Event']['odbiorcy'] = $this->e_data['odbiorcy'];
+                $rqdata['Event']['temat'] = $this->e_data['temat'];
+                $rqdata['Event']['url'] = Router::url($this->e_data['linktab'], true);
+            }
             if( !in_array( $event, array(send_o, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK) ) ) {
                 if ( array_key_exists( 'Order', $rqdata ) ) {
                     $this->code=55;
@@ -589,7 +602,7 @@ class Event extends AppModel {
                     }
                 } elseif ( array_key_exists( 'Card', $rqdata ) ) {
                         $this->code=89;
-                    if( $this->Card->saveAssociated($rqdata) ) return true;
+                    if( $this->Card->saveAssociated($rqdata) ) { return true; }
                 } else {
                     if( $this->save($rqdata) ) return true;
                 }
@@ -598,48 +611,36 @@ class Event extends AppModel {
             } else {
                 switch ($event) {
                     case send_o:
-                            if( $this->save($rqdata) ) {
-                                    $wynik = $this->zakoncz_order($rqdata['Event']['order_id']);
-                                    if( $wynik['ok'] ) return true;
-                                    else
-                                     $this->code=215;
-                            } else {
-                                    $this->code=123;
-                            }
+                        if( $this->save($rqdata) ) {
+                            $wynik = $this->zakoncz_order($rqdata['Event']['order_id']);
+                            if( $wynik['ok'] ) { return true; } else { $this->code=215; }
+                        } else { $this->code=123; }
                     break;
                     case eB_REJ2KOR:
                     case eB_REJ2DTP:
                     case eJ_ACC:
-                            if( $this->Job->saveAssociated($rqdata) ) 
-                                    return true;
-                            else
-                                    return false;
-                            break;
+                            if( $this->Job->saveAssociated($rqdata) ) { return true; }
+                            else { return false; }                            
                     case eJ_FILE1:
                     case eJ_FILE2:
                     case eJ_FILE3:
                     case eJ_DBACK:
-                            //$rqdata = array( 'Event' => $rqdata['Event'] );
-                            //unset($rqdata['Event']);
-                            if( !empty($rqdata['Upload']) || $event == eJ_FILE3 || $event == eJ_DBACK ) {
-                                    $evrecord = array( 'Event' => $rqdata['Event'] );
-                                    unset($rqdata['Event']);
-                                    $this->create();
-                                    if( $this->save($evrecord) ) {
-                                            $evid = $this->id;
-                                            foreach( $rqdata['Upload'] as &$plikdata )
-                                                    $plikdata['event_id'] = $evid;
-                                            if( $this->Job->saveAssociated($rqdata) ) 
-                                                    return true;
-                                            else
-                                                    return false;
-                                    }
-                                    else
-                                            return false;
+                        if( !empty($rqdata['Upload']) || $event == eJ_FILE3 || $event == eJ_DBACK ) {
+                            $evrecord = array( 'Event' => $rqdata['Event'] );
+                            unset($rqdata['Event']);
+                            $this->create();
+                            if( $this->save($evrecord) ) {
+                                    $evid = $this->id;
+                                    foreach( $rqdata['Upload'] as &$plikdata )
+                                            $plikdata['event_id'] = $evid;
+                                    if( $this->Job->saveAssociated($rqdata) ) {
+                                        return true; }
+                                    else {
+                                        return false; }
                             }
-                            else
-                                    return false;
-                            break;
+                            else { return false; }
+                        } else { return false; }
+                        break;
                 }
 
 

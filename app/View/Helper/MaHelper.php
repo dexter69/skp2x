@@ -647,61 +647,61 @@ class MaHelper extends AppHelper {
 
 	public function kontrolka_ord($order, $evcontrol) {
 		
-		if($evcontrol['ile']) { //wyświetlamy formularz, jeżeli są w ogle jakieś submity
-				
-				//echo '<pre>'; print_r($evcontrol); echo  '</pre>';
-				
-				echo $this->Html->div('event-order');
-				echo $this->Form->create('Event', array(
-    				'url' => array('controller' => 'events', 'action' => 'add')
-				));
-				echo $this->Html->tag('fieldset');
-					echo $this->Form->hidden('card_id', array('default' => 0));
-					echo $this->Form->hidden('order_id', array('default' => $order['Order']['id']));
-					echo $this->Form->hidden('job_id', array('default' => 0));
-					echo $this->Form->hidden('co', array('default' => ZERO));
-			
-					// idki podpiętych kart
-					$i=0;
-					foreach ($order['Card'] as $karta) {
-						echo $this->Form->input('Card.'.$i.'.id',array('default' => $karta['id']));
-						echo $this->Form->hidden('Card.'.$i.'.status',array('default' => $karta['status']));
-						echo $this->Form->hidden('Card.'.$i.'.isperso',array('default' => $karta['isperso']));
-						if( $evcontrol['bcontr'][push4checking] ) {
-							echo $this->Form->hidden('Card.'.$i.'.D', array('default' => 0));
-							echo $this->Form->hidden('Card.'.$i.'.P', array('default' => 0));
-							echo $this->Form->hidden('Card.'.$i.'.remstatus',array('default' => $karta['remstatus']));
-						}
-						$i++;
-						//echo $this->Form->input('Card.'.$i++.'.status',array('default' => $karta['status']));
-					}
-					echo $this->Form->input('post', array('label' => 'Komentarz'));
-			
-					//$buttons = $evcontrol['buttons'];
-				//$bcontr = $evcontrol['bcontr'];
-					echo $this->Html->div('subwrap');
-					foreach ( $evcontrol['buttons'] as $val ) {
-						if( $evcontrol['bcontr'][$val] ) $thecl = 'submit'; else $thecl = 'submit nieaktywny';
-						if( array_key_exists($val, $this->button_val) )
-							$nazwa_klawisza = $this->button_val[$val];
-						else 
-							$nazwa_klawisza = $val;
-						if( array_key_exists($val, $this->button_req) )
-							$wymagany = $this->button_req[$val];
-						else
-							$wymagany = 0;
-						echo $this->Form->submit($nazwa_klawisza, array(
-							'class' => 'eventsub',
-							'co'=>$val,
-							'div' => array('class' => $thecl),
-							'req'=>$wymagany  
-						));
-					}
-					echo $this->Html->tag('/div');
-			echo $this->Html->tag('/fieldset');
-			echo $this->Form->end();
-			echo $this->Html->tag('/div');
-		}
+            if($evcontrol['ile']) { //wyświetlamy formularz, jeżeli są w ogle jakieś submity
+
+                //echo '<pre>'; print_r($evcontrol); echo  '</pre>';
+
+                echo $this->Html->div('event-order');
+                echo $this->Form->create('Event', array(
+                'url' => array('controller' => 'events', 'action' => 'add')
+                ));
+                echo $this->Html->tag('fieldset');
+                        echo $this->Form->hidden('card_id', array('default' => 0));
+                        echo $this->Form->hidden('order_id', array('default' => $order['Order']['id']));
+                        echo $this->Form->hidden('job_id', array('default' => 0));
+                        echo $this->Form->hidden('co', array('default' => ZERO));
+
+                        // idki podpiętych kart
+                        $i=0;
+                        foreach ($order['Card'] as $karta) {
+                                echo $this->Form->input('Card.'.$i.'.id',array('default' => $karta['id']));
+                                echo $this->Form->hidden('Card.'.$i.'.status',array('default' => $karta['status']));
+                                echo $this->Form->hidden('Card.'.$i.'.isperso',array('default' => $karta['isperso']));
+                                if( $evcontrol['bcontr'][push4checking] ) {
+                                        echo $this->Form->hidden('Card.'.$i.'.D', array('default' => 0));
+                                        echo $this->Form->hidden('Card.'.$i.'.P', array('default' => 0));
+                                        echo $this->Form->hidden('Card.'.$i.'.remstatus',array('default' => $karta['remstatus']));
+                                }
+                                $i++;
+                                //echo $this->Form->input('Card.'.$i++.'.status',array('default' => $karta['status']));
+                        }
+                        echo $this->Form->input('post', array('label' => 'Komentarz'));
+
+                        //$buttons = $evcontrol['buttons'];
+                //$bcontr = $evcontrol['bcontr'];
+                        echo $this->Html->div('subwrap');
+                        foreach ( $evcontrol['buttons'] as $val ) {
+                                if( $evcontrol['bcontr'][$val] ) $thecl = 'submit'; else $thecl = 'submit nieaktywny';
+                                if( array_key_exists($val, $this->button_val) )
+                                        $nazwa_klawisza = $this->button_val[$val];
+                                else 
+                                        $nazwa_klawisza = $val;
+                                if( array_key_exists($val, $this->button_req) )
+                                        $wymagany = $this->button_req[$val];
+                                else
+                                        $wymagany = 0;
+                                echo $this->Form->submit($nazwa_klawisza, array(
+                                        'class' => 'eventsub',
+                                        'co'=>$val,
+                                        'div' => array('class' => $thecl),
+                                        'req'=>$wymagany  
+                                ));
+                        }
+                        echo $this->Html->tag('/div');
+                        echo $this->Html->tag('/fieldset');
+                        echo $this->Form->end();
+                        echo $this->Html->tag('/div');  
+            }
 	}	
 															 
 	public function kontrolka_job($job, $submity) {

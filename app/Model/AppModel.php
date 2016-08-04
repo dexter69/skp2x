@@ -31,7 +31,130 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model {
 	
-    public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}	
+    public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
+    
+    //wyświetlanie tekstów o zdarzeniach
+    private $eventText = array(
+            ZERO => array(
+                    '',
+                    '','class' => 'zadna'),
+            publi => array(
+                    'złożył zamówienie',
+                    'złożyła zamówienie','class' => 'pom'),
+            kor_ok => array(
+                    'zatwierdził zamówienie',
+                    'zatwierdziła zamówienie','class' => 'ziel'),
+            kor_no => array(
+                    'odrzucił zamówienie',
+                    'odrzuciła zamówienie','class' => 'czer'),
+            d_ok => array(
+                    'zatwierdził kartę: ',
+                    'zatwierdziła kartę: ','class' => 'ziel'),
+            d_no => array(
+                    'odrzucił kartę: ',
+                    'odrzuciła kartę: ','class' => 'czer'),
+            p_ok => array(
+                    'zatwierdził perso: ',
+                    'zatwierdziła perso: ','class' => 'ziel'),
+            p_no => array(
+                    'odrzucił perso: ',
+                    'odrzuciła perso: ','class' => 'czer'),
+            p_ov => array(
+                    'zakończył personalizację: ',
+                    'zakończyła personalizację: ','class' => 'ziel'),
+            put_kom => array(
+                    'napisał',
+                    'napisała','class' => 'pom'),
+            fix_o => array(
+                    'poprawił zamówienie',
+                    'poprawiła zamówienie','class' => 'pom'),
+            send_o => array(
+                    'zakończył zamówienie',
+                    'zakończyła zamówienie','class' => 'ziel'),
+            unlock_o => array(
+                    'odblokował zamówienie',
+                    'odblokowała zamówienie','class' => 'pom'),
+            unlock_again => array(
+                    'zwrócił uzupełnione zamówienie',
+                    'zwróciła uzupełnione zamówienie','class' => 'czer'),
+            update_o  => array(
+                    'uzupełnił zamówienie',
+                    'uzupełniła zamówienie','class' => 'pom'),	
+            klepnij => array(
+                    'zaakceptował uzupełnione zamówienie',
+                    'zaakceptowała uzupełnione zamówienie','class' => 'ziel'),	
+            push4checking => array(
+                    'przekazał do sprawdzenia DTP/P',
+                    'przekazała do sprawdzenia DTP/P','class' => 'pom'),
+            eJPUBLI => array(
+                    'złożył zlecenie',
+                    'złożyła zlecenie','class' => 'pom'),
+            eJKOM => array(
+                    'napisał',
+                    'napisała','class' => 'pom'),
+            eJ_FILE1 => array(
+                    'załączył pliki',
+                    'załączyła pliki','class' => 'pom'),
+            eJ_FILE2 => array(
+                    'załączył pliki',
+                    'załączyła pliki','class' => 'pom'),
+            eJ_FILE3 => array(
+                    'poprawił',
+                    'poprawiła','class' => 'pom'),
+            eJF_BACK => array(
+                    'odrzucił pliki',
+                    'odrzuciła pliki','class' => 'czer'),
+            eJF_OK => array(
+                    'zaakceptował pliki',
+                    'zaakceptowała pliki','class' => 'ziel'),
+            eJ_KOR2B => array(
+                    'poprawił zlecenie',
+                    'poprawiła zlecenie','class' => 'pom'),
+            eJ_KOR2DTP => array(
+                    'odrzucił pliki',
+                    'odrzuciła pliki','class' => 'czer'),
+            ePUSH2B => array(
+                    'zatwierdził pliki',
+                    'zatwierdziła pliki','class' => 'ziel'),
+            eJ_B2KOR => array(
+                    'zwrócił na biurko',
+                    'zwróciła na biurko','class' => 'czer'),
+            eJ_COF2KOR => array(
+                    'zwrócił na biurko',
+                    'zwróciła na biurko','class' => 'czer'),
+            eJ_COF2DTP => array(
+                    'zwrócił do DTP',
+                    'zwróciła do DTP','class' => 'czer'),
+            eJB_UNPAUSE => array(
+                    'zaakceptował',
+                    'zaakceptowała','class' => 'ziel'),
+            eJ_KBACK =>	 array(
+                    'poprawił',
+                    'poprawiła','class' => 'pom'),
+            eJ_DBACK =>	 array(
+                    'poprawił',
+                    'poprawiła','class' => 'pom'),
+            eB_REJ => array(
+                    'zwrócił',
+                    'zwróciła','class' => 'czer'),
+            eJ_B2DTP => array(
+                    'zwrócił do DTP',
+                    'zwróciła do DTP','class' => 'czer'),
+            eJ_ACC => array(
+                    'zatwierdził',
+                    'zatwierdziła','class' => 'ziel'),
+            // zdarzenia przedpłaty
+            pp_red => array(
+                    'BRAK WPŁATY',
+                    'BRAK WPŁATY','class' => 'czer'),
+            pp_ora => array(
+                    'JEST POTWIERDZENIE',
+                    'JEST POTWIERDZENIE','class' => 'pom'),
+            pp_gre => array(
+                    'JEST WPŁATA',
+                    'JEST WPŁATA','class' => 'ziel')
+
+    );
     
     // Dane do wysłania e-maila
     public $e_data = array();
@@ -40,6 +163,9 @@ class AppModel extends Model {
      * $eventtab - tablica z danymi dla mozdelu Event (z requestdata) */
     public function prepEmailData( $eventtab = array() ) {
         
+        if(array_key_exists(0, $eventtab)) { // znaczy wersja dla hasMany
+            $eventtab = $eventtab[0]; // na lokalne potrzeby
+        }
         $this->tematTrescLink($eventtab);
         foreach( $this->e_data['value']['Event'] as $ewent ) {
                 $uids[$ewent['user_id']] = 1; //przypisz na razie cokolwiek	
@@ -49,7 +175,7 @@ class AppModel extends Model {
                 $uids[$karta['user_id']] = 1; } //przypisz na razie cokolwiek					
         }
         $uids[4] = 1; // Jola zawsze dostaje			
-        unset($uids[$this->Auth->user('id')]); // generujący zdarzenie nie dostaje maila
+        unset($uids[AuthComponent::user('id')]); // generujący zdarzenie nie dostaje maila
         $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
         $tab = array();
         foreach( $uids as $key => $wartosc) { $tab[] = $key; }
@@ -58,7 +184,7 @@ class AppModel extends Model {
     
     private function ludzikoza( $tab, $eventtab ) {
         
-        $ludziki = $this->Event->User->find('all', array(
+        $ludziki = $this->User->find('all', array(
                 'conditions' => array('User.id' => $tab),
                 'recursive' => 0
         ));
@@ -78,7 +204,7 @@ class AppModel extends Model {
                 unset( $odbiorcy[$klucz] );
             }
         }
-        $this->e_data['odbiorcy'] = $odbiorcy;
+        $this->e_data['odbiorcy'] = implode(" ", $odbiorcy);
     }
     
     /* Przygotuj temat, treść i link e-maila
@@ -86,25 +212,57 @@ class AppModel extends Model {
     private function tematTrescLink( $eventtab = array() ) {
         
         if( $eventtab['order_id'] ) { // do handlowego
-            $this->e_data['value'] = $this->Event->Order->find('first', array(
+            $this->e_data['value'] = $this->Order->find('first', array(
                     'conditions' => array('Order.id' => $eventtab['order_id'])));
-            $this->e_data['temat'] = 'ZAM ' . $this->bnr2nrh2($value['Order']['nr'],$value['User']['inic'],false);
-            $this->e_data['link'] = array('controller' => 'orders', 'action' => 'view', $eventtab['order_id']); }
+            $this->e_data['temat'] = 'ZAM ' . $this->bnr2nrh2($this->e_data['value']['Order']['nr'], $this->e_data['value']['User']['inic'],false);
+            $this->e_data['linktab'] = array('controller' => 'orders', 'action' => 'view', $eventtab['order_id']); }
         else { // do produkcyjnego
-            $this->e_data['value'] = $this->Event->Job->find('first', array(
-                'conditions' => array('Job.id' => $eventtab['job_id'])));
-            $this->e_data['temat'] = 'ZLE ' .  $this->bnr2nrj2($value['Job']['nr'],$value['User']['inic'],false);
-            $this->e_data['link'] = array('controller' => 'jobs', 'action' => 'view', $eventtab['job_id']); 
+                $this->e_data['value'] = $this->Job->find('first', array(
+                    'conditions' => array('Job.id' => $eventtab['job_id'])));
+                $this->e_data['temat'] = 'ZLE ' .  $this->bnr2nrj2($this->e_data['value']['Job']['nr'],$this->e_data['value']['User']['inic'],false);
+                $this->e_data['linktab'] = array('controller' => 'jobs', 'action' => 'view', $eventtab['job_id']); 
         }
-        $this->e_data['temat'] .=   ', ' . $this->Auth->user('name'). ' ' .
-                    $this->evtext2[$eventtab['co']][$this->Auth->user('k')];
+        $this->e_data['temat'] .=   ', ' . AuthComponent::user('name') . ' ' .
+                    $this->eventText[$eventtab['co']][AuthComponent::user('k')];
         if($eventtab['card_id']) {
             if( $eventtab['co'] == put_kom ) { $this->e_data['temat'] .= ' odnośnie karty:'; }
-            foreach( $value['Card'] as $karta ) {
+            foreach( $this->e_data['value']['Card'] as $karta ) {
                 if( $karta['id'] == $eventtab['card_id'] ) { $this->e_data['temat'] .= ' ' . $karta['name']; }
             }
         } 
         $this->e_data['tresc'] = $eventtab['post'];
     }
+    
+    // convert base nr to nrj - numer job'a
+    public function bnr2nrj2($bnr = null, $inicjaly = null, $ishtml = true, $sepyearchar = '/') {
+
+            if($bnr && $bnr > BASE_NR) {
+                if( $ishtml ) {
+                    $startspan = '<span class="ordernr">';
+                    $stopspan = '</span>';
+                } else {
+                    $startspan = $stopspan = null; }                
+                return (int)substr((int)$bnr,2).$startspan.$sepyearchar.substr((int)$bnr,0,2).$stopspan;
+            }
+            return $bnr;
+    }
+    
+    // convert base nr to nrh - numer handlowego
+    public function bnr2nrh2($bnr = null, $inicjaly = null, $ishtml = true, $sepyearchar = '/') {
+
+        if($bnr && $bnr > BASE_NR) {
+            if( $ishtml ) {
+                $startspan = '<span class="ordernr">';
+                $stopspan = '</span>';
+            } else {
+                $startspan = $stopspan = null;
+            }
+            if( $inicjaly ) {
+                return (int)substr((int)$bnr,2).$startspan.$sepyearchar.substr((int)$bnr,0,2).' '.$inicjaly.$stopspan; }
+            else {
+                return (int)substr((int)$bnr,2).$startspan.$sepyearchar.substr((int)$bnr,0,2).' H'.$stopspan; }
+        }  
+        return $bnr; 
+    }	
     
 }
