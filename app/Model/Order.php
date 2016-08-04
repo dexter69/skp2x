@@ -59,17 +59,28 @@ class Order extends AppModel {
                 default:
                     $co = null;                
             }
-            // teraz dane o zdrzeniu  - prawidłowy format w relacji hasMany          
-            $dane['Event'] = array( array(
+            // teraz dane o zdrzeniu
+            $eventtab = array(
                 'user_id' => AuthComponent::user('id'),
-                'order_id' => $rqdata['id'],
-                'co' => $co 
-            ));
+                'order_id' => $rqdata['id'],                
+                'job_id' => 0,
+                'card_id' => 0,
+                'co' => $co,
+                'post' => null,
+                'noevent' => true // to taki trik, bo jest pewna niekompatybilność między
+                // starą a nową obsługą zdarzeń/e-maili
+            );
+            /*  Chcemy uzupełnić rgdata o dane do powiadomień e-mail */
+            $this->prepEmailData($eventtab);
+            $eventtab['odbiorcy'] = $this->e_data['odbiorcy'];
+            $eventtab['temat'] = $this->e_data['temat'];
+            $eventtab['url'] = Router::url($this->e_data['linktab'], true);            
+            $dane['Event'][0] = $eventtab; // prawidłowy format w relacji hasMany  
             $dane['Order'] = $rqdata; // prawidłowy format dla save            
             if( $this->saveAssociated($dane) ) { 
                 $rqdata['errno'] = 0; }
             else { 
-                $rqdata['errno'] =  1; }            
+                $rqdata['errno'] =  1; }                
             return $rqdata;
         }
 	

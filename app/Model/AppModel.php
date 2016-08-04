@@ -166,7 +166,8 @@ class AppModel extends Model {
         if(array_key_exists(0, $eventtab)) { // znaczy wersja dla hasMany
             $eventtab = $eventtab[0]; // na lokalne potrzeby
         }
-        $this->tematTrescLink($eventtab);
+        $this->tematTrescLink($eventtab);    
+        
         foreach( $this->e_data['value']['Event'] as $ewent ) {
                 $uids[$ewent['user_id']] = 1; //przypisz na razie cokolwiek	
         }
@@ -211,9 +212,15 @@ class AppModel extends Model {
      * * $eventtab - tablica z danymi dla mozdelu Event (z requestdata) */
     private function tematTrescLink( $eventtab = array() ) {
         
+        
         if( $eventtab['order_id'] ) { // do handlowego
-            $this->e_data['value'] = $this->Order->find('first', array(
+            if( isset($eventtab['noevent']) ) { // robione z innego modelu niż Event
+                $this->e_data['value'] = $this->find('first', array(
                     'conditions' => array('Order.id' => $eventtab['order_id'])));
+            } else {
+                $this->e_data['value'] = $this->Order->find('first', array(
+                    'conditions' => array('Order.id' => $eventtab['order_id'])));
+            }            
             $this->e_data['temat'] = 'ZAM ' . $this->bnr2nrh2($this->e_data['value']['Order']['nr'], $this->e_data['value']['User']['inic'],false);
             $this->e_data['linktab'] = array('controller' => 'orders', 'action' => 'view', $eventtab['order_id']); }
         else { // do produkcyjnego
@@ -222,8 +229,10 @@ class AppModel extends Model {
                 $this->e_data['temat'] = 'ZLE ' .  $this->bnr2nrj2($this->e_data['value']['Job']['nr'],$this->e_data['value']['User']['inic'],false);
                 $this->e_data['linktab'] = array('controller' => 'jobs', 'action' => 'view', $eventtab['job_id']); 
         }
+        
         $this->e_data['temat'] .=   ', ' . AuthComponent::user('name') . ' ' .
                     $this->eventText[$eventtab['co']][AuthComponent::user('k')];
+        
         if($eventtab['card_id']) {
             if( $eventtab['co'] == put_kom ) { $this->e_data['temat'] .= ' odnośnie karty:'; }
             foreach( $this->e_data['value']['Card'] as $karta ) {
