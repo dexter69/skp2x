@@ -3,7 +3,7 @@
 // full base tutaj nie jest potrzebne - assetUrl działa OK
 //echo '<pre>';	print_r( $order['Customer'] ); echo  '</pre>';
 
-//echo $this->Html->css(array('order-pdf'), array('inline' => false/*, 'fullBase' => true*/));
+echo $this->Html->css(array('order-pdf'), array('inline' => false/*, 'fullBase' => true*/));
 $karty = $this->Pdf->order_kartyTable( $order['Card'] ); 
 $order['Order']['naklad'] = $karty['ilosc'];
 $order['Order']['przedplata'] = $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
