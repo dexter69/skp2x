@@ -17,7 +17,7 @@ if( ($order['Order']['forma_platnosci'] == PRZE || $order['Order']['forma_platno
 
 ?>
 
-<p class="czas-wydruku" ><?php echo 'Czas wydruku: '.$this->Ma->mdt(date('Y-m-d H:i:s'), true); ?></p>
+<p class="czas-wydruku" ><?php echo 'Czas wydruku: ' . $this->Ma->mdt(date('Y-m-d H:i:s'), true); ?></p>
 <div class="naglowek">
     <?php echo $this->Pdf->order_naglowekTable($order); ?> 
 </div>
