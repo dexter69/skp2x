@@ -112,7 +112,7 @@ class WkHtmlToPdfEngine extends AbstractPdfEngine {
 		}
 		$command .= " - -";
 
-		return $command; //oryginał
-                //return 'xvfb-run ' . $command; //test, czy zadziała na nowym serwerze
+		//return $command; //oryginał
+                return 'xvfb-run ' . $command; //test, czy zadziała na nowym serwerze
 	}
 }
