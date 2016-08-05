@@ -28,8 +28,13 @@
 ?>    
     <title></title>
     
+    <style>
+h1 {color:red;}
+p {color:blue;}
+</style>
+    
 </head>
-<body>
+<body>    
 <?php echo $this->fetch('content');  
 ?>
 </body>
