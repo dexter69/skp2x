@@ -113,7 +113,7 @@ class WkHtmlToPdfEngine extends AbstractPdfEngine {
 		$command .= " - -";
                 
                 if( DS == LIN ) { // We are on Linux!
-                    return $command; // stary serwer
+                    //return $command; // stary serwer
                     return 'xvfb-run ' . $command; //nowy server
                 } else { // We are on Windows!
                     return $command; //oryginał
