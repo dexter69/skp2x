@@ -308,8 +308,8 @@ class OrdersController extends AppController {
                  */
                 $order['Order'] = $this->add_prepaid_data($order['Order']);
                 //$order['Order']['zal_clickable'] = $this->is_prepaid_clickable();
-                
-		$this->set( compact('order', 'evcontrol', 'users', 'ludz', 'vju', 'evtext') );
+                $dzial = $this->Auth->user('dzial');
+		$this->set( compact('order', 'evcontrol', 'users', 'ludz', 'vju', 'evtext', 'dzial') );
 		//$this -> render('druknij');
 	}
 
