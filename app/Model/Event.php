@@ -631,8 +631,8 @@ class Event extends AppModel {
                             $this->create();
                             if( $this->save($evrecord) ) {
                                     $evid = $this->id;
-                                    foreach( $rqdata['Upload'] as &$plikdata )
-                                            $plikdata['event_id'] = $evid;
+                                    foreach( $rqdata['Upload'] as &$plikdata ) {
+                                        $plikdata['event_id'] = $evid; }
                                     if( $this->Job->saveAssociated($rqdata) ) {
                                         return true; }
                                     else {
@@ -652,17 +652,7 @@ class Event extends AppModel {
 	
 	public function saveEventAndRelated( $ds = array() ) {
 	
-		$this->saveEventError=0;
-		/*
-		if( !$this->Card->saveMany($ds['Card']) ) {
-			$this->saveEventError = 2;
-		} else {
-			unset($ds['Card']);
-			if( $this->saveAssociated($ds) ) return true;
-			else
-			  $this->saveEventError = 3;
-		}
-		*/
+		$this->saveEventError=0;		
 		if( $this->Order->saveAssociated($ds) ) return true;
 		return false;
 	}

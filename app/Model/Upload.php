@@ -63,9 +63,7 @@ class Upload extends AppModel {
         public function manage_posted_files( array $inputarr = array() ) {
 
 
-            $i=0;
-            $result = array();
-            $row = array();
+            $i=0; $result = array(); $row = array();
 
             // pliki dziedziczą twórcę i właściciela karty
             $userid = $inputarr['Card']['user_id'];
@@ -73,30 +71,30 @@ class Upload extends AppModel {
 
             foreach ( $inputarr['Upload']['files'] as $value ) {
 
-                    if( $value['error'] === UPLOAD_ERR_OK ) {
+                if( $value['error'] === UPLOAD_ERR_OK ) {
 
-                        if( $inputarr['Upload'][$i++]['checkbox'] ) { // jeżeli checked plik                                
-                                do { $uuid = String::uuid(); } while ( file_exists(APP.PLIKOZA.DS.$uuid) );
-                                if ( move_uploaded_file($value['tmp_name'], APP.PLIKOZA.DS.$uuid) ) {
-                                        $row['role'] = $inputarr['Upload'][$i-1]['role'];
-                                        $row['user_id'] = $userid;
-                                        $row['owner_id'] = $ownerid;
-                                        if( $row['role'] == OTHER_ROLE )
-                                                $row['roletxt'] = $inputarr['Upload'][$i-1]['roletxt'];
-                                        else
-                                                $row['roletxt'] = $this->view_options['role']['options'][strval($row['role'])];
-                                $row['filename'] = $value['name'];
-                                $row['filesize'] = $value['size'];
-                                $row['filemime'] = $value['type'];
-                                        $row['uuidname'] = $uuid;
-                                        array_push($result, $row);
-
-                                }
-                                else { return array(); }
+                    if( $inputarr['Upload'][$i++]['checkbox'] ) { // jeżeli checked plik                                
+                        do { $uuid = String::uuid(); } while ( file_exists(APP.PLIKOZA.DS.$uuid) );
+                        if ( move_uploaded_file($value['tmp_name'], APP.PLIKOZA.DS.$uuid) ) {
+                            $row['role'] = $inputarr['Upload'][$i-1]['role'];
+                            $row['user_id'] = $userid;
+                            $row['owner_id'] = $ownerid;
+                            if( $row['role'] == OTHER_ROLE ) {
+                                $row['roletxt'] = $inputarr['Upload'][$i-1]['roletxt'];
+                            } else {
+                                $row['roletxt'] = $this->view_options['role']['options'][strval($row['role'])];
+                            }
+                            $row['filename'] = $value['name'];
+                            $row['filesize'] = $value['size'];
+                            $row['filemime'] = $value['type'];
+                            $row['uuidname'] = $uuid;
+                            array_push($result, $row);
                         }
-
+                        else { return array(); }
                     }
-                    else return array();
+
+                }
+                else { return array(); }
             }
 
             return $result;
@@ -142,10 +140,12 @@ class Upload extends AppModel {
                 $result = array();
                 foreach( $records as $value ) {
 
-                        if( !array_key_exists('id', $value) )
+                        if( !array_key_exists('id', $value) ) {
                                 $this->create();
-                        if ( $this->save($value) ) $result[$i++]=$this->id;
-
+                        }
+                        if ( $this->save($value) ) {
+                            $result[$i++] = $this->id;
+                        }
                 }
 
                 return $result;	

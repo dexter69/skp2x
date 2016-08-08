@@ -119,8 +119,8 @@ class Card extends AppModel {
                     // znaczy mamy jakies pliki z bazy, ale pozbądźmy się
                     // ewentualnie tych, które nie są tego klienta - stare
                     foreach ( $puc['Wspolne'] as $key => $value ) {
-                        if( $value['taken'] )
-                                $ready['Upload']['Upload'][] = $value['id'];
+                        if( $value['taken'] ) {
+                            $ready['Upload']['Upload'][] = $value['id']; }
                     }			
             }
 
@@ -207,20 +207,18 @@ class Card extends AppModel {
 		$zwrot = array(); $errno = 0;
 		//$errno = 'takeCareFiles_4S';
 		if( $edycja && array_key_exists('Zalaczone', $puc) ) {
-			
-			//zajmij się plikami, ktore są już załączone
-			// Zapisz w Uploads - może coś sie zminilo
-			$rezultat = $this->Upload->edytuj_zalaczone($puc['Zalaczone']);
-			$in = $rezultat['edit'];
-			$remove = $rezultat['remove'];
-			
+                    //zajmij się plikami, ktore są już załączone
+                    // Zapisz w Uploads - może coś sie zminilo
+                    $rezultat = $this->Upload->edytuj_zalaczone($puc['Zalaczone']);
+                    $in = $rezultat['edit'];
+                    $remove = $rezultat['remove'];
 		}
 		
 		// prubujemy zapisać uploadowane pliki (te uploodowane i/lub edytowane wcześniej uplodowane)
-		if ( count( $puc['Upload']['files'] )!=1 || $puc['Upload']['files'][0]['error']!=UPLOAD_ERR_NO_FILE ) 
-			//tzn. załączono jakies pliki
-			$in = array_merge($in, $this->Upload->manage_posted_files($puc));
-		
+		if ( count( $puc['Upload']['files'] )!=1 || $puc['Upload']['files'][0]['error']!=UPLOAD_ERR_NO_FILE ) {
+                    //tzn. załączono jakies pliki
+                    $in = array_merge($in, $this->Upload->manage_posted_files($puc));
+                 }
 		
 		$out = $this->Upload->my_saveMany( $in );
 		if( !empty($in) && empty($out) ) $errno = 4;
