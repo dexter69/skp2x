@@ -9,8 +9,14 @@ if( $dzial == SUA ) {
 } else {
     $mark = null;
 }
+$nowy = ( $fields['default']['ver'] == 'new' ); // czy jesteśmy na nowym serwerze?
 
-echo $this->Html->css(array('order-pdf'), array('inline' => false/*, 'fullBase' => true*/));
+if( $fields['default']['ver'] == 'new' ) { // czy jesteśmy na nowym serwerze?
+    // TAK - inny css
+    echo $this->Html->css(array('order/order-pdf'), array('inline' => false));
+} else { // w przeciwnym wypadku standard
+    echo $this->Html->css(array('order-pdf'), array('inline' => false/*, 'fullBase' => true*/));
+}
 $karty = $this->Pdf->order_kartyTable( $order['Card'] ); 
 $order['Order']['naklad'] = $karty['ilosc'];
 $order['Order']['przedplata'] = $vju['forma_zaliczki']['options'][$order['Order']['forma_zaliczki']];
