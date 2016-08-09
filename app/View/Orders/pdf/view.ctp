@@ -9,7 +9,6 @@ if( $dzial == SUA ) {
 } else {
     $mark = null;
 }
-$nowy = ( $fields['default']['ver'] == 'new' ); // czy jesteśmy na nowym serwerze?
 
 if( $fields['default']['ver'] == 'new' ) { // czy jesteśmy na nowym serwerze?
     // TAK - inny css
