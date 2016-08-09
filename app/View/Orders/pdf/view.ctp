@@ -3,6 +3,13 @@
 // full base tutaj nie jest potrzebne - assetUrl działa OK
 //echo '<pre>';	print_r( $order['Customer'] ); echo  '</pre>';
 
+if( $dzial == SUA ) {
+    $fields = get_class_vars('DATABASE_CONFIG');
+    $mark = '(' . $fields['default']['ver'] . ') ';  
+} else {
+    $mark = null;
+}
+
 echo $this->Html->css(array('order-pdf'), array('inline' => false/*, 'fullBase' => true*/));
 $karty = $this->Pdf->order_kartyTable( $order['Card'] ); 
 $order['Order']['naklad'] = $karty['ilosc'];
@@ -17,7 +24,7 @@ if( ($order['Order']['forma_platnosci'] == PRZE || $order['Order']['forma_platno
 
 ?>
 
-<p class="czas-wydruku" ><?php echo 'Czas wydruku: ' . $this->Ma->mdt(date('Y-m-d H:i:s'), true); ?></p>
+<p class="czas-wydruku" ><?php echo $mark . "Czas wydruku: " . $this->Ma->mdt(date('Y-m-d H:i:s'), true); ?></p>
 <div class="naglowek">
     <?php echo $this->Pdf->order_naglowekTable($order); ?> 
 </div>
