@@ -3,8 +3,8 @@
 // full base tutaj nie jest potrzebne - assetUrl działa OK
 //echo '<pre>';	print_r( $order['Customer'] ); echo  '</pre>';
 
-if( $dzial == SUA ) {
-    $fields = get_class_vars('DATABASE_CONFIG');
+$fields = get_class_vars('DATABASE_CONFIG');
+if( $dzial == SUA ) {    
     $mark = '(' . $fields['default']['ver'] . ') ';  
 } else {
     $mark = null;
