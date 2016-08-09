@@ -1,7 +1,7 @@
 <?php
 if( $dzial == SUA ) {
     $fields = get_class_vars('DATABASE_CONFIG');
-    echo $fields['default']['database'];  
+    echo $fields['default']['ver'];  
 }
 $pokaz = false; // decyduje o wyswietlaniu w linii ~121
 //echo '<pre>';	print_r($order['Event']); echo  '</pre>';
