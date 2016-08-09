@@ -36,20 +36,19 @@ class Upload extends AppModel {
         foreach ( $inputarr['Upload']['files'] as $value ) {
 
                 if( $value['error'] === UPLOAD_ERR_OK ) {
-
-                        do { $id = String::uuid(); } while ( file_exists(APP.PLIKOZA.DS.$id) );
-                        if ( move_uploaded_file($value['tmp_name'], APP.PLIKOZA.DS.$id) ) {
-                                //$row['role'] = $inputarr['Upload'][$i++]['role'];
-                                $row['role'] = 0;
-                                $row['user_id'] = $userid;
-                                $row['owner_id'] = $ownerid;
-                                //$row['roletxt']= $this->view_options['role']['options'][strval($row['role'])];
-                        $row['filename'] = $value['name'];
-                        $row['filesize'] = $value['size'];
-                        $row['filemime'] = $value['type'];
-                                $row['uuidname'] = $id;
-                                array_push($result, $row);
-
+                        /* zmieniamy sposob generowania nazwy i nie sprawdzamy istnienia już takich plików
+                        do { $id = String::uuid(); } while ( file_exists(APP.PLIKOZA.DS.$id) ); */
+                        $new_uuid = $this->newUuidName();
+                        if ( move_uploaded_file($value['tmp_name'], APP.PLIKOZA.DS.$new_uuid) ) {
+                            $row['role'] = 0;
+                            $row['user_id'] = $userid;
+                            $row['owner_id'] = $ownerid;                                
+                            $row['filename'] = $value['name'];
+                            $row['filesize'] = $value['size'];
+                            $row['filemime'] = $value['type'];
+                            $row['uuidname'] = null;
+                            $row['new-uuidname'] = $new_uuid;
+                            array_push($result, $row);
                         }
                         else return array();
                 }
@@ -73,9 +72,11 @@ class Upload extends AppModel {
 
                 if( $value['error'] === UPLOAD_ERR_OK ) {
 
-                    if( $inputarr['Upload'][$i++]['checkbox'] ) { // jeżeli checked plik                                
-                        do { $uuid = String::uuid(); } while ( file_exists(APP.PLIKOZA.DS.$uuid) );
-                        if ( move_uploaded_file($value['tmp_name'], APP.PLIKOZA.DS.$uuid) ) {
+                    if( $inputarr['Upload'][$i++]['checkbox'] ) { // jeżeli checked plik   
+                        /* zmieniamy sposob generowania nazwy i nie sprawdzamy istnienia już takich plików
+                        do { $uuid = String::uuid(); } while ( file_exists(APP.PLIKOZA.DS.$uuid) ); */
+                        $new_uuid = $this->newUuidName();
+                        if ( move_uploaded_file($value['tmp_name'], APP.PLIKOZA.DS.$new_uuid) ) {
                             $row['role'] = $inputarr['Upload'][$i-1]['role'];
                             $row['user_id'] = $userid;
                             $row['owner_id'] = $ownerid;
@@ -87,7 +88,8 @@ class Upload extends AppModel {
                             $row['filename'] = $value['name'];
                             $row['filesize'] = $value['size'];
                             $row['filemime'] = $value['type'];
-                            $row['uuidname'] = $uuid;
+                            $row['uuidname'] = null;
+                            $row['new-uuidname'] = $new_uuid;
                             array_push($result, $row);
                         }
                         else { return array(); }
@@ -99,6 +101,15 @@ class Upload extends AppModel {
 
             return $result;
 
+        }
+        
+        private function newUuidName($short = false) {
+            
+            if($short ) {
+                return date("YmdHis") . "_" . String::uuid();
+            } else {
+                return date("Y-m-d_H.i.s") . "_" . String::uuid();
+            }
         }
         
         /*

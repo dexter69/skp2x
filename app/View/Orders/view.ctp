@@ -4,12 +4,6 @@ $pokaz = false; // decyduje o wyswietlaniu w linii ~121
 //echo '<pre>';	print_r($order); echo  '</pre>';
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
 //echo $this->Html->url('/css/order-pdf.css', true);
-if( $dzial == SUA ) {
-    echo "1. " . date("Y-m-d, H:i:s-u") . "<br>";
-    echo "2. " . date("Y-m-d, H:i:s-u") . "<br>";
-    //phpinfo();
-}
-
 echo $this->Html->css(array('order', 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
 echo $this->Html->css('order/order.css?v=' . time(), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 

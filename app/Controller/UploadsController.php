@@ -150,8 +150,6 @@ class UploadsController extends AppController {
 		if ( !$id ) {
 			throw new NotFoundException(__('Brak id pliku!'));
 		}
-		//echo $uuidname
-		//szukamy rozszerzenia, gdzie jest ostatnia kropka?
 		
 		$options = array('conditions' => array('Upload.' . $this->Upload->primaryKey => $id));
 		$data = $this->Upload->find('first', $options);
@@ -160,37 +158,19 @@ class UploadsController extends AppController {
 		
 		$this->response->type( array( $extension => $data['Upload']['filemime'] ) );
 		$this->response->type($extension);
+                if( $data['Upload']['uuidname'] != NULL ) {
+                    $uname = $data['Upload']['uuidname']; // po staremu
+                } else {
+                    $uname = $data['Upload']['new-uuidname']; // po nowemu
+                }
 		$this->response->file(
-    		APP.$this->Upload->uplpath.DS.$data['Upload']['uuidname'], // path
-    		array( 'download' => true, 'name' => $data['Upload']['filename'] )
+                    APP.$this->Upload->uplpath.DS.$uname, // path
+                    array( 'download' => true, 'name' => $data['Upload']['filename'] )
 		);
 		return $this->response;
 		
 	}
 	
-	public function download2( $uuidname = null, $filename = null, $filemime1 = null, $filemime2 = null ) {
-		
-		// stare - w url wszystkie dane
-		if ( !$uuidname || !$filename ) {
-			throw new NotFoundException(__('Brak danych o pliku!'));
-		}
-		//echo $uuidname
-		//szukamy rozszerzenia, gdzie jest ostatnia kropka?
-		$pos = strripos($filename, '.');
-		$ext = substr($filename, $pos + 1 );
-		$filemime = $filemime1 . '/' . $filemime2;
-		//if( $ext == 'wma' )
-		$this->response->type(array($ext => $filemime ));
-		
-		$path = APP.$this->Upload->uplpath.DS.$uuidname;
-		$this->response->type($ext);
-		$this->response->file(
-    		$path,
-    		array( 'download' => true, 'name' => $filename )
-		);
-		return $this->response;
-		
-	}
+	
 
 }
-
