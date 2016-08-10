@@ -4,10 +4,10 @@
 @import 'pdf';
 
 
-$nag-height: 22mm;
+$nag-height: 28mm; // 22mm; - tak bylo na apacz
 $kolor-nag-karty: #bddfeb;
 $kolor-etykiety-w-naglowku-karty: #999999;
-$info-o-karcie-wysokosc: 21.5mm;
+$info-o-karcie-wysokosc: 27mm;
 
 .naglowek {
     //background-color: lightcyan;
@@ -81,7 +81,7 @@ WYDRUK INFORMACJI O KARCIE
 .info-o-karcie {
     //background-color: lightcyan;
     border: 1px solid lightgray;
-    height: 25mm;// Na skp.lan drukuje mniejsze...
+    height: $info-o-karcie-wysokosc;// Na skp.lan drukuje mniejsze... tu chcemy uzyskać de facto 21 mm
     border-radius: 10px;
     margin-bottom: 4mm;
     //overflow: hidden;
