@@ -1,7 +1,13 @@
 <?php
-echo $this->Html->css(array('job-pdf'), array('inline' => false/*, 'fullBase' => true*/));
-
-//echo $this->Pdf->job_PrintNaglowek($job);
+// coby zasysał odpowiedni css, w zależności gdzie działa (na starym czy nowym)
+$fields = get_class_vars('DATABASE_CONFIG');
+if( $fields['default']['ver'] == 'new' ) { // czy jesteśmy na nowym serwerze?
+    // TAK - inny css
+    echo $this->Html->css(array('job/job-pdf'), array('inline' => false));
+} else { // w przeciwnym wypadku standard
+    echo $this->Html->css(array('job-pdf'), array('inline' => false));
+}
+// po staremu //echo $this->Html->css(array('job-pdf'), array('inline' => false/*, 'fullBase' => true*/));
 
 $index = 0;
 $i = 0; // ile elementów drukniętych

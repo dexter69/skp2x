@@ -1,0 +1,218 @@
+/* 
+    Dla wydruku pdf'a dla joba na nowym serwerze
+*/
+
+
+@import '../order/pdf';
+
+$nag-height: 22mm;
+$kolor-nag-karty: #bddfeb;
+$kolor-etykiety-w-naglowku-karty: #999999;
+$info-o-karcie-wysokosc: 21.5mm;
+
+.naglowek {
+    //background-color: lightcyan;
+    border: 1px solid #003366;
+    height: $nag-height;
+    border-radius: 2mm;
+    margin-bottom: 4mm;
+}
+
+.naglowek > div {
+    //background-color: lightgreen;
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;    
+}
+
+.job-pdf-left { //background-color: orange; 
+    //border-right: 1px solid grey;
+    width: 39%;
+    //padding: 0 2mm;
+}
+
+.job-pdf-left > table {
+    //background-color: orange;
+    margin-left: 2mm;
+    width: 98%;
+}
+
+.job-pdf-right { 
+    //background-color: lightskyblue;     
+    width: 61%;
+    overflow: hidden;
+    font-size: 85%;
+}
+
+.nr-col {
+   width: 45mm;
+   //background-color: lightgreen; 
+}
+
+.job-nr {
+    color: $job-nr-color;
+    font-size: 2em;
+    font-weight: bold;
+    
+}
+
+p.job-nr span { font-weight: 100; color: grey; }
+
+
+.job-termin { color: $job-termin-color; font-size: 1.5em; text-align: right; }
+
+.arkuszediv { 
+    padding-left: 2mm;
+}
+.arkuszediv > p { 
+    display: inline-block; 
+    padding: 1mm;
+    width: 31%;
+    margin-top: 1mm;
+} 
+
+.job-uwagi {
+    padding: 1mm 2mm 1mm 5mm;
+}
+
+/*
+WYDRUK INFORMACJI O KARCIE
+*/
+
+.info-o-karcie {
+    //background-color: lightcyan;
+    border: 1px solid lightgray;
+    height: 21mm;//$info-o-karcie-wysokosc;//21.5mm;
+    border-radius: 10px;
+    margin-bottom: 4mm;
+    //overflow: hidden;
+}
+
+$szer-obszaru-opcji-0: 59%;
+$szer-obszaru-opcji-2: 66%;
+$szer-obszaru-opcji-3: 70%;
+
+.opcje-tab-div-around { display: inline-block; }//background-color: lightpink;}
+.opcje-tab-div-around.szer0, .opcje-tab-div-around.szer1 { width: $szer-obszaru-opcji-0; }
+.opcje-tab-div-around.szer2 { width: $szer-obszaru-opcji-2; }
+.opcje-tab-div-around.szer3 { width: $szer-obszaru-opcji-3; }
+
+.uwagi-techniczne-do-karty {     
+    display: inline-block;
+    vertical-align: top;
+    //background-color: lightgreen;
+    padding-left: 2mm;
+    font-size: 80%;
+    max-height: $info-o-karcie-wysokosc - 6.9mm;
+    //border-left: 1px solid black;
+    overflow: hidden;
+}
+
+.uwagi-techniczne-do-karty.szer0,
+.uwagi-techniczne-do-karty.szer1 { width: 99%-$szer-obszaru-opcji-0; }
+.uwagi-techniczne-do-karty.szer2 { width: 99%-$szer-obszaru-opcji-2; }
+.uwagi-techniczne-do-karty.szer3 { width: 99%-$szer-obszaru-opcji-3; }
+
+.opcje-tab { font-size: 90%; //background-color: lightpink; 
+}
+.opcje-tab th, .opcje-tab td { 
+    padding: 0.2em;
+    border-left: 0.5px solid gray;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.opcje-tab th { font-weight: normal; }
+.opcje-tab td { text-align: center; }
+
+.info-o-karcie > .table-in-head { 
+    background-color: $kolor-nag-karty; 
+    border-radius: 10px; //padding: 0.4em;
+    position: relative;
+    // wersja wkhtmltopdf na serwerze nie kum relative dla th, zrobiłem więc tu dla table
+}
+
+.info-o-karcie > .table-in-head th {
+    //
+    padding: 0;
+    //position: relative;
+    // wersja wkhtmltopdf na serwerze nie kum relative dla th, zrobiłem więc dla table
+}
+
+.info-o-karcie > .table-in-head th > label {
+    color: $kolor-etykiety-w-naglowku-karty;
+    font-size: 8px;
+    position: absolute;
+    //right: 0;
+    top: -2.5mm;
+    //padding: 1mm;
+    padding: 0 5mm 0.5mm 5mm;
+    background-color: white;
+    border-radius: 2mm;
+    border: 1px solid $kolor-etykiety-w-naglowku-karty;
+}
+
+.info-o-karcie > .table-in-head th:first-child > label { left: 10mm; }
+.info-o-karcie > .table-in-head th.ilosc > label { left: 109mm; }
+.info-o-karcie > .table-in-head th.klient > label { left: 130mm; }
+.info-o-karcie > .table-in-head th.ordernr > label { right: 31mm; }
+.info-o-karcie > .table-in-head th.termin > label { right: 3mm; }
+
+.info-o-karcie > .table-in-head td { 
+    white-space: nowrap;
+    overflow-x: hidden;
+    padding-left: 2mm;
+    padding-right: 2mm;
+}
+
+
+.table-in-head .termin { width: 7em; text-align: center;}
+.table-in-head .ordernr { width: 8em; text-align: center;}
+.table-in-head .ilosc { width: 6.8em; text-align: right;}
+//.table-in-head .nazwa {font-weight: bold;}
+.table-in-head td:first-child { font-weight: bold; }
+
+
+//.opcje-tab .id { width: 4em;}
+.opcje-tab .aw { text-align: right; width: 4em;}
+
+.opcje-tab .materia { width: 4em;}
+.opcje-tab .sito-przed { width: 6em;}
+.opcje-tab .cmyk { width: 4em;}
+.opcje-tab .panton { width: 3em;}
+.opcje-tab .zadruk { width: 6.5em;}
+.opcje-tab .laminat { width: 5em;}
+.opcje-tab .mag { width: 3.5em;}
+.opcje-tab td.mag { padding-top: 0.7em; }
+.opcje-tab .pasek { width: 4em;}
+.opcje-tab .perso { width: 3.5em; border-right: 0.5px solid gray;}
+.opcje-tab td.perso { padding-top: 0.7em; }
+
+//.info-o-karcie th:nth-child(odd), .info-o-karcie td:nth-child(odd) { background-color: lightgray; }
+
+
+.glyph-nozyczki { background-image:  url('../img/glyph/glyphicons-289-scissors.png'); }
+.nozyczki1 { background-image:  url('../img/nozycki_26.png'); }
+.nie-brak-x { background-image:  url('../img/x_26.png'); }
+.tak-checked { background-image:  url('../img/checked_26.png'); }
+
+.pdf-symbol {
+    width: 13px;
+    height: 13px; 
+    display: inline-block;    
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 1mm;
+}
+
+.pdf-symbol-big {
+    width: 20px;
+    height: 20px; 
+    display: inline-block;    
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 1mm 0 1mm 1mm;
+}
+
+
