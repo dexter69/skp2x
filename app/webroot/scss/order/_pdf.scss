@@ -1,14 +1,14 @@
 $font-stack:    'lucida grande',verdana,helvetica,arial,sans-serif;
 $primary-color: black;
 $order-nr-color: #007300;
-$codrugi-wiersz-color: #e0e0e0; //do tabelek, wyróżninie co drugiego wiersza
+$codrugi-wiersz-color: #c9c9c9; // na old -> #e0e0e0; //do tabelek, wyróżninie co drugiego wiersza
 $order-termin-color: red;
 $order-jobnr-color: red;
 $job-nr-color: red;
 $job-termin-color: red;
 
 body {
-  font: 110% $font-stack;
+  font: 115% $font-stack;
   color: $primary-color;
   margin: 0 auto;
 }
