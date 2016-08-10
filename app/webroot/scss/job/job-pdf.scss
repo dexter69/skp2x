@@ -1,9 +1,8 @@
-/* 
-    Dla wydruku pdf'a dla joba na nowym serwerze
+/*    Dla wydruku pdf'a dla joba na nowym serwerze 
 */
 
+@import 'pdf';
 
-@import '../order/pdf';
 
 $nag-height: 22mm;
 $kolor-nag-karty: #bddfeb;
