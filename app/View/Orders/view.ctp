@@ -1,4 +1,6 @@
 <?php
+echo "<br>" . $_SERVER['SERVER_NAME'];
+
 $pokaz = false; // decyduje o wyswietlaniu w linii ~121
 //echo '<pre>';	print_r($order['Event']); echo  '</pre>';
 //echo '<pre>';	print_r($order); echo  '</pre>';
