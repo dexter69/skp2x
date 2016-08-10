@@ -18,7 +18,7 @@ table td.td1 > p { padding: 1mm; }
 table td.td1 .termin { color: $order-termin-color; font-size: 1.6em; }
 //table td.td1 .termin, table td.td1 .naklad { display: inline-block; }
 
-.karty-pdf > table td { border: 0.9px solid black;}
+.karty-pdf > table td { border: 1px solid black;}
 .karty-pdf table tr:last-child td { border: none; }
 
 table td.nr-col > p.ord-nr {
