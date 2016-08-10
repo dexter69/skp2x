@@ -26,7 +26,7 @@ endforeach;
 
 
 $link = $this->Html->link('bla', $linktab);
-$link = str_replace('href="', 'href="http://'.HOSCIK, $link);
+$link = str_replace('href="', 'href="http://'. $_SERVER['SERVER_NAME'], $link);
 $pocz = strpos($link, '"' )+1;
 $dl = strpos($link, '"', $pocz) - $pocz;
 $link = str_replace('bla', substr($link, $pocz,  $dl), $link);
