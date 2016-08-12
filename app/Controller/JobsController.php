@@ -164,6 +164,8 @@ class JobsController extends AppController {
 		$status = $job['Job']['status'];
 		$logged_user = $this->Auth->user('id');
 		$submits = array();
+                // jeżeli to kier. prod lub jego zastępca, to prawda
+                $kiper = $logged_dzial == KIP || $this->Auth->user('kiper');
 		
 		if( count($job['Card']) ) { //zlecenie musi miec jakies karty
 			
@@ -180,8 +182,8 @@ class JobsController extends AppController {
                         case sHAS_F1:
                         case sHAS_F2:
                                 if( $logged_user == $tworca ) {
-                                        $submits[eJF_OK] = 0;
-                                        $submits[eJF_BACK] = 1;
+                                    $submits[eJF_OK] = 0;
+                                    $submits[eJF_BACK] = 1;
                                 }					
                         break;	
                         case sDTP2FIX:
@@ -190,12 +192,12 @@ class JobsController extends AppController {
                                 }
                         break;	
                         case sW4B:
-                        case sW4B2:
-                                if( $logged_dzial == KIP ) {
-                                        $submits[eJ_ACC] = 0;
-                                        //$submits[eB_REJ] = 1;						
-                                        $submits[eJ_B2KOR] = 1;
-                                        $submits[eJ_B2DTP] = 1;
+                        case sW4B2: //#tu
+                                if( $kiper ) {
+                                    $submits[eJ_ACC] = 0;
+                                    //$submits[eB_REJ] = 1;						
+                                    $submits[eJ_B2KOR] = 1;
+                                    $submits[eJ_B2DTP] = 1;
                                 }
                         break;	
                         case sDTP2FIX2:
@@ -209,10 +211,10 @@ class JobsController extends AppController {
                                         $submits[eJ_KOR2B] = 0;
                                 }
                         break;
-                        case sJ_PROD:
-                                if( $logged_dzial == KIP ) {
-                                        $submits[eJ_COF2KOR] = 1;
-                                        $submits[eJ_COF2DTP] = 1;
+                        case sJ_PROD: //#tu
+                                if( $kiper ) {
+                                    $submits[eJ_COF2KOR] = 1;
+                                    $submits[eJ_COF2DTP] = 1;
                                 }
                         break;
                         case sPAUSE4K:
@@ -226,11 +228,11 @@ class JobsController extends AppController {
                                         $submits[eJ_DBACK] = 0;						
                                 }
                         break;
-                        case sBACK2B:
-                                if( $logged_dzial == KIP ) {
-                                        $submits[eJ_COF2KOR] = 1;
-                                        $submits[eJ_COF2DTP] = 1;
-                                        $submits[eJB_UNPAUSE] = 0;
+                        case sBACK2B: //#tu
+                                if( $kiper ) {
+                                    $submits[eJ_COF2KOR] = 1;
+                                    $submits[eJ_COF2DTP] = 1;
+                                    $submits[eJB_UNPAUSE] = 0;
                                 }
                         break;
 
