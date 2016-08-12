@@ -7,6 +7,7 @@ $pokaz = false; // decyduje o wyswietlaniu w linii ~121
 echo $this->Html->css(array('order', 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
 echo $this->Html->css('order/order.css?v=' . time(), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 
+echo $this->Ma->walnijJqueryUI();
 $this->Ma->displayActions('orders');
 
 if( $order['Order']['nr'] ) {
@@ -329,6 +330,8 @@ if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
 <?php
     echo $this->element('orders/view/pre-paid-tpl', array( 'prepaid' => $prepaidTxt )); ?>
 </template>
+<!-- Do zmieniania daty wpłaty -->
+<div id="datepicker"></div><div id="komunikat"></div>
 <?php
     //echo '<pre>';	print_r($order); echo  '</pre>';
 

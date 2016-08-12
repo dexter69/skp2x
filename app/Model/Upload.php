@@ -151,12 +151,12 @@ class Upload extends AppModel {
                 $result = array();
                 foreach( $records as $value ) {
 
-                        if( !array_key_exists('id', $value) ) {
-                                $this->create();
-                        }
-                        if ( $this->save($value) ) {
-                            $result[$i++] = $this->id;
-                        }
+                    if( !array_key_exists('id', $value) ) {
+                       $this->create();
+                    }
+                    if ( $this->save($value) ) {
+                       $result[$i++] = $this->id;
+                    }
                 }
 
                 return $result;	
@@ -187,25 +187,23 @@ class Upload extends AppModel {
         //podpięte do żadnej karty
         public function eventually_kosz( $koszarr  = array() ) {
 
-                $ret = 0;
-                if( !empty($koszarr) ) {
+            $ret = 0;
+            if( !empty($koszarr) ) {
 
-                        foreach($koszarr as $wiersz) {
-                                $options = array('conditions' => array('Upload.' . $this->primaryKey => $wiersz['id']));
-                                $upload = $this->find('first', $options);
+                foreach($koszarr as $wiersz) {
+                    $options = array('conditions' => array('Upload.' . $this->primaryKey => $wiersz['id']));
+                    $upload = $this->find('first', $options);
 
-                                if( !empty($upload) && array_key_exists('Card', $upload) && empty($upload['Card']) ) {
-                                        rename(APP.$this->uplpath.DS.$upload['Upload']['uuidname'], 
-                                                        APP.PLIKOZA.DS.KOSZ.DS.$upload['Upload']['uuidname'] 
-                                                        );
-                                        $this->delete( $upload['Upload']['id'], false );
-                                }
-                        }
-
-
+                    if( !empty($upload) && array_key_exists('Card', $upload) && empty($upload['Card']) ) {
+                            // w związku z nowym sposobem nazywania plików
+                            $uname = ( $upload['Upload']['uuidname'] != null ) ? $upload['Upload']['uuidname'] : $upload['Upload']['new-uuidname'];
+                            rename(APP.$this->uplpath.DS.$uname, APP.PLIKOZA.DS.KOSZ.DS.$uname );
+                            $this->delete( $upload['Upload']['id'], false );
+                    }
                 }
+            }
 
-                return $ret;
+            return $ret;
         }
 
 

@@ -205,7 +205,6 @@ class Card extends AppModel {
 	
 		$in = $remove = array();
 		$zwrot = array(); $errno = 0;
-		//$errno = 'takeCareFiles_4S';
 		if( $edycja && array_key_exists('Zalaczone', $puc) ) {
                     //zajmij się plikami, ktore są już załączone
                     // Zapisz w Uploads - może coś sie zminilo
