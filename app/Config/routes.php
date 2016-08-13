@@ -26,7 +26,12 @@
  */
 	//Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 	Router::connect('/', array('controller' => 'orders', 'action' => 'index', 'index'));
+        
+        // strona home Cakephp
         Router::connect('/cake', array('controller' => 'pages', 'action' => 'display', 'home'));
+        
+        // phpinfo()
+        Router::connect('/info', array('controller' => 'pages', 'action' => 'display', 'info'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
