@@ -56,6 +56,7 @@ class MaHelper extends AppHelper {
 		unlock_again => 'ZWRÓĆ',
 		klepnij => 'PRZYJMIJ',
 		push4checking => 'DO DTP/P',
+                odemknij => 'OTWÓRZ',
 		
                 /* DEPREC
 		kor_no1 => 'odrzuć', 

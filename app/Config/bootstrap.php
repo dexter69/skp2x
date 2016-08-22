@@ -473,13 +473,17 @@ define('p_ok', 9); // c
 
 define('put_kom', 13); // o i c - komentarz
 define('fix_o', 16); // o i c
-define('send_o', 17); // o , zaznacz że wysłane (u klienta)
+define('send_o', 17); // o , zaznacz że wysłane (u klienta), albo inaczej zamknij
 define('unlock_o', 18); // o, odblokuj zamówienie
 define('update_o', 19); // o, po uzupełnieniu handlowiec wciska
 //zdarzenia generowane przez Jolę na uzupełnionym zamówieniu / karcie
 define('unlock_again', 20); // czyli uzupełnione źle, z powrotem do handlowca
 define('klepnij', 23); // jest ok wrcamy do produkcji
 define('push4checking', 24); // daj Frankowi i/lub Adamowi do sprawdzenia
+define('odemknij', 25); /* odemknij zamknięte zamówienie, czyli nadaj statusy:
+ 42 - wszystkim kartom tego handlowego 
+ 66 - temu handlowemu
+ 28 - odpowiadającemu mu produkcyjnemu */
 
 // prepaid update - zdarzenia aktualizacji przedpłaty
 define('pp_red', 120); // stan wyjściowy - ustawienie "brak wpłaty"

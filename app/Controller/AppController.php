@@ -190,6 +190,9 @@ class AppController extends Controller {
             push4checking => array(
                     'przekazał do sprawdzenia DTP/P',
                     'przekazała do sprawdzenia DTP/P','class' => 'pom'),
+            odemknij => array(
+                    'otworzył zamówienie',
+                    'otworzyła zamówienie','class' => 'ziel'),
             eJPUBLI => array(
                     'złożył zlecenie',
                     'złożyła zlecenie','class' => 'pom'),

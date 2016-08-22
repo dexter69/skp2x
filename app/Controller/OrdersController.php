@@ -368,61 +368,63 @@ class OrdersController extends AppController {
 
 	public function prepareSubmits($order) {
 		
-		$tab = array(
-			'buttons' => array(publi, kor_ok, kor_no, fix_o, put_kom, send_o, unlock_o, update_o, klepnij, unlock_again, push4checking),
-			'bcontr' => array(publi=>0, kor_ok=>0, kor_no=>0, fix_o=>0, put_kom=>0, send_o=>0, unlock_o=>0, update_o=>0, unlock_again=>0, klepnij=>0, push4checking=>0),
-			'ile' => 0 //liczba submitow do wyświetlenia
-		);
-		
-		
-		$tworca = $order['Order']['user_id'] == $this->Auth->user('id');
-		/**/
-		$karty_sprawdzone = $no_rej_card = true;
-		foreach ($order['Card'] as $card)	{
-			if( $card['status'] != D_OK && $card['status'] != P_OK ) $karty_sprawdzone = false;	
-			if( in_array( $card['status'], array(W4DPNO, W4PDNO, DNO, DOKPNO, DNOPNO, DNOPOK)) )
-			// jeżeli choć jedna karta jest "odrzucona"
-				$no_rej_card = false;
-		}
-				
-		
-		switch( $order['Order']['status'] ) {
-			case PRIV:
-				$tab = $this->plant_PUBLIKUJ($tab, $tworca); // przycisk "PUBLIKUJ"
-			break;
-			case NOWKA:
-			case FIXED:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"
-				$tab = $this->plant_KOORDYNACJA($tab, $karty_sprawdzone); // przyciski "kor_ok1" i "kor_no1"				
-			break;
-			case O_ERR:
-			case O_FINE:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"
-			break;
-			case O_REJ:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"
-				$tab = $this->plant_FIX_O2($tab, $tworca, fix_o); // przycisk "POPRAW" fix_o1
-			break;
-			case O_ACC:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"				
-				$tab = $this->plant_WYSLANE($tab, $tworca); // przycisk "WYSŁANE"
-				$tab = $this->plant_ODBLOKUJ($tab, $tworca); // przycisk "ODBLOKUJ"
-			break;
-			case W4UZUP:
-			case UZU_REJ:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"
-				$tab = $this->plant_UPDATE($tab, $tworca); // przycisk "UZUPEŁNIONE"
-			break;											// dla handlowca
-			case UZUPED:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca);
-				$tab = $this->plant_DEALWITHUZUPED($tab, $tworca, $no_rej_card);
-			break;
-			case UZU_CHECK:
-				$tab = $this->plant_KOMENTUJ($tab, $tworca);
-			break;
-		}
-			
-		return $tab;
+            $tab = array(
+                'buttons' => array(publi, kor_ok, kor_no, fix_o, put_kom, send_o, unlock_o, update_o, klepnij, unlock_again, push4checking, odemknij),
+                'bcontr' => array(publi=>0, kor_ok=>0, kor_no=>0, fix_o=>0, put_kom=>0, send_o=>0, unlock_o=>0, update_o=>0, unlock_again=>0, klepnij=>0, push4checking=>0, odemknij=>0),
+                'ile' => 0 //liczba submitow do wyświetlenia
+            );
+
+
+            $tworca = $order['Order']['user_id'] == $this->Auth->user('id');
+            /**/
+            $karty_sprawdzone = $no_rej_card = true;
+            foreach ($order['Card'] as $card)	{
+                    if( $card['status'] != D_OK && $card['status'] != P_OK ) $karty_sprawdzone = false;	
+                    if( in_array( $card['status'], array(W4DPNO, W4PDNO, DNO, DOKPNO, DNOPNO, DNOPOK)) )
+                    // jeżeli choć jedna karta jest "odrzucona"
+                            $no_rej_card = false;
+            }
+
+
+            switch( $order['Order']['status'] ) {
+                    case PRIV:
+                            $tab = $this->plant_PUBLIKUJ($tab, $tworca); // przycisk "PUBLIKUJ"
+                    break;
+                    case NOWKA:
+                    case FIXED:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"
+                            $tab = $this->plant_KOORDYNACJA($tab, $karty_sprawdzone); // przyciski "kor_ok1" i "kor_no1"				
+                    break;
+                    case O_ERR:
+                    case O_FINE:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"
+                    break;
+                    case O_REJ:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"
+                            $tab = $this->plant_FIX_O2($tab, $tworca, fix_o); // przycisk "POPRAW" fix_o1
+                    break;
+                    case O_ACC:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"				
+                            $tab = $this->plant_WYSLANE($tab, $tworca); // przycisk "WYSŁANE"
+                            $tab = $this->plant_ODBLOKUJ($tab, $tworca); // przycisk "ODBLOKUJ"
+                    break;
+                    case W4UZUP:
+                    case UZU_REJ:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"
+                            $tab = $this->plant_UPDATE($tab, $tworca); // przycisk "UZUPEŁNIONE"
+                    break;											// dla handlowca
+                    case UZUPED:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca);
+                            $tab = $this->plant_DEALWITHUZUPED($tab, $tworca, $no_rej_card);
+                    break;
+                    case UZU_CHECK:
+                            $tab = $this->plant_KOMENTUJ($tab, $tworca);
+                    case KONEC: // gdy zamknięte chemy miec możliwość otwarcia
+                            $tab = $this->plant_OTWORZ($tab);                     
+                    break;
+            }
+
+            return $tab;
 		
 	}
 	
@@ -549,6 +551,19 @@ class OrdersController extends AppController {
 				$ret_tab['ile']++;
 			break;
 		}
+		return $ret_tab;
+	}
+        
+        private function plant_OTWORZ( $button_tab = array(), $tworca = false ) {
+		
+		$ret_tab = $button_tab;
+		// superadmin, kordynator lub krysia
+                $properDzial = $this->Auth->user('dzial') == SUA || KOR || SEK;
+                $properDzial = in_array($this->Auth->user('dzial'), array(SUA, KOR, SEK));
+                if( $properDzial ) {
+                    $ret_tab['bcontr'][odemknij] = 1;
+                    $ret_tab['ile']++;
+                }		
 		return $ret_tab;
 	}
 		

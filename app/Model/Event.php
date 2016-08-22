@@ -43,61 +43,95 @@ class Event extends AppModel {
 		return $wynik;
 	}
 
-	private function zakoncz_order( $id = null ) {
+               
+	private function zamknijLubOtworz( $id = null, $otworz = false ) {
+            // gdy otworz == true, to znaczy, że mamy otworzyć
 		
-		$wynik = array('ok' => false, 'msg' => '...');
-		if( $id != null ) {		
-			$opcje = array( 
-				'conditions' => array( 'Order.id' => $id ),
-				'fields' => array('Order.id', 'Order.status'),
-				'recursive' => 1
-			);
-			$rez = $this->Order->find( 'first', $opcje );
-			$things2end['Order'] = $rez['Order'];	
-			$things2end['Order']['status'] = KONEC;
-			
-			foreach( $rez['Card'] as $karta )	{
-				$things2end['Card'][] = array( 'id' => $karta['id'], 'job_id' => $karta['job_id'], 'status' => KONEC );
-				$tmp[$karta['job_id']] = true;
-			}
-			foreach( $tmp as $key => $value ) $jobtab[] = $key;
-			
-			$opcje = array( 
-				'conditions' => array( 'Job.id' => $jobtab ),
-				'fields' => array('Job.id', 'Job.status'),
-				'recursive' => 1
-			);
-			$joby = $this->Job->find( 'all', $opcje );
-			
-			
-			$jobyaffected = array();
-			foreach( $joby as $row ) { //
-				$tenjob = true;
-				foreach( $row['Card']  as $kartazjoba )	{
-					if( $kartazjoba['order_id'] != $things2end['Order']['id'] &&
-						$kartazjoba['status'] != KONEC ) {
-							$tenjob = false;
-					}
-				}
-				if( $tenjob ) {
-					$row['Job']['status'] = KONEC;
-					$jobyaffected[] = $row['Job'];
-				}
-			}		
-			
-			$wynik = array('ok' => true, 'msg' => 'ALL gites!');
-			
-			if( $this->Order->saveAssociated($things2end) ) {
-				if( !empty($jobyaffected) )
-					if( !$this->Job->saveMany($jobyaffected) )
-						$wynik = array('ok' => false, 'msg' => 'Nie moge zakończyć zleceń/nia');
-			} else
-			 	$wynik = array('ok' => false, 'msg' => 'Nie moge zakończyć zamówienia id = '.$things2end['Order']['id']);
-		} else
-			$wynik = array('ok' => false, 'msg' => 'id zamówienia podane null');
-			
-		return $wynik;
+            $wynik = array('ok' => false, 'msg' => '...');
+            if( $id != null ) {		
+                $things2end = $this->orderAndCards2close($id, $otworz);
+                $jobyaffected = $this->jobyToOpenOrClose($things2end, $otworz);                
+                $wynik = $this->try2saveIt($things2end, $jobyaffected);
+            } else {
+                $wynik = array('ok' => false, 'msg' => 'id zamówienia podane null'); }
+
+            return $wynik;
 	}
+        
+        private function orderAndCards2close( $id = null, $otworz = false ) { // id order'a
+            
+            $opcje = array( 
+                'conditions' => array( 'Order.id' => $id ),
+                'fields' => array('Order.id', 'Order.status'),
+                'recursive' => 1
+            );
+            $rez = $this->Order->find( 'first', $opcje );
+            $things2end['Order'] = $rez['Order'];	
+            $things2end['Order']['status'] = $otworz ? O_ACC : KONEC;
+            
+            $statusKarty = $otworz ? W_PROD : KONEC;
+            foreach( $rez['Card'] as $karta )	{
+                $things2end['Card'][] = array( 'id' => $karta['id'], 'job_id' => $karta['job_id'], 'status' => $statusKarty );
+                $tmp[$karta['job_id']] = true;
+            }
+            foreach( $tmp as $key => $value ) $jobtab[] = $key;
+            $things2end['jobtab'] = $jobtab;
+            return $things2end;
+        }
+        
+        private function jobyToOpenOrClose($things2end, $otworz = false) {
+            
+            $opcje = array( 
+                'conditions' => array( 'Job.id' => $things2end['jobtab'] ),
+                'fields' => array('Job.id', 'Job.status'),
+                'recursive' => 1
+            );
+            $joby = $this->Job->find( 'all', $opcje );
+            
+            /* Nie wszystkie joby są do zakończenia, bo mogą zawierać karty z innych (niezakańczanych)
+               handlowych - dlatego musimy znaleźć te joby, które trzeba zakończyć.
+             * Podobnie - nie wszystkie joby trza otwierać, bo niektóre mogą być nie zamknięte
+             */
+            $jobyaffected = array();
+            foreach( $joby as $row ) { //
+                $tenjob = $this->examTheJob($things2end['Order']['id'], $row, $otworz);                
+                if( $tenjob ) {
+                    $row['Job']['status'] = $otworz ? sJ_PROD : KONEC;
+                    $jobyaffected[] = $row['Job'];
+                }
+            }
+            return $jobyaffected;
+        }
+        
+        private function examTheJob($order_id, $jobrow, $otworz) {
+            
+            if( $otworz ) { // znaczy - mamy otworzyć job'a
+                if( $jobrow['Job']['status'] != KONEC ) { return false; } // ten nie otwieramy
+            } else { // czyli zamknąć
+                foreach( $jobrow['Card']  as $kartazjoba )	{
+                    if( $kartazjoba['order_id'] != $order_id &&  $kartazjoba['status'] != KONEC ) {
+                        return false; 
+                    }
+                } 
+            }
+            return true;
+        }
+        
+        private function try2saveIt( $orderAndCards, $joby) {
+            
+            $wynik = array('ok' => true, 'msg' => 'ALL gites!');
+            unset($orderAndCards['jobtab'] ); // jest zbędne
+            if( $this->Order->saveAssociated($orderAndCards) ) {
+                if( !empty($joby) ) {
+                    if( !$this->Job->saveMany($joby) ) {
+                        $wynik = array('ok' => false, 'msg' => 'Nie moge zakończyć zleceń/nia');
+                    }
+                }
+            } else {
+                $wynik = array('ok' => false, 'msg' => 'Nie moge zakończyć zamówienia id = '.$things2end['Order']['id']);
+            }  
+            return $wynik;
+        }
 
 	private function is_klosing_aktion( $eventarr = array() ) {
 		/* sprawdzamy, czy ta akcja zamyka pozytywnie sprawdzanie zamówienia,
@@ -543,7 +577,7 @@ class Event extends AppModel {
 		
 		if( !in_array($event, array(unlock_again)) ) { 
 		// chcemy się pozbyć tego poniżej i robić wszystko powyżej, więc tu wrunek, co bez nowych			//
-			if( in_array($event, array(put_kom, eJKOM, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK, send_o, unlock_o)) ) {
+			if( in_array($event, array(put_kom, eJKOM, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK, send_o, unlock_o, odemknij)) ) {
                             unset($rqdata['Card']); }
 			else {
 				$rqdata['Event'] = array( $rqdata['Event'] );
@@ -574,7 +608,7 @@ class Event extends AppModel {
                 $rqdata['Event']['temat'] = $this->e_data['temat'];
                 $rqdata['Event']['url'] = Router::url($this->e_data['linktab'], true);
             }
-            if( !in_array( $event, array(send_o, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK) ) ) {
+            if( !in_array( $event, array(odemknij, send_o, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK) ) ) {
                 if ( array_key_exists( 'Order', $rqdata ) ) {
                     $this->code=55;
                     if( $this->Order->saveAssociated($rqdata) ) {
@@ -610,11 +644,18 @@ class Event extends AppModel {
 
             } else {
                 switch ($event) {
-                    case send_o:
+                    case send_o:                       
                         if( $this->save($rqdata) ) {
-                            $wynik = $this->zakoncz_order($rqdata['Event']['order_id']);
+                            $wynik = $this->zamknijLubOtworz($rqdata['Event']['order_id']);
                             if( $wynik['ok'] ) { return true; } else { $this->code=215; }
                         } else { $this->code=123; }
+                    break;
+                    case odemknij:
+                        if( $this->save($rqdata) ) {
+                            // czyli otwórz - drugi argument == true
+                            $wynik = $this->zamknijLubOtworz($rqdata['Event']['order_id'], true); 
+                            if( $wynik['ok'] ) { return true; } else { $this->code=216; }
+                        } else { $this->code=124; }
                     break;
                     case eB_REJ2KOR:
                     case eB_REJ2DTP:
