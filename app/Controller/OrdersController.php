@@ -557,8 +557,7 @@ class OrdersController extends AppController {
         private function plant_OTWORZ( $button_tab = array(), $tworca = false ) {
 		
 		$ret_tab = $button_tab;
-		// superadmin, kordynator lub krysia
-                $properDzial = $this->Auth->user('dzial') == SUA || KOR || SEK;
+		// superadmin, kordynator lub krysia                
                 $properDzial = in_array($this->Auth->user('dzial'), array(SUA, KOR, SEK));
                 if( $properDzial ) {
                     $ret_tab['bcontr'][odemknij] = 1;
