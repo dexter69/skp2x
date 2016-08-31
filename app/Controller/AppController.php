@@ -192,7 +192,7 @@ class AppController extends Controller {
                     'przekazała do sprawdzenia DTP/P','class' => 'pom'),
             odemknij => array(
                     'otworzył zamówienie',
-                    'otworzyła zamówienie','class' => 'ziel'),
+                    'otworzyła zamówienie','class' => 'pom'),
             eJPUBLI => array(
                     'złożył zlecenie',
                     'złożyła zlecenie','class' => 'pom'),

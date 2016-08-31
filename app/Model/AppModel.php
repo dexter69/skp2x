@@ -88,7 +88,7 @@ class AppModel extends Model {
                     'przekazała do sprawdzenia DTP/P','class' => 'pom'),
             odemknij => array(
                     'otworzył',
-                    'otworzyła','class' => 'ziel'),
+                    'otworzyła','class' => 'pom'),
             eJPUBLI => array(
                     'złożył zlecenie',
                     'złożyła zlecenie','class' => 'pom'),
