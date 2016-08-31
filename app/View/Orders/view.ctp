@@ -1,7 +1,7 @@
 <?php
 $pokaz = false; // decyduje o wyswietlaniu w linii ~121
 //echo '<pre>';	print_r($order['Event']); echo  '</pre>';
-//echo '<pre>';	print_r($order); echo  '</pre>';
+//echo '<pre>';	print_r($evtext); echo  '</pre>';
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
 //echo $this->Html->url('/css/order-pdf.css', true);
 echo $this->Html->css(array('order', 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));

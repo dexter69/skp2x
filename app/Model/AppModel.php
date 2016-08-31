@@ -34,7 +34,7 @@ class AppModel extends Model {
     public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
     
     //wyświetlanie tekstów o zdarzeniach
-    private $eventText = array(
+    public $eventText = array(
             ZERO => array(
                     '',
                     '','class' => 'zadna'),
@@ -87,8 +87,8 @@ class AppModel extends Model {
                     'przekazał do sprawdzenia DTP/P',
                     'przekazała do sprawdzenia DTP/P','class' => 'pom'),
             odemknij => array(
-                    'otworzył',
-                    'otworzyła','class' => 'pom'),
+                    'otworzył zamówienie',
+                    'otworzyła zamówienie','class' => 'pom'),
             eJPUBLI => array(
                     'złożył zlecenie',
                     'złożyła zlecenie','class' => 'pom'),

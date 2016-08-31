@@ -289,7 +289,8 @@ class OrdersController extends AppController {
 		foreach( $users as $value) {
 			$ludz[$value['User']['id']] = array('name'=>$value['User']['name'], 'k'=>$value['User']['k'], 'enotif'=>$value['User']['enotif']);
                 }
-		$evtext = $this->evtext2;
+		//$evtext = $this->evtext2;
+                $evtext = $this->Order->eventText;
                 
                 $this->pdfConfig = array(
                     'margin' => array(

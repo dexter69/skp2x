@@ -193,7 +193,9 @@ class EventsController extends AppController {
             }
             //$theEvent = end($value['Event']);
             $temat .=	', ' . $this->Auth->user('name'). ' ' .
-                        $this->evtext2[$eventtab['co']][$this->Auth->user('k')];
+                        //$this->evtext2[$eventtab['co']][$this->Auth->user('k')];
+                    //po nowemu
+                    $this->Event->eventText[$eventtab['co']][$this->Auth->user('k')];
 
             if($eventtab['card_id'])	{
                 if( $eventtab['co'] == put_kom ) { $temat .= ' odnośnie karty:'; }
