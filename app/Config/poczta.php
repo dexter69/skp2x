@@ -19,7 +19,8 @@ $read = "SELECT * FROM events WHERE sent=0";
 print("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   " . date("Y-m-d, H:i:s"));
 // Zerżnięte z http://www.w3schools.com/php/php_mysql_connect.asp
 try {
-        $conn = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['database'], $db['login'], $db['password']);
+        $pdostr = "mysql:host=" . $db['host'] . ";dbname=" . $db['database'] . ";charset=UTF8";
+        $conn = new PDO($pdostr, $db['login'], $db['password']);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // odczytaj wszystkie rekordy, które nie były wysłane
@@ -62,5 +63,5 @@ catch(PDOException $e)
         echo "Connection failed: " . $e->getMessage();
     }
 $conn = null;
-$time = microtime(true) - $time_start; // koniec pomiaru
-print("\nCzas wykonania skryptu: $time s\n\n");
+$time = (microtime(true) - $time_start) * 1000; // koniec pomiaru, chcemy w milisekundach
+print("\nCzas wykonania skryptu: $time ms\n\n");
