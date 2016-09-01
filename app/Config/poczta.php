@@ -11,6 +11,7 @@ require_once 'database.php';
 
 // Dane dostępu do bazy
 $dbconfig = new DATABASE_CONFIG;
+$db = $dbconfig->default;
 
 //nasze zapytanie - szukamy rekordów z sent == 0,
 //czyli zdarzenia dla których e-mail nie został wysłany
