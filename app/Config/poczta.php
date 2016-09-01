@@ -4,12 +4,19 @@
  * Skrypt wysyłyjący maile z crona (zamiast z wywoływanego przez użytkownika)
  */
 $time_start = microtime(true); // mierzymy czas wykonania skryptu
+// folder na server, gdzie przechowywany jest config bazy
+define('SERVER_CONF_FOLDER', '/var/www/skp/skp.lan/public_html/app/Config/');
 //print_r($argv);
 require_once 'database.php';
 
 // Dane dostępu do bazy
 $dbconfig = new DATABASE_CONFIG;
 $db = $dbconfig->default;
+if( $db['ver'] == 'dev' ) { //We are on devel machine
+    print("\nDevel");
+} else {
+    print("\nWe are on Linux, path would be: \n" . SERVER_CONF_FOLDER . 'database.php');
+}
 //nasze zapytanie - szukamy rekordów z sent == 0,
 //czyli zdarzenia dla których e-mail nie został wysłany
 $read = "SELECT * FROM events WHERE sent=0";
