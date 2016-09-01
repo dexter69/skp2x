@@ -60,4 +60,4 @@ catch(PDOException $e)
     }
 $conn = null;
 $time = microtime(true) - $time_start; // koniec pomiaru
-print("\nCzas wykonania skryptu: $time s");
+print("\nCzas wykonania skryptu: $time s\n\n");
