@@ -1,12 +1,19 @@
 #!/bin/bash
 
-LOGS="/home/dexter/logs/email/"                    							# katalog z logami
-SC_FOLDER="/var/www/skp/skp.lan/public_html/app/Skrypty/"	# folder skryptu php
-logtime=`date +"%Y-%m-%d_%H"`           							# czas logowania z dokładnością do godzin
+# katalog z logami
+LOGS="/home/dexter/logs/email/"
+
+# folder skryptu php
+PHP_SCRIPT_FOLDER="/var/www/skp/skp.lan/public_html/app/Skrypty/"
+
+# czas logowania z dokładnością do godzin
+logtime=`date +"%Y-%m-%d_%H"`
 suffix="-email.log"
 
-logfile="$LOGS$logtime$suffix"										#pełna nazwa pliku do logowania
+#pełna nazwa pliku do logowania
+logfile="$LOGS$logtime$suffix"
 
-cd $SC_FOLDER
-php poczta.php >> $logfile 											#php skrypt do maili
+cd $PHP_SCRIPT_FOLDER
+#php skrypt do maili
+php poczta.php >> $logfile
 
