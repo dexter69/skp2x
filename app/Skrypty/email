@@ -1,5 +1,5 @@
 #!/bin/bash
-#ble ble coś tam test dskjfksdjfk
+
 LOGS="/home/dexter/logs/email/"                    							# katalog z logami
 SC_FOLDER="/var/www/skp/skp.lan/public_html/app/Skrypty/"	# folder skryptu php
 logtime=`date +"%Y-%m-%d_%H"`           							# czas logowania z dokładnością do godzin
