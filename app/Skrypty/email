@@ -1,0 +1,10 @@
+#!/bin/bash
+
+LOGS="~/logs/email/"            # katalog z logami
+logtime=`date +"%Y-%m-%d_%H"`   #czas logowania z dokładnością do godzin
+suff="-email.log"
+
+logfile="$LOGS$logtime$suff"    #pełna nazwa pliku do logowania
+
+php /usr/bin/skp/poczta.php >> $logfile		#php skrypt do maili
+
