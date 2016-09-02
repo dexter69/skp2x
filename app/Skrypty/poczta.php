@@ -5,9 +5,10 @@
  */
 $time_start = microtime(true); // mierzymy czas wykonania skryptu
 // folder na server, gdzie przechowywany jest config bazy
-define('SERVER_CONF_FOLDER', '/var/www/skp/skp.lan/public_html/app/Config/');
+//define('SERVER_CONF_FOLDER', '/var/www/skp/skp.lan/public_html/app/Config/');
 //print_r($argv);
-require_once 'database.php';
+
+require_once '../Config/database.php';
 
 // Dane dostępu do bazy
 $dbconfig = new DATABASE_CONFIG;
