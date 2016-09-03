@@ -13,10 +13,14 @@ $time_start = microtime(true); // mierzymy czas wykonania skryptu
 //print_r($argv);
 
 require_once '../Config/database.php';
+require_once '../Config/email.php'; // dane do serwera smtp
+require_once 'class.phpmailer.php';
+require_once 'class.smtp.php';
 
 // Dane dostępu do bazy
 $dbconfig = new DATABASE_CONFIG;
 $db = $dbconfig->default;
+
 $czas = date("Y-m-d, H:i:s"); // teraz
 
 
@@ -45,9 +49,37 @@ try {
             */
             
             //1
-            print("\nNastepujacy rekord bylby wyslany via e-mail:\n");
-            print_r($record);
-            print("\n");
+            $emailconf = new EmailConfig;
+            //$emailconf->homepl_smtp
+            
+            $mail = new PHPMailer;
+            $mail->isSMTP(); 
+            $mail->CharSet = 'UTF-8';
+            $mail->Host = 'polskiekarty.pl';  // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = 'skp@polskiekarty.pl';                 // SMTP username
+            $mail->Password = 'P9GsF@87&HoG';                           // SMTP password
+            $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;                                    // TCP port to connect to
+            
+            $mail->setFrom('skp@polskiekarty.pl', 'SKP');
+            $mail->addAddress('darek@polskiekarty.pl', 'DG');     // Add a recipient
+            
+            $mail->isHTML(true);                                  // Set email format to HTML
+            
+            $mail->Subject = 'Skwakał ifona żźćńółśęą';
+            $mail->Body    = 'Przyjdz dziś wieczorem <b>in bold!</b>';
+            
+            if(!$mail->send()) {
+                print("\nMessage could not be sent.\n\n");
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            } else {
+                print("\nMessage has been sent");
+            }
+            
+            //print("\nNastepujący rekord byłby wysłany via e-mail:\n");
+            //print_r($record);
+            //print("\n");
             
             //2
             // sql do oznaczenia, że e-mail z tym zdarzeniem został wysłany            
@@ -58,7 +90,7 @@ try {
             if( $stmt->rowCount() ) {
                 print("Zapisano w bazie pomyślnie\n");
             } else {
-                print("Nie udalo sie zapisac w bazie\n");
+                print("Nie udało się zapisać w bazie\n");
             }
         } else {
             print("\nNothing to do....");
