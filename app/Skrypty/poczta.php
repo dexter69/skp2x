@@ -1,8 +1,12 @@
 <?php
-
-/* 
- * Skrypt wysyłyjący maile z crona (zamiast z wywoływanego przez użytkownika)
+/*  Skrypt wysyłyjący maile z crona (zamiast z wywoływanego przez użytkownika)
  */
+
+// Potrzebne stałe
+define("READ", "SELECT * FROM events WHERE sent=0");    // nie wysłane zdarzenia
+define("START_STR", "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   "); // startowy string
+define("UQUERY", "UPDATE events SET sent=1 WHERE id="); // sql do uaktualnienia
+
 $time_start = microtime(true); // mierzymy czas wykonania skryptu
 // folder na server, gdzie przechowywany jest config bazy
 //define('SERVER_CONF_FOLDER', '/var/www/skp/skp.lan/public_html/app/Config/');
@@ -13,56 +17,55 @@ require_once '../Config/database.php';
 // Dane dostępu do bazy
 $dbconfig = new DATABASE_CONFIG;
 $db = $dbconfig->default;
+$czas = date("Y-m-d, H:i:s"); // teraz
 
-//nasze zapytanie - szukamy rekordów z sent == 0,
-//czyli zdarzenia dla których e-mail nie został wysłany
-$read = "SELECT * FROM events WHERE sent=0";
-print("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   " . date("Y-m-d, H:i:s"));
+
+
 // Zerżnięte z http://www.w3schools.com/php/php_mysql_connect.asp
 try {
+        //Próbujemy połączyć się z bazą
         $pdostr = "mysql:host=" . $db['host'] . ";dbname=" . $db['database'] . ";charset=UTF8";
         $conn = new PDO($pdostr, $db['login'], $db['password']);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
         // odczytaj wszystkie rekordy, które nie były wysłane
-        $stmt = $conn->prepare($read);
+        $stmt = $conn->prepare(READ);
         $stmt->execute();
         
         //pierwszy ze znalezionych
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
+        // początkowy wiersz
+        print(START_STR . $czas);
         if( !empty($record) ) { // jeżeli coś jest
             /*
                 1. wyślij e-maila
              *  2. oznacz rekord, że wysłany
              *  3. loguj wykonanie
-             *  
             */
+            
             //1
             print("\nNastepujacy rekord bylby wyslany via e-mail:\n");
             print_r($record);
             print("\n");
             
             //2
-            // sql do oznaczenia, że e-mail z tym zdarzeniem został wysłany
-            $update = "UPDATE events SET sent=1 WHERE id=" . $record['id'];
-            // Wykonaj
-            $stmt = $conn->prepare($update);            
+            // sql do oznaczenia, że e-mail z tym zdarzeniem został wysłany            
+            $stmt = $conn->prepare(UQUERY . $record['id']);            
             $stmt->execute();
             
             //3
             if( $stmt->rowCount() ) {
-                print("Zapisano w bazie pomyslnie\n");
+                print("Zapisano w bazie pomyślnie\n");
             } else {
                 print("Nie udalo sie zapisac w bazie\n");
             }
         } else {
             print("\nNothing to do....");
         }
-    }
-catch(PDOException $e)
-    {
-        echo "Connection failed: " . $e->getMessage();
-    }
+} catch(PDOException $e) {
+        echo "DB connection failed: " . $e->getMessage();
+}
 $conn = null;
 $time = (microtime(true) - $time_start) * 1000; // koniec pomiaru, chcemy w milisekundach
 print("\nCzas wykonania skryptu: $time ms\n\n");
