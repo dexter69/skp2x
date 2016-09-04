@@ -9,7 +9,7 @@ class POCZTA {
     // ustawiamy główne parametry, poza odbiorcami tematem i trescią
     public function setMainEmailParams( $mail, $config ) { // $config - array z parametrami smtp
         // zakładamy, że $email to obiket PHPMailer'a
-        //$mail->isSMTP(); 
+        $mail->isSMTP(); 
         $mail->SMTPDebug  = 4;
         $mail->Timeout  =   20;
         $mail->CharSet = 'UTF-8';
