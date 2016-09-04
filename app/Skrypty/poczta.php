@@ -16,6 +16,7 @@ require_once '../Config/database.php';
 require_once '../Config/email.php'; // dane do serwera smtp
 require_once 'class.phpmailer.php';
 require_once 'class.smtp.php';
+require_once 'class.poczta.php';
 
 // Dane dostępu do bazy
 $dbconfig = new DATABASE_CONFIG;
@@ -39,58 +40,40 @@ try {
         
         //pierwszy ze znalezionych
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
-        // początkowy wiersz
-        print(START_STR . $czas);
+        // początkowy wiersz logowania
+        print(START_STR . $czas . "\n");
         if( !empty($record) ) { // jeżeli coś jest
-            /*
-                1. wyślij e-maila
-             *  2. oznacz rekord, że wysłany
-             *  3. loguj wykonanie
-            */
-            
-            //1
-            $emailconf = new EmailConfig;
-            //$emailconf->homepl_smtp
+            //1 - wyślij e-maila
             
             $mail = new PHPMailer;
-            $mail->isSMTP(); 
-            $mail->CharSet = 'UTF-8';
-            $mail->Host = 'polskiekarty.pl';  // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;                               // Enable SMTP authentication
-            $mail->Username = 'skp@polskiekarty.pl';                 // SMTP username
-            $mail->Password = 'P9GsF@87&HoG';                           // SMTP password
-            $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = 587;                                    // TCP port to connect to
-            
-            $mail->setFrom('skp@polskiekarty.pl', 'SKP');
-            $mail->addAddress('darek@polskiekarty.pl', 'DG');     // Add a recipient
-            
-            $mail->isHTML(true);                                  // Set email format to HTML
-            
-            $mail->Subject = 'Skwakał ifona żźćńółśęą';
-            $mail->Body    = 'Przyjdz dziś wieczorem <b>in bold!</b>';
+            // ustaw parametry maila
+            $poczta = new POCZTA;
+            $emailconf = new EmailConfig;
+            // sprawdzamy parzystość id - by wysyłac naprzemiennie z różnych kont e-mail 
+            if( $record['id'] % 2 == 0 ) { //parzyste
+                $poczta->setMainEmailParams($mail, $emailconf->homepl_smtp);
+            }
+            else { // nieparzyste
+                $poczta->setMainEmailParams($mail, $emailconf->homepl_smtp1);
+            }
+            $poczta->setRecsSubjectBody($mail, $record);
             
             if(!$mail->send()) {
-                print("\nMessage could not be sent.\n\n");
+                print("\nE-mail NIE został wysłany.\n\n");
                 echo 'Mailer Error: ' . $mail->ErrorInfo;
+                print("\n\n");                
             } else {
-                print("\nMessage has been sent");
-            }
-            
-            //print("\nNastepujący rekord byłby wysłany via e-mail:\n");
-            //print_r($record);
-            //print("\n");
-            
-            //2
-            // sql do oznaczenia, że e-mail z tym zdarzeniem został wysłany            
-            $stmt = $conn->prepare(UQUERY . $record['id']);            
-            $stmt->execute();
-            
-            //3
-            if( $stmt->rowCount() ) {
-                print("Zapisano w bazie pomyślnie\n");
-            } else {
-                print("Nie udało się zapisać w bazie\n");
+                print("\nE-mail OK");
+                //2 oznacz w bazie rekord, że wysłany
+                // sql do oznaczenia, że e-mail z tym zdarzeniem został wysłany            
+                $stmt = $conn->prepare(UQUERY . $record['id']);            
+                $stmt->execute();
+                //3 loguj wykonanie
+                if( $stmt->rowCount() ) { 
+                    print("\nZapisano w bazie pomyślnie");
+                } else {
+                    print("\nNie udało się zapisać w bazie");
+                }
             }
         } else {
             print("\nNothing to do....");
@@ -100,4 +83,4 @@ try {
 }
 $conn = null;
 $time = (microtime(true) - $time_start) * 1000; // koniec pomiaru, chcemy w milisekundach
-print("\nCzas wykonania skryptu: $time ms\n\n");
+print("\nCzas wykonania skryptu: $time ms\n");

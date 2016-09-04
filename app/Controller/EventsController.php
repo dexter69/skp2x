@@ -59,9 +59,10 @@ class EventsController extends AppController {
                 if( $this->displayIT($this->request->data) ) { return; }
                 
                 if ( $this->Event->prepareData($this->request->data, true) ) {
-                    $this->serveEventMailing( $this->request->data ); }
-                else {
-                    $this->serveErr(); }
+                    $this->serveEventMailing( $this->request->data );
+                } else {
+                    $this->serveErr(); 
+                }
             }
             return $this->redirect($this->referer());
 	}
@@ -82,9 +83,9 @@ class EventsController extends AppController {
             $oid = $rqdata['Event']['order_id'];
             $jid = $rqdata['Event']['job_id'];
             $arr = array('controller' => 'orders', 'action' => 'index');
-            
+            // wyłączamy wysyłanie maili tuatj (e_powidamiaj)
             if( $oid ) {
-                $this->e_powiadamiaj($rqdata['Event']); 
+                //$this->e_powiadamiaj($rqdata['Event']); 
                 switch( $rqdata['Event']['co'] ) {
                     case p_ov:
                         // zakończenie perso -> tak chciał Adam
@@ -97,7 +98,7 @@ class EventsController extends AppController {
                 }
             } else {
                 if( $jid ) {
-                    $this->e_powiadamiaj($rqdata['Event']);                            
+                    //$this->e_powiadamiaj($rqdata['Event']);                            
                     $arr = array('controller' => 'jobs', 'action' => 'view', $jid);
                 } 
             }            

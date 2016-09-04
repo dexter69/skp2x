@@ -212,7 +212,7 @@ class AppModel extends Model {
     }
     
     /* Przygotuj temat, treść i link e-maila
-     * * $eventtab - tablica z danymi dla mozdelu Event (z requestdata) */
+     * * $eventtab - tablica z danymi dla modelu Event (z requestdata) */
     private function tematTrescLink( $eventtab = array() ) {
         
         
