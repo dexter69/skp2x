@@ -10,13 +10,15 @@ class POCZTA {
     public function setMainEmailParams( $mail, $config ) { // $config - array z parametrami smtp
         // zakładamy, że $email to obiket PHPMailer'a
         $mail->isSMTP(); 
+        $mail->SMTPDebug  = 3;
+        $mail->Timeout  =   15;
         $mail->CharSet = 'UTF-8';
         $mail->Host = $config['host'];  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = $config['username'];                 // SMTP username
         $mail->Password = $config['password'];                           // SMTP password
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                   // TCP port to connect to
+        //$mail->Port = 587;                                   // TCP port to connect to
         //$mail->setFrom('skp@polskiekarty.pl', 'SKP');
         $mail->setFrom(key($config['from']), 'SKP');
         $mail->isHTML(true);                                  // Set email format to HTML
