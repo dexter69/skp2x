@@ -10,8 +10,8 @@ class POCZTA {
     public function setMainEmailParams( $mail, $config ) { // $config - array z parametrami smtp
         // zakładamy, że $email to obiket PHPMailer'a
         $mail->isSMTP(); 
-        $mail->SMTPDebug  = 3;
-        $mail->Timeout  =   30;
+        $mail->SMTPDebug  = 4;
+        $mail->Timeout  =   20;
         $mail->CharSet = 'UTF-8';
         $mail->Host = $config['host'];  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
