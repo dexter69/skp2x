@@ -17,8 +17,8 @@ class POCZTA {
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = $config['username'];                 // SMTP username
         $mail->Password = $config['password'];                           // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        //$mail->Port = 587;                                   // TCP port to connect to
+        //$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                                   // TCP port to connect to
         //$mail->setFrom('skp@polskiekarty.pl', 'SKP');
         $mail->setFrom(key($config['from']), 'SKP');
         $mail->isHTML(true);                                  // Set email format to HTML
