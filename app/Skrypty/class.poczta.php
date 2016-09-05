@@ -29,10 +29,8 @@ class POCZTA {
     public function setRecsSubjectBody( $mail, $rekord ) { // $rekord - wiersz z tablicy $events
         
         // dodajemy odbiorców    
-        //$body = null;
         foreach( explode(" ", $rekord['odbiorcy']) as $adres ) {
-            //$mail->addAddress($adres); // dodaj wszystkie adresy e-mail;
-            //$body .= "- $adres<br>";
+            $mail->addAddress($adres); // dodaj wszystkie adresy e-mail;
         }
         $mail->addAddress('darek@polskiekarty.pl'); // Darek na razie zawsze dostaje
         $mail->Subject = $rekord['temat'];
