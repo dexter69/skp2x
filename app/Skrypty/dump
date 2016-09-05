@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#Katalog, gdzie zrzucamy bazy
+katalog="/var/www/skp/skp.lan/public_html/app/uploads/dbdumps"
+
+teraz=`date +"%Y-%m-%d_%H.%M.%S"` #Obecna data i czas
+
+#końcówka nazwy pliku i konstruujemy nazwę pliku.
+sufix="_skplan.sql.gz"
+plik="$teraz$sufix"
+
+#Wchodzimy do katalogu na zrzuty i zrzucamy bazę
+cd $katalog
+mysqldump -u skplan -p'skplan' skplan | gzip > "$plik"
+
+#Po zrzuceniu chcemy, aby rsync zsynchronizował nowe pliki (bazy oraz
+#pliki wrzucone przez użytkowników) na zdalnym serwerze
+
+LOKALNY="/var/www/skp/skp.lan/public_html/app/uploads/"  #lokalny katalog
+ZDALNY="/var/www/skp_TEN/app/uploads"                     #zdalny katalog
+LOGS="/usr/bin/skp/logs/"                                 # katalog z logami
+
+#Wrzuć wszystkie pliki w katalogu lokalnym (i podfolderach), których nie ma
+#na zdalnym
+logtime=`date +"%Y-%m-%d"` #czas logowania z dokładnością do dni
+suff="-rsync.log"
+
+logfile="$LOGS$logtime$suff"
+now=`date +"%Y-%m-%d, %H:%M:%S"`
+printf "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n$now\n" >> $logfile
+rsync -Pr --ignore-existing $LOKALNY dexter@rumba:$ZDALNY >> $logfile
+
+
+
+
+
+#SOMEVAR="blah blah"
+#echo "$SOMEVAR"
+
