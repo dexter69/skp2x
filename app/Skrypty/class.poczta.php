@@ -17,7 +17,7 @@ class POCZTA {
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = $config['username'];                 // SMTP username
         $mail->Password = $config['password'];                           // SMTP password
-        $mail->SMTPSecure = false;                            // Nie chce na razie szyfrowania //Enable TLS encryption, `ssl` also accepted
+        $mail->SMTPSecure = 'tls';                            // Nie chce na razie szyfrowania //Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                   // TCP port to connect to
         //$mail->setFrom('skp@polskiekarty.pl', 'SKP');
         $mail->setFrom(key($config['from']), 'SKP');
@@ -30,7 +30,7 @@ class POCZTA {
         // dodajemy odbiorców    
         //$body = null;
         foreach( explode(" ", $rekord['odbiorcy']) as $adres ) {
-            $mail->addAddress($adres); // dodaj wszystkie adresy e-mail;
+            //$mail->addAddress($adres); // dodaj wszystkie adresy e-mail;
             //$body .= "- $adres<br>";
         }
         $mail->addAddress('darek@polskiekarty.pl'); // Darek na razie zawsze dostaje
