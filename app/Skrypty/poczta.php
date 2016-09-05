@@ -70,7 +70,7 @@ try {
                 $stmt->execute();
                 //3 loguj wykonanie
                 if( $stmt->rowCount() ) { 
-                    print("\nZapisano w bazie pomyślnie");
+                    print("\nZapisano w bazie pomyślnie, id = " . $record['id']);
                 } else {
                     print("\nNie udało się zapisać w bazie");
                 }
