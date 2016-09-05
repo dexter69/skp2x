@@ -202,7 +202,8 @@ class AppModel extends Model {
             $odbiorcy[] = 'info@polskiekarty.pl';
         }
         // Frank nie chce tych powiadomień...
-        if( $eventtab['co'] == p_ov || $eventtab['co'] == send_o ) {
+        //if( $eventtab['co'] == p_ov || $eventtab['co'] == send_o ) {
+        if( in_array($eventtab['co'], array(p_ov, send_o)) || $eventtab['post'] == NULL ) {
             $klucz = array_search('grafik@polskiekarty.pl',  $odbiorcy);
             if( $klucz != false ) {
                 unset( $odbiorcy[$klucz] );
