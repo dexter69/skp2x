@@ -106,14 +106,11 @@ class POCZTA {
     // ustaw odbiorców, temat i treść
     public function setRecsSubjectBody( $mail ) { // $rekord - wiersz z tablicy $events
         
-        // dodajemy odbiorców 
-        if( !TEST ) { // nie test wysyłamy normalie
-            foreach( explode(" ", $this->rekord['odbiorcy']) as $adres ) {
-                $mail->addAddress($adres); // dodaj wszystkie adresy e-mail;
-                //print("\n$adres");
-            }    
-        }        
-        $mail->addAddress('darek@polskiekarty.pl'); // Darek na razie zawsze dostaje
+        // dodajemy odbiorców         
+        foreach( explode(" ", $this->rekord['odbiorcy']) as $adres ) {
+            $mail->addAddress($adres); // dodaj wszystkie adresy e-mail;
+        }            
+        //$mail->addAddress('darek@polskiekarty.pl'); // Darek na razie zawsze dostaje
         $mail->Subject = $this->rekord['temat'];
         $url = $this->rekord['url']; 
         $post = nl2br($this->rekord['post']);        

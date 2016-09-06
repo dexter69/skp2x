@@ -3,8 +3,8 @@
 /* Lepsza wersja skryptu
 */
 $time_start = microtime(true); // mierzymy czas wykonania skryptu
+
 // Potrzebne stałe
-define("TEST", false); // w testach wysyłamy do darka tylko email
 define("READ", "SELECT * FROM events WHERE sent=0");    // nie wysłane zdarzenia
 define("UQUERY", "UPDATE events SET sent=1 WHERE id="); // sql do uaktualnienia
 
