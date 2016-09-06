@@ -1,14 +1,9 @@
 <?php
-
-/* 
- * Przydatne rzeczy
- */
-
-class POCZTA {
-    
-    /* dodajemy rzeczy związane z bazą danych, chcemy, by przy tworzeniu instancji
+/* dodajemy rzeczy związane z bazą danych, chcemy, by przy tworzeniu instancji
      * skrypt sprawdzał połączenie z bazą i wczytywał rekord danych, jeżeli jest takowy
      */
+class POCZTA {
+    
     public $conection = null;
     
     public $rekord = null; // tu wczytujemy rekord z bazy
