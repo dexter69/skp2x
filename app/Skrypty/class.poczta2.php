@@ -11,6 +11,8 @@ class POCZTA {
     private $emailSent = false; // rezuktat wysyłania emaila
     private $emailErr = null;   // tu będziemy wpisywać błąd PHPMailera
     
+    public $homePlTime = null; // chcemy czas interakcji z serwerem pocztowym Home.pl
+    
     function __construct( $sql_read ) {
        
         $dbconfig = new DATABASE_CONFIG;
@@ -48,8 +50,11 @@ class POCZTA {
             // i pozostałe - treść
             $this->setRecsSubjectBody($mail);
             
+            $this->homePlTime =  microtime(true); // chcemy zmierzyć czas gęgania do Home.pl
             // W $this->emailSent będzie info czy wysłaliśmy czy nie
-            $this->emailSent = $mail->send();       
+            $this->emailSent = $mail->send();  
+            // chcemy w ms
+            $this->homePlTime =  (microtime(true) - $this->homePlTime) * 1000;
             if( !$this->emailSent ) { //nie wysłano - zapiszmy błąd
                 $this->emailErr = $mail->ErrorInfo;
             }
@@ -97,7 +102,7 @@ class POCZTA {
         $mail->Password = $config['password'];                  // SMTP password
         //$mail->SMTPSecure = 'tls';                            //Enable TLS encryption, `ssl` also accepted
         $mail->SMTPAutoTLS = false;                             //wyłącza auto tls
-        $mail->Port = 587;                                   // TCP port to connect to
+        $mail->Port = $config['port'];                                   // TCP port to connect to
         //$mail->setFrom('skp@polskiekarty.pl', 'SKP');
         $mail->setFrom(key($config['from']), 'SKP');
         $mail->isHTML(true);                                  // Set email format to HTML
