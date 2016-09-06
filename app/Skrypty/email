@@ -15,5 +15,5 @@ logfile="$LOGS$logtime$suffix"
 
 cd $PHP_SCRIPT_FOLDER
 #php skrypt do maili
-php poczta.php >> $logfile
+php poczta2.php >> $logfile
 
