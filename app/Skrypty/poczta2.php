@@ -8,16 +8,16 @@ $time_start = microtime(true); // mierzymy czas wykonania skryptu
 define("READ", "SELECT * FROM events WHERE sent=0");    // nie wysłane zdarzenia
 define("UQUERY", "UPDATE events SET sent=1 WHERE id="); // sql do uaktualnienia
 
-define("START_STR", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   "); // startowy string
+// startowy string - gdy "nothing to do"
+define("START_STR", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   "); 
+// startowy string - gdy coś jest
+define("START_STR2", "#########################################   "); 
 
 require_once '../Config/database.php';
 require_once '../Config/email.php'; // dane do serwera smtp
 require_once 'class.phpmailer.php';
 require_once 'class.smtp.php';
 require_once 'class.poczta2.php';
-
-//startowy log
-print("\n" . START_STR . date("Y-m-d, H:i:s"));
 
 /*  przy tworzeniu nowego obiektu łączymy się z bazą i wczytujemy rekord jeżeli takowy
     istnieje */ 

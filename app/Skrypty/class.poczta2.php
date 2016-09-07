@@ -40,6 +40,8 @@ class POCZTA {
     public function sendMail()   {
         
         if( $this->rekord ) { // coś wczytaliśmy, więc wyślemy powiadomienie
+            //startowy log - gdy coś jest
+            print("\n" . START_STR2 . date("Y-m-d, H:i:s"));
             $emailconf = new EmailConfig;
             // wysyłamy parzyste rekordy z innego konta niz nieparzyste (bo Home.pl nie lubi jak sie za dużo maili wysyła)
             $config = ( $this->rekord['id'] % 2 == 0 ) ? $emailconf->homepl_smtp : $emailconf->homepl_smtp1;
@@ -58,7 +60,10 @@ class POCZTA {
             if( !$this->emailSent ) { //nie wysłano - zapiszmy błąd
                 $this->emailErr = $mail->ErrorInfo;
             }
-        } 
+        } else {
+            //startowy log - gdy nic nie ma
+            print("\n" . START_STR . date("Y-m-d, H:i:s"));
+        }
     }
     
     // Posprzątaj na końcu
