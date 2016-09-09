@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  * @author dexter
  */
 class TasksController extends AppController {
-
+    
+    //testowa metoda
     public function index() {
         
         $active = $this->Task->getActive();
