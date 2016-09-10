@@ -13,12 +13,33 @@ class Task extends AppModel {
     
     public $useTable = 'jobs';
     
+    public $hasMany = array(
+        'Ticket' => array(
+            'fields' => array('Ticket.id', 'Ticket.name')
+        )
+    );
+    
     // chcemy joby, które są aktywne (w produkcji)
     public function getActive() {
         $conditions = array(
-            'status !=' => KONEC
+            'status !=' => KONEC            
         );
-        return $this->find('all', compact('conditions'));
+        $fields = array('id', 'nr');
+        return $this->find('all', compact(
+                'conditions'
+                , 'fields'
+        ));
+    }
+    
+    /*  Sprwdza, czy zlecenie $no/$year istnieje, jeżeli tak, to zwraca jego $id.
+     *  W przeciwnym wypadku 0. Jeżeli argument $year nie jest podany, to zakłada, że szukasz
+     *  z bieżącego roku. */
+    public function nr2id($nr = null, $year = null) {
+        
+        if( $nr ) {
+            //$rok = $year != null ? 
+        }
+        return 0;
     }
     
 }

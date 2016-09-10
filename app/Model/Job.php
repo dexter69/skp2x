@@ -147,48 +147,48 @@ class Job extends AppModel {
 	// nadaj zleceniu numer po publikacji, zakładamy, że id właśnie zapisanego rekordu jest w $this->id
 	public function set_job_number() {
 		
-		$this->JobError = 0; //brak błędu
-		$id = $this->id;
-		if( $id ) {
-			if( $this->exists($id) ) {
-				//znajdz ostatni nr
-				$rekord = $this->find('first', array(
-        			'conditions' => array('OR' => array(
-        				'Job.nr !=' => null,
-        				'Job.id' => 1
-        			)),
-        			'order' => array('Job.nr' => 'desc')
-    			));
-    			if( !empty($rekord) ) {
-					if( $rekord['Job']['id'] == 1 && $rekord['Job']['nr'] == null ) //pierwszy nr
-						$new_nr = FIRST_JOB_NR;
-					else 
-						$new_nr = $rekord['Job']['nr']+1;					
-					$dane = array( 
-							'Job' => array(
-								'id' => $id,
-								'nr' => $new_nr
-					));
-					
-					if( $this->save($dane) ) 
-						return true;
-					else {
-						$this->JobError = 1;
-						return false;
-					}
-				} else {
-					$this->JobError = 2;
-					return false;
-				}
-			} else {
-				$this->JobError = 3;
-				return false;
-			}
-			return true;
-		} else {
-			$this->JobError = 4;
-			return false;
-		}
+            $this->JobError = 0; //brak błędu
+            $id = $this->id;
+            if( $id ) {
+                if( $this->exists($id) ) {
+                    //znajdz ostatni nr
+                    $rekord = $this->find('first', array(
+                        'conditions' => array('OR' => array(
+                                'Job.nr !=' => null,
+                                'Job.id' => 1
+                        )),
+                        'order' => array('Job.nr' => 'desc')
+                    ));
+                    if( !empty($rekord) ) {
+                        if( $rekord['Job']['id'] == 1 && $rekord['Job']['nr'] == null ) //pierwszy nr
+                                $new_nr = FIRST_JOB_NR;
+                        else 
+                                $new_nr = $rekord['Job']['nr']+1;					
+                        $dane = array( 
+                                        'Job' => array(
+                                                'id' => $id,
+                                                'nr' => $new_nr
+                        ));
+
+                        if( $this->save($dane) ) 
+                                return true;
+                        else {
+                                $this->JobError = 1;
+                                return false;
+                        }
+                    } else {
+                            $this->JobError = 2;
+                            return false;
+                    }
+                } else {
+                        $this->JobError = 3;
+                        return false;
+                }
+                return true;
+            } else {
+                    $this->JobError = 4;
+                    return false;
+            }
 	
 	}
 
