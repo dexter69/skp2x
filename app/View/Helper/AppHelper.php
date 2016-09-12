@@ -30,6 +30,8 @@ App::uses('Helper', 'View');
  */
 class AppHelper extends Helper {
     
+    public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
+    
     //MATERIAŁ KART
     public $material_kart = array(
         'short1' => array(
@@ -186,10 +188,10 @@ class AppHelper extends Helper {
     public function status_zamow($stat) {
         if( $stat == null) return $this->order_stat[PRIV];
         else 
-                if( array_key_exists($stat , $this->order_stat) )
-                        return $this->order_stat[$stat];
-                else
-                        return $stat;
+                if( array_key_exists($stat , $this->order_stat) ) {
+                    return $this->order_stat[$stat]; }
+                else {
+                    return $stat; }
     }
     
     // Statusy kart
@@ -236,5 +238,7 @@ class AppHelper extends Helper {
         }
         return parent::assetUrl($path, $options);
     }  
+    
+    
     
 }

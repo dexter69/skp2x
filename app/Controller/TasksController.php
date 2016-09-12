@@ -8,11 +8,24 @@ App::uses('AppController', 'Controller');
  */
 class TasksController extends AppController {
     
+    public $helpers = array('BootForm');
+    
     //testowa metoda
     public function index() {
         
         $active = $this->Task->getActive();
         $this->set( compact('active' ) );
+    }
+    
+    /* To będzie metoda wyświetlająca interfejs do etykiet dla przebieralni */
+    public function label() {
+        
+        $test = 'get'; $req = null;
+        if ($this->request->is(array('post', 'put'))) {
+            $test = 'post or put';
+            $req = $this->request->data;
+        }
+        $this->set( compact('test', 'req') );
     }
     
     // Chcemy metode, która będzie po numerze wyświetlać zlecenie
