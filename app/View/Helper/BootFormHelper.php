@@ -8,34 +8,32 @@ class BootFormHelper extends AppHelper {
     public $helpers = array('Form');    
     
     //
-    public function input( $tekst, $opcje= array() ) {
+    public function input( $tekst, $opcje = array() ) {
         
-        $options= array(
-            'class' => 'form-control',
-            'div' => array(
-                'class' => 'form-group col-xs-3'
-            ),
-            'pattern' => "[0-9]{1,4}",
-            'title' => "tylko cyfry, wartość z zakresu 1 - 9999",
-            'placeholder' => "tylko cyfry, wartość z zakresu 1 - 9999",
-            'maxlength' => "4"
-        );
-        if( isset($opcje['label']) ) {
-            $options['label'] = $opcje['label'];
-        }
-        return $this->Form->input($tekst, $options);
+        $opcje['class'] = isset($opcje['class']) ? $opcje['class'] . " form-control" : "form-control";
+        $opcje['div']['class'] = isset($opcje['div']['class']) ? $opcje['div']['class'] . " form-group" : "form-group";
+        
+        return $this->Form->input($tekst, $opcje);
     }
     
     // zakończ formularz
-    public function end( $opcje = array() ) {
+    public function end( $opcje = null ) {
         
-        $label = isset($opcje['label']) ? $opcje['label'] : null;
-        $div = isset($opcje['div']) ? $opcje['div'] : false;
+        if(is_string($opcje) ) {
+            $label = $opcje;
+            $div = false;
+        } else {
+            $label = isset($opcje['label']) ? $opcje['label'] : null;
+            $div = isset($opcje['div']) ? $opcje['div'] : false;
+        }
         $options = array(
             'label' => $label,
-            'div' => $div,
+            //'div' => $div,
             'class' => 'btn btn-default'
         );
+        if( $div ) {
+            $options['div'] = $div;
+        }
         return $this->Form->end($options);
     }
 
