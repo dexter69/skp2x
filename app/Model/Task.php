@@ -19,6 +19,60 @@ class Task extends AppModel {
         )
     );
     
+    /* chcemy sprawdzić czy istnieje produkcyjne z podanym numerem
+     * Numer jest w formie kilku cyfr (tylko i wyłącznie), bez roku. Zakładamy, że chodzi o rok bieżący.
+     * Jeżeli zlecenie z takim numerem nie istnieje w bieżącym roku to szukamy w roku
+     * poprzednim.
+     */
+    public $taskViaErr = array(
+        'err' => false, // prawda, jeżeli wystąpił błąd
+        'msg' => null, // informacja o błędzie        
+        'data' => null // jeżeli coś znaleziono, to tu będzie ten rekord
+    );
+    
+    public function taskViaNoExists( $nr_string ) {
+        
+        if( !ctype_digit($nr_string) ) { // nie składa się wyłącznie z cyfr
+            $this->taskViaErr['err'] = true;
+            $this->taskViaErr['msg'] = 'To nie jest prawidłowy numer!';
+            return false;
+        }
+        // czy numer w sensownym zakresie
+        $nr = (int)$nr_string;
+        if( $nr < 1 || $nr > MAX_BASE) {
+            $this->taskViaErr['err'] = true;
+            $this->taskViaErr['msg'] = 'Numer poza zakresem!';
+            return false;
+        }
+        if( !$this->anyTaskExists($nr) ) {
+            $this->taskViaErr['err'] = true;
+            $t = (int)date("y");
+            $this->taskViaErr['msg'] = 'Nie ma zleceń o numerach: ' . $nr . "/" . $t . ' ani ' . $nr . "/" . ($t-1);
+            return false;
+        }
+        return true;
+    }
+    
+    // sprawdzamy, czy zamówienie o numerze $nr (bez roku, np. 123) istnieje
+    // jeżeli nie to sprawdzamy jeszcze czy zamówienie z poprzedniego roku o tym samym nrze istnieje
+    private function anyTaskExists( $nr ) {
+    
+        $dbnr = $this->digitOnlyNr2dbNr( $nr );
+        $opcje = array('conditions' => array('nr' => $dbnr));
+        $record = $this->find('first', $opcje);
+        if( empty($record) ) {
+            // spróbuj rok wcześniej
+            $dbnr = $this->digitOnlyNr2dbNr( $nr, -1 );
+            $opcje = array('conditions' => array('nr' => $dbnr));
+            $record = $this->find('first', $opcje);
+            if( empty($record) ) {
+                return false;
+            }
+        }
+        $this->taskViaErr['data'] = $record;
+        return true;
+    }
+    
     // chcemy joby, które są aktywne (w produkcji)
     public function getActive() {
         $conditions = array(

@@ -4,7 +4,10 @@ $this->layout='bootstrap';
 
 // formularz do znajdowania
 echo $this->element('tasks/label/getTaskForm');
-
-if( $req != null ) {
-    $this->App->print_r2($req);
+if( $result != null ) { // znaczy było POST
+    if( !empty($result['data']) ) { // mamy coś
+        $this->App->print_r2($result['data']); // prezentuj
+    } else { // wyświetl info o błędach
+        echo $result['msg'];
+    }
 }

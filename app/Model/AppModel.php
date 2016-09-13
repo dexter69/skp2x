@@ -260,6 +260,15 @@ class AppModel extends Model {
             return $bnr;
     }
     
+    /*  Konwertuje numer składający się wyłącznie z cyfr (a więc bez roku) na nr 
+        w formacie bazy danych. Domyślnie rok bieżący lub zmodyfkikowany ofsetem */
+    public function digitOnlyNr2dbNr( $nr = null, $ofset = 0 ) {
+        
+        $nrs = (string)$nr;        
+        $year = date("y") + $ofset;
+        return $year . substr(BASE_ZERO, strlen($nrs)) . $nrs;
+    }
+    
     // convert base nr to nrh - numer handlowego
     public function bnr2nrh2($bnr = null, $inicjaly = null, $ishtml = true, $sepyearchar = '/') {
 

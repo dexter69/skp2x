@@ -228,6 +228,7 @@ define('DEF_ZAL_PROC', 100); //
 define('NR_SUFIX', '14');
 define('BASE_NR', 1400000);
 define('BASE_ZERO', '00000');
+define('MAX_BASE', 99999);
 define('FIRST_ORDER_NR', 1400001);
 define('FIRST_JOB_NR', 1400701);
 define('BASE_YE', 14);
