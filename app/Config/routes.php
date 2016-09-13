@@ -32,6 +32,9 @@
         
         // phpinfo()
         Router::connect('/info', array('controller' => 'pages', 'action' => 'display', 'info'));
+        
+        // etykiety
+        Router::connect('/etykiety', array('controller' => 'tasks', 'action' => 'label'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */

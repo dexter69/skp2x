@@ -6,8 +6,8 @@ echo $this->BootForm->input('numer', array(
     'label' => 'Numer zlecenia PRODUKCYJNEGO',
     'div' => array('class' => 'col-xs-3'),
     'pattern' => "[0-9]{1,4}",
-    'title' => 'podaj numerr bez roku',
-    'placeholder' => 'podaj numerr bez roku',
+    'title' => 'podaj numer bez roku',
+    'placeholder' => 'numer bez roku',
     'maxlength' => '4',
     'required' => true
 ));
