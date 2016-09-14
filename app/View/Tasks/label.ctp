@@ -1,5 +1,6 @@
 <?php
 echo $this->Html->css('etykiety/label.css?v=' . time(), array('inline' => false));
+echo $this->Html->script(array('etykiety/label'), array('block' => 'scriptBottom')); 
 $this->set('title_for_layout', 'Etykiety');
 $this->layout='bootstrap';
 
