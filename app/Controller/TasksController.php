@@ -18,11 +18,27 @@ class TasksController extends AppController {
             $req = $this->request->data;            
             $this->Task->taskViaNoExists($req['Task']['numer']);
             $result = $this->Task->taskViaErr;
+            /*  Tymczasowa modyfikacja - chcemy mieć w kartach opcję etykiety 'lo'.
+                Taka symulacja. Później do usunięcia */
+            $result = $this->tmpOpp($result);
         }
         $this->set( compact('result') );
     }
     
     // ################## TEST / DEPREC <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    
+    //tymczasowa funkcja
+    
+    private function tmpOpp( $rqdata ) {
+        
+        if( isset($rqdata['data']['Ticket']) ) { //Mamy jakieś dane kartowe
+            $i=0;
+            foreach( $rqdata['data']['Ticket'] as $karta ) {
+               $rqdata['data']['Ticket'][$i++]['lo'] = ( $i % 2 == 0 ) ? 'en' : 'pl';                       
+            }
+        }
+        return $rqdata;
+    }
     
     //testowa metoda
     public function index() {
