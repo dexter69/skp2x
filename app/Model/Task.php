@@ -47,7 +47,7 @@ class Task extends AppModel {
         if( !$this->anyTaskExists($nr) ) {
             $this->taskViaErr['err'] = true;
             $t = (int)date("y");
-            $this->taskViaErr['msg'] = 'Nie ma zleceń o numerach: ' . $nr . "/" . $t . ' ani ' . $nr . "/" . ($t-1);
+            $this->taskViaErr['msg'] = 'Nie ma zleceń o numerach: <b>' . $nr . "/" . $t . '</b> ani <b>' . $nr . "/" . ($t-1) . "</b>";
             return false;
         }
         return true;
