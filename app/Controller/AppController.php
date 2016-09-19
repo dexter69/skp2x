@@ -42,6 +42,15 @@ class AppController extends Controller {
 			'logoutRedirect' => array('controller' => 'orders', 'action' => 'index')
         )
     );
+    
+    /* Predefiniowane ilości kart w batonie */
+    public $xbaton = array(        
+        '500' => 500,
+        '250' => 250,
+        '200' => 200,
+        '150' => 150,
+        '100' => 100
+    );
 	
     public function beforeFilter() {
 

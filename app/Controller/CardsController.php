@@ -196,24 +196,7 @@ class CardsController extends AppController {
              * 
              */
                  
-	}
-        /*
-        private function userPersoChange() {
-        // sprawdź, czy zalogowany użytkownik może zmieniać datę perso
-            $userOK = 
-                $this->Auth->user('dzial') == SUA ||
-                $this->Auth->user('dzial') == PER ||
-                $this->Auth->user('dzial') == DTP;
-            //$statusOK = 'Card.status !=' => array(PRIV, KONEC);
-            if( $this->Auth->user('dzial') == SUA ||
-                $this->Auth->user('dzial') == PER ||
-                $this->Auth->user('dzial') == DTP ) {
-                
-                return true;
-            }
-            return false;
-        }
-        */
+	}       
         
         private function userPersoVis() {
         // sprawdź, czy zalogowany użytkownik może widzieć datę perso  

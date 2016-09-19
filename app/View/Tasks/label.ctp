@@ -14,8 +14,9 @@ if( $result != null ) { // znaczy było POST
         foreach( $result['data']['Ticket'] as $karta ) {            
             echo $this->element('tasks/label/panelKarty', array(
                 'karta' => $karta,
-                'divclass' => 'col-sm-6',
-                'lp' => ++$i
+                'divclass' => 'col-sm-6 label-summary',
+                'lp' => ++$i,
+                'box' => $box
             ));
         } ?>
         </div>

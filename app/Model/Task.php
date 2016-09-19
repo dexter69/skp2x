@@ -15,7 +15,7 @@ class Task extends AppModel {
     
     public $hasMany = array(
         'Ticket' => array(
-            'fields' => array('Ticket.id', 'Ticket.name')
+            'fields' => array('Ticket.id', 'Ticket.name', 'Ticket.ilosc', 'Ticket.mnoznik')
         )
     );
     

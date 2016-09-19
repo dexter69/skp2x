@@ -22,18 +22,23 @@ class TasksController extends AppController {
                 Taka symulacja. Później do usunięcia */
             $result = $this->tmpOpp($result);
         }
-        $this->set( compact('result') );
+        $box = $this->xbaton;
+        $this->set( compact('result', 'box') );
     }
+    
     
     // ################## TEST / DEPREC <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
-    //tymczasowa funkcja
+    //tymczasowa funkcja, formatujemy dane
     
     private function tmpOpp( $rqdata ) {
         
         if( isset($rqdata['data']['Ticket']) ) { //Mamy jakieś dane kartowe
             $i=0;
             foreach( $rqdata['data']['Ticket'] as $karta ) {
+               $rqdata['data']['Ticket'][$i]['naklad'] = $karta['ilosc']*$karta['mnoznik'];
+               unset($rqdata['data']['Ticket'][$i]['ilosc']);
+               unset($rqdata['data']['Ticket'][$i]['mnoznik']);               
                $rqdata['data']['Ticket'][$i++]['lo'] = ( $i % 2 == 0 ) ? 'en' : 'pl';                       
             }
         }
