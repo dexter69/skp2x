@@ -10,6 +10,11 @@ class TasksController extends AppController {
     
     public $helpers = array('BootForm');
     
+    /* metoda przygotowująca dane, do wyświetlenia etykiet w formacie pdf */
+    public function lpdf() {
+        
+    }
+    
     /* To będzie metoda wyświetlająca interfejs do etykiet dla przebieralni */
     public function label() {
         
@@ -25,9 +30,6 @@ class TasksController extends AppController {
         $box = $this->batons['rodzaje'];
         $this->set( compact('result', 'box') );
     }
-    
-    
-    // ################## TEST / DEPREC <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
     //tymczasowa funkcja, formatujemy dane
     
@@ -46,6 +48,8 @@ class TasksController extends AppController {
         }
         return $rqdata;
     }
+    
+    // ################## TEST / DEPREC <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
     // wylicz dane, który przycisk ma być aktywny i czy coś ma być w polu input
     private function batonSize( $naklad ) {

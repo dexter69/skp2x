@@ -13,8 +13,12 @@
     padding-top: 2em;
 }
 
-.label-summary .name {
+.label-summary .name a {
     color: black;
+}
+
+.label-summary .name a:hover {
+    color: #404040;
 }
 
 .label-summary li {
