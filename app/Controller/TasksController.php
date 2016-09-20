@@ -22,7 +22,7 @@ class TasksController extends AppController {
                 Taka symulacja. Później do usunięcia */
             $result = $this->tmpOpp($result);
         }
-        $box = $this->xbaton;
+        $box = $this->batons['rodzaje'];
         $this->set( compact('result', 'box') );
     }
     
@@ -36,13 +36,40 @@ class TasksController extends AppController {
         if( isset($rqdata['data']['Ticket']) ) { //Mamy jakieś dane kartowe
             $i=0;
             foreach( $rqdata['data']['Ticket'] as $karta ) {
+               // oblicz nakład
                $rqdata['data']['Ticket'][$i]['naklad'] = $karta['ilosc']*$karta['mnoznik'];
-               unset($rqdata['data']['Ticket'][$i]['ilosc']);
-               unset($rqdata['data']['Ticket'][$i]['mnoznik']);               
+               unset($rqdata['data']['Ticket'][$i]['ilosc'], $rqdata['data']['Ticket'][$i]['mnoznik']);
+               // dane do wyświetlania kontrolki (która wartość jest aktywna)i zawartości pola input
+               $rqdata['data']['Ticket'][$i]['kontrol'] = $this->batonSize($rqdata['data']['Ticket'][$i]['naklad']);
                $rqdata['data']['Ticket'][$i++]['lo'] = ( $i % 2 == 0 ) ? 'en' : 'pl';                       
             }
         }
         return $rqdata;
+    }
+    
+    // wylicz dane, który przycisk ma być aktywny i czy coś ma być w polu input
+    private function batonSize( $naklad ) {
+        
+        if( $naklad >= $this->batons['max'] ) { // nakład większy od poj. największego batona
+            return array(
+                'active' => $this->batons['indmax'], // indeks maks ilości
+                'input' => $this->batons['rodzaje'][$this->batons['indmax']]
+            );
+        }
+        foreach( $this->batons['rodzaje'] as $key => $val ) {
+            if( $naklad == $val ) { // nakład równy pojemności któregoś z batonów
+                return array(
+                    'active' => $key, // indeks batona w który się miesci nakład
+                    'input' => $this->batons['rodzaje'][$key]
+                );
+            }
+        }
+        /* I w końcu trzeci przypadek: nakład jest mniejszy od największego batona
+         * i nie jest równy żadnemu z mniejszych batonów */
+        return array(
+            'active' => null, // żaden "klikacz" nie jest aktywny
+            'input' => $naklad // w input wpisujemy nakład
+        );
     }
     
     //testowa metoda

@@ -44,13 +44,16 @@ class AppController extends Controller {
     );
     
     /* Predefiniowane ilości kart w batonie */
-    public $xbaton = array(        
-        '500' => 500,
-        '250' => 250,
-        '200' => 200,
-        '150' => 150,
-        '100' => 100
-    );
+    public $batons = array(
+        'max' => 500,
+        'indmax' => '500', // indeks wartości max w tablicy 'rodzaje'
+        'rodzaje' => array(
+            '500' => 500,
+            '250' => 250,
+            '200' => 200,
+            '150' => 150,
+            '100' => 100
+    ));
 	
     public function beforeFilter() {
 
