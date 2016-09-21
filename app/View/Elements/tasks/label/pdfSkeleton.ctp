@@ -14,14 +14,7 @@
     };
     
     var docDefinition = {
-        content: [
-          /*
-          { text: 'This is a header', style: 'header' },
-          'No styling here, this is a standard paragraph',
-          { text: 'Another text', style: 'textlabel' },
-          { text: 'Multiple styles applied', style: [ 'header', 'anotherStyle' ] }
-          */
-        ],
+        content: [],
 
         styles: {
           textlabel: {
@@ -37,7 +30,7 @@
           }
         },
         
-        pageSize: { width: 113, height: 198 }, // w pkt =< to daje mniej więcej 70 x 40 mm
+        pageSize: { width: 113, height: 198 }, // w pkt => to daje mniej więcej 40 x 70 mm
 
         // by default we use portrait, you can change it to landscape if you wish
         pageOrientation: 'landscape',
