@@ -6,7 +6,8 @@ echo $this->Html->css(array(
     array('inline' => false));
 echo $this->Html->script(array('etykiety/label'), array('block' => 'scriptBottom')); 
 $this->set('title_for_layout', 'Etykiety');
-$this->layout='bootstrap';
+//$this->layout='bootstrap';
+$this->layout='bootstrap-pdfmake';
 
 // formularz do znajdowania
 echo $this->element('tasks/label/getTaskForm', array('msg' => $result['msg']));
@@ -23,9 +24,11 @@ if( $result != null ) { // znaczy było POST
                 'box' => $box
             ));
         } ?>
-        </div>
+        </div>        
         <?php
-        echo "<br>";
+        // umieszczamy "szkielet" skryptu pod pdfmake w elemencie, bo tak nam wygodnie
+        echo $this->element('tasks/label/pdfSkeleton');
+        //echo "<br>";
         //$this->App->print_r2($result['data']/*['Ticket']*/); // prezentuj
     } 
 }

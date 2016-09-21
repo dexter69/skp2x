@@ -11,7 +11,42 @@ $( document ).ready(function() {
        setClases(this); // pozmieniaj klasy tak, by podświetlony był ten kliknięty
        setInput(this); // wpisz wartość klikniętego elementu do input 
     });
+    /*
+     Testy
+     */
+    $(".label-summary .name").click(function(){
+        // odczytaj dane dla etykiety i zwróć w formie obiektu
+        var etykieta = getLabelData(this);
+        // wykreuj pdf
+        makeLabPdf(etykieta);
+    });
 });
+
+// odczytaj dane dla etykiety i zformatuj
+function getLabelData( obj ) { // obj reprezentuje kliknięty element
+    
+    console.log($(obj).text());
+    return {
+      job: '123/16',
+      order: '254/16 MS',
+      name: $(obj).attr('produkt'),//'Testowa nazwa karty',
+      //name: $(obj).text(),
+      naklad: 10000,
+      baton: 500
+    };
+}
+
+// generujemy etykietę z danych umieszczonych w label
+function makeLabPdf( label ) {
+    //console.log(label);
+    docDefinition.content = []; // najpierw zerujemy
+    // nazwa karty
+    docDefinition.content[docDefinition.content.length] = { text: 'produkt:', style: 'textlabel' };
+    docDefinition.content[docDefinition.content.length] = { text: label.name, style: 'product' };
+           
+    // open the PDF in a new window
+    pdfMake.createPdf(docDefinition).open();
+}
 
 // klikniety - obj reprezentujący klikniety element
 function setClases( klikniety ) {
