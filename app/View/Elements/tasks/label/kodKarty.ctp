@@ -14,7 +14,7 @@ $normal = 'bg-info';
 //dodatkowe pseudo atrybuty
 $ext ='act="' . $active . '" nor="' . $normal . '"';
 ?>
-    <h3 class="name" produkt="<?php echo $karta['name']; ?>">        
+    <h3 class="name" data-product="<?php echo $karta['name']; ?>">        
         <?php echo $karta['name']; ?>
     </h3>
     <ul class="list-inline"><?php

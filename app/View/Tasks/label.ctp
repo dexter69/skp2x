@@ -17,7 +17,7 @@ if( $result != null ) { // znaczy było POST
         <div class="row">
         <?php $i=0;
         foreach( $result['data']['Ticket'] as $karta ) {            
-            echo $this->element('tasks/label/panelKarty', array(
+            echo $this->element('tasks/label/kodKarty', array(
                 'karta' => $karta,
                 'divclass' => 'col-sm-6 label-summary',
                 'lp' => ++$i,
