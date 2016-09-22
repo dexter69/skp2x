@@ -90,14 +90,8 @@ class JobsController extends AppController {
 		}
                 $this->Job->bindModel(
                     array('hasAndBelongsToMany' => array(
-                            'Order' => array(
-                                //'className' => 'Request',
-                                'joinTable' => 'cards',
-                                //'associationForeignKey' => 'order_id'
-                            )
-                        )
-                    )
-                );
+                            'Order' => array( 'joinTable' => 'cards')
+                )));
                 
                 $this->Job->Behaviors->attach('Containable');
 		if( !empty($opcje) ) {
