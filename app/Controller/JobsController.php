@@ -18,8 +18,8 @@ class JobsController extends AppController {
 	public $paginate = array(
             'order' => array( 'Job.nr' => 'desc'),
             'fields' => array('id', 'nr', 'stop_day', 'rodzaj_arkusza', 'arkusze_netto', 'status'),
-            'contain' => array('User.name', /*'Card.id',*/'Card.order_id')
-    );
+            'contain' => array('User.name', 'Order.id', 'Order.isekspres')
+        );
 	
 	public function beforeFilter() {
     	parent::beforeFilter();
@@ -37,7 +37,7 @@ class JobsController extends AppController {
  */
 	public function index( $par = null ) {
 		
-		//$this->Job->recursive = 0;
+		$this->Job->recursive = 0;
 		$this->Paginator->settings = $this->paginate;
 		
 		if( !$this->akcjaOK(null, 'index', $par) ) {
@@ -88,7 +88,18 @@ class JobsController extends AppController {
 			default:
 				$opcje = array();
 		}
-		$this->Job->Behaviors->attach('Containable');
+                $this->Job->bindModel(
+                    array('hasAndBelongsToMany' => array(
+                            'Order' => array(
+                                //'className' => 'Request',
+                                'joinTable' => 'cards',
+                                //'associationForeignKey' => 'order_id'
+                            )
+                        )
+                    )
+                );
+                
+                $this->Job->Behaviors->attach('Containable');
 		if( !empty($opcje) ) {
                     $joby = $this->Paginator->paginate( 'Job', $opcje );	}		
 		else { 
@@ -102,6 +113,18 @@ class JobsController extends AppController {
             Jeżeli tak, to żeby wpisał to do tablicy, Job'a - tak, by było widomo, że ekspres */
         private function transform( $produkcyjne ) {
             
+            $i=0;
+            foreach( $produkcyjne as $record ) {
+                $produkcyjne[$i]['Job']['isekspres'] = false; $j=0;
+                foreach( $record['Order'] as $order ) {
+                    if( $order['isekspres'] ) {
+                        $produkcyjne[$i]['Job']['isekspres'] = true;
+                        break;
+                    }
+                }
+                unset($produkcyjne[$i]['Order']);
+                $i++;
+            }
             return $produkcyjne;
         }
 

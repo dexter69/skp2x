@@ -108,3 +108,5 @@ fieldset textarea {
 }
 
 div.index th:first-child, div.index td:first-child { width: 4em; }
+
+div.index .ekspres { background-color: #ff6699;}
