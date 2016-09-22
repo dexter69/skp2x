@@ -86,3 +86,5 @@ if( array_key_exists($par, $klasa) )
 	?>
 	</div>
 </div>
+<?php
+$this->App->print_r2($jobs);

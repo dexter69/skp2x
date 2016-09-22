@@ -16,9 +16,9 @@ class JobsController extends AppController {
 	public $components = array('Paginator');
 	
 	public $paginate = array(
-        'order' => array(
-            'Job.nr' => 'desc'
-        )
+            'order' => array( 'Job.nr' => 'desc'),
+            'fields' => array('id', 'nr', 'stop_day', 'rodzaj_arkusza', 'arkusze_netto', 'status'),
+            'contain' => array('User.name', /*'Card.id',*/'Card.order_id')
     );
 	
 	public function beforeFilter() {
@@ -37,7 +37,7 @@ class JobsController extends AppController {
  */
 	public function index( $par = null ) {
 		
-		$this->Job->recursive = 0;
+		//$this->Job->recursive = 0;
 		$this->Paginator->settings = $this->paginate;
 		
 		if( !$this->akcjaOK(null, 'index', $par) ) {
@@ -88,14 +88,22 @@ class JobsController extends AppController {
 			default:
 				$opcje = array();
 		}
-		
-		if( !empty($opcje) ) 
-			$jobs = $this->Paginator->paginate( 'Job', $opcje );			
-		else 
-			$jobs = $this->Paginator->paginate();
+		$this->Job->Behaviors->attach('Containable');
+		if( !empty($opcje) ) {
+                    $joby = $this->Paginator->paginate( 'Job', $opcje );	}		
+		else { 
+                    $joby = $this->Paginator->paginate(); }
                 
+                $jobs = $this->transform($joby);
 		$this->set(compact('jobs', 'par'));
 	}
+        
+        /* Chcemy dla kazdego Job'a, aby przeszukał korespondujące Handlowe, czy któreś nie jest EXPRESS
+            Jeżeli tak, to żeby wpisał to do tablicy, Job'a - tak, by było widomo, że ekspres */
+        private function transform( $produkcyjne ) {
+            
+            return $produkcyjne;
+        }
 
 /**
  * view method
