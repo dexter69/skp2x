@@ -4,7 +4,7 @@ echo $this->Html->css(array(
         //,'font-awesome-4.6.1/css/font-awesome.min'
     ),
     array('inline' => false));
-echo $this->Html->script(array('etykiety/label'), array('block' => 'scriptBottom')); 
+echo $this->Html->script(array('etykiety/label.js?v='. time()), array('block' => 'scriptBottom')); 
 $this->set('title_for_layout', 'Etykiety');
 //$this->layout='bootstrap';
 $this->layout='bootstrap-pdfmake';
