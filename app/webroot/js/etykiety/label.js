@@ -47,9 +47,17 @@ function setProperInput() {
 // odczytaj dane dla etykiety i zformatuj
 function getLabelData( obj ) { // obj reprezentuje kliknięty element
     
-    var name = $(obj).data('product'),
+    var left,
+        name = $(obj).data('product'),
         naklad = $(obj).data('naklad'),
         baton = $($(obj).parent().find("input")).val();
+
+    if( baton === "" || baton === null ) { /* znaczy nie chcemy drukować ilości,
+        * nie liczymy sumy batonów, będzie tylko 1 etykieta */        
+        baton = 0; left = 0; 
+    } else {
+        left = naklad;
+    }
     
     return {
       job: '123/16',
@@ -58,7 +66,7 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
       //name: $(obj).text(),
       naklad: naklad,
       baton: baton,
-      left: naklad, // techniczna, pomocna przy generacji
+      left: left, // techniczna, pomocna przy generacji
       lnr: 1, // nr strony/batona, zaczynamy od 1,
       indec: 1 // o ile zwiększamy/zmniejszamy nr
     };
@@ -109,54 +117,22 @@ function setInput( klikniety ) {
 
 function kontent(etyk) {
     
-    
-    if( etyk.baton === "" || etyk.baton === null ) { /* znaczy nie chcemy drukować ilości
-        i nie liczymy sumy batonów, będzie tylko 1 etykieta */        
-        etyk.baton = 0; etyk.left = 0; // dzięki temu ominiemy pętlę niżej
-    } else { // standardowo
-        etyk.batons = '/' + Math.ceil(etyk.naklad/etyk.baton);
-    }
-    
     var pdfdata = [];
-    /* */
-    while( etyk.left > etyk.baton ) {
-        pdfdata = onePage(etyk, pdfdata); // wygeneruj i dodaj kolejną stronę/etykietę do pdf'a
-        etyk.left -= etyk.baton;
-        etyk.lnr += etyk.indec; // nr batona/strony
-    }
-    pdfdata = onePage(etyk, pdfdata);
+    
+    if( etyk.baton !== 0 ) { /* == 0 oznacza, że będzie tylko 1 etykieta bez ilości w batonie i licznika */                
+        etyk.batons = '/' + Math.ceil(etyk.naklad/etyk.baton);
+        while( etyk.left > etyk.baton ) {
+            pdfdata = onePage(etyk, pdfdata); // wygeneruj i dodaj kolejną stronę/etykietę do pdf'a
+            etyk.left -= etyk.baton;
+            etyk.lnr += etyk.indec; // nr batona/strony
+        }
+    } 
+    pdfdata = lastPage(etyk, pdfdata);
     return pdfdata;
     
 }
-/* Generujemu dnae dla jednej strony pdf'a */
+/* Generujemu dnae dla jednej strony pdf'a i nie ostatniej */
 function onePage( etyk, strony ) {
-    
-    var last, baton, kolumny, druga;
-    
-    if( etyk.left > etyk.baton ) { // czyli to nie ostatnia strona - chcemy pagebrake
-        last = { text: numberSeparator(etyk.naklad, " "), style: 'normal', margin: [0, 0, 0, 0], pageBreak: 'after' };
-        baton = etyk.baton;
-    } else {
-        last = { text: numberSeparator(etyk.naklad, " "), style: 'normal', margin: [0, 0, 0, 0] };
-        baton = etyk.left.toString();
-    }
-    
-    if( etyk.baton === 0 ) { // czyli nie drukujemy ilości batona i licznika
-        baton = " ";
-        druga = [];
-    } else {
-        druga = [
-            { text: 'opakowanie nr:', style: 'textlabel', alignment: 'right' },
-            { text: etyk.lnr + etyk.batons, style: 'normal', alignment: 'right' }
-        ];
-    }
-    kolumny = [
-        [
-            { text: 'ilość w opakowaniu:', style: 'textlabel' },
-            { text: baton, style: 'normal' }
-        ],
-        druga
-    ];
     
     strony.push(        
         {
@@ -168,10 +144,59 @@ function onePage( etyk, strony ) {
         { text: 'produkt:', style: 'textlabel', margin: [ 0, 3, 0, 0 ] },
         { text: etyk.name, style: 'product'},
         {
-            columns: kolumny
+            columns: [
+                [
+                    { text: 'ilość w opakowaniu:', style: 'textlabel' },
+                    { text: etyk.baton, style: 'normal' }
+                ],
+                [
+                    { text: 'opakowanie nr:', style: 'textlabel', alignment: 'right' },
+                    { text: etyk.lnr + etyk.batons, style: 'normal', alignment: 'right' }
+                ]
+            ]
         },
         { text: 'zamówiona ilość:', style: 'textlabel' },        
-        last
+        { text: numberSeparator(etyk.naklad, " "), style: 'normal', margin: [0, 0, 0, 0], pageBreak: 'after' }
+    );
+    return strony;
+}
+
+/* Generujemu ostatbią stronę pdf'a, bez page brake */
+function lastPage( etyk, strony ) {
+    
+    var baton, druga;
+    
+    if( etyk.baton === 0 ) { // czyli nie drukujemy ilości batona i licznika
+        baton = " ";
+        druga = [];
+    } else {
+        baton = etyk.left.toString();
+        druga = [
+            { text: 'opakowanie nr:', style: 'textlabel', alignment: 'right' },
+            { text: etyk.lnr + etyk.batons, style: 'normal', alignment: 'right' }
+        ];
+    }
+    
+    strony.push(        
+        {
+            text: [
+                { text: etyk.job, style: 'numer', bold: true},
+                { text: ' (' + etyk.order + ')', style: 'numer'}
+            ]
+        },
+        { text: 'produkt:', style: 'textlabel', margin: [ 0, 3, 0, 0 ] },
+        { text: etyk.name, style: 'product'},
+        {
+            columns: [
+                [
+                    { text: 'ilość w opakowaniu:', style: 'textlabel' },
+                    { text: baton, style: 'normal' }
+                ],
+                druga
+            ]
+        },
+        { text: 'zamówiona ilość:', style: 'textlabel' },        
+        { text: numberSeparator(etyk.naklad, " "), style: 'normal', margin: [0, 0, 0, 0] }
     );
     return strony;
 }
