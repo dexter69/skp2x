@@ -14,10 +14,12 @@ $normal = 'bg-info';
 //dodatkowe pseudo atrybuty
 $ext ='act="' . $active . '" nor="' . $normal . '"';
 ?>
-    <h3 class="name" data-product="<?php echo $karta['name']; ?>">        
+    <h3 class="name"
+        data-product="<?php echo $karta['name']; ?>"
+        data-naklad="<?php echo $karta['naklad']; ?>">        
         <?php echo $karta['name']; ?>
     </h3>
-    <ul class="list-inline"><?php
+    <ul <?php echo $ext;?> class="list-inline"><?php
         foreach( $box as $key => $val ) {
             if( $karta['kontrol']['active'] == $key ) { // ten "klikacz" ma być aktywny
                 echo '<li class="' . $active . '" ' . $ext . '>' . $val . '</li>';

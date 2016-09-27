@@ -6,6 +6,11 @@ $( document ).ready(function() {
     $('#TaskNumer').click(function(){ // przy kliknięciu wyzeruj ten input
         $(this).val("");
     });    
+    
+    // W razie odświeżenia strony chcemy skorygować zawartość pola input
+    // ustaw we wszystkich kartach prawidłowe wartości pola input
+    setProperInput();
+    
     //Kliknięcie w dowolny "klikacz" powoduje zmianę we wszystkich jego braciach
     $('.label-summary li').click(function(){
        setClases(this); // pozmieniaj klasy tak, by podświetlony był ten kliknięty
@@ -16,6 +21,14 @@ $( document ).ready(function() {
     $(".label-summary .name").click(function(){
         // odczytaj dane dla etykiety i zwróć w formie obiektu
         var etykieta = getLabelData(this);
+        /*
+        console.log("baton = " + etykieta.baton);
+        if( etykieta.baton == "") {
+            console.log("puste");
+        } else {
+            console.log("NIE puste");
+        }
+        */
         // wykreuj pdf
         makeLabPdf(etykieta);
     });
@@ -23,12 +36,20 @@ $( document ).ready(function() {
 
 // LEVEL 01 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+function setProperInput() {
+    
+    // W razie odświeżenia strony chcemy skorygować zawartość pola input
+    $('.label-summary input').each(function(){
+        $(this).val($(this).attr('value'));
+    });
+}
+
 // odczytaj dane dla etykiety i zformatuj
 function getLabelData( obj ) { // obj reprezentuje kliknięty element
     
     var name = $(obj).data('product'),
-        naklad = 2000,
-        batons = '/4'; //ile wszystkich batonów
+        naklad = $(obj).data('naklad'),
+        baton = $($(obj).parent().find("input")).val();
     
     return {
       job: '123/16',
@@ -36,11 +57,10 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
       name: name,//'Nazwa karty',
       //name: $(obj).text(),
       naklad: naklad,
-      baton: '500',
-      batons: batons,
+      baton: baton,
       left: naklad, // techniczna, pomocna przy generacji
-      lnr: 4, // nr strony/batona, zaczynamy od 1,
-      indec: -1 // o ile zwiększamy/zmniejszamy nr
+      lnr: 1, // nr strony/batona, zaczynamy od 1,
+      indec: 1 // o ile zwiększamy/zmniejszamy nr
     };
 }
 
@@ -89,6 +109,14 @@ function setInput( klikniety ) {
 
 function kontent(etyk) {
     
+    
+    if( etyk.baton === "" || etyk.baton === null ) { /* znaczy nie chcemy drukować ilości
+        i nie liczymy sumy batonów, będzie tylko 1 etykieta */        
+        etyk.baton = 0; etyk.left = 0; // dzięki temu ominiemy pętlę niżej
+    } else { // standardowo
+        etyk.batons = '/' + Math.ceil(etyk.naklad/etyk.baton);
+    }
+    
     var pdfdata = [];
     /* */
     while( etyk.left > etyk.baton ) {
@@ -103,13 +131,33 @@ function kontent(etyk) {
 /* Generujemu dnae dla jednej strony pdf'a */
 function onePage( etyk, strony ) {
     
-    var last;
+    var last, baton, kolumny, druga;
     
     if( etyk.left > etyk.baton ) { // czyli to nie ostatnia strona - chcemy pagebrake
         last = { text: numberSeparator(etyk.naklad, " "), style: 'normal', margin: [0, 0, 0, 0], pageBreak: 'after' };
+        baton = etyk.baton;
     } else {
         last = { text: numberSeparator(etyk.naklad, " "), style: 'normal', margin: [0, 0, 0, 0] };
+        baton = etyk.left.toString();
     }
+    
+    if( etyk.baton === 0 ) { // czyli nie drukujemy ilości batona i licznika
+        baton = " ";
+        druga = [];
+    } else {
+        druga = [
+            { text: 'opakowanie nr:', style: 'textlabel', alignment: 'right' },
+            { text: etyk.lnr + etyk.batons, style: 'normal', alignment: 'right' }
+        ];
+    }
+    kolumny = [
+        [
+            { text: 'ilość w opakowaniu:', style: 'textlabel' },
+            { text: baton, style: 'normal' }
+        ],
+        druga
+    ];
+    
     strony.push(        
         {
             text: [
@@ -120,16 +168,7 @@ function onePage( etyk, strony ) {
         { text: 'produkt:', style: 'textlabel', margin: [ 0, 3, 0, 0 ] },
         { text: etyk.name, style: 'product'},
         {
-            columns: [
-                [
-                    { text: 'ilość w opakowaniu:', style: 'textlabel' },
-                    { text: etyk.baton, style: 'normal' }
-                ],
-                [
-                    { text: 'opakowanie nr:', style: 'textlabel', alignment: 'right' },
-                    { text: etyk.lnr + etyk.batons, style: 'normal', alignment: 'right' }
-                ]
-            ]
+            columns: kolumny
         },
         { text: 'zamówiona ilość:', style: 'textlabel' },        
         last
