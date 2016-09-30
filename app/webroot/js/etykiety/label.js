@@ -47,29 +47,31 @@ function setProperInput() {
 // odczytaj dane dla etykiety i zformatuj
 function getLabelData( obj ) { // obj reprezentuje kliknięty element
     
-    var left,
-        name = $(obj).data('product'),
-        naklad = $(obj).data('naklad'),
-        baton = $($(obj).parent().find("input")).val();
-
-    if( baton === "" || baton === null ) { /* znaczy nie chcemy drukować ilości,
+    var label = { 
+        job: '123/16',
+        order: '254/16 MS',
+        name: $(obj).data('product'),
+        naklad: $(obj).data('naklad'),
+        baton: $($(obj).parent().find("input")).val(),
+        lnr: 1, // nr strony/batona, zaczynamy od 1,
+        indec: 1,
+        boxq: true, /* czy generujemy ilość w kart w batonie.
+        False oznacza puste (miejsce na ręczny wpis) -> pociąga to równieżź za sobą fakt,
+        że boxnr będzie false */
+        boxnr: true, /* numerowanie batonów, czyli 1, 2, 3.... */
+        boxsum: true, /* sumowanie batonów - będzie (np.) 1/12, 2/12, ..., 12/12 */
+        lang: 'pl'
+    };
+    
+    if( label.baton === "" || label.baton === null ) { /* znaczy nie chcemy drukować ilości,
         * nie liczymy sumy batonów, będzie tylko 1 etykieta */        
-        baton = 0; left = 0; 
+        label.baton = 0; label.left = 0; 
+        label.boxq = false;        
     } else {
-        left = naklad;
+        label.left = label.naklad;
     }
     
-    return {
-      job: '123/16',
-      order: '254/16 MS',
-      name: name,//'Nazwa karty',
-      //name: $(obj).text(),
-      naklad: naklad,
-      baton: baton,
-      left: left, // techniczna, pomocna przy generacji
-      lnr: 1, // nr strony/batona, zaczynamy od 1,
-      indec: 1 // o ile zwiększamy/zmniejszamy nr
-    };
+    return label;
 }
 
 // generujemy etykietę z danych umieszczonych w label
@@ -112,6 +114,73 @@ function setInput( klikniety ) {
 }
 
 // LEVEL 02 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+/* Obiekt trzymający strukturę strony pdf etykiety */
+
+var dexpage = { // wartości "text" przykładowe
+  pagebreak: true,
+  lang: 'pl',
+  lbs: {        // teksty do etykietek, typu "produkt", itp.
+      produkt:  {pl: 'produkt:', en: 'product:'},
+      inbox:    {pl: 'ilość w opakowaniu:', en: 'batch:'},
+      boxnr:    {pl: 'opakowanie nr:', en: 'batch no:'},
+      naklad:   {pl: 'zamówiona ilość:', en: 'ordered quantity:'}
+  },
+  zlecnr: { // numery naszy zleceń
+    label: false,
+    value: {
+        text: [
+            { text: 'jobnr', style: 'numer', bold: true},
+            { text: 'ordernr', style: 'numer'}
+        ]
+    }
+  },
+  produkt:{ 
+      label: true,
+      labval: { text: 'labtxt', style: 'textlabel', margin: [ 0, 3, 0, 0 ] },
+      value:    { text: 'nazwa karty', style: 'product'}      
+  },
+  inbox: {
+      label: true,
+      labval: { text: 'labtxt', style: 'textlabel' },
+      value:  { text: '500', style: 'normal' }
+  },
+  boxnr: {
+      label: true,
+      labval: { text: 'labtxt', style: 'textlabel', alignment: 'right' },
+      value:  { text: '1/4', style: 'normal', alignment: 'right' }
+  },
+  naklad: {
+      label: true,
+      labval: { text: 'labtxt', style: 'textlabel' },
+      value:  { text: '1000', style: 'normal', margin: [0, 0, 0, 0]/*, pageBreak: 'after'*/ }
+  },
+  structure1: [],
+  /* Tworzy ogólną strukturę strony, do której będziemy zapisywać tylko zmienne rzeczy
+   * później, układ (na stronie) opcja 1 */
+  makeStructre1: function() {
+      //return this.firstName + " " + this.lastName;
+      this.structure1 = [
+          this.zlecnr.value,
+          this.produkt.labval,
+          this.produkt.value,
+          {
+            columns: [
+                [this.inbox.labval, this.inbox.value],
+                [this.boxnr.labval, this.boxnr.value]
+            ]
+          },
+          this.naklad.labval,
+          this.naklad.value
+      ];
+  },
+  /* Ustawiamy wartości na podstawie danych o etykiecie.
+   * Są to wartości, które będą stałe dla każdej strony pdf'a */
+  presetStructure1: function( etykdata ) {
+      
+      this.zlecnr.value.text[0].text
+  }
+};
 
 // geberuje faktyczny kontent obiektu dla pdfmake
 

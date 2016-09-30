@@ -22,3 +22,7 @@ Thumbs.db
 /app/uploads/
 /nbproject/private/
 /.project
+/app/Skrypty/xyz/bs.csv
+/app/Skrypty/xyz/bs.txt
+/app/Skrypty/xyz/ch.txt
+/app/Skrypty/xyz/chr.csv
