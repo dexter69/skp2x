@@ -4,7 +4,12 @@ echo $this->Html->css(array(
         //,'font-awesome-4.6.1/css/font-awesome.min'
     ),
     array('inline' => false));
-echo $this->Html->script(array('etykiety/label.js?v='. time()), array('block' => 'scriptBottom')); 
+echo $this->Html->script(array(
+    'etykiety/label-funkcje.js?v='. time(),
+    'etykiety/label2.js?v='. time()
+    ),
+    array('block' => 'scriptBottom')
+); 
 $this->set('title_for_layout', 'Etykiety');
 //$this->layout='bootstrap';
 $this->layout='bootstrap-pdfmake';
@@ -29,6 +34,6 @@ if( $result != null ) { // znaczy było POST
         // umieszczamy "szkielet" skryptu pod pdfmake w elemencie, bo tak nam wygodnie
         echo $this->element('tasks/label/pdfSkeleton');
         //echo "<br>";
-        $this->App->print_r2($result['data']/*['Ticket']*/); // prezentuj
+        //$this->App->print_r2($result['data']/*['Ticket']*/); // prezentuj
     } 
 }
