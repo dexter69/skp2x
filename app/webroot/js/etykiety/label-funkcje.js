@@ -1,5 +1,73 @@
 /* Funkcje dla label.js */
 
+
+/* Konstruktory strony etykiety */
+var page = {
+    firstLine: function(order, job) {
+        this.text = [
+            { text: job, style: 'numer', bold: true},
+            { text: '  <' + order + '>', style: 'numer'}
+        ];
+    },
+    secondLine: function(val, lbltxt) {       
+       this.text = val;
+       if(lbltxt) { //znaczy tprodukujemy treść label'a       
+           this.style = 'textlabel';
+           this.margin = [ 0, 3, 0, 0 ]; 
+       } else { //nazwa produktu           
+           this.style = 'product';
+       }
+    },
+    thirdLineV1: function(inbaton, labtxt, valtxt) {
+    
+        this.columns = [
+            [
+                { text: 'ilość w opakowaniu:', style: 'textlabel' },
+                { text: inbaton, style: 'normal' }
+            ],
+            [
+                { text: labtxt, style: 'textlabel', alignment: 'right' },
+                { text: valtxt, style: 'normal', alignment: 'right' }
+            ]
+        ];
+    },
+    thirdLineV2: function(naklad, inbaton) {
+    
+        this.columns = [
+            [
+                { text: 'zamówiona ilość:', style: 'textlabel' },
+                { text: naklad, style: 'normal' }
+            ],
+            [
+                { text: 'ilość w opakowaniu:', style: 'textlabel', alignment: 'right' },
+                { text: inbaton, style: 'normal', alignment: 'right' }
+            ]
+        ];
+    },
+    fourthLineV1: function(val, lbltxt) {
+       this.text = val;
+       
+       if(lbltxt) { //znaczy tprodukujemy treść label'a     
+           this.style = 'textlabel';
+           
+       } else { // wartość
+           this.style = 'normal';
+           this.margin = [ 0, 0, 0, 0 ]; 
+           this.pageBreak = 'after'; 
+       }
+    },
+    fourthLineV2: function(val, lbltxt) {
+        this.text = val;
+        this.alignment = 'right';
+        if(lbltxt) { //znaczy tprodukujemy treść label'a     
+            this.style = 'textlabel';
+        } else { // wartość
+            this.style = 'normal';
+            this.pageBreak = 'after'; 
+        }
+    }
+};
+
 function setProperInput() {
     
     // W razie odświeżenia strony chcemy skorygować zawartość pola input

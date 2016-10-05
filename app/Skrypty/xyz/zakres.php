@@ -12,13 +12,13 @@ $i = 0;
 if( $handle ) {
     echo "l;p\n";
     while (($stri = fgets($handle)) !== false) { // dopuki coś mamy        
-        $str = trim($stri); // chcemy bez znaku nowej linii        
+        $str = '"' . trim($stri) . '"'; // chcemy bez znaku nowej linii (trim)     
         $i++;
         if( ($i % $inbat) < 2 ) {
             if( ($i % $inbat) == 1 ) {
                 echo $str . ";";
             } else {
-                echo $stri;
+                echo $str . "\n";
             }
         }
     }

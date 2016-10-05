@@ -46,7 +46,6 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
         lnr: 1, // nr strony/batona, zaczynamy od 1,    
         
         
-        
         lang: 'pl',
         
             
@@ -115,7 +114,7 @@ function kontent(etyk) {
 
 function addStructureOfOnePage(etyk) {
     
-    var baton = etyk.baton, batonoza, labtxt = ' ', valtxt = ' ';
+    var baton = etyk.baton, labtxt = ' ', valtxt = ' ';
     if( etyk.baton === 0) {
         baton = " ";
     } else {
@@ -128,33 +127,13 @@ function addStructureOfOnePage(etyk) {
         }
     }
     
-    batonoza = {
-        columns: [
-                [
-                    { text: 'ilość w opakowaniu:', style: 'textlabel' },
-                    { text: baton.toString(), style: 'normal' }
-                ],
-                [
-                    { text: labtxt, style: 'textlabel', alignment: 'right' },
-                    { text: valtxt, style: 'normal', alignment: 'right' }
-                ]
-            ]
-    };
-    
-    pdfdata.push(        
-        {
-            text: [
-                { text: etyk.job, style: 'numer', bold: true},
-                { text: '  <' + etyk.order + '>', style: 'numer'}
-            ]
-        },
-        { text: 'produkt:', style: 'textlabel', margin: [ 0, 3, 0, 0 ] },
-        { text: etyk.name, style: 'product'},
-        batonoza,        
-        { text: 'zamówiona ilość:', style: 'textlabel' },        
-        { text: numberSeparator(etyk.naklad, " "), style: 'normal', margin: [0, 0, 0, 0], pageBreak: 'after' }       
+    pdfdata.push(                
+        new page.firstLine(etyk.order, etyk.job),  
+        new page.secondLine('produkt:', true),        
+        new page.secondLine(etyk.name, false),
+        new page.thirdLineV2(numberSeparator(etyk.naklad, " "), baton.toString()),
+        new page.fourthLineV2(labtxt, true),
+        new page.fourthLineV2(valtxt, false)
     );
     
 }
-
-
