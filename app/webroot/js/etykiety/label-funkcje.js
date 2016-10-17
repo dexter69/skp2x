@@ -17,20 +17,7 @@ var page = {
        } else { //nazwa produktu           
            this.style = 'product';
        }
-    },
-    thirdLineV1: function(inbaton, labtxt, valtxt) {
-    
-        this.columns = [
-            [
-                { text: 'ilość w opakowaniu:', style: 'textlabel' },
-                { text: inbaton, style: 'normal' }
-            ],
-            [
-                { text: labtxt, style: 'textlabel', alignment: 'right' },
-                { text: valtxt, style: 'normal', alignment: 'right' }
-            ]
-        ];
-    },
+    },    
     thirdLineV2: function(naklad, inbaton) {
     
         this.columns = [
@@ -43,19 +30,7 @@ var page = {
                 { text: inbaton, style: 'normal', alignment: 'right' }
             ]
         ];
-    },
-    fourthLineV1: function(val, lbltxt) {
-       this.text = val;
-       
-       if(lbltxt) { //znaczy tprodukujemy treść label'a     
-           this.style = 'textlabel';
-           
-       } else { // wartość
-           this.style = 'normal';
-           this.margin = [ 0, 0, 0, 0 ]; 
-           this.pageBreak = 'after'; 
-       }
-    },
+    },    
     fourthLineV2: function(val, lbltxt) {
         this.text = val;
         this.alignment = 'right';

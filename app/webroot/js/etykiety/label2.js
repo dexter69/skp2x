@@ -78,19 +78,21 @@ function makeLabPdf( label ) {
     // open the PDF in a new window
     pdfMake.createPdf(docDefinition).open();
 }
+
+// tu wdzingujemy strukturę pdf'a
 var pdfdata = [];
+
 /* Wygeneruj kontent dla make pdf */
 function kontent(etyk) {
-    pdfdata = [];
-    /* 
-     * 1. Stwórz strukturę strony
-     * 2. Oblicz liczbę stron i dane dla ostatniej 
-     * 3. Pwiel strukturę tyle razy ile jest stron uzupełniając wartośći */
+    pdfdata = [];        
+    etyk.labtxt = etyk.valtxt = ' ';
     
-    // 1.
-    //createStructure(etyk);
+    if( etyk.baton !== 0 ) {
+        etyk.baton2 = etyk.baton;
+    } else {
+        
+    }
     
-    // 2.
     if(etyk.baton !== 0 && etyk.licznik) {
         etyk.pages = Math.ceil(etyk.naklad/etyk.baton);
         if( etyk.suma ) { // drukujemy sume batonów, czyli np. /12
@@ -100,8 +102,16 @@ function kontent(etyk) {
         etyk.pages = 1;
     }
     
+    if( etyk.baton === 0) {
+        etyk.baton2 = " ";
+    } else {
+        //->etyk.baton2 = etyk.baton;
+        if( etyk.licznik ) { // drukujemy licznik
+            etyk.labtxt = 'opakowanie nr:';
+        }
+    }
+    
     do {
-        
       addStructureOfOnePage(etyk);      
       etyk.pages--;  
       etyk.lnr++; // kolejny nr batona     
@@ -114,16 +124,12 @@ function kontent(etyk) {
 
 function addStructureOfOnePage(etyk) {
     
-    var baton = etyk.baton, labtxt = ' ', valtxt = ' ';
-    if( etyk.baton === 0) {
-        baton = " ";
-    } else {
+    if( etyk.baton !== 0) {
         if( etyk.left < etyk.baton ) {
-            baton = etyk.left;
+            etyk.baton2 = etyk.left;
         }      
-        if( etyk.licznik ) { // drukujemy licznik
-            labtxt = 'opakowanie nr:';
-            valtxt = etyk.lnr + etyk.sumb;
+        if( etyk.licznik ) { // drukujemy licznik            
+            etyk.valtxt = etyk.lnr + etyk.sumb;
         }
     }
     
@@ -131,9 +137,9 @@ function addStructureOfOnePage(etyk) {
         new page.firstLine(etyk.order, etyk.job),  
         new page.secondLine('produkt:', true),        
         new page.secondLine(etyk.name, false),
-        new page.thirdLineV2(numberSeparator(etyk.naklad, " "), baton.toString()),
-        new page.fourthLineV2(labtxt, true),
-        new page.fourthLineV2(valtxt, false)
+        new page.thirdLineV2(numberSeparator(etyk.naklad, " "), etyk.baton2.toString()),
+        new page.fourthLineV2(etyk.labtxt, true),
+        new page.fourthLineV2(etyk.valtxt, false)
     );
     
 }
