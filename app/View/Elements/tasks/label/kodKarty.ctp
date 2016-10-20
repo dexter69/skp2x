@@ -19,6 +19,7 @@ $ext ='act="' . $active . '" nor="' . $normal . '"';
         data-naklad="<?php echo $karta['naklad']; ?>">        
         <?php echo $karta['name']; ?>
     </h3>
+    <p class="infobar">nakład: <strong><?php echo $karta['naklad']; ?></strong></p>
     <ul <?php echo $ext;?> class="list-inline"><?php
         foreach( $box as $key => $val ) {
             if( $karta['kontrol']['active'] == $key ) { // ten "klikacz" ma być aktywny

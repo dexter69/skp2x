@@ -19,10 +19,9 @@ $( document ).ready(function() {
     
     /* Klikając na nazwę karty, generujemy pdf z etykietami */
     $(".label-summary .name").click(function(){
-        // odczytaj dane dla etykiety i zwróć w formie obiektu
-        var etykieta = getLabelData(this);        
-        // wykreuj pdf
-        makeLabPdf(etykieta);
+        makeLabPdf( // wykreuj pdf
+                getLabelData(this) // odczytaj dane dla etykiety i zwróć w formie obiektu
+        );
     });
 });
 

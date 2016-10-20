@@ -19,8 +19,8 @@
     cursor: pointer;
 }
 
-.label-summary .name a:hover {
-    color: #404040;
+.label-summary .name:hover {
+    color: #276489;
 }
 
 .label-summary li {
@@ -41,3 +41,7 @@
     max-width: 3em;
 }
 
+// infobar
+.infobar {
+    font-size: 120%; // chcemy troszkę większe
+}
