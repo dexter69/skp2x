@@ -89,26 +89,18 @@ function kontent(etyk) {
     
     if( etyk.baton !== 0 ) {
         etyk.baton2 = etyk.baton;
-    } else {
-        
-    }
-    
-    if(etyk.baton !== 0 && etyk.licznik) {
-        etyk.pages = Math.ceil(etyk.naklad/etyk.baton);
-        if( etyk.suma ) { // drukujemy sume batonów, czyli np. /12
-            etyk.sumb = "/" + etyk.pages;
-        }
-    } else {
-        etyk.pages = 1;
-    }
-    
-    if( etyk.baton === 0) {
-        etyk.baton2 = " ";
-    } else {
-        //->etyk.baton2 = etyk.baton;
         if( etyk.licznik ) { // drukujemy licznik
+            etyk.pages = Math.ceil(etyk.naklad/etyk.baton);
             etyk.labtxt = 'opakowanie nr:';
+            if( etyk.suma ) { // drukujemy sume batonów, czyli np. /12
+                etyk.sumb = "/" + etyk.pages;
+            }
+        } else {
+            etyk.pages = 1;
         }
+    } else {
+       etyk.baton2 = " "; 
+       etyk.pages = 1;
     }
     
     do {
