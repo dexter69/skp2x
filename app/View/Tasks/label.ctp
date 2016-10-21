@@ -20,15 +20,17 @@ echo $this->element('tasks/label/getTaskForm', array('msg' => $result['msg']));
 if( $result != null ) { // znaczy było POST
     if( !empty($result['data']) ) { // mamy coś ?>
         <div class="row">
-        <?php $i=0;
-        foreach( $result['data']['Ticket'] as $karta ) {            
-            echo $this->element('tasks/label/kodKarty', array(
-                'karta' => $karta,
-                'divclass' => 'col-sm-6 label-summary',
-                'lp' => ++$i,
-                'box' => $box
-            ));
-        } ?>
+            <!-- info o znalezionym produkcyjnym -->
+            <div id="jobinfo"  class="col-sm-12"><h1  class="text-success"><strong>1234</strong>/16</h1></div>
+            <?php $i=0;
+            foreach( $result['data']['Ticket'] as $karta ) {            
+                echo $this->element('tasks/label/kodKarty', array(
+                    'karta' => $karta,
+                    'divclass' => 'col-sm-6 label-summary',
+                    'lp' => ++$i,
+                    'box' => $box
+                ));
+            } ?>
         </div>        
         <?php
         // umieszczamy "szkielet" skryptu pod pdfmake w elemencie, bo tak nam wygodnie

@@ -30,8 +30,8 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
     
     
     var label = { 
-        job: '123/16',
-        order: '254/16 MS',
+        job: '1234/16',
+        order: '255/16 MS',
         name: $(obj).data('product'),
         naklad: parseInt($(obj).data('naklad')),
         baton: $($(obj).parent().find("input")).val(),
@@ -48,7 +48,7 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
         lang: 'pl',
         
             
-        indec: 1
+        //indec: 1
     };
     
     if( label.baton === "" || label.baton === null ) {
