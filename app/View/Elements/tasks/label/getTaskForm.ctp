@@ -15,7 +15,8 @@ echo $this->BootForm->input('numer', array(
 if( $msg ) { // mamy jakieś info o błędach
     $class = 'bg-danger';
 } else {
-    $class = null;
+    $class = 'normal';
+    $msg = $this->Ma->bnr2nrj($nr);
 }
 ?>
 

@@ -15,13 +15,14 @@ $this->set('title_for_layout', 'Etykiety');
 $this->layout='bootstrap-pdfmake';
 
 // formularz do znajdowania
-echo $this->element('tasks/label/getTaskForm', array('msg' => $result['msg']));
+echo $this->element('tasks/label/getTaskForm', array(
+    'msg' => $result['msg'],
+    'nr' => $result['data']['Task']['nr']
+));
 
 if( $result != null ) { // znaczy było POST
     if( !empty($result['data']) ) { // mamy coś ?>
-        <div class="row">
-            <!-- info o znalezionym produkcyjnym -->
-            <div id="jobinfo"  class="col-sm-12"><h1  class="text-success"><strong>1234</strong>/16</h1></div>
+        <div class="row">            
             <?php $i=0;
             foreach( $result['data']['Ticket'] as $karta ) {            
                 echo $this->element('tasks/label/kodKarty', array(
@@ -36,6 +37,6 @@ if( $result != null ) { // znaczy było POST
         // umieszczamy "szkielet" skryptu pod pdfmake w elemencie, bo tak nam wygodnie
         echo $this->element('tasks/label/pdfSkeleton');
         //echo "<br>";
-        //$this->App->print_r2($result['data']/*['Ticket']*/); // prezentuj
+        $this->App->print_r2($result['data']/*['Ticket']*/); // prezentuj
     } 
 }
