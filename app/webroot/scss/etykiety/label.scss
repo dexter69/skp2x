@@ -4,9 +4,22 @@
 
 #errinfo > p {
     //color: orange;
-    padding: 0.7em;
-    margin-top: 1.75em;
+    padding: 0.6em;
+    margin-top: 1em;
     border-radius: 0.3em;
+    font-size: 130%;
+}
+
+#errinfo p.normal {
+    //color: red;
+    font-weight: bold;
+    font-size: 300%;
+    margin-top: 0.2em;    
+    padding: 0.15em 1em;
+}
+
+#errinfo p.normal span {
+    font-weight: normal;
 }
 
 .label-summary {

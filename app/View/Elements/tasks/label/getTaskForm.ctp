@@ -13,15 +13,15 @@ echo $this->BootForm->input('numer', array(
 ));
 
 if( $msg ) { // mamy jakieś info o błędach
-    $class = 'bg-danger';
+    $class = 'bg-primary text-center';
 } else {
-    $class = 'normal';
+    $class = 'normal text-primary';
     $msg = $this->Ma->bnr2nrj($nr);
 }
 ?>
 
 <!-- ewentualne info o błędach -->
-<div id="errinfo" class="col-sm-4"><p class="<?php echo $class ?>"><?php echo $msg ?></p></div>
+<div id="errinfo" class="col-sm-6"><p class="<?php echo $class ?>"><?php echo $msg ?></p></div>
 
 <?php
 echo $this->BootForm->end(array(
