@@ -24,12 +24,14 @@ if( $result != null ) { // znaczy było POST
     if( !empty($result['data']) ) { // mamy coś ?>
         <div class="row">            
             <?php $i=0;
+            $produkcyjne = $this->Ma->bnr2nrj($result['data']['Task']['nr'], null, false);
             foreach( $result['data']['Ticket'] as $karta ) {            
                 echo $this->element('tasks/label/kodKarty', array(
                     'karta' => $karta,
                     'divclass' => 'col-sm-6 label-summary',
                     'lp' => ++$i,
-                    'box' => $box
+                    'box' => $box,
+                    'produkcyjne' => $produkcyjne
                 ));
             } ?>
         </div>        

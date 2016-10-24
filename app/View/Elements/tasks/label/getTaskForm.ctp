@@ -21,7 +21,9 @@ if( $msg ) { // mamy jakieś info o błędach
 ?>
 
 <!-- ewentualne info o błędach -->
-<div id="errinfo" class="col-sm-6"><p class="<?php echo $class ?>"><?php echo $msg ?></p></div>
+<div id="errinfo" class="col-sm-6" data-produkcyjne="<?php echo $this->Ma->bnr2nrj($nr, null, false); ?>">
+    <p class="<?php echo $class ?>"><?php echo $msg ?></p>
+</div>
 
 <?php
 echo $this->BootForm->end(array(

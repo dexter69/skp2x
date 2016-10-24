@@ -16,7 +16,9 @@ $ext ='act="' . $active . '" nor="' . $normal . '"';
 ?>
     <h3 class="name"
         data-product="<?php echo $karta['name']; ?>"
-        data-naklad="<?php echo $karta['naklad']; ?>">        
+        data-naklad="<?php echo $karta['naklad']; ?>"
+        data-produkcyjne="<?php echo $produkcyjne; ?>"
+        data-handlowe="<?php echo $karta['hnr']; ?>">        
         <?php echo $karta['name']; ?>
     </h3>
     <p class="infobar">nakład: <strong><?php echo $karta['naklad']; ?></strong></p>

@@ -38,7 +38,10 @@ class TasksController extends AppController {
                unset($rqdata['data']['Ticket'][$i]['ilosc'], $rqdata['data']['Ticket'][$i]['mnoznik']);
                // dane do wyświetlania kontrolki (która wartość jest aktywna)i zawartości pola input
                $rqdata['data']['Ticket'][$i]['kontrol'] = $this->batonSize($rqdata['data']['Ticket'][$i]['naklad']);
-               $rqdata['data']['Ticket'][$i++]['lo'] = ( $i % 2 == 0 ) ? 'en' : 'pl';                       
+               $rqdata['data']['Ticket'][$i]['lo'] = ( $i % 2 == 0 ) ? 'en' : 'pl'; 
+               //Troche prymitywnie (bo nam sie nie chce) pobierz nr handlowego dla danej karty
+               $rqdata['data']['Ticket'][$i]['hnr'] = $this->Task->Ticket->getNrHandlowgo($rqdata['data']['Ticket'][$i]['id']);
+               $i++;
             }
         }
         return $rqdata;
