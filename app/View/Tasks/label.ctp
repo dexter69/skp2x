@@ -39,6 +39,6 @@ if( $result != null ) { // znaczy było POST
         // umieszczamy "szkielet" skryptu pod pdfmake w elemencie, bo tak nam wygodnie
         echo $this->element('tasks/label/pdfSkeleton');
         //echo "<br>";
-        $this->App->print_r2($result['data']/*['Ticket']*/); // prezentuj
+        //$this->App->print_r2($result['data']/*['Ticket']*/); // prezentuj
     } 
 }

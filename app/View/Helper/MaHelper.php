@@ -1353,7 +1353,6 @@ class MaHelper extends AppHelper {
 			$this->Form->input('Card.a_pant',$vju['x_pant']),
 			$this->Form->input('Card.r_pant',$vju['x_pant'])
 		);
-		
 		$tablica = array( $material, $laminat, $cmyk, $panton );
 		
 		
@@ -1422,11 +1421,13 @@ class MaHelper extends AppHelper {
                         $this->Form->input('Card.mag',$vju['mag']) .
                         $this->Form->input('Card.wzor',$vju['wzor']) .
                         $this->Form->input('Card.chip',$vju['chip']) .
+                        //$this->Form->input('Card.etykieta', $vju['etykieta']) .
                 $this->Html->tag('/div') .
                 $this->Html->tag('div', null, array('class' => 'optiondiv')) .
                         $this->Form->input('Card.dziurka',$vju['dziurka']) .
                         $this->Form->input('Card.ksztalt',$vju['ksztalt']) .
                         $this->Form->input('Card.hologram',$vju['hologram']) .
+                        //$this->Form->input('Card.etylang', $vju['etylang']) .
                 $this->Html->tag('/div') .
                 $this->Html->tag('div', null, array('class' => 'optiondiv')) .
                         $this->Form->input('Card.option_comment',$vju['option_comment']) .
@@ -1451,12 +1452,23 @@ class MaHelper extends AppHelper {
                             $this->Html->tag('/div') .
                             $this->Html->tag('div', null, array('id' => 'finaluw', 'class' => 'input textarea')) .
                                     $this->viewheader('UWAGI DO CAŁEGO PROJEKTU', array('class' => 'dol_small')) .
+                                    $this->putEtykieta($vju) .
                                     $this->Form->input('Card.comment',$vju['comment']) .
                             $this->Html->tag('/div');
 					
 		
 		return $markup;
 	}
+        
+        private function putEtykieta( $vju ) {
+            
+            return
+                $this->Html->tag('div', null, array('id' => 'etykietoza')) .
+                    $this->Form->input('Card.etykieta', $vju['etykieta']) . 
+                    $this->Form->input('Card.etylang', $vju['etylang']) .
+                $this->Html->tag('/div');
+            
+        }
 
 	
 	public function zalaczone_pliki( $pliczki = array(), $thevju = array() ) {

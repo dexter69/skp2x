@@ -199,11 +199,12 @@ ul#fileList li div:last-child {
 }
 
 #ptext > textarea {
-    height: 130px;
+    height: 200px;
 }
 
 div#finaluw textarea {
 	width: 97%;
+        height: 145px;
 }
 
 .cardviewtable { /*display: inline-block;*/ vertical-align: top; }
@@ -457,3 +458,17 @@ dl#cardviewdl dd.busy {
    text-align: center;
    margin: 0 0 2px 0;
 }
+
+
+//etykiety
+#etykietoza {
+    margin: 0;
+}
+#etykietoza > div {
+    display: inline-block;
+}
+
+#etykietoza > div:last-child {
+    margin-left: 1.5em;
+}
+    

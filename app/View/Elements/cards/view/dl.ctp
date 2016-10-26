@@ -31,8 +31,8 @@
     $this->Proof->dd($datka, $atrs);
     
     $this->Proof->dtdd('Klient',
-                    $this->Html->link($customer['name'], array(
-                    'controller' => 'customers', 'action' => 'view', $customer['id']
+        $this->Html->link($customer['name'], array(
+        'controller' => 'customers', 'action' => 'view', $customer['id']
     )));
     
     $this->Proof->dtdd('Opiekun', $owner['name']);
@@ -58,6 +58,13 @@
     else
         { $dd =  $this->Ma->status_karty($card['status']); }
     $this->Proof->dtdd('Status', $dd);
+    
+    //etykieta
+    $strety = $etykieta[$card['etykieta']];
+    if( $card['etykieta'] != 'niebyc' ) {
+        $strety .= ' (' . $etylang[$card['etylang']] . ')';
+    }    
+    $this->Proof->dtdd('Etykieta', $strety);
     
     $this->Proof->dtdd('Stworzone', $this->Ma->mdt($card['created']));
     $this->Proof->dtdd('Zmodyfikowane', $this->Ma->mdt($card['modified']));

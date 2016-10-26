@@ -24,7 +24,9 @@ echo $this->element('cards/view/head', array(
             'owner' => $card['Owner'],
             'creator' => $card['Creator'],
             'job' => $card['Job'],
-            'comm' => $comm
+            'comm' => $comm,
+            'etykieta' => $vju['etykieta']['options'],
+            'etylang' => $vju['etylang']['view']
         )); 
 
         // CMYK
@@ -65,8 +67,9 @@ echo $this->element('cards/view/head', array(
 <div id="datepicker"></div><div id="komunikat"></div>
 
 <?php 
+//$this->Proof->printR($vju);
 //$this->Proof->printR($card);
-//$this->Ma->kontrolka($card, $evcontrol);	?>
+//$this->Ma->kontrolka($card, $evcontrol);
 
 
 

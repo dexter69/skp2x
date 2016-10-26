@@ -919,6 +919,26 @@ class Card extends AppModel {
 	// formatowania do views
 	public $view_options = 
             array (
+                // Etykieta
+                'etykieta' =>   array(
+                    'options' => array(
+                        'standa' => 'STANDARD',
+                        'zakres' => 'STANDARD + ZAKRES',
+                        //'zpliku' => 'Z PLIKU',
+                        'nietyp' => 'NIETYPOWA',
+                        'niebyc' => 'BRAK'
+                )),
+                'etylang' =>   array( 
+                    'label' => 'Język etykiety',
+                    'options' => array(
+                        'pl' => 'Polski',
+                        'en' => 'Angielski'
+                    ),
+                    'view' => array(
+                        'pl' => 'polska',
+                        'en' => 'angielska')
+                ),
+                // <<<<<<<<<<<
                 'name'=>	array( 
                                                         'label' => 'Nazwa karty',
                                                         //'div' => array('id' => ''),
@@ -1126,11 +1146,9 @@ class Card extends AppModel {
                                                                 'default' => ZERO
                                                 ),
                 'perso' =>	array(	'label' => false, 
-                                                        'div'  => array('id'=>'ptext')
-                                                        /*	'div'  => false,
-                                                                'type' => 'text',
-                                                                'default' => 0*/
-                                                ),
+                        'div'  => array('id'=>'ptext')
+                                                        
+                ),
                 'option_comment' =>	array( 
                                                         'label' => 'UWAGI',
 
@@ -1140,6 +1158,7 @@ class Card extends AppModel {
                                                         'label' => false,
                                                         //'div' => array('id'=>'finaluw')
                                                         'div' => false
+                                                        //,'rows' => 4
                                                 )							
             );
 		
