@@ -375,57 +375,48 @@ class CardsController extends AppController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
-			//$this->Card->print_r2($this->request->data); return;			
-			//$this->Card->create();
-			if ( $this->Card->saveitAll( $this->request->data, $blad ) ) {
-				$this->Session->setFlash('KARTA ZOSTAŁA ZAPISANA!', 'default', array('class' => GOOD_FLASH));
-				return $this->redirect(array('action' => 'view', $this->Card->id));
-			} else {
-				$this->Session->setFlash(__('Nie można zapisac karty. Proszę spróbuj ponownie. (blad = ' . $blad . ')'));
-			}
-		}
+            if ($this->request->is('post')) {
+                //$this->Card->print_r2($this->request->data); return;			                    
+                if ( $this->Card->saveitAll( $this->request->data, $blad ) ) {
+                        $this->Session->setFlash('KARTA ZOSTAŁA ZAPISANA!', 'default', array('class' => GOOD_FLASH));
+                        return $this->redirect(array('action' => 'view', $this->Card->id));
+                } else {
+                        $this->Session->setFlash(__('Nie można zapisac karty. Proszę spróbuj ponownie. (blad = ' . $blad . ')'));
+                }
+            }
 
-		//chcemy tylko klientów, którzy są "własnością" zalogowanego użytkownika
-		// UWAGA, przy zmianie na klientów różnych użytkowników - to nie bedzie dzialać
-		$tmp = $this->Card->Customer->find('list', array(
-			'conditions' => array('owner_id' => $this->Auth->user('id')),
-			'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id')
-		));
-		// powyższe zwraca nam strukturę, gdzie mamay też owner_id, czyli nie bierzemy 
-		// z zalogowanego, tylko owner_id klientów - przyda się w przyszłości
-				
-		if( !empty($tmp) ) {
-			$tuklucz = array_keys($tmp);	
-			$customers = $tmp[$tuklucz[0]];
-			
-			// $tuklucz[0] - to id ownera klienta
-			$ownerid = $tuklucz[0];
-		}
-		else {
-			$customers = array();
-			$ownerid = 0;
-		}
-		
-		if( empty($customers) ) {
-                    $this->Session->setFlash( 'Musisz najpierw dodać jakiegoś klienta !' );
-                    //$this->Session->setFlash('Something bad.', 'default', array(), 'ble');
-                    return $this->redirect($this->referer());
-                    //return $this->redirect(array('controller' => 'customers', 'action' => 'index', 'my'));
-		}
-		
-		// przygotowujemy tablicę z klientami dla autocomplete w $jscode
-		$klienci = array();
-		foreach( $customers as $key => $value) 
-                    { $klienci[] = array('label' => $value, 'id' => $key); }
-		$jscode = "var yeswyb = " . true . ";\nvar yesperso = " . JEDEN . ";\n" . "var klienci =  " . json_encode($klienci);
-		
-		// Chcemy pliki podpięte do kart "w buforze" zalogowanego użytkownika
-		$wspolne = $this->Card->findPropperUploads();
-		$vju = $this->Card->get_view_options();
-		$links = $this->links;
-		$referer = $this->referer();
-		$this->set(compact( 'vju', 'ownerid', 'wspolne', 'links', 'jscode', 'tmp', 'referer' ));		
+            //chcemy tylko klientów, którzy są "własnością" zalogowanego użytkownika
+            // UWAGA, przy zmianie na klientów różnych użytkowników - to nie bedzie dzialać            
+            $ownerid = $this->Auth->user('id');
+            $customers = $this->Card->Customer->find('all', array(
+                    'recursive' => 0,
+                    'conditions' => array('owner_id' => $ownerid),
+                    'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id', 'Customer.etylang')
+            ));
+
+            if( empty($customers) ) {
+                $this->Session->setFlash( 'Musisz najpierw dodać jakiegoś klienta !' );
+                return $this->redirect($this->referer());
+            }
+
+            // przygotowujemy tablicę z klientami dla autocomplete w $jscode
+            $klienci = array();
+            foreach( $customers as $row ) { 
+                $klienci[] = array(
+                    'label' => $row['Customer']['name'],
+                    'id' => (int)$row['Customer']['id'],
+                    'etylang' => $row['Customer']['etylang']
+                );             
+            }
+            $jscode =   "var yeswyb = " . true . ";\nvar yesperso = " . JEDEN .                        
+                        ";\nvar klienci =  "  . json_encode($klienci);
+
+            // Chcemy pliki podpięte do kart "w buforze" zalogowanego użytkownika
+            $wspolne = $this->Card->findPropperUploads();
+            $vju = $this->Card->get_view_options();
+            $links = $this->links;
+            $referer = $this->referer();
+            $this->set(compact( 'vju', 'ownerid', 'wspolne', 'links', 'jscode', 'referer'/*, 'tmp2', 'customers'*/ ));
 	}
 
 /**
@@ -465,16 +456,17 @@ class CardsController extends AppController {
             $vju = $this->Card->get_view_options();
             $links = $this->links;
 
-            /**/
             // id usera brane z karty - przyda się do edycji przez inne osoby niz handlowiec: twórca
-            $customers = $this->Card->Customer->find('list', array(
-                    'conditions' => array('owner_id' => $this->request->data['Card']['owner_id']),
-                    //'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id')
-            ));
+            $customers = $this->Card->Customer->find('all', array(
+                'recursive' => 0,
+                'conditions' => array('owner_id' => $this->request->data['Card']['owner_id']),
+                'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id', 'Customer.etylang')
+            ));            
             $klienci = array();
-            foreach( $customers as $key => $value) {
-                $klienci[] = array('label' => $value, 'id' => $key); }
-
+            
+            foreach( $customers as $row) {
+                $klienci[] = array('label' => $row['Customer']['name'], 'id' => $row['Customer']['id'], 'etylang' => $row['Customer']['etylang']);    
+            }    
             $klienci = "var klienci =  \n" . str_replace("},", "},\n", json_encode($klienci) );
             $jscode = "var yeswyb = " . true . ";\nvar yesperso = " . JEDEN . ";\n";
             $jscode .= "var orvalue = " . OTHER_ROLE . ";\n\n" . $klienci . ";";

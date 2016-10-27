@@ -181,7 +181,8 @@
 	
 	
 	$( document ).ready(function() {
-		
+            
+            console.log(klienci);
             check_podklady();
             check_is_perso();
             check_edit_pliki();
@@ -213,7 +214,7 @@
             });
 
             $( '#CardKlient' ).focusout(function() {
-                    if( $('#CardCustomerId').val() == 0 ) {
+                    if( $('#CardCustomerId').val() === 0 ) {
                             $( '#CardKlient' ).val('');
 
                     }
@@ -223,11 +224,14 @@
             $( '#CardKlient' ).autocomplete({
                     source: klienci,
                     select: function(event, ui) {
-                    $('#CardCustomerId').val(ui.item.id);
-                    $('.cu' + ui.item.id).show();
-                    if( $('.cu' + ui.item.id).length )
+                        $('#CardCustomerId').val(ui.item.id);
+                        $('.cu' + ui.item.id).show();
+                        if( $('.cu' + ui.item.id).length ) {
                             $('#wdiv > label').show();
-            }
+                        }
+                        //Ustaw proponowany język wg klienta
+                        $('#CardEtylang').val(ui.item.etylang);
+                    }
             });
 	
 	
