@@ -47,7 +47,7 @@
             <p>
                 czas realizacji:&nbsp;<strong><?php echo $customer['cr']; ?> dni</strong><br>
                 opiekun:&nbsp;<strong><?php echo $opiekun; ?></strong><br>
-                język etykiety:&nbsp;<strong><?php echo $customer['etylang']; ?></strong><br>
+                język etykiety:&nbsp;<strong><?php echo $customer['etylang-txt']; ?></strong><br>
             </p>
         </div>
     </div>

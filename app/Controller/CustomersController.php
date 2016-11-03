@@ -97,7 +97,7 @@ class CustomersController extends AppController {
                     $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
                     return $this->redirect($this->referer());
             }
-            //$links = $this->links;
+            $customer['Customer']['etylang-txt'] = $this->Customer->etyk_view['etylang']['cview'][$customer['Customer']['etylang']];
             $this->set( compact( 'customer') );
             //$this->render('view-old'); 
 	}        

@@ -291,37 +291,37 @@ class Customer extends AppModel {
 		);
 	
 		public function get_view_options( $customer = array() ) {
-   
 			
-			$this->view_options['owner_id']['options'] = $this->Owner->find('list');
-			$this->view_options['owner_id']['default'] = AuthComponent::user('id');
-			
-			if( !empty($customer) ) { // tzn. edycja
-				$this->view_options['forma_zaliczki']['default'] = $customer['forma_zaliczki'];
-				$this->view_options['forma_platnosci']['default'] = $customer['forma_platnosci'];
-			}
-			
-			if( $this->view_options['forma_zaliczki']['default'] == NIE || $this->view_options['forma_zaliczki']['default'] == PAU ) {
-				$this->view_options['procent_zaliczki']['disabled'] = true;
-				$this->view_options['procent_zaliczki']['required'] = false;
-				$this->view_options['procent_zaliczki']['default'] = null;
-			} else {
-				$this->view_options['procent_zaliczki']['disabled'] = false;
-				$this->view_options['procent_zaliczki']['required'] = true;
-			}
-			
-			if( $this->view_options['forma_platnosci']['default'] == NIE ||
-				$this->view_options['forma_platnosci']['default'] == POB ||
-				$this->view_options['forma_platnosci']['default'] == PAU
-			) {
-				$this->view_options['termin_platnosci']['default'] = null;	
-				$this->view_options['termin_platnosci']['disabled'] = true;
-				$this->view_options['termin_platnosci']['required'] = false;
-			} else {
-				$this->view_options['termin_platnosci']['disabled'] = false;
-				$this->view_options['termin_platnosci']['required'] = true;
-			}
-			return $this->view_options;
+                    $this->view_options['owner_id']['options'] = $this->Owner->find('list');
+                    $this->view_options['owner_id']['default'] = AuthComponent::user('id');
+                    $this->view_options['etylang'] = $this->etyk_view['etylang'];
+
+                    if( !empty($customer) ) { // tzn. edycja
+                            $this->view_options['forma_zaliczki']['default'] = $customer['forma_zaliczki'];
+                            $this->view_options['forma_platnosci']['default'] = $customer['forma_platnosci'];
+                    }
+
+                    if( $this->view_options['forma_zaliczki']['default'] == NIE || $this->view_options['forma_zaliczki']['default'] == PAU ) {
+                            $this->view_options['procent_zaliczki']['disabled'] = true;
+                            $this->view_options['procent_zaliczki']['required'] = false;
+                            $this->view_options['procent_zaliczki']['default'] = null;
+                    } else {
+                            $this->view_options['procent_zaliczki']['disabled'] = false;
+                            $this->view_options['procent_zaliczki']['required'] = true;
+                    }
+
+                    if( $this->view_options['forma_platnosci']['default'] == NIE ||
+                            $this->view_options['forma_platnosci']['default'] == POB ||
+                            $this->view_options['forma_platnosci']['default'] == PAU
+                    ) {
+                            $this->view_options['termin_platnosci']['default'] = null;	
+                            $this->view_options['termin_platnosci']['disabled'] = true;
+                            $this->view_options['termin_platnosci']['required'] = false;
+                    } else {
+                            $this->view_options['termin_platnosci']['disabled'] = false;
+                            $this->view_options['termin_platnosci']['required'] = true;
+                    }
+                    return $this->view_options;
 		}
 		
 	

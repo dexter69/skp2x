@@ -40,6 +40,7 @@ $this->Ma->displayActions($links);
 		
 		$markup =	$this->Form->input('vatno_txt',$vju['vatno_txt']) .
 					$this->Form->input('waluta',$vju['waluta']) .
+                                        $this->Form->input('etylang', $vju['etylang']) .
 					$this->Form->input('cr',$vju['cr']);
 		$this->Ma->responsive_divs( $markup, 'vat_wal_cr');
 					

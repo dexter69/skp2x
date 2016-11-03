@@ -1,6 +1,6 @@
 <?php 
 // do sekcji head zostanie dodany customer.css
-$this->Html->css(array(/**/'customer.css?v=328526834'), null, array('inline' => false));
+$this->Html->css(array(/**/'customer.css?v=328956895434'), null, array('inline' => false));
 echo $this->Html->script( array('jquery', /* 'common',*/ 'customer'), array('inline' => false)); 
 
 $code = "var pay = " . json_encode( array( PRZE, CASH ) ) . ";\n" .
@@ -52,15 +52,16 @@ $this->Ma->displayActions($links);
 		
 		echo $this->Form->hidden('vatno',$vju['vatno']);
 		
-		$markup =	$this->Form->input('vatno_txt',$vju['vatno_txt']) .
-					$this->Form->input('waluta',$vju['waluta']) .
-					$this->Form->input('cr',$vju['cr']);
+                $markup =   $this->Form->input('vatno_txt',$vju['vatno_txt']) .                            
+                            $this->Form->input('waluta',$vju['waluta']) .
+                            $this->Form->input('etylang', $vju['etylang']) .
+                            $this->Form->input('cr',$vju['cr']);
 		$this->Ma->responsive_divs( $markup, 'vat_wal_cr');
 					
 		
-		$markup =	$this->Form->input('osoba_kontaktowa',$vju['osoba_kontaktowa']) .
-					$this->Form->input('email',$vju['email']) .
-					$this->Form->input('tel',$vju['tel']);					;
+		$markup =	$this->Form->input('osoba_kontaktowa',$vju['osoba_kontaktowa']) .                                        
+                                $this->Form->input('email',$vju['email']) .
+                                $this->Form->input('tel',$vju['tel']);					
 		$this->Ma->responsive_divs( $markup, 'osob_kontakt');					
 		
 		
@@ -85,4 +86,5 @@ $this->Ma->displayActions($links);
 	</fieldset>
 <?php echo $this->Form->end(__('Zapisz')); ?>
 </div>
+<?php //$this->App->print_r2($vju);//
 

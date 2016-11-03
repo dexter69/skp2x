@@ -52,7 +52,11 @@ class AppModel extends Model {
             ),
             'view' => array(
                 'pl' => 'polska',
-                'en' => 'angielska')
+                'en' => 'angielska'),
+            'cview' => array( // widok klienta
+                'pl' => 'polski',
+                'en' => 'angielski'
+            )
         )
     );
     

@@ -7,6 +7,7 @@ div.wrapit { border: 1px solid blue; }
 }
 
 #nr_budynku_div, #kraj_div, #cr_div, #tel_div {	width: 27%;  }
+
 #osoba_kontaktowa_div { width: 38%; }
 #nr_budynku_div  > input, #kraj_div  > input,
 #cr_div  > input, #email_div  > input {	width: 93%; }
@@ -14,8 +15,9 @@ div.wrapit { border: 1px solid blue; }
 #kod_div { width: 17%;  }
 #ulica_div > input { width: 96%; }
 #kod_div > input { width: 90%; }
-#waluta_div { width: 12%; }
-#waluta_div select { width: 90%; }
+#waluta_div { width: 17%; }
+#waluta_div + div { width: 18%; }
+#waluta_div select, #waluta_div + div select { width: 90%; }
 
 .opcje_platnosci {
 	padding: 0 20px 0 0;
