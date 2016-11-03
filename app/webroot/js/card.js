@@ -222,16 +222,16 @@
 
 
             $( '#CardKlient' ).autocomplete({
-                    source: klienci,
-                    select: function(event, ui) {
-                        $('#CardCustomerId').val(ui.item.id);
-                        $('.cu' + ui.item.id).show();
-                        if( $('.cu' + ui.item.id).length ) {
-                            $('#wdiv > label').show();
-                        }
-                        //Ustaw proponowany język wg klienta
-                        $('#CardEtylang').val(ui.item.etylang);
+                source: klienci,
+                select: function(event, ui) {
+                    $('#CardCustomerId').val(ui.item.id);
+                    $('.cu' + ui.item.id).show();
+                    if( $('.cu' + ui.item.id).length ) {
+                        $('#wdiv > label').show();
                     }
+                    //Ustaw proponowany język wg klienta
+                    $('#CardEtylang').val(ui.item.etylang);
+                }
             });
 	
 	
