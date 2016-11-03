@@ -263,6 +263,7 @@ define('BAZA', 3);
 define('PODPERSO', 4);
 define('PODGLAD', 5);
 define('PODPIS', 6);
+define('ETYKIETA', 6);
 
 
 //Job

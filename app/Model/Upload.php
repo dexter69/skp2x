@@ -260,21 +260,20 @@ class Upload extends AppModel {
 								//'options' => array('1'=>'STANDARD PVC', '2'=>'BIO PVC', '3'=>'TRANSPARENT'), 
 								'default' => 0 //
 							),
-			'role'=>	array( 
-								//'label' => 'PRZEZNACZENIE PLIKU',
-							 	//'div' => array('id' => 'user_id_div'),
-								'label' => false,
-								'div' => false,
-								'options' => array(
-									NULL=>'- WYBIERZ COŚ -',
-									PROJ=>'PROJEKT KARTY',
-									BAZA=>'BAZA DANYCH',
-									PODPERSO=>'PODGLĄD PERSO',
-									PODGLAD=>'PODGLĄD',
-                                                                        PODPIS => 'PODPIS',
-									OTHER_ROLE=>'INNA'), 
-								'default' => NULL //
-							),
+			'role'  =>  array( 
+                            'label' => false,
+                            'div' => false,
+                            'options' => array(
+                                    NULL=>'- WYBIERZ COŚ -',
+                                    PROJ=>'PROJEKT KARTY',
+                                    BAZA=>'BAZA DANYCH',
+                                    PODPERSO=>'PODGLĄD PERSO',
+                                    PODGLAD=>'PODGLĄD',
+                                    PODPIS => 'PODPIS',
+                                    ETYKIETA => 'ETYKIETA',
+                                    OTHER_ROLE=>'INNA'), 
+                            'default' => NULL //
+                        ),
 			'roletxt'=>	array(
 								'label' => false,
 								'div' => false,
