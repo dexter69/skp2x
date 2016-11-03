@@ -33,6 +33,29 @@ class AppModel extends Model {
 	
     public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
     
+    /*
+     * Etykiety */
+    public $etyk_view = array(
+        'etykieta' =>   array(
+            'options' => array(
+                'standa' => 'STANDARD',
+                'zakres' => 'STANDARD + ZAKRES',
+                //'zpliku' => 'Z PLIKU',
+                'nietyp' => 'NIETYPOWA',
+                'niebyc' => 'BRAK'
+        )),
+        'etylang' =>   array( 
+            'label' => 'Język etykiety',
+            'options' => array(
+                'pl' => 'Polski',
+                'en' => 'Angielski'
+            ),
+            'view' => array(
+                'pl' => 'polska',
+                'en' => 'angielska')
+        )
+    );
+    
     //wyświetlanie tekstów o zdarzeniach
     public $eventText = array(
             ZERO => array(

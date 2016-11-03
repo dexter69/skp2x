@@ -917,28 +917,8 @@ class Card extends AppModel {
 	
 	// ######################################
 	// formatowania do views
-	public $view_options = 
-            array (
-                // Etykieta
-                'etykieta' =>   array(
-                    'options' => array(
-                        'standa' => 'STANDARD',
-                        'zakres' => 'STANDARD + ZAKRES',
-                        //'zpliku' => 'Z PLIKU',
-                        'nietyp' => 'NIETYPOWA',
-                        'niebyc' => 'BRAK'
-                )),
-                'etylang' =>   array( 
-                    'label' => 'Język etykiety',
-                    'options' => array(
-                        'pl' => 'Polski',
-                        'en' => 'Angielski'
-                    ),
-                    'view' => array(
-                        'pl' => 'polska',
-                        'en' => 'angielska')
-                ),
-                // <<<<<<<<<<<
+	public $view_options = array (
+                
                 'name'=>	array( 
                                                         'label' => 'Nazwa karty',
                                                         //'div' => array('id' => ''),
@@ -1170,8 +1150,9 @@ class Card extends AppModel {
 			$this->view_options['file'] = $this->Upload->view_options['file'];
 			$this->view_options['role'] = $this->Upload->view_options['role'];
 			$this->view_options['roletxt'] = $this->Upload->view_options['roletxt'];
+                        $this->view_options['etykieta'] = $this->etyk_view['etykieta'];
+                        $this->view_options['etylang'] = $this->etyk_view['etylang'];
 			return $this->view_options;
 		}
-			
-
+                
 }

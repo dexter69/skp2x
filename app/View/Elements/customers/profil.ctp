@@ -46,7 +46,8 @@
             <span class="label label-default label-big">Inne</span>
             <p>
                 czas realizacji:&nbsp;<strong><?php echo $customer['cr']; ?> dni</strong><br>
-                opiekun:&nbsp;<strong><?php echo $opiekun; ?></strong>
+                opiekun:&nbsp;<strong><?php echo $opiekun; ?></strong><br>
+                język etykiety:&nbsp;<strong><?php echo $customer['etylang']; ?></strong><br>
             </p>
         </div>
     </div>
