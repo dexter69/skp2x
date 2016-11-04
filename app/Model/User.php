@@ -34,7 +34,8 @@ class User extends AppModel {
                     //'div' => false,
                     'options' => array(
                             SUA=>'superadmin', MAR=>'marketing', KOR=>'koordynator',
-                            KIP=> 'kierownik prod.', DTP=> 'dział DTP', PER=> 'personalizacja'
+                            KIP=> 'kierownik prod.', DTP=> 'dział DTP', PER=> 'personalizacja',
+                            SEK=> 'sekretariat', KON=>'kontrola jakości'
                     ),
                     'default' => 1 //
                 )					
