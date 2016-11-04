@@ -20,7 +20,7 @@ class TasksController extends AppController {
             $result = $this->Task->taskViaErr;
             /*  Tymczasowa modyfikacja - chcemy mieć w kartach opcję etykiety 'lo'.
                 Taka symulacja. Później do usunięcia */
-            $result = $this->tmpOpp($result);
+            $result = $this->tmpOpp($result);            
         }
         $box = $this->batons['rodzaje'];
         $this->set( compact('result', 'box') );

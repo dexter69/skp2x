@@ -7,12 +7,18 @@ $lan = array(
     'nazwa' => array('pl' => 'nazwa', 'en' => 'name')
 );
 
-// klasy "klikaczy
+// klasy "klikaczy"
 $active = 'bg-primary';
 $normal = 'bg-info';
 
+
 //dodatkowe pseudo atrybuty
 $ext ='act="' . $active . '" nor="' . $normal . '"';
+if( $karta['isperso']) { //oznaczamy kartę z perso
+    $name = '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;' . $karta['name'];
+} else {
+    $name = $karta['name'];
+}
 ?>
     <h3 class="name"
         data-product="<?php echo $karta['name']; ?>"
@@ -20,7 +26,7 @@ $ext ='act="' . $active . '" nor="' . $normal . '"';
         data-produkcyjne="<?php echo $produkcyjne; ?>"
         data-handlowe="<?php echo $karta['hnr']; ?>"
         data-lang="<?php echo $karta['etylang']; ?>">          
-        <?php echo $karta['name']; ?>
+        <?php echo $name; ?>
     </h3>
     <p class="infobar">nakład: <strong><?php echo $karta['naklad']; ?></strong></p>
     <ul <?php echo $ext;?> class="list-inline"><?php
