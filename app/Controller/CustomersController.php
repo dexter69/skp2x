@@ -138,13 +138,16 @@ class CustomersController extends AppController {
                                     $this->Session->setFlash('Klient z tym numerem NIP-u już istnieje: <a href="' . $url . '">' . $name . '</a>');
                     }
             }
-		
-		// opcje wyświetlania pól zdefiniowane w modelu
-		$vju = $this->Customer->get_view_options();
-		//$this->set(compact('vju'));
-		
-		$links = $this->links; 
-		$this->set( compact('vju', 'links' ) );
+            if( $this->Auth->user('dzial') == KON ) {
+                //kontrola jakości - przekieruj skąd przyszli 
+                return $this->redirect($this->referer());
+            }
+            // opcje wyświetlania pól zdefiniowane w modelu
+            $vju = $this->Customer->get_view_options();
+            //$this->set(compact('vju'));
+
+            $links = $this->links; 
+            $this->set( compact('vju', 'links' ) );
 	}
 
 /**
