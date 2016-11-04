@@ -5,7 +5,7 @@
         content: [],        
         styles: {
           textlabel: {
-              fontSize: 7
+              fontSize: 8
           },          
           product: {
             fontSize: 11,
@@ -28,7 +28,7 @@
         pageOrientation: 'landscape',
         
         // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
-        pageMargins: [ 12, 10, 8, 8 ]
+        pageMargins: [ 12, 10, 8, 6 ]
         
       };
     

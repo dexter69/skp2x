@@ -20,16 +20,22 @@ $( document ).ready(function() {
     /* Klikając na nazwę karty, generujemy pdf z etykietami */
     $(".label-summary .name").click(function(){
         makeLabPdf( // wykreuj pdf
-                getLabelData(this) // odczytaj dane dla etykiety i zwróć w formie obiektu
+            getLabelData(this) // odczytaj dane dla etykiety i zwróć w formie obiektu
         );
     });
 });
 
 // odczytaj dane dla etykiety i zformatuj
 function getLabelData( obj ) { // obj reprezentuje kliknięty element
+    /* Dane językowe do etykiet */
+    var langoza = {
+        produkt:    {'pl': 'produkt:', 'en': 'product:'},  
+        naklad:     {'pl': 'zamówiona ilość:', 'en': 'ordered quantity:'},
+        wbatonie:   {'pl': 'ilość w opakowaniu:', 'en': 'batch:'},
+        onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:'}  
+    },
     
-    
-    var label = { 
+    label = { 
         job: $(obj).data('produkcyjne'),
         order: $(obj).data('handlowe'),
         name: $(obj).data('product'),
@@ -42,13 +48,14 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
         licznik: true, /* numerowanie batonów, czyli 1, 2, 3.... */
         suma: true, /* sumowanie batonów - będzie (np.) 1/12, 2/12, ..., 12/12 */
         sumb: '',
-        lnr: 1, // nr strony/batona, zaczynamy od 1,    
-        
-        
-        lang: 'pl',
-        
-            
-        //indec: 1
+        lnr: 1, // nr strony/batona, zaczynamy od 1,           
+        /* Słowa zależne od języka na etykiecie */
+        labels: {
+            produkt: langoza.produkt[$(obj).data('lang')],
+            naklad: langoza.naklad[$(obj).data('lang')],
+            wbatonie: langoza.wbatonie[$(obj).data('lang')],
+            onr: langoza.onr[$(obj).data('lang')]
+        }
     };
     
     if( label.baton === "" || label.baton === null ) {
@@ -56,7 +63,7 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
          * Znaczy, że użytkownik nie chce drukować ilości w batonie,
          * więc nie liczymy również sumy batonów, będzie tylko 1 etykieta */        
         label.baton = 0;
-        label.inbox = false;        
+        label.inbox = false;
     } else {
         label.baton = parseInt(label.baton);
         label.left = label.naklad;
@@ -122,14 +129,16 @@ function addStructureOfOnePage(etyk) {
         if( etyk.licznik ) { // drukujemy licznik            
             etyk.valtxt = etyk.lnr + etyk.sumb;
         }
+    } else {
+        etyk.labels.onr = ""; // nie chcemy tego, gdy w[isywanie ręczne
     }
     
     pdfdata.push(                
         new page.firstLine(etyk.order, etyk.job),  
-        new page.secondLine('produkt:', true),        
+        new page.secondLine(etyk.labels.produkt, true),        
         new page.secondLine(etyk.name, false),
-        new page.thirdLineV2(numberSeparator(etyk.naklad, " "), etyk.baton2.toString()),
-        new page.fourthLineV2(etyk.labtxt, true),
+        new page.thirdLineV2(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),
+        new page.fourthLineV2(etyk.labels.onr, true),
         new page.fourthLineV2(etyk.valtxt, false)
     );
     

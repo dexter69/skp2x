@@ -18,7 +18,8 @@ $ext ='act="' . $active . '" nor="' . $normal . '"';
         data-product="<?php echo $karta['name']; ?>"
         data-naklad="<?php echo $karta['naklad']; ?>"
         data-produkcyjne="<?php echo $produkcyjne; ?>"
-        data-handlowe="<?php echo $karta['hnr']; ?>">        
+        data-handlowe="<?php echo $karta['hnr']; ?>"
+        data-lang="<?php echo $karta['etylang']; ?>">        
         <?php echo $karta['name']; ?>
     </h3>
     <p class="infobar">nakład: <strong><?php echo $karta['naklad']; ?></strong></p>

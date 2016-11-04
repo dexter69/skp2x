@@ -11,22 +11,22 @@ var page = {
     },
     secondLine: function(val, lbltxt) {       
        this.text = val;
-       if(lbltxt) { //znaczy tprodukujemy treść label'a       
+       if(lbltxt) { //znaczy tprodukujemy treść label'a  
            this.style = 'textlabel';
-           this.margin = [ 0, 3, 0, 0 ]; 
-       } else { //nazwa produktu           
+           this.margin = [ 0, 0, 0, 0 ]; 
+       } else { //nazwa produktu      
            this.style = 'product';
        }
     },    
-    thirdLineV2: function(naklad, inbaton) {
+    thirdLineV2: function(naklad, inbaton, labtexts) {
     
         this.columns = [
             [
-                { text: 'zamówiona ilość:', style: 'textlabel' },
+                { text: labtexts.naklad, style: 'textlabel' },
                 { text: naklad, style: 'normal' }
             ],
             [
-                { text: 'ilość w opakowaniu:', style: 'textlabel', alignment: 'right' },
+                { text: labtexts.wbatonie, style: 'textlabel', alignment: 'right' },
                 { text: inbaton, style: 'normal', alignment: 'right' }
             ]
         ];
