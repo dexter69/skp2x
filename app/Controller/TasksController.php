@@ -29,6 +29,12 @@ class TasksController extends AppController {
     }
     
     private function prepare( $rqdata ) {
+        /*
+            standa
+            zakres
+            netyp
+            niebyc
+         */
         
         if( isset($rqdata['data']['Ticket']) ) { //Mamy jakieś dane kartowe            
             foreach( $rqdata['data']['Ticket'] as $karta ) {
