@@ -17,13 +17,25 @@ class TasksController extends AppController {
         if ($this->request->is(array('post', 'put'))) {
             $req = $this->request->data;            
             $this->Task->taskViaNoExists($req['Task']['numer']);
-            $result = $this->Task->taskViaErr;
+            $tmp = $this->Task->taskViaErr;
             /*  Tymczasowa modyfikacja - chcemy mieć w kartach opcję etykiety 'lo'.
                 Taka symulacja. Później do usunięcia */
-            $result = $this->tmpOpp($result);            
+            $tmp = $this->tmpOpp($tmp);    
+            //dodatkowe formatowanie danych
+            $result = $this->prepare($tmp);            
         }
         $box = $this->batons['rodzaje'];
         $this->set( compact('result', 'box') );
+    }
+    
+    private function prepare( $rqdata ) {
+        
+        if( isset($rqdata['data']['Ticket']) ) { //Mamy jakieś dane kartowe            
+            foreach( $rqdata['data']['Ticket'] as $karta ) {
+                
+            }
+        }
+        return $rqdata;
     }
     
     //tymczasowa funkcja, formatujemy dane
@@ -37,9 +49,7 @@ class TasksController extends AppController {
                $rqdata['data']['Ticket'][$i]['naklad'] = $karta['ilosc']*$karta['mnoznik'];
                unset($rqdata['data']['Ticket'][$i]['ilosc'], $rqdata['data']['Ticket'][$i]['mnoznik']);
                // dane do wyświetlania kontrolki (która wartość jest aktywna)i zawartości pola input
-               $rqdata['data']['Ticket'][$i]['kontrol'] = $this->batonSize($rqdata['data']['Ticket'][$i]['naklad']);
-               //Linia niżej już nie potrzebna
-               //$rqdata['data']['Ticket'][$i]['lo'] = ( $i % 2 == 0 ) ? 'en' : 'pl'; 
+               $rqdata['data']['Ticket'][$i]['kontrol'] = $this->batonSize($rqdata['data']['Ticket'][$i]['naklad']);               
                //Troche prymitywnie (bo nam sie nie chce) pobierz nr handlowego dla danej karty
                $rqdata['data']['Ticket'][$i]['hnr'] = $this->Task->Ticket->getNrHandlowgo($rqdata['data']['Ticket'][$i]['id']);
                $i++;

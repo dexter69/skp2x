@@ -17,7 +17,8 @@ class Task extends AppModel {
         'Ticket' => array(
             'fields' => array(
                 'Ticket.id', 'Ticket.name', 'Ticket.ilosc',
-                'Ticket.mnoznik', 'Ticket.etylang', 'Ticket.isperso'
+                'Ticket.mnoznik', 'Ticket.etylang', 'Ticket.etykieta',
+                'Ticket.isperso'
             )
         )
     );
