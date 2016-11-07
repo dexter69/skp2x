@@ -63,7 +63,10 @@ class Task extends AppModel {
     private function anyTaskExists( $nr ) {
     
         $dbnr = $this->digitOnlyNr2dbNr( $nr );
-        $opcje = array('conditions' => array('nr' => $dbnr));
+        $opcje = array(
+            'conditions' => array('nr' => $dbnr),
+            'recursive' => 2
+        );
         $record = $this->find('first', $opcje);
         if( empty($record) ) {
             // spróbuj rok wcześniej

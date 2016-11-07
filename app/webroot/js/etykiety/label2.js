@@ -13,15 +13,25 @@ $( document ).ready(function() {
     
     //Kliknięcie w dowolny "klikacz" powoduje zmianę we wszystkich jego braciach
     $('.label-summary li').click(function(){
-       setClases(this); // pozmieniaj klasy tak, by podświetlony był ten kliknięty
-       setInput(this); // wpisz wartość klikniętego elementu do input 
+       // niebyc - oznacza, że dla tej karty nie drukujemy etykiet
+       // plik - że jest gotowy plik etykiet
+       var theDiv = $(this).parent().parent();
+       if( !$(theDiv).hasClass('niebyc') && !$(theDiv).hasClass('plik') ) {
+            setClases(this); // pozmieniaj klasy tak, by podświetlony był ten kliknięty
+            setInput(this); // wpisz wartość klikniętego elementu do input 
+       }
     });
     
     /* Klikając na nazwę karty, generujemy pdf z etykietami */
     $(".label-summary .name").click(function(){
-        makeLabPdf( // wykreuj pdf
-            getLabelData(this) // odczytaj dane dla etykiety i zwróć w formie obiektu
-        );
+        // niebyc - oznacza, że dla tej karty nie drukujemy etykiet
+        // plik - że jest gotowy plik etykiet
+        var theDiv = $(this).parent();
+        if( !$(theDiv).hasClass('niebyc') && !$(theDiv).hasClass('plik') ) {
+            makeLabPdf( // wykreuj pdf
+                getLabelData(this) // odczytaj dane dla etykiety i zwróć w formie obiektu
+            );    
+        }        
     });
 });
 

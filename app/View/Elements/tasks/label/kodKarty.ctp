@@ -1,43 +1,27 @@
-<div class="<?php echo $divclass?>">
+<div class="<?php echo $divclass;?>">
 <?php
 
-/*  Na razie tu dajemy zmienną przechowującą dane do wersji polskiej i ang etykiety
-    Jak będzie taka potrzeba, to przeniesiemy do np. helper'a */
-$lan = array(
-    'nazwa' => array('pl' => 'nazwa', 'en' => 'name')
-);
-
-// klasy "klikaczy"
-$active = 'bg-primary';
-$normal = 'bg-info';
-
-
 //dodatkowe pseudo atrybuty
-$ext ='act="' . $active . '" nor="' . $normal . '"';
-if( $karta['isperso']) { //oznaczamy kartę z perso
-    $name = '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;' . $karta['name'];
-} else {
-    $name = $karta['name'];
-}
+$ext ='act="' . $karta['active'] . '" nor="' . $karta['normal'] . '"';
 ?>
-    <h3 class="name"
+    <h3 class="<?php echo $karta['hclass']; ?>"
         data-product="<?php echo $karta['name']; ?>"
         data-naklad="<?php echo $karta['naklad']; ?>"
         data-produkcyjne="<?php echo $produkcyjne; ?>"
         data-handlowe="<?php echo $karta['hnr']; ?>"
         data-lang="<?php echo $karta['etylang']; ?>">          
-        <?php echo $name; ?>
+        <?php echo $karta['nazwa']; ?>
     </h3>
     <p class="infobar">nakład: <strong><?php echo $karta['naklad']; ?></strong></p>
     <ul <?php echo $ext;?> class="list-inline"><?php
         foreach( $box as $key => $val ) {
             if( $karta['kontrol']['active'] == $key ) { // ten "klikacz" ma być aktywny
-                echo '<li class="' . $active . '" ' . $ext . '>' . $val . '</li>';
+                echo '<li class="' . $karta['active'] . '" ' . $ext . '>' . $val . '</li>';
             } else {
-                echo '<li class="' . $normal . '" ' . $ext . '>' . $val . '</li>';
+                echo '<li class="' . $karta['normal'] . '" ' . $ext . '>' . $val . '</li>';
             }
         }
     ?>
-        <li class="bg-info input"><input type="text" class="form-controlx" value="<?php echo $karta['kontrol']['input'];?>"></li>
+        <li class="bg-info input"><input type="text" class="form-controlx" value="<?php echo $karta['kontrol']['input'];?>" <?php echo $karta['linput'];?>></li>
     </ul>
 </div>

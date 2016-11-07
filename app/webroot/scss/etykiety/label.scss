@@ -31,7 +31,11 @@
     cursor: pointer;
 }
 
-.label-summary .name:hover {
+.label-summary.niebyc .name, .label-summary.plik .name {
+    cursor: auto;
+}    
+
+.label-summary.normal .name:hover {
     color: #276489;
 }
 
@@ -41,6 +45,14 @@
     margin-right: 0.7em;
     border-radius: 0.5em;
     cursor: pointer;
+}
+
+.label-summary li.bg-szare {
+    color: #999999;
+}
+
+.label-summary.niebyc li, .label-summary.plik li {
+    cursor: auto;
 }
 
 .label-summary li.input {

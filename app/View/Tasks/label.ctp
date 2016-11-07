@@ -26,10 +26,10 @@ if( $result != null ) { // znaczy było POST
             <?php $i=0;
             $produkcyjne = $this->Ma->bnr2nrj($result['data']['Task']['nr'], null, false);
             foreach( $result['data']['Ticket'] as $karta ) { 
-                //if( !$karta['isperso'] ) { //tylko karty bez [ersonalizacji
+                    $karta = $this->Task->countDataForEtykFromCardData($karta);
                     echo $this->element('tasks/label/kodKarty', array(
                         'karta' => $karta,
-                        'divclass' => 'col-sm-6 label-summary',
+                        'divclass' => 'col-sm-6 label-summary ' . $karta['klasa'],
                         'lp' => ++$i,
                         'box' => $box,
                         'produkcyjne' => $produkcyjne

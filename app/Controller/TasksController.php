@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
  */
 class TasksController extends AppController {
     
-    public $helpers = array('BootForm');
+    public $helpers = array('BootForm', 'Task');
     
     /* To będzie metoda wyświetlająca interfejs do etykiet dla przebieralni */
     public function label() {
@@ -20,28 +20,10 @@ class TasksController extends AppController {
             $tmp = $this->Task->taskViaErr;
             /*  Tymczasowa modyfikacja - chcemy mieć w kartach opcję etykiety 'lo'.
                 Taka symulacja. Później do usunięcia */
-            $tmp = $this->tmpOpp($tmp);    
-            //dodatkowe formatowanie danych
-            $result = $this->prepare($tmp);            
+            $result = $this->tmpOpp($tmp);                           
         }
         $box = $this->batons['rodzaje'];
         $this->set( compact('result', 'box') );
-    }
-    
-    private function prepare( $rqdata ) {
-        /*
-            standa
-            zakres
-            netyp
-            niebyc
-         */
-        
-        if( isset($rqdata['data']['Ticket']) ) { //Mamy jakieś dane kartowe            
-            foreach( $rqdata['data']['Ticket'] as $karta ) {
-                
-            }
-        }
-        return $rqdata;
     }
     
     //tymczasowa funkcja, formatujemy dane
@@ -49,19 +31,36 @@ class TasksController extends AppController {
     private function tmpOpp( $rqdata ) {
         
         if( isset($rqdata['data']['Ticket']) ) { //Mamy jakieś dane kartowe
-            $i=0;
-            foreach( $rqdata['data']['Ticket'] as $karta ) {
-               // oblicz nakład
-               $rqdata['data']['Ticket'][$i]['naklad'] = $karta['ilosc']*$karta['mnoznik'];
-               unset($rqdata['data']['Ticket'][$i]['ilosc'], $rqdata['data']['Ticket'][$i]['mnoznik']);
+            foreach( $rqdata['data']['Ticket'] as &$karta ) {
+               // oblicz nakład               
+               $karta['naklad'] = $karta['ilosc']*$karta['mnoznik'];
+               unset($karta['ilosc'], $karta['mnoznik']);
                // dane do wyświetlania kontrolki (która wartość jest aktywna)i zawartości pola input
-               $rqdata['data']['Ticket'][$i]['kontrol'] = $this->batonSize($rqdata['data']['Ticket'][$i]['naklad']);               
+               $karta['kontrol'] = $this->batonSize($karta['naklad']);               
                //Troche prymitywnie (bo nam sie nie chce) pobierz nr handlowego dla danej karty
-               $rqdata['data']['Ticket'][$i]['hnr'] = $this->Task->Ticket->getNrHandlowgo($rqdata['data']['Ticket'][$i]['id']);
-               $i++;
+               $karta['hnr'] = $this->Task->Ticket->getNrHandlowgo($karta['id']);
+               unset($karta['Task']);
+               //teraz chcemy sprawdzić, czy jest załączony do karty plik tpu 'ETYKIETA'
+               $karta['isetyfile'] = $this->parseUploads($karta['Upload']);
+               if( $karta['isetyfile'] ) {
+                   $karta['etykieta'] = 'plik'; // mamy załączony gotowy plik
+               }
+               unset($karta['Upload'], $karta['Request']);
             }
         }
         return $rqdata;
+    }
+    
+    // Sprawdzamy, czy wśród załączonych plików jest plik etykiety
+    private function parseUploads( $uploads = array() ) {
+        
+        foreach( $uploads as $row ) {
+            if( $row['role'] == ETYKIETA) {
+                // karta zawiera plik do etykiet, kończymy i zwracamy id uploadu
+                return $row['id']; 
+            }
+        }
+        return false;
     }
     
     // ################## TEST / DEPREC <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

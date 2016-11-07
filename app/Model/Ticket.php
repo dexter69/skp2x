@@ -13,6 +13,16 @@ class Ticket extends AppModel {
         'Task' => array('foreignKey' => 'job_id')
     );
     
+    public $hasAndBelongsToMany = array(
+        'Upload' => array(
+            'className' => 'Upload',
+            'joinTable' => 'cards_uploads',
+            'foreignKey' => 'card_id',
+            'associationForeignKey' => 'upload_id'
+            ,'fields' => array('Upload.id', 'Upload.role')
+        )
+    );
+    
     /* chcemy się dowiedzieć jaki ma nr handlowe, do którego potpieta jest karta o danym id */
     public function getNrHandlowgo($id) {
         
