@@ -61,6 +61,17 @@ class AppController extends Controller {
     }
     
     
+    // Sprawdzamy, czy wśród załączonych plików jest plik etykiety
+    public function parseUploads( $uploads = array() ) {
+        //$uploads - tablica z plikami
+        foreach( $uploads as $row ) {
+            if( $row['role'] == ETYKIETA) {
+                // karta zawiera plik do etykiet, kończymy i zwracamy id uploadu
+                return $row['id']; 
+            }
+        }
+        return false;
+    }
     
     
     /*

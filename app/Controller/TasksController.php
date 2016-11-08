@@ -49,20 +49,8 @@ class TasksController extends AppController {
             }
         }
         return $rqdata;
-    }
-    
-    // Sprawdzamy, czy wśród załączonych plików jest plik etykiety
-    private function parseUploads( $uploads = array() ) {
-        
-        foreach( $uploads as $row ) {
-            if( $row['role'] == ETYKIETA) {
-                // karta zawiera plik do etykiet, kończymy i zwracamy id uploadu
-                return $row['id']; 
-            }
-        }
-        return false;
-    }
-    
+    }    
+
     // ################## TEST / DEPREC <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
     // wylicz dane, który przycisk ma być aktywny i czy coś ma być w polu input

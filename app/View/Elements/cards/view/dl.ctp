@@ -61,7 +61,7 @@
     
     //etykieta
     $strety = $etykieta[$card['etykieta']];
-    if( $card['etykieta'] != 'niebyc' ) {
+    if( $card['etykieta'] != 'niebyc' && $card['etykieta'] != 'nietyp') {
         $strety .= ' (' . $etylang[$card['etylang']] . ')';
     }    
     $this->Proof->dtdd('Etykieta', $strety);

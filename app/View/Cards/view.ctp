@@ -68,7 +68,7 @@ echo $this->element('cards/view/head', array(
 
 <?php 
 //$this->Proof->printR($vju);
-//$this->Proof->printR($card);
+//$this->App->print_r2($card);
 //$this->Ma->kontrolka($card, $evcontrol);
 
 

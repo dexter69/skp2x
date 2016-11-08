@@ -39,6 +39,13 @@
     color: #276489;
 }
 
+// ikonka przy karvie
+.label-summary .name > span { font-size: 80%; color: #00dfc3; }
+
+// kolory inne, niż ogółu
+.label-summary .name > span.niebyc { color: red; }
+
+
 .label-summary li {
     font-size: 130%;
     padding: 0 0.5em;
