@@ -119,7 +119,10 @@ class Order extends AppModel {
             
             $this->Behaviors->attach('Containable');
             $zamowienia = $this->find('all', array(
-                'conditions' => array('Order.customer_id' => $klient_id ),
+                'conditions' => array(
+                    'Order.customer_id' => $klient_id,
+                    'Order.status !=' => 0 // tu nie chcemy prywatnych
+                ),
                 'fields' => array( 'Order.nr', 'Order.stop_day', 'Order.status' ),
                 'contain' => array('User.id', 'User.inic', 'Card.id' , 'Card.name', 'Card.quantity')
             ));

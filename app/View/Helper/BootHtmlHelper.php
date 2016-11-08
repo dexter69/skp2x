@@ -32,25 +32,13 @@ class BootHtmlHelper extends AppHelper {
     public function tableOfOrders4Customer( $zamowienia = array(), $inicjaly = array() ) {
         
         $rows = array(); $i = 0; $naklad = 0; $ile = count($zamowienia);
-        /*
-        foreach( $zamowienia as $order ) {
-            $rows[] = array(
-                ++$i,
-                $this->orderNrLink( $order['Order']['id'], $order['Order']['nr'], $order['User']['inic']),
-                $this->cardsDropdownDiv($order['Card'], $naklad),
-                //$this->Math->tys($naklad),
-                array( $this->Math->tys($naklad), array('class' => 'text-right')),
-                array( $this->Math->md($order['Order']['stop_day']), array('class' => 'text-center')),                
-                $this->status_zamow($order['Order']['status'])
-            );
-        }
-        */
+        
         for( $i = $ile-1; $i >= 0; $i--) {
             $order = $zamowienia[$i];
             $rows[] = array(
                 $i+1,
                 $this->orderNrLink( $order['Order']['id'], $order['Order']['nr'], $order['User']['inic']),
-                $this->cardsDropdownDiv($order['Card'], $naklad),
+                $this->cardsDropdownDiv($naklad, $order['Card']),
                 //$this->Math->tys($naklad),
                 array( $this->Math->tys($naklad), array('class' => 'text-right')),
                 array( $this->Math->md($order['Order']['stop_day']), array('class' => 'text-center')),                
@@ -94,28 +82,8 @@ class BootHtmlHelper extends AppHelper {
                 array( $this->Math->md($card['Order']['stop_day'], true), array('class' => 'text-center')),
                 $this->statusOfCard($card['Card']['status'])
             );
-        } /*
-        foreach( $karty as $card ) {
-            $inic = null;
-            if( array_key_exists( $card['Order']['user_id'], $inicjaly) ) {
-                $inic = $inicjaly[$card['Order']['user_id']];
-            }
-            $rows[] = array(
-                ++$i,
-                $this->cardLink( $card['Card']['id'], $card['Card']['name']),
-                array( $this->Math->tys($card['Card']['quantity']), array('class' => 'text-right')),                
-                array( $this->orderNrLink(
-                                $card['Order']['id'],
-                                $card['Order']['nr'],
-                                $inic
-                        ),
-                        array('class' => 'text-right')
-                ),                
-                array( $this->jobNrLink( $card['Job']['id'], $card['Job']['nr']), array('class' => 'text-right')),                                
-                array( $this->Math->md($card['Order']['stop_day'], true), array('class' => 'text-center')),
-                $this->statusOfCard($card['Card']['status'])
-            );
-        }*/
+        } 
+        
         $naglowek = $this->Html->tableHeaders(array( 
             array( '&Sigma; = '. $ile => array('class' => 'col-md-1')),
             array( 'Nazwa karty' => array('class' => 'col-md-6')),            
@@ -129,7 +97,7 @@ class BootHtmlHelper extends AppHelper {
         return '<table class="table table-striped table-hover table-condensed">' . $naglowek . $body . '</table>';
     }
     
-    private function cardsDropdownDiv( $karty = array(), &$ilosc ) {
+    private function cardsDropdownDiv( &$ilosc, $karty = array() ) {
         // przygotowuje html 4 drpdown oraz zlicza nam nakład
         $ile = count($karty); 
         if( $ile > 1 ) {

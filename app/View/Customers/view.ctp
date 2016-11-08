@@ -40,5 +40,4 @@ echo $this->Html->css('boot/customer', null, array('inline' => false));
     </div>        
 </div>
 <?php
-//$this->App->print_r2($customer);
-//echo '<pre>'; echo print_r($customer['Card']); echo '</pre>';
+//$this->App->print_r2($customer['Order']);
