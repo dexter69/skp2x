@@ -416,7 +416,7 @@ class CardsController extends AppController {
             $vju = $this->Card->get_view_options();
             $links = $this->links;
             $referer = $this->referer();
-            $this->set(compact( 'vju', 'ownerid', 'wspolne', 'links', 'jscode', 'referer', 'customers'/**/ ));
+            $this->set(compact( 'vju', 'ownerid', 'wspolne', 'links', 'jscode', 'referer', 'customers', 'klienci'/**/ ));
 	}
 
 /**
