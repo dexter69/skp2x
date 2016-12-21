@@ -840,6 +840,8 @@ div.nofloat.view {
 	display: inline-block;
 }
 
+#header > a { display: inline-block; vertical-align: super; color: #59cef0; font-size: 140%;}
+
 #header div.out {
 	background:  url('../img/logoutoza.png') no-repeat left;
 	float: right;

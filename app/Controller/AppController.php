@@ -58,6 +58,7 @@ class AppController extends Controller {
     public function beforeFilter() {
 
         $this->set('juzer', $this->Auth->User('name') );
+        $this->set('departament', $this->Auth->User('dzial') );
     }
     
     
