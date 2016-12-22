@@ -1421,7 +1421,7 @@ class MaHelper extends AppHelper {
                         $this->Form->input('Card.mag',$vju['mag']) .
                         $this->Form->input('Card.wzor',$vju['wzor']) .
                         $this->Form->input('Card.chip',$vju['chip']) .
-                        //$this->Form->input('Card.etykieta', $vju['etykieta']) .
+                        $this->Form->input('Card.ishotstamp', $vju['hotstamp']) .
                 $this->Html->tag('/div') .
                 $this->Html->tag('div', null, array('class' => 'optiondiv')) .
                         $this->Form->input('Card.dziurka',$vju['dziurka']) .

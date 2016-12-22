@@ -958,14 +958,14 @@ class Card extends AppModel {
                                                         'type' => 'text'
                                                 ),
                 'wzor'=>	array( 
-                                                        'label' => 'Wzory/Załączniki',
-                                                        //'div' => array('id' => 'user_id_div'),
-                                                        'options' => array(NIE=>'BRAK', 2 => 'KARTA WZORCOWA', 3=>'CROMALIN',
-                                                                                                4 => 'WYDRUK CYFROWY', 5 => 'POWTÓRKA (UWAGI)',
-                                                                                                PAU => 'PATRZ UWAGI'
-                                                        ), 
-                                                        'default' => NIE //
-                                                ),
+								'label' => 'Wzory/Załączniki',
+								//'div' => array('id' => 'user_id_div'),
+								'options' => array(NIE=>'BRAK', 2 => 'KARTA WZORCOWA', 3=>'CROMALIN',
+																		4 => 'WYDRUK CYFROWY', 5 => 'POWTÓRKA (UWAGI)',
+																		PAU => 'PATRZ UWAGI'
+								), 
+								'default' => NIE //
+						),
                 'x_material'=>	array( 
                                         'label' => false,
                                         'div' => false, //array('id' => 'user_id_div'),
@@ -1099,6 +1099,14 @@ class Card extends AppModel {
                                                                                 ),
                                                                 'default' => 0
                                                 ),
+				'hotstamp' =>	array(	
+					'label' => 'Hotstamping',
+					'options' => array(
+						NIE	=>	'NIE',
+						TAK	=>	'TAK' 
+									),
+					'default' => 0
+                ),
                 'yesno'=>	array( 
                                                         'label' => false,
                                                         'div' => false,

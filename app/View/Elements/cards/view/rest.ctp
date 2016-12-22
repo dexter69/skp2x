@@ -74,6 +74,10 @@ if( $card['wzor'] ) {
     $inne .= $this->Html->tag('dt', 'Wzory / załączniki', null);
     $inne .= $this->Html->tag('dd', $vju['wzor']['options'][$card['wzor']], null);
 }
+if( $card['ishotstamp'] ) {	
+    $inne .= $this->Html->tag('dt', 'Hotstamping', null);
+    //$inne .= $this->Html->tag('dd', $vju['wzor']['options'][$card['wzor']], null);
+}
 $isperso = $card['isperso'];
 if( $inne || !$isperso || $card['option_comment'] ) {
     $startdiv1 = $startdiv2 = $stopdiv = null;    
