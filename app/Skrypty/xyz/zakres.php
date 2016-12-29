@@ -4,7 +4,7 @@
  * Prosty skrypt produkujący bazę zakresów. Bierze plik tekstowy, każdą linię traktuje jako osobną wartość.
     Dla batona 500 szt. wyłuskuje 1, 500, 501, 1000, 1001, 1500 itd i tworzy pary z nich */
 
-$inbat = 500; // ile kart w batonie
+$inbat = 350; // ile kart w batonie
 $fname = $argv[1];
 
 $handle = fopen($fname, "r");

@@ -525,30 +525,28 @@ class Order extends AppModel {
 		}
 	}	
 
-	// nadaj zleceniu numer po publikacji, zakładamy, że id właśnie zapisanego rekordu jest w $this->id
+	// nadaj zleceniu numer po publikacji, zakładamy,
+	//że id właśnie zapisanego rekordu jest w $this->id
 	public function set_order_number() {
 		
 		$this->OrderError = 0; //brak błędu
-		$id = $this->id;
+		$id = $this->id;		
 		if( $id ) {
 			if( $this->exists($id) ) {
-				//znajdz ostatni nr
-				$rekord = $this->find('first', array(
+				//znajdz ostatni nr (statnie ponumerowane zamówienie, jakie istnieje)
+				$lastWithNr = $this->find('first', array(
         			'conditions' => array('OR' => array(
         				'Order.nr !=' => null,
         				'Order.id' => 1
         			)),
         			'order' => array('Order.nr' => 'desc')
     			));
-    			if( !empty($rekord) ) {
-					if( $rekord['Order']['id'] == 1 && $rekord['Order']['nr'] == null ) //pierwszy nr
-						$new_nr = FIRST_ORDER_NR;
-					else 
-						$new_nr = $rekord['Order']['nr']+1;					
+    			if( !empty($lastWithNr) ) {					
+					$new_nr = $this->skalkulujNr($lastWithNr, $id);
 					$dane = array( 
-							'Order' => array(
-								'id' => $id,
-								'nr' => $new_nr
+						'Order' => array(
+							'id' => $id,
+							'nr' => $new_nr
 					));
 					
 					if( $this->save($dane) ) 
@@ -573,6 +571,30 @@ class Order extends AppModel {
 	
 	}
 	
+	// oblicza nr kolejnego zamówienia, $row - tablica z danymi ostatniego zamówienia, które ma nr
+	// $id - id rekordu, dla którego musimy znaleźć nr zamówienia
+	private function skalkulujNr( $row = array(), $id = null ) {
+
+		if( $row['Order']['id'] == 1 && $row['Order']['nr'] == null ) {//pierwszy nr
+			return FIRST_ORDER_NR;
+		}
+		$nowrec = $this->find('first', array(
+			'conditions' => array('Order.id' => $id)
+		));
+		if( empty($nowrec) ) { //coś nie tak
+			return null;
+		}
+		// data publikacji (rok) ostatniego zamówienia z numerem
+		$lastYear = (int)substr($row['Order']['data_publikacji'],0,4);
+		// data publikacji (rok) nowego zamówienia
+		$nowYear = (int)substr($nowrec['Order']['data_publikacji'],0,4);
+		if( $nowYear > $lastYear) { // zmiana roku, konieczny reset numeru
+			$nr = (int)(substr($nowYear,2) . BASE_ZERO) + 1;
+		} else {
+			$nr = $row['Order']['nr']+1;
+		}
+		return $nr;
+	}
 
 	// formatowania do views
 	public $view_options = 

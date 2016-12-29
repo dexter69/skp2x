@@ -612,12 +612,13 @@ class Event extends AppModel {
                 if ( array_key_exists( 'Order', $rqdata ) ) {
                     $this->code=55;
                     if( $this->Order->saveAssociated($rqdata) ) {
-                        if( $event == publi ) { // w wypadku publikacji potrzebujemy nadać numer zamówieniu
+                        if( $event == publi ) {
+                                // w wypadku publikacji potrzebujemy nadać numer zamówieniu
                             if( $this->Order->set_order_number() )
-                                    return true;
+                                return true;
                             else {
-                                    $this->code=2;
-                                    return false;
+                                $this->code=2;
+                                return false;
                             }								
                         }	
                         return true;								
