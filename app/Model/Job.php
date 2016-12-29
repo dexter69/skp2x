@@ -152,22 +152,19 @@ class Job extends AppModel {
             if( $id ) {
                 if( $this->exists($id) ) {
                     //znajdz ostatni nr
-                    $rekord = $this->find('first', array(
+                    $lastWithNr = $this->find('first', array(
                         'conditions' => array('OR' => array(
                                 'Job.nr !=' => null,
                                 'Job.id' => 1
                         )),
                         'order' => array('Job.nr' => 'desc')
                     ));
-                    if( !empty($rekord) ) {
-                        if( $rekord['Job']['id'] == 1 && $rekord['Job']['nr'] == null ) //pierwszy nr
-                                $new_nr = FIRST_JOB_NR;
-                        else 
-                                $new_nr = $rekord['Job']['nr']+1;					
+                    if( !empty($lastWithNr) ) {
+						$new_nr = $this->skalkulujNr($lastWithNr, $id);                        					
                         $dane = array( 
-                                        'Job' => array(
-                                                'id' => $id,
-                                                'nr' => $new_nr
+							'Job' => array(
+									'id' => $id,
+									'nr' => $new_nr
                         ));
 
                         if( $this->save($dane) ) 
@@ -190,6 +187,34 @@ class Job extends AppModel {
                     return false;
             }
 	
+	}
+
+	// oblicza nr kolejnego ZLEcenia, $row - tablica z danymi ostatniego ZLEcenia, które ma nr
+	// $id - id rekordu, dla którego musimy znaleźć nr ZLEcenia
+	private function skalkulujNr( $row = array(), $id = null ) {
+
+		//pierwszy numer ever
+		if( $row['Job']['id'] == 1 && $row['Job']['nr'] == null ) {
+			return FIRST_JOB_NR; 
+		}
+
+		$nowrec = $this->find('first', array(
+			'conditions' => array('Job.id' => $id)
+		));
+		if( empty($nowrec) ) { //coś nie tak
+			return null;
+		}
+
+		// data publikacji (rok) ostatniego ZLEcenia z numerem
+		$lastYear = (int)substr($row['Job']['data_publikacji'],0,4);
+		// data publikacji (rok) nowego ZLEcenia
+		$nowYear = (int)substr($nowrec['Job']['data_publikacji'],0,4);
+
+		if( $nowYear > $lastYear) { // zmiana roku, konieczny reset numeru
+			return (int)(substr($nowYear,2) . BASE_ZERO) + 1;
+		}
+		// zazwyczaj
+		return $row['Job']['nr']+1;
 	}
 
 

@@ -460,6 +460,7 @@ class Event extends AppModel {
                     case eJPUBLI:
                             $rqdata['Job']['id'] = $rqdata['Event']['job_id'];
                             $rqdata['Job']['status'] = sDTP_REQ;
+                            $rqdata['Job']['data_publikacji']=date('Y-m-d H:i:s');
                             status_kart( $rqdata['Card'], JOBED );
                             break;
                     case eJ_FILE1:
@@ -613,7 +614,7 @@ class Event extends AppModel {
                     $this->code=55;
                     if( $this->Order->saveAssociated($rqdata) ) {
                         if( $event == publi ) {
-                                // w wypadku publikacji potrzebujemy nadać numer zamówieniu
+                        // w wypadku publikacji potrzebujemy nadać numer zamówieniu
                             if( $this->Order->set_order_number() )
                                 return true;
                             else {
