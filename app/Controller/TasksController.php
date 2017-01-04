@@ -9,13 +9,13 @@ App::uses('AppController', 'Controller');
 class TasksController extends AppController {
     
     public $helpers = array('BootForm', 'Task');
-    
+
     /* To będzie metoda wyświetlająca interfejs do etykiet dla przebieralni */
     public function label() {
         
         $req = null; $result = null;
         if ($this->request->is(array('post', 'put'))) {
-            $req = $this->request->data;            
+            $req = $this->request->data;          
             $this->Task->taskViaNoExists($req['Task']['numer']);
             $tmp = $this->Task->taskViaErr;
             /*  Tymczasowa modyfikacja - chcemy mieć w kartach opcję etykiety 'lo'.
@@ -23,7 +23,7 @@ class TasksController extends AppController {
             $result = $this->tmpOpp($tmp);                           
         }
         $box = $this->batons['rodzaje'];
-        $this->set( compact('result', 'box', 'tmp') );
+        $this->set( compact('result', 'box') );
     }
     
     //tymczasowa funkcja, formatujemy dane
@@ -45,7 +45,7 @@ class TasksController extends AppController {
                if( $karta['isetyfile'] ) {
                    $karta['etykieta'] = 'plik'; // mamy załączony gotowy plik
                }
-               unset($karta['Upload'], $karta['Request']);
+               //unset($karta['Upload'], $karta['Request']);
             }
         }
         return $rqdata;
