@@ -317,24 +317,26 @@ class MaHelper extends AppHelper {
         
         // wzór pustej tablicy cech
         private $tablica_cech_wzor = array(
-            //na razie tylko personalizacja
+            //na razie tylko personalizacja + hotstamping
             'set' => false, // ustawiona -> true, zrestetowana/pusta -> false
             'isperso' => false, // ogólnie czy jest, może się przyda?
             'pl' => false, // personalizacja pod laminatem
             'pt' => false, // personalizacja płaska albo Termodruk
             'pe' => false, // Embossing
-            'pp' => false /* personalizacja ogólnie, że jest
+            'pp' => false, /* personalizacja ogólnie, że jest
                             Zasada:
                                 'pp' == true, to wszystkie inne false (stara karta)
                                  i na odwrót, któraś z 3-ech true, to 'pp' false
                             */
+			'hot' => false // Hotstamping
         );
         
         private $ztitles = array(
             'p-plaska' => 'personalizacja PŁASKA',
             'p-laminat' => 'personalizacja pod LAMINATEM',
             'p-emboss' => 'EMBOSSING',
-            'p-old' => 'personalizacja'
+            'p-old' => 'personalizacja',
+			'hot' => 'Hotstamping'
         );
 
         private function getAndSetCechyKarty( $karta = array() ) {
@@ -343,7 +345,7 @@ class MaHelper extends AppHelper {
             $this->resetTablicaCech(); // reset gwarantowany
             if( !empty($karta) ) {
                 $this->tablica_cech['set'] = true; // tak, bo sprawdziliśmy i ustawiliśmy
-                // na razie tylko perso
+                // na razie tylko perso + hotstamping
                 if( $karta['isperso'] ) {
                    $this->tablica_cech['isperso'] = true;                   
                    $this->tablica_cech['pl'] =  $karta['pl'] == '1';
@@ -353,7 +355,10 @@ class MaHelper extends AppHelper {
                        !$this->tablica_cech['pe'] ) { 
                        $this->tablica_cech['pp'] = true; // znaczy perso "po staremu"
                    }
-                }                
+                }    
+				if( $karta['ishotstamp'] ) {
+					$this->tablica_cech['hot'] = true;
+				}
             }
             return $this->tablica_cech;
         }       
@@ -365,9 +370,9 @@ class MaHelper extends AppHelper {
 
         public function cechyKarty( $karta = array(), $wrap_klasa = null ) {
             
+			$html = null;
             $this->getAndSetCechyKarty( $karta );
-            if( $this->tablica_cech['isperso'] ) {
-                $html = null;
+            if( $this->tablica_cech['isperso'] ) {                
                 if( $this->tablica_cech['pp'] ) { // karta po staremu
                     $html .= $this->markCechy('?', 'p-old', $this->ztitles['p-old']);
                 } else { // karta po nowemu
@@ -375,14 +380,18 @@ class MaHelper extends AppHelper {
                     if( $this->tablica_cech['pt'] ) { $html .= $this->markCechy('P', 'p-pla', $this->ztitles['p-plaska']); }
                     if( $this->tablica_cech['pe'] ) { $html .= $this->markCechy('E', 'p-emb', $this->ztitles['p-emboss']); }
                 }
-                $klasa = 'cechy-wrap';
-                if( $wrap_klasa != null ) {
+                $klasa = 'cechy-wrap';                
+            }
+			if( $this->tablica_cech['hot'] ) { // jest hotstamping
+				$html .= $this->markCechy('H', 'hot', $this->ztitles['hot']);
+			}
+			if( $html ) {
+				if( $wrap_klasa != null ) {
                     $klasa .= ' ' . $wrap_klasa;
                 }
-                $html = '<div class="' . $klasa . '"><div class="process perso">' . $html . '</div></div>';
-                return $html;
-            }
-            return null;
+            	$html = '<div class="' . $klasa . '"><div class="process perso">' . $html . '</div></div>';
+			}            
+            return $html;
         }
         
 //        $znaczki_titles = array(
@@ -390,6 +399,7 @@ class MaHelper extends AppHelper {
 //            'p-laminat' => 'personalizacja pod LAMINATEM',
 //            'p-emboss' => 'EMBOSSING',
 //            'p-old' => 'personalizacja'
+//			  'hot' => 'hotstamping'
         
         private function markCechy( $char = null, $klasa = null, $title = null ) {
             

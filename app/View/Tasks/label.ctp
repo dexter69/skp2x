@@ -42,6 +42,6 @@ if( $result != null ) { // znaczy było POST
         echo $this->element('tasks/label/pdfSkeleton');
         //echo "<br>";
         //$this->App->print_r2($result['data']/*['Ticket']*/); 
-        //$this->App->print_r2($result);
+        $this->App->print_r2($tmp);
     } 
 }

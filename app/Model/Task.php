@@ -65,7 +65,7 @@ class Task extends AppModel {
         $dbnr = $this->digitOnlyNr2dbNr( $nr );
         $opcje = array(
             'conditions' => array('nr' => $dbnr),
-            'recursive' => 2
+            'recursive' => 1
         );
         $record = $this->find('first', $opcje);
         if( empty($record) ) {
