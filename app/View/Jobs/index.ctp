@@ -9,7 +9,7 @@ if( array_key_exists($par, $klasa) ) { $klasa[$par] = 'swieci'; }
 ?>
 
 <div class="jobs index">
-	<h2 class="indexnag"><?php echo 'PRODUKCYJNE' . $this->Ma->indexFiltry('jobs', $klasa);; ?></h2>
+	<h2 class="indexnag"><div><?php echo 'PRODUKCYJNE</div>' . $this->Ma->indexFiltry('jobs', $klasa);; ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>

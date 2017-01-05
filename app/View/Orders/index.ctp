@@ -20,7 +20,7 @@ else
 ?>
 
 <div class="orders index">
-    <h2 class="hfiltry"><?php echo 'HANDLOWE'; 
+    <h2 class="hfiltry"><div><?php echo 'HANDLOWE</div>'; 
             echo $this->Ma->indexFiltry('orders', $klasa);
     ?>
 

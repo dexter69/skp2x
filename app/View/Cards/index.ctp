@@ -21,7 +21,7 @@ if( array_key_exists($par, $klasa) )
 ?>
 
 <div id="indekskart" class="cards index">
-	<h2 class="hfiltry"><?php echo 'KARTY'; 
+	<h2 class="hfiltry"><div><?php echo 'KARTY</div>'; 
 		echo $this->Ma->indexFiltry('cards', $klasa);
 	?>
 		

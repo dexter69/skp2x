@@ -997,6 +997,11 @@ h2 > p {
 	font-size: 50%;
 }
 
+.indexnag > div, .hfiltry > div {
+	display: inline-block;
+	margin-right: 0.5em;
+}
+
 .acctions ul li a,
 .acctions a {
 	font-weight:normal;
