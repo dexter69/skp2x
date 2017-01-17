@@ -145,14 +145,8 @@ if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
 			if( $evcontrol['bcontr'][push4checking] ) {
 				echo '<th class="card_dpcheck_fix">'.'D'.'</th>'.'<th class="card_dpcheck_fix">'.'P'.'</th>';
 			}
-		?>
-		<!--
-		<th><?php echo __('Wzor'); ?></th>
-		<th><?php echo __('Comment'); ?></th>
+		?>	
 		
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>-->
 	</tr>
 	<?php $k=0; $sigma = 0;
 		foreach ($order['Card'] as $card): ?>
@@ -177,9 +171,16 @@ if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
 			</td>
 			<td class="card_ilosc_fix"><?php 
                             $sigma += $card['quantity'];
-                            echo $this->Ma->tys($card['quantity']); ?></td>
-			<td class="card_cena_fix"><?php echo $this->Ma->colon($card['price']);
-			 ?></td>
+                            echo $this->Ma->tys($card['quantity']); ?></td>			
+			<?php
+			// cena - chcemy, że gdy jest 0, to by program wypisywał "UWAGI"
+				if ( $card['price'] == 0 ) {
+					$cenka = 'UWAGI';
+				} else {
+					$cenka = $this->Ma->colon($card['price']);
+				}				
+			?>
+			<td class="card_cena_fix"><?php echo $cenka;?></td>
 			 <td class="card_status_fix"><?php 
 			 		if( $card['status'] == PRIV && $order['Order']['id'] )
 						echo 'ZAŁĄCZONA';
