@@ -1492,6 +1492,11 @@ div#szukanie {	float: right; width: auto;}
     color: white;
 }
 
+.process > .hot > div {
+    background-color: #ff3030;
+    color: white;
+}
+
 /* Nagłówek listingów
 */
 

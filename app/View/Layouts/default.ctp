@@ -31,7 +31,7 @@ $cakeDescription = __d('cake_dev', 'SKP');
             //echo $this->Html->script(array('jquery', 'funkcje')); 
             echo $this->Html->script(array('lib/jquery-2.1.4.min', 'funkcje')); 
             echo $this->Html->script('common', array('block' => 'scriptBottom'));
-            echo $this->Html->css('cake.generic.css?v=201701051351');
+            echo $this->Html->css('cake.generic.css?v=201701170957');
 			if($departament == SUA) {
 				echo $this->Html->css(array('font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
 			}

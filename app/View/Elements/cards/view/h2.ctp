@@ -1,6 +1,6 @@
 <?php 
-//echo '<pre>';	print_r($card['Card']); echo  '</pre>'; 
-//echo $this->Ma->cechyKarty( $card['Card'] );
+//echo '<pre>';	print_r($card); echo  '</pre>'; 
+//echo $this->Ma->cechyKarty( $card );
 //echo '<pre>';	print_r($this->Ma->tablica_cech); echo  '</pre>'; 
 //if( $this->Ma->tablica_cech['isperso'] ) echo 'Gibon';
 

@@ -384,6 +384,7 @@ class MaHelper extends AppHelper {
             }
 			if( $this->tablica_cech['hot'] ) { // jest hotstamping
 				$html .= $this->markCechy('H', 'hot', $this->ztitles['hot']);
+				$klasa = 'cechy-wrap';
 			}
 			if( $html ) {
 				if( $wrap_klasa != null ) {
