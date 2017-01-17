@@ -10,7 +10,7 @@ if( $card['pvis'] ) {
     $klasa = array(	
         'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
         'my'=>null, 'active'=>null, 'closed'=>null, 'ponly'=>null,
-        'pover'=>null, 'ptodo'=>null
+        'pover'=>null, 'ptodo'=>null, 'hot'=>null
     );
     echo '<h2 class="hfiltry">' . $this->Ma->indexFiltry('cards', $klasa) . '</h2>';
 }

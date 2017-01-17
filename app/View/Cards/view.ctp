@@ -70,6 +70,7 @@ echo $this->element('cards/view/head', array(
 //$this->Proof->printR($vju);
 //$this->App->print_r2($card);
 //$this->Ma->kontrolka($card, $evcontrol);
+//$this->App->print_r2($evcontrol);
 
 
 

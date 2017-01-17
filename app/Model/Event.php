@@ -363,6 +363,11 @@ class Event extends AppModel {
                           $rqdata['Card']['pover'] = 1;
                           unset( $rqdata['Card']['status'], $rqdata['Card']['isperso'] );
                     break;
+                    case h_ov:
+                          $rqdata['Card']['id'] = $rqdata['Event']['card_id'];
+                          $rqdata['Card']['ishotstamp'] = 2;
+                          unset( $rqdata['Card']['status'], $rqdata['Card']['isperso']  );
+                    break;                    
                     case fix_o:
                             $rqdata['Order']['status'] = FIXED;
                             $rqdata['Order']['id'] = $rqdata['Event']['order_id'];

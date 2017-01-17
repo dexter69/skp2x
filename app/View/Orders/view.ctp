@@ -230,20 +230,7 @@ if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
 					));
 					echo '<td class="card_dpcheck_fix">'.$dtp.'</td>'.'<td class="card_dpcheck_fix">'.$per.'</td>';
 				}
-			?>			
-			<!--
-			 
-			<td><?php echo $card['wzor']; ?></td>
-			<td><?php echo $card['comment']; ?></td>
-			
-			<td><?php echo $card['created']; ?></td>
-			<td><?php echo $card['modified']; ?></td>-->
-			<!--
-			<td class="actions">
-				<?php echo $this->Html->link(__('V'), array('controller' => 'cards', 'action' => 'view', $card['id'])); ?>
-				<?php echo $this->Html->link(__('E'), array('controller' => 'cards', 'action' => 'edit', $card['id'])); ?>
-				<?php echo $this->Form->postLink(__('D'), array('controller' => 'cards', 'action' => 'delete', $card['id']), null, __('Are you sure you want to delete # %s?', $card['id'])); ?>
-			</td>-->
+			?>						
 		</tr>
 	<?php endforeach; 
             if( $sigma ) {
@@ -281,7 +268,8 @@ if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
                                     case p_no: 
                                     case p_ok: 
                                     case d_no: 
-                                    case d_ok: 
+                                    case d_ok:
+									case h_ov: 
                                             $co = $karty[$event['card_id']]; 
                                     break;
                                     default:

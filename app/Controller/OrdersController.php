@@ -496,30 +496,6 @@ class OrdersController extends AppController {
 			return $button_tab;
 	}
 
-	private function plant_FIX_K( $button_tab = array(), $tworca = false ) {
-		
-		//if( $card['Order']['status'] == OREJ) { 
-												
-			$ret_tab = $button_tab;
-			
-			switch( $this->Auth->user('O_PUB') ) { // sprawdzamy uprawnienia do publikowania zamówień
-				case r_OWN:
-					if( $tworca ) {
-						$ret_tab['bcontr'][fix_k] = 1;
-						$ret_tab['ile']++;
-					}
-				break;
-				case r_ALL:
-				case r_SAL:
-						$ret_tab['bcontr'][fix_k] = 1;
-						$ret_tab['ile']++;
-				break;
-			}
-			return $ret_tab;
-		//}
-		return $button_tab;
-	}
-
 	private function plant_KOMENTUJ( $button_tab = array(), $tworca = false ) {
 			
 			$ret_tab = $button_tab;

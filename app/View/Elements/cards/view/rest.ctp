@@ -75,7 +75,10 @@ if( $card['wzor'] ) {
     $inne .= $this->Html->tag('dd', $vju['wzor']['options'][$card['wzor']], null);
 }
 if( $card['ishotstamp'] ) {	
-    $inne .= $this->Html->tag('dt', 'Hotstamping', null);
+    if( $card['ishotstamp'] == 2 ) { 
+        $trzeci = array('class' => 'konec'); }
+    else { $trzeci = null;}
+    $inne .= $this->Html->tag('dt', 'Hotstamping', $trzeci);
     //$inne .= $this->Html->tag('dd', $vju['wzor']['options'][$card['wzor']], null);
 }
 $isperso = $card['isperso'];

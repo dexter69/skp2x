@@ -473,6 +473,7 @@ define('d_no', 6); // c
 define('p_no', 7); // c
 define('d_ok', 8); // c
 define('p_ok', 9); // c
+define('h_ov', 10); // c - zamarkowanie, ze hotstamping został zakończony
 
 define('put_kom', 13); // o i c - komentarz
 define('fix_o', 16); // o i c
@@ -493,9 +494,9 @@ define('pp_red', 120); // stan wyjściowy - ustawienie "brak wpłaty"
 define('pp_ora', 121); // - ustawienie "jest potwierdzenie"
 define('pp_gre', 122); // - ustawienie "jest wpłata"
 
-define('fix_k', 10); // c
-define('fix_o1', 11); // o
-define('fix_o2', 12); // o
+/*define('fix_k', 10); 
+define('fix_o1', 11); 
+define('fix_o2', 12); */
 
 /**/
 

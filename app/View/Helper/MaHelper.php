@@ -56,17 +56,11 @@ class MaHelper extends AppHelper {
 		unlock_again => 'ZWRÓĆ',
 		klepnij => 'PRZYJMIJ',
 		push4checking => 'DO DTP/P',
-                odemknij => 'OTWÓRZ',
+        odemknij => 'OTWÓRZ',		
+        
+		h_ov => 'HOT OK',
 		
-                /* DEPREC
-		kor_no1 => 'odrzuć', 
-		kor_ok1 => 'akceptuj',
-		kor_no2 => 'kor_no2',
-		kor_ok2 => 'kor_ok2',*/
-		
-		fix_k => 'popraw',//'fix_k',
-		fix_o1 => 'poprawione',//'fix_o1',
-		fix_o2 => 'poprawione',//'fix_o2',
+
 		put_kom => 'napisz',//'put_kom',
 		
 		
@@ -124,11 +118,13 @@ class MaHelper extends AppHelper {
 		kor_no1 => true,
 		kor_ok1 => false,
 		kor_no2 => true,
-		kor_ok2 => false,*/
-		
-		fix_k => false,
+		kor_ok2 => false,
 		fix_o1 => false,
 		fix_o2 => false,
+		*/
+		
+		h_ov => false,
+		
 		put_kom => true,
 		update_o => true
 	);	
@@ -199,30 +195,8 @@ class MaHelper extends AppHelper {
 			'poprawiła','class' => 'pom'),	
 		send_o => array(
 			'zakończył',
-			'zakończyła','class' => 'ziel'),
-			
-		/* deprec	
-		kor_ok1 => array(
-			'zatwierdził',
-			'zatwierdziła','class' => 'ziel'),
-		kor_ok2 => array(
-			'zatwierdził',
-			'zatwierdziła','class' => 'ziel'),
-		kor_no1 => array(
-			'odrzucił',
-			'odrzuciła','class' => 'czer'),
-		kor_no2 => array(
-			'odrzucił',
-			'odrzuciła','class' => 'czer'),*/
-		fix_o1 => array(
-			'poprawił',
-			'poprawiła','class' => 'pom'),
-		fix_o2 => array(
-			'poprawił',
-			'poprawiła','class' => 'pom'),
-		fix_k => array(
-			'poprawił',
-			'poprawiła','class' => 'pom'),
+			'zakończyła','class' => 'ziel'),			
+
 			
 		eJPUBLI => array(
 			'złożył zlecenie',
@@ -1614,6 +1588,7 @@ class MaHelper extends AppHelper {
                         $retcode =
                         '<p class="filtry">'.
                             $this->Html->link( 'DTP?', array( 'controller' => 'cards', 'action' => 'index', 'dtpcheck'), array('class' => $klasa['dtpcheck'])) .
+							$this->Html->link( 'HOT', array( 'controller' => 'cards', 'action' => 'index', 'hot'), array('class' => $klasa['hot'])) .
                             $this->Html->link( 'PERSO?', array( 'controller' => 'cards', 'action' => 'index', 'persocheck'), array('class' => $klasa['persocheck'])) .
 
                             $this->Html->link( 'P-ONLY', array( 'controller' => 'cards', 'action' => 'index', 'ponly'), array('class' => $klasa['ponly'])) .

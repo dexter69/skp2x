@@ -10,10 +10,10 @@
 //echo '<pre>';	print_r($vju['x_sito']['options']); echo  '</pre>'; 
 
 if( OLD_PDF_PROOF ) {
-    $options = array('card.css?v=328496968', 'card-proof', 'font-awesome-4.5.0/css/font-awesome.min'); 
+    $options = array('card.css?v=201701171336', 'card-proof', 'font-awesome-4.5.0/css/font-awesome.min'); 
     $js_arr = array('card-perso', 'proof/proof'); }
 else {
-    $options = array('card.css?v=328496967');
+    $options = array('card.css?v=201701171336');
     $js_arr = array('card-perso');}
 
 echo $this->Html->css( $options, null, array('inline' => false));

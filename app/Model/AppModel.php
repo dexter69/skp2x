@@ -89,6 +89,9 @@ class AppModel extends Model {
             p_ov => array(
                     'zakończył personalizację: ',
                     'zakończyła personalizację: ','class' => 'ziel'),
+        h_ov => array(
+                'zakończył hotstamping: ',
+                'zakończyła hotstamping: ','class' => 'ziel'),
             put_kom => array(
                     'napisał',
                     'napisała','class' => 'pom'),

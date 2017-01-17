@@ -100,6 +100,11 @@ class CardsController extends AppController {
                         $opcje = array(
                                 'Card.status' => array(W4D, W4DP, W4DPNO, W4DPOK),
                                 'Order.status !=' => array(O_REJ, W4UZUP, UZUPED) );				
+                break;
+                case 'hot':
+                        $opcje = array(
+                                'Card.ishotstamp' => 1,
+                                'Order.status !=' => array(O_REJ, W4UZUP, UZUPED, KONEC) );				
                 break;			
                 case 'persocheck':
                         $opcje = array(
@@ -213,8 +218,8 @@ class CardsController extends AppController {
             //$user_dzial = $this->Auth->user('dzial');
             $tworca = $card['Card']['user_id'] == $this->Auth->user('id');
             $tab = array(
-                    'buttons' => array(d_no, d_ok, p_no, p_ok, p_ov, put_kom),
-                    'bcontr' => array(d_no=>0, d_ok=>0, p_no=>0, p_ok=>0, p_ov=>0, put_kom=>0),
+                    'buttons' => array(d_no, d_ok, p_no, p_ok, p_ov, put_kom, h_ov),
+                    'bcontr' => array(d_no=>0, d_ok=>0, p_no=>0, p_ok=>0, p_ov=>0, put_kom=>0, h_ov=>0),
                     'ile' => 0 //liczba submitow do wyświetlenia
             );
 
@@ -247,6 +252,8 @@ class CardsController extends AppController {
                     case W_PROD:
                         $tab = $this->plant_POVER($tab, $card['Card'], $this->Auth->user('dzial'));
                         $tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
+                        // możliwość zakończenia hotstampingu
+                        $tab = $this->plant_HOT($tab, $card['Card'], $this->Auth->user('dzial'));
                     break;
                     default:		
                             $tab = $this->plant_KOMENTUJ($tab, $tworca, $card['Card']['isperso']);
@@ -255,13 +262,28 @@ class CardsController extends AppController {
             return $tab;
 		
 	}
+        private function plant_HOT( $button_tab = array(), $karta = array(), $dzial = 0 ) {
+            
+            $ret_tab = $button_tab;
+            
+            $warunek = 
+                    // d) użytkownik jest superadminem, z perso lub dtp 
+                    in_array($dzial, array(SUA, DTP, PER) ) &&
+                    $karta['ishotstamp'] == 1 && // b) karta ma hotstamping niezakończony                    
+                    $karta['status'] == W_PROD; // a) ma klarowny status
+            if( $warunek ) {
+                $ret_tab['bcontr'][h_ov] = 1;
+		        $ret_tab['ile']++;
+            }
+            return $ret_tab;
+        }
 
         private function plant_POVER( $button_tab = array(), $karta = array(), $dzial = 0 ) {
             
             $ret_tab = $button_tab;
             
             $warunek = 
-                    // d) użytkownik jest superafdminem, z perso lub dtp 
+                    // d) użytkownik jest superadminem, z perso lub dtp 
                     in_array($dzial, array(SUA, DTP, PER) ) &&
                     $karta['isperso'] && // b) karta ma personalizację
                     !$karta['pover'] && // c) nie została już zamarkowana
@@ -336,31 +358,6 @@ class CardsController extends AppController {
 			}
 		return $ret_tab;
 		
-	}
-
-	private function plant_FIX_K( $button_tab = array(), $card = array() ) {
-		
-		if( $card['Order']['status'] == OREJ) { // jak nie jest taki, znaczy że jest inna karta w zamówie-
-												// niu, która nie została jeszcze sprawdzona
-			$ret_tab = $button_tab;
-			
-			switch( $this->Auth->user('O_PUB') ) { // sprawdzamy uprawnienia do publikowania zamówień
-				case r_OWN:
-					$tworca = $card['Card']['user_id'] == $this->Auth->user('id');
-					if( $tworca ) {
-						$ret_tab['bcontr'][fix_k] = 1;
-						$ret_tab['ile']++;
-					}
-				break;
-				case r_ALL:
-				case r_SAL:
-						$ret_tab['bcontr'][fix_k] = 1;
-						$ret_tab['ile']++;
-				break;
-			}
-			return $ret_tab;
-		}
-		return $button_tab;
 	}
 
 	public function kartaMaPerso( $card = array() ) {
@@ -604,6 +601,7 @@ class CardsController extends AppController {
                             case 'ptodo':
                             case 'my':
                             case 'dtpcheck':
+                            case 'hot':
                             case 'persocheck':
                             case 'szukaj':
                                     return true;

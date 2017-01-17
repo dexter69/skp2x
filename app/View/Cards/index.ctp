@@ -15,7 +15,7 @@
 	
 $klasa = array(	'dtpcheck'=>null, 'persocheck'=>null, 'all-but-priv'=>null,
 		'my'=>null, 'active'=>null, 'closed'=>null, 'ponly'=>null,
-                'pover'=>null, 'ptodo'=>null);
+                'pover'=>null, 'ptodo'=>null, 'hot'=>null);
 if( array_key_exists($par, $klasa) )
     { $klasa[$par] = 'swieci'; }
 ?>
