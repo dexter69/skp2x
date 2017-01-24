@@ -33,7 +33,46 @@ $( document ).ready(function() {
             );    
         }        
     });
+
+    /* Klikając przycisk przełaczmy się między generacją dla batona a dla zbiorczego */
+    $(".infobar .switch button").click(function(){
+        //console.log('zbiorczoza !');
+        przelanczKlasy(this); //wszelkie machlojki z klasami robi
+        //console.log($(this).text());
+    });
+
 });
+
+function przelanczKlasy(obj) {
+
+    var bar = {
+        selektor: ".infobar", //klasa belki
+        baton: "baton", //klasa dla widoku batona
+        zbiorcza: "zbiorcza", //klasa dla etykiety zbiorczej
+        obie: function() {return this.baton + ' ' + this.zbiorcza;}
+    },
+    przycisk = {
+        baton: "btn-primary",
+        zbiorcza: "btn-success"
+    };
+
+    //console.log(bar.obie());
+    // przełączamy klasę dziadka przycisku, czyli belkę (bar)
+    if( $( bar.selektor ).hasClass(bar.baton) ) {
+        $( bar.selektor ).removeClass( bar.baton );
+        $( bar.selektor ).addClass( bar.zbiorcza );
+        $(obj).text(bar.zbiorcza);
+        $(obj).removeClass(przycisk.baton);
+        $(obj).addClass(przycisk.zbiorcza);
+    } else {
+        $( bar.selektor ).removeClass( bar.zbiorcza );
+        $( bar.selektor ).addClass( bar.baton );
+        $(obj).html("&nbsp;&nbsp;" + bar.baton + "&nbsp;&nbsp;");
+        $(obj).removeClass(przycisk.zbiorcza);
+        $(obj).addClass(przycisk.baton);
+    }
+
+}
 
 // odczytaj dane dla etykiety i zformatuj
 function getLabelData( obj ) { // obj reprezentuje kliknięty element

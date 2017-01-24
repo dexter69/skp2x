@@ -12,7 +12,10 @@ $ext ='act="' . $karta['active'] . '" nor="' . $karta['normal'] . '"';
         data-lang="<?php echo $karta['etylang']; ?>">          
         <?php echo $karta['nazwa']; ?>
     </h3>
-    <p class="infobar">nakład: <strong><?php echo $karta['naklad']; ?></strong></p>
+    <p class="infobar baton">
+        <span class="switch"><button class="btn btn-primary" type="button">&nbsp;&nbsp;baton&nbsp;&nbsp;</button></span>
+        nakład: <strong><?php echo $karta['naklad']; ?></strong>        
+    </p>
     <ul <?php echo $ext;?> class="list-inline"><?php
         foreach( $box as $key => $val ) {
             if( $karta['kontrol']['active'] == $key ) { // ten "klikacz" ma być aktywny
