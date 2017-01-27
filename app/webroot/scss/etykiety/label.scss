@@ -73,6 +73,23 @@
 }
 
 // infobar
-.infobar {
+p.infobar {
     font-size: 120%; // chcemy troszkę większe
+    margin-bottom: 1em;
+}
+
+.infobar > .switch > button {
+    padding: 6px 10px;    
+}
+
+.baton > .switch > button {
+    margin-right: 1em;
+}
+
+.zbiorcza > .switch > button {
+    margin-right: 0.94em;
+}
+
+.kod-karty {
+    padding-left: 0.45em;
 }

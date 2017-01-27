@@ -58,15 +58,15 @@ function przelanczKlasy(obj) {
 
     //console.log(bar.obie());
     // przełączamy klasę dziadka przycisku, czyli belkę (bar)
-    if( $( bar.selektor ).hasClass(bar.baton) ) {
-        $( bar.selektor ).removeClass( bar.baton );
-        $( bar.selektor ).addClass( bar.zbiorcza );
+    if( $( obj ).hasClass(bar.baton) ) {
+        $( obj ).removeClass( bar.baton );
+        $( obj ).addClass( bar.zbiorcza );
         $(obj).text(bar.zbiorcza);
         $(obj).removeClass(przycisk.baton);
         $(obj).addClass(przycisk.zbiorcza);
     } else {
-        $( bar.selektor ).removeClass( bar.zbiorcza );
-        $( bar.selektor ).addClass( bar.baton );
+        $( obj ).removeClass( bar.zbiorcza );
+        $( obj ).addClass( bar.baton );
         $(obj).html("&nbsp;&nbsp;" + bar.baton + "&nbsp;&nbsp;");
         $(obj).removeClass(przycisk.zbiorcza);
         $(obj).addClass(przycisk.baton);
