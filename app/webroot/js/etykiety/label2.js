@@ -45,28 +45,26 @@ $( document ).ready(function() {
 
 function przelanczKlasy(obj) {
 
-    var bar = {
-        selektor: ".infobar", //klasa belki
+    var bar = {        
         baton: "baton", //klasa dla widoku batona
-        zbiorcza: "zbiorcza", //klasa dla etykiety zbiorczej
-        obie: function() {return this.baton + ' ' + this.zbiorcza;}
+        zbiorcza: "zbiorcza" //klasa dla etykiety zbiorczej        
     },
     przycisk = {
         baton: "btn-primary",
         zbiorcza: "btn-success"
-    };
+    },
+    pradziadek = $( obj ).parent().parent();
 
-    //console.log(bar.obie());
-    // przełączamy klasę dziadka przycisku, czyli belkę (bar)
-    if( $( obj ).hasClass(bar.baton) ) {
-        $( obj ).removeClass( bar.baton );
-        $( obj ).addClass( bar.zbiorcza );
+    
+    if( $( pradziadek ).hasClass(bar.baton) ) {
+        $( pradziadek ).removeClass( bar.baton );
+        $( pradziadek ).addClass( bar.zbiorcza );
         $(obj).text(bar.zbiorcza);
         $(obj).removeClass(przycisk.baton);
         $(obj).addClass(przycisk.zbiorcza);
     } else {
-        $( obj ).removeClass( bar.zbiorcza );
-        $( obj ).addClass( bar.baton );
+        $( pradziadek ).removeClass( bar.zbiorcza );
+        $( pradziadek ).addClass( bar.baton );
         $(obj).html("&nbsp;&nbsp;" + bar.baton + "&nbsp;&nbsp;");
         $(obj).removeClass(przycisk.zbiorcza);
         $(obj).addClass(przycisk.baton);
