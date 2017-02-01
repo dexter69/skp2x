@@ -53,18 +53,21 @@ function przelanczKlasy(obj) {
         baton: "btn-primary",
         zbiorcza: "btn-success"
     },
-    pradziadek = $( obj ).parent().parent();
+    pradziadek = $( obj ).parent().parent(),
+    praPraDziadek = $( obj ).parent().parent().parent(); // wraping div
 
     
     if( $( pradziadek ).hasClass(bar.baton) ) {
         $( pradziadek ).removeClass( bar.baton );
         $( pradziadek ).addClass( bar.zbiorcza );
+        $( praPraDziadek ).addClass( bar.zbiorcza );
         $(obj).text(bar.zbiorcza);
         $(obj).removeClass(przycisk.baton);
         $(obj).addClass(przycisk.zbiorcza);
     } else {
         $( pradziadek ).removeClass( bar.zbiorcza );
         $( pradziadek ).addClass( bar.baton );
+        $( praPraDziadek ).removeClass( bar.zbiorcza );
         $(obj).html("&nbsp;&nbsp;" + bar.baton + "&nbsp;&nbsp;");
         $(obj).removeClass(przycisk.zbiorcza);
         $(obj).addClass(przycisk.baton);
