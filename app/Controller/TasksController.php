@@ -23,7 +23,8 @@ class TasksController extends AppController {
             $result = $this->tmpOpp($tmp);                           
         }
         $box = $this->batons['rodzaje'];
-        $this->set( compact('result', 'box') );
+        $parcel = $this->batons['parcel']['conected2bat'];
+        $this->set( compact('result', 'box', 'parcel') );
     }
     
     //tymczasowa funkcja, formatujemy dane

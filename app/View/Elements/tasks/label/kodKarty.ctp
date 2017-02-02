@@ -19,9 +19,9 @@ $ext ='act="' . $karta['active'] . '" nor="' . $karta['normal'] . '"';
     <ul <?php echo $ext;?> class="list-inline kod-karty"><?php
         foreach( $box as $key => $val ) {
             if( $karta['kontrol']['active'] == $key ) { // ten "klikacz" ma być aktywny
-                echo '<li class="' . $karta['active'] . '" ' . $ext . '>' . $val . '</li>';
+                echo '<li class="' . $karta['active'] . '" ' . $ext . ' data-q="' . $parcel[$key] . '">' . $val . '</li>';
             } else {
-                echo '<li class="' . $karta['normal'] . '" ' . $ext . '>' . $val . '</li>';
+                echo '<li class="' . $karta['normal'] . '" ' . $ext . ' data-q="' . $parcel[$key] . '">' . $val . '</li>';
             }
         }
     ?>

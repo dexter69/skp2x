@@ -32,6 +32,7 @@ if( $result != null ) { // znaczy było POST
                         'divclass' => 'col-sm-6 label-summary ' . $karta['klasa'],
                         'lp' => ++$i,
                         'box' => $box,
+                        'parcel' => $parcel,
                         'produkcyjne' => $produkcyjne
                     ));
                 //}                
@@ -42,5 +43,6 @@ if( $result != null ) { // znaczy było POST
         echo $this->element('tasks/label/pdfSkeleton');
         //echo "<br>";
         //$this->App->print_r2($result['data']/*['Ticket']*/); 
+        //$this->App->print_r2($parcel); 
     } 
 }

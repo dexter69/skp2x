@@ -54,9 +54,9 @@ function przelanczKlasy(obj) {
         zbiorcza: "btn-success"
     },
     pradziadek = $( obj ).parent().parent(),
+    theUl = $( obj ).parent().parent().next(), // nasze ul przyciskami ilości
     praPraDziadek = $( obj ).parent().parent().parent(); // wraping div
 
-    
     if( $( pradziadek ).hasClass(bar.baton) ) {
         $( pradziadek ).removeClass( bar.baton );
         $( pradziadek ).addClass( bar.zbiorcza );
