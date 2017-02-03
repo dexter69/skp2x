@@ -80,47 +80,26 @@ function replaceValues( naszeUL ) {
 
     var
         obj = $(naszeUL).children(':not(.input)'),
-        rodzic = $( naszeUL ).parent(),
-        firstLi = $(obj).first()
-        ;
+        to = $(naszeUL).find("." + $(naszeUL).attr('act') ),
+        vtekst;
     
-
-    var klasa = $(naszeUL).attr('act'); // klasa wyróżnionego li
-    console.log(
-        klasa
-    );
-
-    
-    
-    
-
-
     $(obj).each(function(){
         
-        var 
-            //stored = parseInt($(this).data('q')),
-            stored = $(this).data('q'),
+        var stored = $(this).data('q'),
             tekst = $(this).text();
-        
+        // podmień wartości
         $(this).text(stored);
         $(this).data('q', tekst);
     });
 
-    // aktualizujemy input 
-
-    var to = $(naszeUL).find("." + klasa),
-        vtekst; // nasze li podświetlone
-    
+    // aktualizujemy input     
     if( to.length ) { // tzn znaleźliśmy
         vtekst = $(to).text();        
     } else { // bierzemy perwszy element li
         vtekst = $(obj).first().text();        
     }
-    console.log(vtekst);
-
-    var input = $(naszeUL).find('input'); // ten input element
     // nadaj wartosc
-    $(input).val(vtekst);
+    $(naszeUL).find('input').val(vtekst);
 }
 
 // odczytaj dane dla etykiety i zformatuj
