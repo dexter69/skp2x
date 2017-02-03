@@ -57,19 +57,19 @@ class AppController extends Controller {
         // dodajemy dane do pudeł zbiorczych
         'parcel' => array(
                 'rodzaje' => array(
-                        '5' => 5,
-                        '3' => 3,
-                        '2,5' => 2.5,
-                        '2' => 2,
-                        '1' => 1
+                        '5' => 5000,
+                        '3' => 3000,
+                        '2,5' => 2500,
+                        '2' => 2000,
+                        '1' => 1000
                 ), // trochę zakręcone - wartości jw, ale klucze te same, co dla batonów,
                 // by utwozyć powiązanie do UI poprzez klucze dla batonów
                 'conected2bat' => array(
-                        '500' => 5,
-                        '250' => 3,
-                        '200' => 2.5,
-                        '150' => 2,
-                        '100' => 1
+                        '500' => 5000,
+                        '250' => 3000,
+                        '200' => 2500,
+                        '150' => 2000,
+                        '100' => 1000
                 )   
         )
     );

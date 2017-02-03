@@ -57,22 +57,70 @@ function przelanczKlasy(obj) {
     theUl = $( obj ).parent().parent().next(), // nasze ul przyciskami ilości
     praPraDziadek = $( obj ).parent().parent().parent(); // wraping div
 
-    if( $( pradziadek ).hasClass(bar.baton) ) {
+    if( $( pradziadek ).hasClass(bar.baton) ) { // przełącz na zbiorcze
         $( pradziadek ).removeClass( bar.baton );
         $( pradziadek ).addClass( bar.zbiorcza );
         $( praPraDziadek ).addClass( bar.zbiorcza );
         $(obj).text(bar.zbiorcza);
         $(obj).removeClass(przycisk.baton);
-        $(obj).addClass(przycisk.zbiorcza);
-    } else {
+        $(obj).addClass(przycisk.zbiorcza);        
+    } else { // przełącz na batony
         $( pradziadek ).removeClass( bar.zbiorcza );
         $( pradziadek ).addClass( bar.baton );
         $( praPraDziadek ).removeClass( bar.zbiorcza );
         $(obj).html("&nbsp;&nbsp;" + bar.baton + "&nbsp;&nbsp;");
         $(obj).removeClass(przycisk.zbiorcza);
-        $(obj).addClass(przycisk.baton);
+        $(obj).addClass(przycisk.baton);        
     }
+    replaceValues(theUl);
+}
 
+// przełączamy wartości batonów
+function replaceValues( naszeUL ) {
+
+    var
+        obj = $(naszeUL).children(':not(.input)'),
+        rodzic = $( naszeUL ).parent(),
+        firstLi = $(obj).first()
+        ;
+    
+
+    var klasa = $(naszeUL).attr('act'); // klasa wyróżnionego li
+    console.log(
+        klasa
+    );
+
+    
+    
+    
+
+
+    $(obj).each(function(){
+        
+        var 
+            //stored = parseInt($(this).data('q')),
+            stored = $(this).data('q'),
+            tekst = $(this).text();
+        
+        $(this).text(stored);
+        $(this).data('q', tekst);
+    });
+
+    // aktualizujemy input 
+
+    var to = $(naszeUL).find("." + klasa),
+        vtekst; // nasze li podświetlone
+    
+    if( to.length ) { // tzn znaleźliśmy
+        vtekst = $(to).text();        
+    } else { // bierzemy perwszy element li
+        vtekst = $(obj).first().text();        
+    }
+    console.log(vtekst);
+
+    var input = $(naszeUL).find('input'); // ten input element
+    // nadaj wartosc
+    $(input).val(vtekst);
 }
 
 // odczytaj dane dla etykiety i zformatuj
