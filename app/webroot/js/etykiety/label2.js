@@ -27,7 +27,10 @@ $( document ).ready(function() {
         // niebyc - oznacza, że dla tej karty nie drukujemy etykiet
         // plik - że jest gotowy plik etykiet
         var theDiv = $(this).parent();
-        if( !$(theDiv).hasClass('niebyc') && !$(theDiv).hasClass('plik') ) {
+        if( !$(theDiv).hasClass('niebyc') &&
+            !$(theDiv).hasClass('plik') ||
+            $(theDiv).hasClass('zbiorcza') // na zbiorcze zawsze da się wydrukować
+        ) {
             makeLabPdf( // wykreuj pdf
                 getLabelData(this) // odczytaj dane dla etykiety i zwróć w formie obiektu
             );    
@@ -118,7 +121,9 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
         name: $(obj).data('product'),
         naklad: parseInt($(obj).data('naklad')),
         baton: $($(obj).parent().find("input")).val(),
-        
+        // czy etykieta ma byc zbiorcza
+        zbiorcza: $(obj).parent().hasClass('zbiorcza'),
+
         inbox: true, /* czy generujemy ilość w kart w batonie.
         False oznacza puste (miejsce na ręczny wpis) -> pociąga to równieżź za sobą fakt,
         że boxnr będzie false */
@@ -132,7 +137,7 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
             naklad: langoza.naklad[$(obj).data('lang')],
             wbatonie: langoza.wbatonie[$(obj).data('lang')],
             onr: langoza.onr[$(obj).data('lang')]
-        }
+        }        
     };
     
     if( label.baton === "" || label.baton === null ) {
@@ -155,9 +160,14 @@ function makeLabPdf( label ) {
     
     var maxdl = 52; // maksymalna długość nazwy produktu (przy czcionce 11)
     // obcinamy, gdy za długie, nie chcemy by wyszło nam na 3 linijki
-    label.name = label.name.substr(0,maxdl);    
-    
-    docDefinition.content = kontent(label);       
+    label.name = label.name.substr(0,maxdl); 
+
+    if( label.zbiorcza )   { //ma być etykieta na zbiorcze
+        docDefinition.content = kontentDlaZbiorczej(label);
+    } else {
+        docDefinition.content = kontentDlaBatona(label);       
+    }
+
     // open the PDF in a new window
     pdfMake.createPdf(docDefinition).open();
 }
@@ -165,9 +175,38 @@ function makeLabPdf( label ) {
 // tu wdzingujemy strukturę pdf'a
 var pdfdata = [];
 
-/* Wygeneruj kontent dla make pdf */
+/* Wygeneruj kontent dla make pdf, wersja na zbiorcze */
+function kontentDlaZbiorczej(etyk) {
+
+    return kontent(etyk);
+}
+
+/* Wygeneruj kontent dla make pdf, wersja na batony */
+function kontentDlaBatona(etyk) {
+
+    return kontent(etyk);
+}
+
+
 function kontent(etyk) {
-    pdfdata = [];        
+    
+    pdfdata = [];    
+    etyk = kontentPart1(etyk);
+    
+    do {
+      addStructureOfOnePage(etyk);      
+      etyk.pages--;  
+      etyk.lnr++; // kolejny nr batona     
+      etyk.left -= etyk.baton;
+    } while( etyk.pages > 0);
+    
+    delete pdfdata[pdfdata.length-1].pageBreak;  //nie chcemy by na generował break po ostatniej stronie
+    return pdfdata;
+}
+
+// Czysto dla skrócenia kodu
+function kontentPart1(etyk) {
+
     etyk.labtxt = etyk.valtxt = ' ';
     
     if( etyk.baton !== 0 ) {
@@ -185,16 +224,9 @@ function kontent(etyk) {
        etyk.baton2 = " "; 
        etyk.pages = 1;
     }
-    
-    do {
-      addStructureOfOnePage(etyk);      
-      etyk.pages--;  
-      etyk.lnr++; // kolejny nr batona     
-      etyk.left -= etyk.baton;
-    } while( etyk.pages > 0);
-    
-    delete pdfdata[pdfdata.length-1].pageBreak;  //nie chcemy by na generował break po ostatniej stronie
-    return pdfdata;
+
+    return etyk;
+
 }
 
 function addStructureOfOnePage(etyk) {
