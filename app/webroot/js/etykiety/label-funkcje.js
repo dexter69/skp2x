@@ -1,7 +1,7 @@
 /* Funkcje dla label.js */
 
 
-/* Konstruktory strony etykiety */
+/* Konstruktory strony etykiety dla batona */
 var page = {
     firstLine: function(order, job) {
         this.text = [
@@ -40,6 +40,43 @@ var page = {
             this.style = 'normal';
             this.pageBreak = 'after'; 
         }
+    }
+};
+
+/* Konstruktory strony etykiety dla zbiorczej */
+var pagez = {
+    firstLine: function(val) {
+        this.text = val;
+        this.style = 'product';
+    },
+    secondLine: function(naklad, inbaton, labtexts) {       
+       this.columns = [
+            [
+                { text: labtexts.naklad, style: 'textlabel' },
+                { text: naklad, style: 'normal' }
+            ],
+            [
+                { text: labtexts.wbatonie, style: 'textlabel', alignment: 'right' },
+                { text: inbaton, style: 'normal', alignment: 'right' }
+            ]
+        ];
+    },    
+    thirdLine: function(val, lbltxt) {
+
+        this.text = val;
+        this.alignment = 'right';
+        if(lbltxt) { //znaczy tprodukujemy treść label'a                 
+            this.style = 'textlabel';
+        } else { // wartość            
+            this.style = 'normal';             
+        }
+    },    
+    fourthLine: function(job) {
+        
+        this.text = [
+            { text: job, style: 'numer2'}
+        ];
+        this.pageBreak = 'after';
     }
 };
 

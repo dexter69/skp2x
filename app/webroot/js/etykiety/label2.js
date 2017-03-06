@@ -162,11 +162,7 @@ function makeLabPdf( label ) {
     // obcinamy, gdy za długie, nie chcemy by wyszło nam na 3 linijki
     label.name = label.name.substr(0,maxdl); 
 
-    if( label.zbiorcza )   { //ma być etykieta na zbiorcze
-        docDefinition.content = kontentDlaZbiorczej(label);
-    } else {
-        docDefinition.content = kontentDlaBatona(label);       
-    }
+    docDefinition.content = kontent(label);    
 
     // open the PDF in a new window
     pdfMake.createPdf(docDefinition).open();
@@ -174,18 +170,6 @@ function makeLabPdf( label ) {
 
 // tu wdzingujemy strukturę pdf'a
 var pdfdata = [];
-
-/* Wygeneruj kontent dla make pdf, wersja na zbiorcze */
-function kontentDlaZbiorczej(etyk) {
-
-    return kontent(etyk);
-}
-
-/* Wygeneruj kontent dla make pdf, wersja na batony */
-function kontentDlaBatona(etyk) {
-
-    return kontent(etyk);
-}
 
 
 function kontent(etyk) {
@@ -226,7 +210,6 @@ function kontentPart1(etyk) {
     }
 
     return etyk;
-
 }
 
 function addStructureOfOnePage(etyk) {
@@ -239,16 +222,31 @@ function addStructureOfOnePage(etyk) {
             etyk.valtxt = etyk.lnr + etyk.sumb;
         }
     } else {
-        etyk.labels.onr = ""; // nie chcemy tego, gdy w[isywanie ręczne
+        etyk.labels.onr = ""; // nie chcemy tego, gdy wpisywanie ręczne
     }
-    
-    pdfdata.push(                
-        new page.firstLine(etyk.order, etyk.job),  
-        new page.secondLine(etyk.labels.produkt, true),        
-        new page.secondLine(etyk.name, false),
-        new page.thirdLineV2(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),
-        new page.fourthLineV2(etyk.labels.onr, true),
-        new page.fourthLineV2(etyk.valtxt, false)
-    );
-    
+
+    constructPage(etyk);    
+}
+
+// przygotuj strukturę strony dokumentu
+function constructPage(etyk) {
+
+    if( etyk.zbiorcza )   { //ma być etykieta na zbiorcze
+        pdfdata.push(                
+            new pagez.firstLine(etyk.name + " " + etyk.name),  
+            new pagez.secondLine(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),            
+            new pagez.thirdLine(etyk.labels.onr, true),
+            new pagez.thirdLine(etyk.valtxt, false),
+            new pagez.fourthLine(etyk.job)            
+        );
+    } else {
+        pdfdata.push(                
+            new page.firstLine(etyk.order, etyk.job),  
+            new page.secondLine(etyk.labels.produkt, true),        
+            new page.secondLine(etyk.name, false),
+            new page.thirdLineV2(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),
+            new page.fourthLineV2(etyk.labels.onr, true),
+            new page.fourthLineV2(etyk.valtxt, false)
+        );
+    }
 }

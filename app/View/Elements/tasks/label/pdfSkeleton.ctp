@@ -19,6 +19,11 @@
           numer: {
             fontSize: 8,
             alignment: 'right'
+          },
+          numer2: {
+            fontSize: 15,
+            alignment: 'left',
+            bold: true
           }
         },
         
