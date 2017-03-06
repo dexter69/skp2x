@@ -233,7 +233,7 @@ function constructPage(etyk) {
 
     if( etyk.zbiorcza )   { //ma być etykieta na zbiorcze
         pdfdata.push(                
-            new pagez.firstLine(etyk.name + " " + etyk.name),  
+            new pagez.firstLine(etyk.name),  
             new pagez.secondLine(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),            
             new pagez.thirdLine(etyk.labels.onr, true),
             new pagez.thirdLine(etyk.valtxt, false),
