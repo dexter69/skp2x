@@ -1,5 +1,7 @@
 <?php
 	echo $this->Html->script(array(/*'jquery',*/ 'event'), array('inline' => false)); 
+	echo $this->Html->css('job/job-view'//.css?v=' . time()
+						 , array('inline' => false));
 	//echo '<pre>';	print_r($submits); echo  '</pre>';	
 	//echo '<pre>';	print_r($ordery); echo  '</pre>';
 	//echo '<pre>';	print_r($ludz); echo  '</pre>';
@@ -109,81 +111,47 @@
 	</h3>
 	-->
 	<?php if (!empty($job['Card'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0" id="lista-kart">
 	<tr>
-		<th><?php echo __('Id'); ?></th>
+		<th class="id"><?php echo __('Id'); ?></th>
 		<th><?php echo __('Nazwa'); ?></th>
-		<th><?php echo 'Status'; ?></th>
-		<th><?php echo __('Ilość'); ?></th>
-		<th><?php echo __('IKNA'); ?></th>
-		<th>Opcje</th>
-		<th><?php echo __('Zamówienie'); ?></th>
-		<th><?php echo __('Opiekun'); ?></th>
-		<!--<th><?php echo __('Klient'); ?></th>-->
-		
-		
-		<!--<th><?php echo __('Job Id'); ?></th>-->
-		<!--
-		<th><?php echo __('Price'); ?></th>
-		<th><?php echo __('Wzor'); ?></th>
-		<th><?php echo __('Comment'); ?></th>
-		<th><?php echo __('Status'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>-->
+		<th class="status"><?php echo 'Status'; ?></th>
+		<th class="ile"><?php echo 'Ilość'; ?></th>
+		<th class="ikna"><?php echo 'IKNA'; ?></th>
+		<th class="opcje">Opcje</th>
+		<th class="order"><?php echo 'Zamówienie'; ?></th>
+		<!--<th class="opiekun"><?php echo 'Opiekun'; ?></th>-->
 	</tr>
 	<?php foreach ($job['Card'] as $card): ?>
 		<tr>
-			<td><?php echo $card['id']; ?></td>
+			<td  class="id"><?php echo $card['id']; ?></td>
 			<td><?php echo $this->Html->link($card['name'], array(
 						'controller' => 'cards', 'action' => 'view', $card['id']
 						), array('title' => $card['name'])); ?>
 			</td>
-			<td><?php echo $this->Ma->status_karty($card['status']); ?></td>
-			<td><?php echo $this->Ma->tys($card['quantity']); ?></td>
-			<td><?php echo $card['ikna']; ?></td>
-			<td>
+			<td class="status"><?php echo $this->Ma->status_karty($card['status']); ?></td>
+			<td class="ile"><?php echo $this->Ma->tys($card['quantity']); ?></td>
+			<td class="ikna"><?php echo $card['ikna']; ?></td>
+			<td class="opcje">
 				<?php if( $card['isperso'] ) echo '<span class="perso">P</span>'; ?>
 			</td>
 			
-			<!--<td><?php echo $card['customer_id']; ?></td>-->
-			<!--
-			<td><?php
-				//echo $ordery[$card['id']]['Customer']['name'];
-				echo $this->Html->link($ordery[$card['id']]['Customer']['name'], array(
-						'controller' => 'customers', 'action' => 'view', $card['customer_id']
-						));
-			 ?>
-				
-			</td>-->
-			
-			<!--<td><?php echo $card['order_id']; ?></td>-->
-			<td><?php 
+			<td class="order"><?php 
 			
 			$nrek = $this->Ma->bnr2nrh($ordery[$card['id']]['Order']['nr'], $ordery[$card['id']]['User']['inic']);
 			echo $this->Html->link($nrek, array(
 						'controller' => 'orders', 'action' => 'view', $card['order_id']
 						), array('escape' => false)); 
 			
-			//echo $this->Html->link($this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic']), array('action' => 'view', $order['Order']['id']), array('escape' => false));
-			?></td>
-			<td><?php 
-			echo $ordery[$card['id']]['User']['name'];
-			//echo $job['User']['name']; ?></td>
-			<!--<td><?php echo $card['job_id']; ?></td>-->
 			
+			?></td>
 			<!--
-			<td><?php echo $card['price']; ?></td>
-			<td><?php echo $card['wzor']; ?></td>
-			<td><?php echo $card['comment']; ?></td>
-			<td><?php echo $card['status']; ?></td>
-			<td><?php echo $card['created']; ?></td>
-			<td><?php echo $card['modified']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'cards', 'action' => 'view', $card['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'cards', 'action' => 'edit', $card['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'cards', 'action' => 'delete', $card['id']), null, __('Are you sure you want to delete # %s?', $card['id'])); ?>
-			</td>-->
+			<td class="opiekun"><?php 
+				echo $ordery[$card['id']]['User']['name'];?>
+			</td>
+			-->
+			
+			
 		</tr>
 	<?php endforeach; ?>
 	</table>
