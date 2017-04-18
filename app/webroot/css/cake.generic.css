@@ -1359,8 +1359,8 @@ a.pdflink div {
 
 /* listing kart */
 .card_id_fix { width: 4em;}
-.card_opcje_fix { width: 14em; }
-.card_zlec_fix { width: 7em;}
+.card_opcje_fix { width: 7em; }
+.card_zlec_fix { width: 5em;}
 .card_ilosc_fix { width: 7em; text-align: right; padding-right: 1em;}
 .card_cena_fix { width: 5em; }
 .card_status_fix { width: 9em; }
