@@ -135,8 +135,7 @@ $this->Ma->displayActions($links);
 				$this->Ma->responsive_divs2( $markup, 'platnosci') .					
 			$this->Html->tag('/div');
 		
-		//echo $markup;
-			
+					
 		echo $this->Form->hidden('prc');
 		echo $this->Form->hidden('trm');
 
@@ -148,9 +147,8 @@ $this->Ma->displayActions($links);
 				$this->Html->div(null, '', array('id' => 'ekspresorder')) .
 				$this->Ma->viewheader('DATA ZAKOŃCZENIA', array( 'class' => 'margin03')	) .
 				$this->Html->div(null, '', array('id' => 'datepicker')) .								
-			$this->Html->tag('/div') . $markup;
-			
-		//echo $markup2;
+			$this->Html->tag('/div') . $markup;			
+		
 		
 		echo $this->Ma->responsive_divs2( $markup, 'timeandpay');
 
