@@ -48,14 +48,17 @@ class AppModel extends Model {
             'label' => 'Język etykiety',
             'options' => array(
                 'pl' => 'Polski',
-                'en' => 'Angielski'
+                'en' => 'Angielski',
+                'de' => 'Niemiecki'
             ),
             'view' => array(
                 'pl' => 'polska',
-                'en' => 'angielska'),
+                'en' => 'angielska',
+                'de' => 'niemiecka'),
             'cview' => array( // widok klienta
                 'pl' => 'polski',
-                'en' => 'angielski'
+                'en' => 'angielski',
+                'de' => 'niemiecki'
             )
         )
     );
