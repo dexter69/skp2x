@@ -109,10 +109,10 @@ function replaceValues( naszeUL ) {
 function getLabelData( obj ) { // obj reprezentuje kliknięty element
     /* Dane językowe do etykiet */
     var langoza = {
-        produkt:    {'pl': 'produkt:', 'en': 'product:'},  
-        naklad:     {'pl': 'zamówiona ilość:', 'en': 'ordered quantity:'},
-        wbatonie:   {'pl': 'ilość w opakowaniu:', 'en': 'batch:'},
-        onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:'}  
+        produkt:    {'pl': 'produkt:', 'en': 'product:', 'de': 'Produkt'},  
+        naklad:     {'pl': 'zamówiona ilość:', 'en': 'ordered quantity:', 'de': 'Bestellmenge'},
+        wbatonie:   {'pl': 'ilość w opakowaniu:', 'en': 'batch:', 'de': 'Inhalt'},
+        onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:', 'de': 'Karton'}  
     },
     
     label = { 
