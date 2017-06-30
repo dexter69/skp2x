@@ -30,7 +30,7 @@
             echo $this->Html->meta('icon');
             
             //echo $this->Html->css( array('bootswatch/custom/bootstrap.min', 'boot/core') );
-            echo $this->BootHtml->css( array('bootswatch/custom/bootstrap.min', 'boot/core'), false );
+            echo $this->BootHtml->css( array('bootswatch/custom/bootstrap.min', 'boot/core.css?v=201706301029'), false );
             ?>
             <!--
                 wersja local 
@@ -62,7 +62,11 @@
         ================================================== 
         Placed at the end of the document so the pages load faster -->        
         <?php
-            echo $this->Html->script(array('jquery-1.11.2.min', 'bootstrap.min.js'));
+            echo $this->Html->script(array(
+                'jquery-1.11.2.min'
+                , 'bootstrap.min.js'
+                //, 'bootstrap_3.37.min.js'
+            ));
             echo $this->fetch('scriptBottom');
         ?>
     </body>

@@ -1,7 +1,8 @@
 <?php
 
-/* To ma być nowy model operujący na tablicy orders dla celów obsługi druku etykiet.
- * Po prostu chcemy czysty kod */
+/*  To ma być nowy model operujący na tablicy orders dla celów zrobienia lebszego listingu
+ *  i wyszukiwania handlowych.
+ *  Po prostu chcemy czysty kod */
 
 App::uses('AppModel', 'Model');
 
@@ -15,6 +16,6 @@ class Request extends AppModel {
         )
     );
     
-    public $belongsTo = 'User';
+    //public $belongsTo = 'User';
     
 }
