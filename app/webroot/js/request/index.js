@@ -1,0 +1,3 @@
+$('#testpicker').datepicker({
+    language: "pl"
+});    
