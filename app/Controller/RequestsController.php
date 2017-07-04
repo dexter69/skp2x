@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class RequestsController extends AppController {
 
-    public $helpers = array('Ma');
+    public $helpers = array('Ma', 'BootForm');
 
     public function index() {
 
@@ -20,9 +20,12 @@ class RequestsController extends AppController {
 
         return [
             'label' => 'Od:',
-            'years' => [2017, 2016, 2015, 2014],
-            'anydate' => true
-            //'anydate' => false
+            'old' => [
+                'label' => 'Od:',
+                'years' => [2017, 2016, 2015, 2014],
+                'anydate' => true
+                //'anydate' => false
+            ]
         ];        
     }
 

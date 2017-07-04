@@ -1,24 +1,23 @@
 <?php
-/*
-USES bootstrap datepicker
-https://bootstrap-datepicker.readthedocs.io
-*/
-echo $this->Html->css(
-    '../my-bootstrap-date-picker/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min'
-);
-echo $this->Html->script(
-    array(
-        '../my-bootstrap-date-picker/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min',
-        '../my-bootstrap-date-picker/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker_pl.min',            
-        //'../my-bootstrap-date-picker/picker.js?v=' . time()
-    ),
-    array('block' => 'scriptBottom')
-);
+
+$this->BootForm->placeDatePicker( $config );
+
 ?>
 <div class="picker-container">
-    <input type="text" class="form-control"
+    <div class="input-group date"
         data-provide="datepicker"
         data-date-language="pl"
-        data-date-autoclose="true">    
+        data-date-autoclose="true">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+            &nbsp;<?php echo $config['label']; ?>
+        </div>
+        <input type="text" class="form-control">     
+    </div>
 </div>
+<?php
+ $code = 'var gibon = "hau, miau";';
+ echo $this->Html->scriptBlock($code,
+    array('block' => 'scriptBottom'));
+
 

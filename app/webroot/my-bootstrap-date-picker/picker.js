@@ -1,4 +1,8 @@
-$('.picker-container input').datepicker({
-    language: "pl",
-    autoclose: true
-});    
+$('.picker-container .input-group').datepicker()
+    .on('changeDate', function(e) {
+        //console.log('zmiana');
+        console.log(e.date);
+        console.log($('.picker-container .input-group input').val());        
+    });    
+
+//console.log(gibon);

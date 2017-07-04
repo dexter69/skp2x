@@ -4,16 +4,19 @@
 ?>
 
 <div class="row filter-panel">
-    <div class="col-md-2">
-        <?php            
+    <div class="col-md-3">
+        <?php 
+            
+            
             echo $this->element('bootstrap/myBPdatePicker', array(
                 'config' => $config
             ));
             echo '<br><br>';
+            
         ?>
         
         <?php
-           // echo '<pre>'; print_r($config); echo '</pre>';
+           echo '<pre>'; print_r($config); echo '</pre>';
         ?>
         
     </div>    
