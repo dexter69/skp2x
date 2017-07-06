@@ -184,6 +184,17 @@ class AppHelper extends Helper {
         F_OK => 'PLIKI OK',//'F_OK',
         ORD_OK => 'PRZYJĘTE'//'ORD_OK'
     );
+
+    /*
+        Usuń początkowy  <script> tag, gdy istnieje  */
+    public function stripScript( $s = null) {
+
+        $str = trim($s);        
+        if( substr($str,0,8) == "<script>" ) {
+            return substr($str,8);
+        }
+        return $s;
+    }
     
     public function status_zamow($stat) {
         if( $stat == null) return $this->order_stat[PRIV];
