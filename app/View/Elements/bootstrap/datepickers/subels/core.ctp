@@ -5,7 +5,7 @@
         'id' => $config[0]['id']
     )); 
     $klasy = $klasa2 . " date";
-    if( count($config) > 1 ) { // znaczy 2 powiązane kalendarze
+    if( count($config) > 1 ) { // znaczy 2 powiązane kalendarze        
         $inputs .= $this->element(
             'bootstrap/datepickers/subels/input', array(    
             'label' => $config[1]['label'],  

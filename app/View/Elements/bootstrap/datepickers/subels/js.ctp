@@ -1,9 +1,16 @@
 
 <script>
-$('<?php echo $klasy . " #" .$config['id']; ?>').change(function(){
-    <?php echo $config['acc']; ?> = $(this).val();
-    console.log(request);
+$('<?php echo $klasy; ?>').datepicker()
+    .on('changeDate', function(e) {
+        //console.log(e.date);     
+        <?php echo $config[0]['acc']; ?>  = $('<?php echo $klasy . " #" .$config[0]['id']; ?>').val();
+
+        <?php
+            if( count($config) > 1 ) { // znaczy 2 pickery
+                echo $config[1]['acc']; ?>  = $('<?php echo $klasy . " #" .$config[1]['id']; ?>').val();
+        <?php
+            }
+        ?>
+        //console.log(request);        
 });
-
-
 

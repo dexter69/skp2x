@@ -19,13 +19,13 @@ echo $this->element(
 ));
 
 $code = $this->element('bootstrap/datepickers/subels/js', array(
-    'config' => $config[0],    
+    'config' => $config,    
     'klasy' => ".$klasa1 .$klasa2" 
 ));
 // stripScript - bo kod zawiera <scritpt> tag, niepotrzebny - bez tego syntax err
 echo $this->Html->scriptBlock($this->App->stripScript($code), array('block' => 'scriptBottom'));
 
-if( count($config) > 1 ) { // znaczy 2 powiązane kalendarze
+if( count($config) > 100 ) { // znaczy 2 powiązane kalendarze
     // Więc js dla drugiego pickera
     $code = $this->element('bootstrap/datepickers/subels/js', array(
         'config' => $config[1],    
@@ -35,8 +35,7 @@ if( count($config) > 1 ) { // znaczy 2 powiązane kalendarze
     echo $this->Html->scriptBlock($this->App->stripScript($code), array('block' => 'scriptBottom'));
 }
 
-echo '<br><br>';
-echo '<pre>'; print_r($config); echo '</pre>';
+//echo '<br><br><pre>'; print_r($config); echo '</pre>';
 
 
 

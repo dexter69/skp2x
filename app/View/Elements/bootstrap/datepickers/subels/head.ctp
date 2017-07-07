@@ -1,7 +1,8 @@
 <?php
 
 echo $this->Html->css(
-    '../my-bootstrap-date-picker/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min'
+    '../my-bootstrap-date-picker/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min',
+    array('inline' => false)
 );
 
 echo $this->Html->script(

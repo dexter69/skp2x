@@ -26,14 +26,14 @@ class RequestsController extends AppController {
                 'label' => 'Od:',
                 'value' => null, // wartość daty początkowa
                 'acc' => $theObjName . '.od.value' /* Tekstowa wartość ibiektu albo klucza,
-                do którego skrypt ma zapisywać vartośc wybranej daty */
+                do którego skrypt ma zapisywać vartośc wybranej daty */                
             ],
             // struktura dla daty do
             'do' => [
                 'id' => 'picker-do',
                 'label' => 'Do:',
                 'value' => null, // wartość daty początkowa
-                'acc' => $theObjName . '.do.value'
+                'acc' => $theObjName . '.do.value'                
             ]
         ];
     }
