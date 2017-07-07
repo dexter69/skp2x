@@ -5,10 +5,11 @@
 ?>
 
 <div class="row filter-panel">
-    <div class="col-md-3">
+    <div class="col-md-7">
         <?php
             echo $this->element('bootstrap/datepickers/myBPdatePicker', array(
                 'config' => [$config['od'], $config['do']]
+                //'config' => [$config['od']]
             ));
         ?>
     </div>    

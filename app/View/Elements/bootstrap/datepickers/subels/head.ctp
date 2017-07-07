@@ -7,8 +7,7 @@ echo $this->Html->css(
 echo $this->Html->script(
     array(
         '../my-bootstrap-date-picker/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min',
-        '../my-bootstrap-date-picker/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker_pl.min',            
-        //'../my-bootstrap-date-picker/picker.js?v=' . time()
+        '../my-bootstrap-date-picker/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker_pl.min'        
     ),
     array('block' => 'scriptBottom')
 );

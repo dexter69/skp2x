@@ -1,14 +1,9 @@
 
 <script>
-// powyzsze tylko w celu, by miec zakolorowany kod ponizej (by edytor kumal)
-$('#<?php echo $id . " ." . $klasa; ?>').datepicker()
-.on('changeDate', function(e) {
-    //console.log(e.date);     
-    <?php echo $hereval; ?>  = $('#<?php echo $id . " ." . $klasa; ?> input').val();
-    
-    //console.log(request.od.value);
+$('<?php echo $klasy . " #" .$config['id']; ?>').change(function(){
+    <?php echo $config['acc']; ?> = $(this).val();
     console.log(request);
 });
-//console.log(request);
+
 
 
