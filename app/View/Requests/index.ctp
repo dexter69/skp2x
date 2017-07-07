@@ -8,7 +8,7 @@
     <div class="col-md-3">
         <?php
             echo $this->element('bootstrap/datepickers/myBPdatePicker', array(
-                'config' => $config['od']
+                'config' => [$config['od'], $config['do']]
             ));
         ?>
     </div>    
@@ -16,6 +16,7 @@
 <?php
     echo '<br><br>';
     echo '<pre>'; print_r($config); echo '</pre>';
+    
 ?>
 
 

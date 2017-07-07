@@ -31,7 +31,10 @@ $cakeDescription = __d('cake_dev', 'SKP');
             //echo $this->Html->script(array('jquery', 'funkcje')); 
             echo $this->Html->script(array('lib/jquery-2.1.4.min', 'funkcje')); 
             echo $this->Html->script('common', array('block' => 'scriptBottom'));
-            echo $this->Html->css('cake.generic.css?v=201704181002');
+            echo $this->Html->css(array(
+				'cake.generic.css?v=201704181002',
+				'global.css?v=' . time()
+			));
 			if($departament == SUA) {
 				echo $this->Html->css(array('font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
 			}
@@ -47,7 +50,10 @@ $cakeDescription = __d('cake_dev', 'SKP');
 	<div id="container">
 		<div id="header">
 			<?php if($departament == SUA) { ?>
-				<a href="/db" target="_blank"><i class="fa fa-database" aria-hidden="true"></i></a>
+				<a href="/db" target="_blank" class="layout-link"><i class="fa fa-database" aria-hidden="true"></i></a>
+			<?php } ?>
+			<?php if($departament == SUA) { ?>
+				<a href="/szukaj" target="_blank" class="layout-link"><i class="fa fa-search" aria-hidden="true"></i></a>
 			<?php } ?>
 			<div class="out"><a href="<?php echo $this->webroot;?>users/logout"><div></div></a></div>
 			<p><span><?php echo $juzer; ?></span></p>

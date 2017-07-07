@@ -37,7 +37,7 @@
         Router::connect('/etykiety', array('controller' => 'tasks', 'action' => 'label'));
 
         // Handlowe po nowemu
-        Router::connect('/handlowe', array('controller' => 'requests', 'action' => 'index'));
+        Router::connect('/szukaj', array('controller' => 'requests', 'action' => 'index'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
