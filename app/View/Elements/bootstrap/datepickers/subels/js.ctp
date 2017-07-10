@@ -11,6 +11,5 @@ $('<?php echo $klasy; ?>').datepicker()
         <?php
             }
         ?>
-        //console.log(request);        
 });
 

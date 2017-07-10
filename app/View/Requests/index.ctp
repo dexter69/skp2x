@@ -1,6 +1,8 @@
 <?php 
-    $jscode =  "var " . $config['objname'] . " = " . json_encode($config) . ";";
-    $this->Html->scriptBlock("\n" . $jscode, array('inline' => false));     
+    //
+    $jscode = "var " . $config['varname'] . "= " . json_encode($config['theobj']) . ";";
+
+    $this->Html->scriptBlock($jscode, array('inline' => false));     
     $this->set('title_for_layout', 'Szukaj');    
 ?>
 
