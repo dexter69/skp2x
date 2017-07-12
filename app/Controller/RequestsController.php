@@ -36,8 +36,14 @@ class RequestsController extends AppController {
             /*  struktura tworzonego obiektu w którym będą przechowywane dane odnośnie
                 parametrów poszukiwań */
             'theobj' => [ 
-                'od' => null,
-                'do' => null
+                'od' => null, // Data od
+                'do' => null,  // data do
+                'mag' => null /* Rdzaj paska magnetycznego, zbiór wartości:
+                    - null - brak
+                    - 'H'   - HiCo
+                    - 'L'   - LoCo
+                    - 'A'   - "any" - dowolny pasek mag.
+                */
             ]
         ];
     }

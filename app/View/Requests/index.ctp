@@ -16,3 +16,18 @@
     ?>    
     </div>
 </div>
+<div class="row">
+    <div class="col-md-6">
+    <?php
+        $options = [
+            'els' => ['opcja1', 'opcja2', 'opcja3'],
+            'default' => 0
+        ];
+        
+        echo $this->element('bootstrap/selects/select', array(
+            'opcje' => $options
+        ));
+        
+    ?>
+    </div>
+</div>
