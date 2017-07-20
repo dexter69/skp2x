@@ -25,14 +25,14 @@ class RequestsController extends AppController {
             // dane dla daty od
             'od' => [
                 'id' => 'picker-od',
-                'label' => 'Od:',               
+                'label' => 'OD:',               
                 'acc' => NEW_OBJ_NAME . '.od' /* Tekstowa wartość ibiektu albo klucza,
                 do którego skrypt ma zapisywać vartośc wybranej daty */                
             ],
             // dane dla daty do
             'do' => [
                 'id' => 'picker-do',
-                'label' => 'Do:',                
+                'label' => 'DO:',                
                 'acc' => NEW_OBJ_NAME . '.do'                
             ],
             'mag' => [ // konfiguracja selecta pod pasek mag
