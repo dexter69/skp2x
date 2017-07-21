@@ -58,7 +58,7 @@ function checkPeymenCondition() {
 }
 
 // Sprawdzamy stan na serwerze, obj - technicznie, obiekt reprezentujący kliknięty dolarek
-function getPeymentInfo(obj, cblFunction) {
+function getPeymentInfo(obj, clbFunction) {
     
     spinerON(); //Włącze kręciołe
     
@@ -68,7 +68,7 @@ function getPeymentInfo(obj, cblFunction) {
     posting.done(function( answer ) { // sukces, dostaliśmy dane        
         // uaktualnij stan faktyczny i wygląd na stronie, a następnie przekaż obsługe 
         // do cblFunction
-        uaktualnijDOM(answer, obj, cblFunction); 
+        uaktualnijDOM(answer, obj, clbFunction); 
     });
     
     posting.fail(function( /*answer*/ ) { // błąd, coś poszło nie tak        
