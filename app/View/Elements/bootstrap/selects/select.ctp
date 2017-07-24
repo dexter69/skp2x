@@ -6,19 +6,19 @@
     // Podstawowe sprawdzenie parametrów    
     $options = $this->Boot->selectCtpCheck( $config );
 ?>
-<div id="<?php echo $config['id']; ?>" class="btn-group">
-  <button
+<div id="<?php echo $config['id']; ?>" class="btn-group" data-toggle="tooltip" title="Some tooltip text!">
+  <button        
     type="button" class="btn btn-default dropdown-toggle"
     data-toggle="dropdown"
     aria-haspopup="true"
-    aria-expanded="false"
+    aria-expanded="false"            
     data-value="<?php echo $options['default'];?>">
     <?php echo $options['els'][$options['default']];?> <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
     <?php
         foreach( $options['els'] as $key => $tekst) {
-            echo '<li value="' . $key . '"><a href="#">' . "$tekst</a></li>";
+            echo '<li value="' . $key . '" data-toggle="tooltip" title="Li tooltip"><a href="#">' . "$tekst</a></li>";
         }
     ?>    
   </ul>

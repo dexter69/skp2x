@@ -1,6 +1,25 @@
-#loopka {
-  cursor: pointer;
+.ikony > span {
   font-size: 2.6em; }
+
+.ikony > #loopka {
+  cursor: pointer; }
+
+.ikony.kreci > #loopka {
+  cursor: pointer;
+  display: none; }
+
+.ikony > #loading {
+  display: none; }
+
+.ikony.kreci > #loading {
+  display: inline-block;
+  animation: spin .8s infinite linear; }
+
+@keyframes spin {
+  from {
+    transform: scale(1) rotate(0deg); }
+  to {
+    transform: scale(1) rotate(360deg); } }
 
 .filter-panel .table > tbody > tr > td {
   border-top-style: none; }

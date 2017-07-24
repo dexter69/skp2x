@@ -1,10 +1,10 @@
 <?php 
-    //
     $jscode = "var " . $config['varname'] . "= " . json_encode($config['theobj']) . ";";
-
     $this->Html->scriptBlock($jscode, array('inline' => false));     
+
     $this->set('title_for_layout', 'Szukaj');    
-    echo $this->Html->css('boot/ko-search', null, array('inline' => false));
+    echo $this->Html->css('boot/ko-search.css?v=' . time(), null, array('inline' => false));
+    echo $this->Html->script('ko-search/search.js?v=' . time(), array('block' => 'scriptBottom'));
 ?>
 
 <div class="row filter-panel">   
@@ -48,9 +48,19 @@
     </div>
     <div class="col-md-1">
         <table  class="table">  
-            <tr><td class="text-primary"><span id="loopka" class="glyphicon glyphicon-search" aria-hidden="true"></span></td></tr>  
+            <tr>
+                <td class="text-primary ikony">
+                    <span id="loopka" class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span id="loading" class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                </td>
+            </tr>  
         </table>        
     </div>
 </div>
+<div id="rezultat" class="row">    
+    <div id="tmp" class="col-md-12"></div>
+    <div id="czas" class="col-md-12"></div>
+</div>
+
 <?php
 //$this->App->print_r2($config);

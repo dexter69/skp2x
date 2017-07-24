@@ -93,6 +93,16 @@ class RequestsController extends AppController {
             ]
     ];
 
+    // Szukaj wg zadanych parametrów
+    public function search() {
+
+        $answer = 'Tu będzie w przyszłości odpowiedź';
+        $data = $this->request->data;
+        $this->set( compact('answer', 'data') ); 
+        $this->layout='ajax'; // nie wysyłamy całej struktury strony tylko fragment html
+        sleep(1); // w celach testowych
+    }
+
     public function index() {
 
         // Date picker config
