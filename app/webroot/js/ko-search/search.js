@@ -3,12 +3,7 @@ $(function() {
     $('.ikony > #loopka').click(function(){
         loadingON();    
         getData(loadingOFF);
-    });
-    // initialize tooltips
-    
-    //$('#magsel').tooltip();
-    
-    
+    });    
 });
 
 //WŁącz kręciołe

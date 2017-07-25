@@ -37,18 +37,8 @@ class RequestsController extends AppController {
             ],
             'mag' => [ // konfiguracja selecta pod pasek mag
                 'id' => 'magsel', // id elementu html
-                'acc' => NEW_OBJ_NAME . '.mag',
-                'options' => [ /*
-                    lista, opcje, w postaci klucz => wartość
-                    wartość zostaje wyświetlona, jako element tekstowy
-                    klucz zostaje wpisany do atrybutu value elementu li
-                    */
-                    MAG_DEFAULT => 'Pasek magnetyczny?',
-                    'hico' => 'HiCo',
-                    'loco' => 'LoCo',
-                    'any' => 'HiCo lub LoCo'
-                ],
-                // opcje elementu selct
+                'acc' => NEW_OBJ_NAME . '.mag',                
+                // opcje elementu select
                 'opcje' => [
                     // opcja 0
                     [
@@ -76,38 +66,100 @@ class RequestsController extends AppController {
                         'title' => 'Karty z dowolnym paskiem magnetycznym.' 
                     ],
                     'default' => 0 // która opcja jest domyślna
-                ],                
-                'default' => MAG_DEFAULT
+                ]
             ], 
             'chip' => [
                 'id' => 'ischip',
-                'acc' => NEW_OBJ_NAME . '.chip',
-                'options' => [
-                    CHIP_DEFAULT => 'Chip?',
-                    true => 'Z chipem',
-                    false => 'Bez chipa'
-                ],
-                'default' => CHIP_DEFAULT
+                'acc' => NEW_OBJ_NAME . '.chip',                
+                // opcje elementu select
+                'opcje' => [
+                    // opcja 0
+                    [
+                         // wartość wybranej opcji - ta wartość będzie przesyłana na serwer
+                        'value' => CHIP_DEFAULT,                        
+                        'display' => 'Chip?', // wartość wyświetlana w elemencie select
+                        'title' => 'Karta z chipem lub bez.' // podpowiedź dla użytkownika
+                    ],
+                    // opcja 1
+                    [                         
+                        'value' => 'M',                        
+                        'display' => 'Mifare', 
+                        'title' => 'Karty z chipem Mifare.' 
+                    ],
+                    // opcja 2
+                    [                         
+                        'value' => 'U',                        
+                        'display' => 'Unique', 
+                        'title' => 'Karty z chipem Unique.' 
+                    ],
+                    // opcja 3
+                    [                         
+                        'value' => 'S',                        
+                        'display' => 'Stykowe', 
+                        'title' => 'Karty z chipem stykowym.' 
+                    ],
+                    // opcja 4
+                    [                         
+                        'value' => 'any',                        
+                        'display' => 'Dowolny', 
+                        'title' => 'Karty z dowolnym chipem.' 
+                    ],
+                    'default' => 0 // która opcja jest domyślna
+                ]
             ],
             'pvc' => [
                 'id' => 'whatpvc',
                 'acc' => NEW_OBJ_NAME . '.pvc',
-                'options' => [
-                    PVC_DEFAULT => 'Dowolne PVC',
-                    'std' => 'PVC - standard',
-                    'exo' => 'PVC - nietypowe'
-                ],
-                'default' => PVC_DEFAULT
+                // opcje elementu select
+                'opcje' => [
+                    // opcja 0
+                    [
+                         // wartość wybranej opcji - ta wartość będzie przesyłana na serwer
+                        'value' => PVC_DEFAULT,                        
+                        'display' => 'Dowolne PVC', // wartość wyświetlana w elemencie select
+                        'title' => 'Karty z jakiegokolwiek materiału.' // podpowiedź dla użytkownika
+                    ],
+                    // opcja 1
+                    [                         
+                        'value' => 'std',                        
+                        'display' => 'PVC - standardowe', 
+                        'title' => 'Karty zrobione ze zwykłego PVC.' 
+                    ],
+                    // opcja 2
+                    [                         
+                        'value' => 'exo',                        
+                        'display' => 'PVC - nietypowe', 
+                        'title' => 'Karty zrobione z nietypowego PVC.' 
+                    ],                    
+                    'default' => 0 // która opcja jest domyślna
+                ]
             ],
             'sha' => [
                 'id' => 'shape',
                 'acc' => NEW_OBJ_NAME . '.sha',
-                'options' => [
-                    SHA_DEFAULT => 'Kształt dowolny',
-                    'std' => 'Kształt - standard',
-                    'exo' => 'Kształt - nietypowy'
-                ],
-                'default' => SHA_DEFAULT
+                // opcje elementu select
+                'opcje' => [
+                    // opcja 0
+                    [
+                         // wartość wybranej opcji - ta wartość będzie przesyłana na serwer
+                        'value' => SHA_DEFAULT,                        
+                        'display' => 'Kształt dowolny', // wartość wyświetlana w elemencie select
+                        'title' => 'Karty o dowolnym kształcie.' // podpowiedź dla użytkownika
+                    ],
+                    // opcja 1
+                    [                         
+                        'value' => 'std',                        
+                        'display' => 'Kształt - standardowy', 
+                        'title' => 'Karty standard ISO.' 
+                    ],
+                    // opcja 2
+                    [                         
+                        'value' => 'exo',                        
+                        'display' => 'Kształt - nietypowy', 
+                        'title' => 'Karty o nietypowym kształcie/rozmiarach.' 
+                    ],                    
+                    'default' => 0 // która opcja jest domyślna
+                ]
             ],            
             'varname' => NEW_OBJ_NAME,
             /*  struktura tworzonego obiektu w którym będą przechowywane dane odnośnie
