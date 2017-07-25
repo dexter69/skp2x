@@ -6,7 +6,7 @@ $(function() {
     });
     // initialize tooltips
     
-    $('[data-toggle="tooltip"]').tooltip();
+    //$('#magsel').tooltip();
     
     
 });

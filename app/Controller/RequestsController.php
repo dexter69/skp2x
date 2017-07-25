@@ -48,6 +48,35 @@ class RequestsController extends AppController {
                     'loco' => 'LoCo',
                     'any' => 'HiCo lub LoCo'
                 ],
+                // opcje elementu selct
+                'opcje' => [
+                    // opcja 0
+                    [
+                         // wartość wybranej opcji - ta wartość będzie przesyłana na serwer
+                        'value' => MAG_DEFAULT,                        
+                        'display' => 'Pasek magnetyczny?', // wartość wyświetlana w elemencie select
+                        'title' => 'Karta z paskiem magnetycznym lub bez.' // podpowiedź dla użytkownika
+                    ],
+                    // opcja 1
+                    [                         
+                        'value' => 'hico',                        
+                        'display' => 'HiCo', 
+                        'title' => 'Karty z paskiem magnetycznym HiCo.' 
+                    ],
+                    // opcja 2
+                    [                         
+                        'value' => 'loco',                        
+                        'display' => 'LoCo', 
+                        'title' => 'Karty z paskiem magnetycznym LoCo.' 
+                    ],
+                    // opcja 3
+                    [                         
+                        'value' => 'any',                        
+                        'display' => 'HiCo lub LoCo', 
+                        'title' => 'Karty z dowolnym paskiem magnetycznym.' 
+                    ],
+                    'default' => 0 // która opcja jest domyślna
+                ],                
                 'default' => MAG_DEFAULT
             ], 
             'chip' => [

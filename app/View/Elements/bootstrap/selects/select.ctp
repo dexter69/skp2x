@@ -5,8 +5,12 @@
 <?php
     // Podstawowe sprawdzenie parametrów    
     $options = $this->Boot->selectCtpCheck( $config );
+    $title = "Some tooltip text3!";
+    if( array_key_exists('opcje', $config) ) {
+        $title = $config['opcje'][$config['opcje']['default']]['title'];
+    }
 ?>
-<div id="<?php echo $config['id']; ?>" class="btn-group" data-toggle="tooltip" title="Some tooltip text!">
+<div id="<?php echo $config['id']; ?>" class="btn-group" title="<?php echo $title; ?>">
   <button        
     type="button" class="btn btn-default dropdown-toggle"
     data-toggle="dropdown"
@@ -17,9 +21,17 @@
   </button>
   <ul class="dropdown-menu">
     <?php
-        foreach( $options['els'] as $key => $tekst) {
-            echo '<li value="' . $key . '" data-toggle="tooltip" title="Li tooltip"><a href="#">' . "$tekst</a></li>";
-        }
+        if( array_key_exists('opcje', $config) ) {
+            foreach( $config['opcje'] as $key => $arr) {
+                if( $key != 'default' ) {
+                    echo '<li value="' . $arr['value'] . '" title="' . $arr['title'] . '"><a href="#">' . $arr['display'] . "</a></li>";
+                }
+            }
+        } else {            
+            foreach( $options['els'] as $key => $tekst) {
+                echo '<li value="' . $key . '" data-toggle="tooltip" title="Li tooltip"><a href="#">' . "$tekst</a></li>";
+            }
+        }                
     ?>    
   </ul>
 </div>
