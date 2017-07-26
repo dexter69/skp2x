@@ -1,10 +1,25 @@
 $(function() {
     //console.log( "ready!" );
     $('.ikony > #loopka').click(function(){
+        /*
         loadingON();    
         getData(loadingOFF);
-    });    
+        */
+        fireSearch();
+    });
+
+    $('.inputddown').on('hidden.bs.dropdown', function () {
+        console.log( request );
+        fireSearch();
+    })
+
 });
+
+// wyślij zapytanie na serwer
+function fireSearch() {
+    loadingON();    
+    getData(loadingOFF);
+}
 
 //WŁącz kręciołe
 function loadingON() {

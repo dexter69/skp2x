@@ -23,7 +23,7 @@ class RequestsController extends AppController {
         $data = $this->request->data;
         $this->set( compact('answer', 'data') ); 
         $this->layout='ajax'; // nie wysyłamy całej struktury strony tylko fragment html
-        sleep(1); // w celach testowych
+        //sleep(1); // w celach testowych
     }
 
     public function index() {

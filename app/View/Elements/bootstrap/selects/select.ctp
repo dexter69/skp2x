@@ -8,7 +8,7 @@
     */
     $title = $config['opcje'][$config['opcje']['default']]['title'];
 ?>
-<div id="<?php echo $config['id']; ?>" class="btn-group" title="<?php echo $title; ?>">
+<div id="<?php echo $config['id']; ?>" class="btn-group inputddown" title="<?php echo $title; ?>">
   <button        
     type="button" class="btn btn-default dropdown-toggle"
     data-toggle="dropdown"
