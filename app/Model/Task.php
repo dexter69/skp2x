@@ -54,10 +54,10 @@ class Task extends AppModel {
             $this->taskViaErr['msg'] = 
                     'Zlecenia o numerach: <b>' . $nr . "/" . $t . '</b> i <b>' . $nr . "/" . ($t-1) . "</b> nie istnieją!";
             return false;
-        }
+        }   
         return true;
     }
-    
+
     // sprawdzamy, czy zamówienie o numerze $nr (bez roku, np. 123) istnieje
     // jeżeli nie to sprawdzamy jeszcze czy zamówienie z poprzedniego roku o tym samym nrze istnieje
     private function anyTaskExists( $nr ) {

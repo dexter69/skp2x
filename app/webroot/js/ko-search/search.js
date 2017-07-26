@@ -1,10 +1,6 @@
 $(function() {
     //console.log( "ready!" );
-    $('.ikony > #loopka').click(function(){
-        /*
-        loadingON();    
-        getData(loadingOFF);
-        */
+    $('.ikony > #loopka').click(function(){       
         fireSearch();
     });
 
@@ -12,6 +8,8 @@ $(function() {
         console.log( request );
         fireSearch();
     })
+
+    
 
 });
 

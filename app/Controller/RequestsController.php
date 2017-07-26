@@ -1,14 +1,4 @@
 <?php
-// nazwa obiektu w którym bedą przetrzymywane wybrane dane do szukania
-define('NEW_OBJ_NAME','request');
-//defaultowa wartość wyboru dla pasków magnetycznych
-define('MAG_DEFAULT', null);
-//defaultowa wartość wyboru dla chipów
-define('CHIP_DEFAULT', null);
-//defaultowa wartość wyboru dla plastiku
-define('PVC_DEFAULT', 'any');
-//defaultowa wartość wyboru dla kształtu karty
-define('SHA_DEFAULT', 'any');
 
 App::uses('AppController', 'Controller');
 
