@@ -4,13 +4,9 @@ $(function() {
         fireSearch();
     });
 
-    $('.inputddown').on('hidden.bs.dropdown', function () {
-        console.log( request );
+    $('.inputddown').on('hidden.bs.dropdown', function () {        
         fireSearch();
-    })
-
-    
-
+    })    
 });
 
 // wyślij zapytanie na serwer

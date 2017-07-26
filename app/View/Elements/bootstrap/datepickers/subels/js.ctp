@@ -1,8 +1,8 @@
 
 <script>
 $('<?php echo $klasy; ?>').datepicker()
-    .on('changeDate', function(e) {
-        //console.log(e.date);     
+    .on('hide', function(e) {
+        //console.log("Gibon!");     
         <?php echo $config[0]['acc']; ?>  = $('<?php echo $klasy . " #" .$config[0]['id']; ?>').val();
 
         <?php
@@ -11,5 +11,8 @@ $('<?php echo $klasy; ?>').datepicker()
         <?php
             }
         ?>
+        // Po zmianie daty, odpal szukanie - komunikację z serwerem
+        // UWAGA !!! nazwa tej funkcji musi być zgodna z tą w pliku search.js
+        fireSearch();
 });
 
