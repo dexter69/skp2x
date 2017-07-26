@@ -26,7 +26,7 @@ class Request extends AppModel {
         )
     );
     
-    //public $belongsTo = 'User';
+    public $belongsTo = 'User';
 
     /*
         Tu zapisana cała struktura, która zawiera dane konfiguracyjne
