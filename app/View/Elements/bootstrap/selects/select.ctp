@@ -22,6 +22,8 @@
         foreach( $config['opcje'] as $key => $arr) {
             if( $key != 'default' ) {
                 echo '<li value="' . $arr['value'] . '" title="' . $arr['title'] . '"><a href="#">' . $arr['display'] . "</a></li>";
+            } else {
+                echo '<li value="' . $arr['value'] . '" title="' . $arr['title'] . '" class="schowaj"><a href="#">' . $arr['display'] . "</a></li>";
             }
         }                  
     ?>    

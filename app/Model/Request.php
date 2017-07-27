@@ -2,9 +2,9 @@
 // nazwa obiektu w którym bedą przetrzymywane wybrane dane do szukania
 define('NEW_OBJ_NAME','request');
 //defaultowa wartość wyboru dla pasków magnetycznych
-define('MAG_DEFAULT', null);
+define('MAG_DEFAULT', 'dsm'); // dsm - does not matter
 //defaultowa wartość wyboru dla chipów
-define('CHIP_DEFAULT', null);
+define('CHIP_DEFAULT', 'dsm');
 //defaultowa wartość wyboru dla plastiku
 define('PVC_DEFAULT', 'any');
 //defaultowa wartość wyboru dla kształtu karty
@@ -107,7 +107,7 @@ class Request extends AppModel {
                     // opcja 3
                     [                         
                         'value' => 'S',                        
-                        'display' => 'Stykowe', 
+                        'display' => 'Stykowy', 
                         'title' => 'Karty z chipem stykowym.' 
                     ],
                     // opcja 4
