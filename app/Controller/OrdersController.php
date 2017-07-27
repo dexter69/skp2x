@@ -366,6 +366,10 @@ class OrdersController extends AppController {
             ));
             //sleep(3);
         }
+	//Sprawdza czy karta ma perso (tak konserwatywnie na wszelki wypadek)
+	private function hasPerso( $card ) {
+		return $card['isperso'] || $card['pl'] || $card['pt'] || $card['pe'];
+	}
 
 	public function prepareSubmits($order) {
 		
@@ -379,11 +383,15 @@ class OrdersController extends AppController {
             $tworca = $order['Order']['user_id'] == $this->Auth->user('id');
             /**/
             $karty_sprawdzone = $no_rej_card = true;
+			$persoIsFinished = true; // Karta nie ma perso lub ma i jest ono zakończone 
             foreach ($order['Card'] as $card)	{
                     if( $card['status'] != D_OK && $card['status'] != P_OK ) $karty_sprawdzone = false;	
-                    if( in_array( $card['status'], array(W4DPNO, W4PDNO, DNO, DOKPNO, DNOPNO, DNOPOK)) )
+                    if( in_array( $card['status'], array(W4DPNO, W4PDNO, DNO, DOKPNO, DNOPNO, DNOPOK)) ) {
                     // jeżeli choć jedna karta jest "odrzucona"
                             $no_rej_card = false;
+					}
+					//Jezeli karta ma perso i nie jest zakonczona
+					if( $this->hasPerso($card) && !$card['pover'] ) { $persoIsFinished = false;  }
             }
 
 
@@ -406,7 +414,11 @@ class OrdersController extends AppController {
                     break;
                     case O_ACC:
                             $tab = $this->plant_KOMENTUJ($tab, $tworca); // przycisk "KOMENTARZ"				
-                            $tab = $this->plant_WYSLANE($tab, $tworca); // przycisk "WYSŁANE"
+							// Poprawka, by nie można zamknąć, jezeli perso nie jest zamknięte
+							/* Jezeli karta ma perso i nie jest zakonczona, to nie mozna zamknac */
+							if( $persoIsFinished ) {
+								$tab = $this->plant_WYSLANE($tab, $tworca); // przycisk "WYSŁANE"
+							}                            
                             $tab = $this->plant_ODBLOKUJ($tab, $tworca); // przycisk "ODBLOKUJ"
                     break;
                     case W4UZUP:
