@@ -33,7 +33,7 @@ function getData( doItWhenYouHaveData ) {
     var posting = $.post( theUrl, request );
 
     posting.done(function( answer ) { // sukces, dostaliśmy dane        
-        //console.log("Data: " + answer);
+        console.log("Data: " + answer);
         updateDOM(answer); //wpisz otrzymane dane
         doItWhenYouHaveData();
     });

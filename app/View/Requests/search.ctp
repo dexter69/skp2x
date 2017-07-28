@@ -1,4 +1,4 @@
-<pre><?php echo $answer; ?></pre>
+<pre><?php print_r($answer); ?></pre>
 
 <pre>
     <p>Wysłałeś:</p>

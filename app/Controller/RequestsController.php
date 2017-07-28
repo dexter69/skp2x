@@ -9,11 +9,28 @@ class RequestsController extends AppController {
     // Szukaj wg zadanych parametrów
     public function search() {
 
-        $answer = 'Tu będzie w przyszłości odpowiedź';
-        $data = $this->request->data;
+        $abc = $this->testy( $this->request->data );
+        $result = $this->Request->theSpecialSerach($this->request->data);
+        $answer =  $result;
+        $data = $abc['dane'];
         $this->set( compact('answer', 'data') ); 
         $this->layout='ajax'; // nie wysyłamy całej struktury strony tylko fragment html
         //sleep(1); // w celach testowych
+    }
+
+    private function testy( $received = [] ) {
+
+        $received['dexter'] = 'Hau';        
+        $txt = $this->isDateSet( $received['od'] ) ? 'Jest data' : 'Nie ma daty'; 
+        return [
+            'txt' => $txt,
+            'dane' => $received
+        ];        
+    }
+
+    private function isDateSet( $dateInString ) {
+
+        return !$dateInString ? false : true;
     }
 
     public function index() {
@@ -25,17 +42,6 @@ class RequestsController extends AppController {
         $this->layout='bootstrap';
 	}
 
-    private function dataForTheDatePicker() {
-
-        return [
-            'label' => 'Od:',
-            'old' => [
-                'label' => 'Od:',
-                'years' => [2017, 2016, 2015, 2014],
-                'anydate' => true
-                //'anydate' => false
-            ]
-        ];        
-    }
+    
 
 }

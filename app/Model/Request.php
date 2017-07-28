@@ -11,7 +11,7 @@ define('PVC_DEFAULT', 'any');
 define('SHA_DEFAULT', 'any');
 
 /*  To ma być nowy model operujący na tablicy orders dla celów zrobienia lebszego listingu
- *  i wyszukiwania handlowych.
+ *  i wyszukiwania handlowych. Oraz obsługi etykiet.
  *  Po prostu chcemy czysty kod */
 
 App::uses('AppModel', 'Model');
@@ -19,14 +19,6 @@ App::uses('AppModel', 'Model');
 class Request extends AppModel {
     
     public $useTable = 'orders';
-    
-    public $hasMany = array(
-        'Ticket' => array(
-            'fields' => array('Ticket.id', 'Ticket.name', 'Ticket.ilosc', 'Ticket.mnoznik')
-        )
-    );
-    
-    public $belongsTo = 'User';
 
     /*
         Tu zapisana cała struktura, która zawiera dane konfiguracyjne
@@ -185,5 +177,25 @@ class Request extends AppModel {
                 'sha' => null // kształt karty
             ]
     ];
+
+    /*
+    Tu nasza metoda do szukania po cehach kart
+    */
+    public function theSpecialSerach( $opcje = [] ) {
+
+        $wyniki = $this->find('first');
+        //return $opcje;
+        return $wyniki;
+    }
+    
+    public $hasMany = array(
+        'Ticket' => array(
+            'fields' => array('Ticket.id', 'Ticket.name', 'Ticket.ilosc', 'Ticket.mnoznik')
+        )
+    );
+    
+    public $belongsTo = 'User';
+
+    
     
 }
