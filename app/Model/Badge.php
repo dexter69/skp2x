@@ -13,11 +13,17 @@ class Badge extends AppModel {
         Metoda do wyszukiwania kart po ich parametrach */
     public function theSpecialSearch() {
 
-        $a = $this->find('first');
+        $opcje = [
+            'fields' => ['Badge.id', 'Badge.name'],
+            'limit' => 3,
+            //'group' => ['Order.id']
+        ];
+        $a = $this->find('all', $opcje);
 
         return $a;
     }
-
     
-
+    public $belongsTo = ['Request' => [
+        'fields' => ['Request.id']
+    ]];
 }

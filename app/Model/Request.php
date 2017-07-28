@@ -178,25 +178,13 @@ class Request extends AppModel {
             ]
     ];
 
-    /*
-    Tu nasza metoda do szukania po cehach kart
-    */
-    public function theSpecialSerach( $opcje = [] ) {
-
-        $wyniki = $this->Badge->theSpecialSearch();
-        //return $opcje;
-        return $wyniki;
-    }
-    
     public $hasMany = array(
         'Ticket' => array(
             'fields' => array('Ticket.id', 'Ticket.name', 'Ticket.ilosc', 'Ticket.mnoznik')
         ),
-        /*
-            Badge używamy dla special search zamiast modelów Car lub Tiket */
         'Badge' => array(
-            'fields' => array('Badge.id', 'Badge.name', 'Badge.ilosc', 'Badge.mnoznik')
-        )
+            'fields' => array('Badge.id')
+        )        
     );
     
     public $belongsTo = 'User';
