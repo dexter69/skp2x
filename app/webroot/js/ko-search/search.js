@@ -28,7 +28,7 @@ function loadingOFF() {
 
 function getData( doItWhenYouHaveData ) {
 
-    var theUrl = "/requests/search";
+    var theUrl = "/badges/search";
 
     var posting = $.post( theUrl, request );
 

@@ -7,7 +7,7 @@ class RequestsController extends AppController {
     public $helpers = array('Ma', 'BootForm', 'Boot');
 
     // Szukaj wg zadanych parametrów
-    public function search() {
+    public function searchx() {
 
         $abc = $this->testy( $this->request->data );
         $result = $this->Request->theSpecialSerach($this->request->data);

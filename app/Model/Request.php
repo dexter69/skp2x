@@ -183,7 +183,7 @@ class Request extends AppModel {
     */
     public function theSpecialSerach( $opcje = [] ) {
 
-        $wyniki = $this->find('first');
+        $wyniki = $this->Badge->theSpecialSearch();
         //return $opcje;
         return $wyniki;
     }
@@ -191,6 +191,11 @@ class Request extends AppModel {
     public $hasMany = array(
         'Ticket' => array(
             'fields' => array('Ticket.id', 'Ticket.name', 'Ticket.ilosc', 'Ticket.mnoznik')
+        ),
+        /*
+            Badge używamy dla special search zamiast modelów Car lub Tiket */
+        'Badge' => array(
+            'fields' => array('Badge.id', 'Badge.name', 'Badge.ilosc', 'Badge.mnoznik')
         )
     );
     
