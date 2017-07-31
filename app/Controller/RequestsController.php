@@ -13,8 +13,6 @@ class RequestsController extends AppController {
         
         $this->set( compact('config') );        
         $this->layout='bootstrap';
-	}
-
-    
+	}    
 
 }

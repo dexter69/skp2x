@@ -181,10 +181,7 @@ class Request extends AppModel {
     public $hasMany = array(
         'Ticket' => array(
             'fields' => array('Ticket.id', 'Ticket.name', 'Ticket.ilosc', 'Ticket.mnoznik')
-        ),
-        'Badge' => array(
-            'fields' => array('Badge.id')
-        )        
+        )       
     );
     
     public $belongsTo = 'User';

@@ -4,14 +4,13 @@ App::uses('AppController', 'Controller');
 
 class DisposalsController extends AppController {
 
-    public function test() {
+    public function search() {
 
-        //$data = ['kwa' => 'muu'];
-        $data = $this->Disposal->find(
-            'all', [
-             'fields' => ['Disposal.id', 'Disposal.nr', 'Disposal.data_publikacji'],
-             'limit' => 3
-        ]);
+        // Zapisujemy w modelu otrzymane
+        $this->Disposal->otrzymane = $this->request->data;
+        
+        $data = $this->Disposal->theSearch();        
+        array_unshift($data, $this->request->data);
         $this->layout='ajax';
         $this->set( compact( 'data') ); 
     }
