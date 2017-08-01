@@ -9,6 +9,8 @@ class Badge extends AppModel {
 
     public $useTable = 'cards';
 
+    //public $actsAs = array('Containable');
+
     /*
         Metoda do wyszukiwania kart po ich parametrach */
     public function theSpecialSearch() {
@@ -23,7 +25,10 @@ class Badge extends AppModel {
         return $a;
     }
     
-    public $belongsTo = ['Request' => [
-        'fields' => ['Request.id']
-    ]];
+    public $belongsTo = [
+        /*'Request' => [
+            'fields' => ['Request.id']
+        ],*/
+        'Disposal'
+    ];
 }

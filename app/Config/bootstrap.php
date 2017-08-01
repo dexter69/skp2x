@@ -142,7 +142,18 @@ if( DS == WIN) { // We are on Windows!
 //Configure::write('CakePdf.binary', 'C:\wkhtmltopdf\bin\wkhtmltopdf.exe');
 //Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');
 
-
+/*
+	1.08.2017 - stałe do "ANIA serach" */
+// nazwa obiektu w którym bedą przetrzymywane wybrane dane do szukania
+define('NEW_OBJ_NAME','request');
+//defaultowa wartość wyboru dla pasków magnetycznych
+define('MAG_DEFAULT', 'dsm'); // dsm - does not matter
+//defaultowa wartość wyboru dla chipów
+define('CHIP_DEFAULT', 'dsm');
+//defaultowa wartość wyboru dla plastiku
+define('PVC_DEFAULT', 'any');
+//defaultowa wartość wyboru dla kształtu karty
+define('SHA_DEFAULT', 'any');
 
 /**
  * GLOBALNE STAŁE

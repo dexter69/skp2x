@@ -1,14 +1,4 @@
 <?php
-// nazwa obiektu w którym bedą przetrzymywane wybrane dane do szukania
-define('NEW_OBJ_NAME','request');
-//defaultowa wartość wyboru dla pasków magnetycznych
-define('MAG_DEFAULT', 'dsm'); // dsm - does not matter
-//defaultowa wartość wyboru dla chipów
-define('CHIP_DEFAULT', 'dsm');
-//defaultowa wartość wyboru dla plastiku
-define('PVC_DEFAULT', 'any');
-//defaultowa wartość wyboru dla kształtu karty
-define('SHA_DEFAULT', 'any');
 
 /*  To ma być nowy model operujący na tablicy orders dla celów zrobienia lebszego listingu
  *  i wyszukiwania handlowych. Oraz obsługi etykiet.
@@ -126,15 +116,39 @@ class Request extends AppModel {
                     // opcja 1
                     [                         
                         'value' => 'std',                        
-                        'display' => 'PVC - standardowe', 
+                        'display' => 'Standard PVC', 
                         'title' => 'Karty zrobione ze zwykłego PVC.' 
                     ],
                     // opcja 2
                     [                         
+                        'value' => 'bio',                        
+                        'display' => 'Bio PVC', 
+                        'title' => 'Karty zrobione z BIO PVC.' 
+                    ],
+                    // opcja 3
+                    [                         
+                        'value' => 'tra',                        
+                        'display' => 'Transparent PVC', 
+                        'title' => 'Karty zrobione z przeźroczystego PVC.' 
+                    ],
+                    // opcja 4
+                    [                         
+                        'value' => 'clr',                        
+                        'display' => 'Kolorowe PVC', 
+                        'title' => 'Karty zrobione z barwionego PVC.' 
+                    ],
+                    // opcja 5
+                    [                         
+                        'value' => 'foil',                        
+                        'display' => 'PVC z folią', 
+                        'title' => 'Karty zrobione z PVC z folią' 
+                    ],
+                    // opcja 6
+                    [                         
                         'value' => 'exo',                        
-                        'display' => 'PVC - nietypowe', 
-                        'title' => 'Karty zrobione z nietypowego PVC.' 
-                    ],                    
+                        'display' => 'inne PVC', 
+                        'title' => 'Karty zrobione z nietypowego PVC' 
+                    ],
                     'default' => 0 // która opcja jest domyślna
                 ]
             ],
