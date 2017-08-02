@@ -7,9 +7,7 @@ App::uses('AppModel', 'Model');
 
 class Badge extends AppModel {
 
-    public $useTable = 'cards';
-
-    //public $actsAs = array('Containable');
+    public $useTable = 'cards';    
 
     /*
         Metoda do wyszukiwania kart po ich parametrach */
@@ -25,10 +23,7 @@ class Badge extends AppModel {
         return $a;
     }
     
-    public $belongsTo = [
-        /*'Request' => [
-            'fields' => ['Request.id']
-        ],*/
+    public $belongsTo = [        
         'Disposal'
     ];
 }

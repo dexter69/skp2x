@@ -3,8 +3,7 @@ App::uses('AppModel', 'Model');
 
 class Disposal extends AppModel {
     
-    public $useTable = 'orders';
-    //public $actsAs = array('Containable');
+    public $useTable = 'orders';    
 
     public $hasMany = array(        
         'Badge' => array(
@@ -28,7 +27,7 @@ class Disposal extends AppModel {
     private $searchParams = [
         'fields' => ['Disposal.id', 'Disposal.nr', 'Disposal.data_publikacji', 'Disposal.stop_day']
         ,'limit' => 50
-        //To potrebne, by mozna warunki dla obu modeli zapodawać
+        //To potrzebne, by mozna warunki dla obu modeli zapodawać
         ,'joins' => [
             [
                 'table' => 'cards',
@@ -36,16 +35,8 @@ class Disposal extends AppModel {
                 'type' => 'Left',
                 'conditions' => ['Disposal.id = Badge.order_id']
             ]
-        ]
-        //,'contain' => array('Badge')
-        ,'conditions' => [
-            /*
-            'Disposal.stop_day >=' => '2017-06-15',
-            'Disposal.stop_day <=' => '2017-07-31'
-            ,'Badge.a_material' => 3
-            */
-            
-        ]
+        ]        
+        ,'conditions' => []
     ];
 
     /*
