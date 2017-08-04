@@ -9,7 +9,7 @@ class Disposal extends AppModel {
         'Badge' => array(
             'fields' => array(
                 'Badge.id', 'Badge.name', 'Badge.a_material', 'Badge.r_material',
-                'Badge.ksztalt'
+                'Badge.ksztalt', 'Badge.chip'
             )
         )        
     );
@@ -31,9 +31,16 @@ class Disposal extends AppModel {
             '2+1' => 2,
             'bx3' => 3,
             'exo' => 1
+        ],
+        'chip' => [
+            CHIP_DEFAULT => 99,
+            'M' => 3,
+            'U' => 2,
+            'S' => 4,
+            'no' => 0
         ]
     ];
-    
+
     private $searchParams = [
         'fields' => ['Disposal.id', 'Disposal.nr', 'Disposal.data_publikacji', 'Disposal.stop_day']
         ,'limit' => 50
@@ -57,11 +64,25 @@ class Disposal extends AppModel {
             $this->addDates(); // dodaj zakres date, jeżeli jest ustawiony
             $this->addMaterial(); // dodaj materiał karty, jeżeli jest ustawiony
             $this->addShape(); // dodaj szukanie po kształcie karty, jeżeli jest ustawione
+            $this->addChip(); // dodaj szukanie po chip'ie, jeżeli jest ustawione
             $result = $this->find('all', $this->searchParams);
+            array_unshift($result, $this->searchParams['conditions']);
             return $result;
         }
         return ['kwa' => 'muu'];        
     }
+
+    private function addChip() {
+
+        if( $this->otrzymane['chip'] != CHIP_DEFAULT ) { // jakiś wybór odnośnie chip'ów ustawiony
+            if( $this->otrzymane['chip'] != 'any' ) { // mamy konkretny chip
+                $this->searchParams['conditions']['Badge.chip'] =
+                    $this->mapSearchOptionsToDbOptions['chip'][$this->otrzymane['chip']]; 
+            } else { // dowolny chip
+                $this->searchParams['conditions']['Badge.chip >'] = 0;
+            }
+        }
+    }    
 
     private function addShape() {
 

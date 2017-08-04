@@ -89,7 +89,7 @@ class Request extends AppModel {
                     // opcja 3
                     [                         
                         'value' => 'S',                        
-                        'display' => 'Stykowy', 
+                        'display' => 'SLE', 
                         'title' => 'Karty z chipem stykowym.' 
                     ],
                     // opcja 4
@@ -97,6 +97,12 @@ class Request extends AppModel {
                         'value' => 'any',                        
                         'display' => 'Dowolny', 
                         'title' => 'Karty z dowolnym chipem.' 
+                    ],
+                    // opcja 5
+                    [                         
+                        'value' => 'no',                        
+                        'display' => "BEZ chip'a", 
+                        'title' => "Karty bez chip'a" 
                     ],
                     'default' => 0 // która opcja jest domyślna
                 ]
