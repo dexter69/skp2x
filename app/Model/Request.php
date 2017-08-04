@@ -59,6 +59,12 @@ class Request extends AppModel {
                         'display' => 'HiCo lub LoCo', 
                         'title' => 'Karty z dowolnym paskiem magnetycznym.' 
                     ],
+                    // opcja 4
+                    [                         
+                        'value' => 'no',                        
+                        'display' => 'BEZ paska mag.', 
+                        'title' => 'Karty bez paska magnetycznego.' 
+                    ],
                     'default' => 0 // która opcja jest domyślna
                 ]
             ], 

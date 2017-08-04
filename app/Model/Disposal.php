@@ -9,7 +9,7 @@ class Disposal extends AppModel {
         'Badge' => array(
             'fields' => array(
                 'Badge.id', 'Badge.name', 'Badge.a_material', 'Badge.r_material',
-                'Badge.ksztalt', 'Badge.chip'
+                'Badge.ksztalt', 'Badge.chip', 'Badge.mag'
             )
         )        
     );
@@ -39,6 +39,13 @@ class Disposal extends AppModel {
             'S' => 4,
             'no' => 0
         ]
+        ,
+        'mag' => [
+            MAG_DEFAULT => 99,
+            'hico' => 1,
+            'loco' => 2,
+            'no' => 0
+        ]
     ];
 
     private $searchParams = [
@@ -65,11 +72,25 @@ class Disposal extends AppModel {
             $this->addMaterial(); // dodaj materiał karty, jeżeli jest ustawiony
             $this->addShape(); // dodaj szukanie po kształcie karty, jeżeli jest ustawione
             $this->addChip(); // dodaj szukanie po chip'ie, jeżeli jest ustawione
+            $this->addMag(); // dodaj szukanie po pasku mag., jeżeli jest ustawione
             $result = $this->find('all', $this->searchParams);
             array_unshift($result, $this->searchParams['conditions']);
             return $result;
         }
         return ['kwa' => 'muu'];        
+    }
+
+    private function addMag() {
+
+        if( $this->otrzymane['mag'] != MAG_DEFAULT ) { // jakiś wybór odnośnie pasków mag ustawiony
+            if( $this->otrzymane['mag'] != 'any' ) { // mamy konkretny pasek mag
+                $this->searchParams['conditions']['Badge.mag'] =
+                    $this->mapSearchOptionsToDbOptions['mag'][$this->otrzymane['mag']];
+            } else { // dowolny pasek mag.
+                $this->searchParams['conditions']['Badge.mag >'] = 0;
+            }
+        }
+
     }
 
     private function addChip() {
