@@ -162,7 +162,7 @@ class Request extends AppModel {
                          // wartość wybranej opcji - ta wartość będzie przesyłana na serwer
                         'value' => SHA_DEFAULT,                        
                         'display' => 'Kształt dowolny', // wartość wyświetlana w elemencie select
-                        'title' => 'Karty o dowolnym kształcie.' // podpowiedź dla użytkownika
+                        'title' => 'Karty o dowolnym kształcie, czyli wszystkie karty' // podpowiedź dla użytkownika
                     ],
                     // opcja 1
                     [                         
@@ -172,8 +172,20 @@ class Request extends AppModel {
                     ],
                     // opcja 2
                     [                         
+                        'value' => '2+1',                        
+                        'display' => '2+1', 
+                        'title' => 'Kształt "2+1" - karta z dwoma odłamywalnymi częściami.' 
+                    ],
+                    // opcja 3
+                    [                         
+                        'value' => 'bx3',                        
+                        'display' => 'Brelok x 3', 
+                        'title' => 'Trzy małe, odłamywalne części' 
+                    ],
+                    // opcja 4
+                    [                         
                         'value' => 'exo',                        
-                        'display' => 'Kształt - nietypowy', 
+                        'display' => 'Kształt NIETYPOWY', 
                         'title' => 'Karty o nietypowym kształcie/rozmiarach.' 
                     ],                    
                     'default' => 0 // która opcja jest domyślna

@@ -7,20 +7,30 @@ class Disposal extends AppModel {
 
     public $hasMany = array(        
         'Badge' => array(
-            'fields' => array('Badge.id', 'Badge.name', 'Badge.a_material', 'Badge.r_material')
+            'fields' => array(
+                'Badge.id', 'Badge.name', 'Badge.a_material', 'Badge.r_material',
+                'Badge.ksztalt'
+            )
         )        
     );
 
     // jak szukane wartości mapują się na wartości w DB
     private $mapSearchOptionsToDbOptions = [
         'pvc' => [
-            PVC_DEFAULT => 99, // tak na wypadek, nie ma w bazie 99, bo dla tej wartości materiał nieistotny
+            PVC_DEFAULT => 99, // tak bez znaczenia na prawdę, w bazie nie ma takiej wartości
             'std' => 1,
             'bio' => 2,
             'tra' => 3,
             'clr' => 4,
             'foil' => 5,
             'exo' => 0
+        ],
+        'sha' => [
+            SHA_DEFAULT => 99,
+            'std' => 0,
+            '2+1' => 2,
+            'bx3' => 3,
+            'exo' => 1
         ]
     ];
     
@@ -46,10 +56,19 @@ class Disposal extends AppModel {
         if( !empty( $this->otrzymane ) ) {            
             $this->addDates(); // dodaj zakres date, jeżeli jest ustawiony
             $this->addMaterial(); // dodaj materiał karty, jeżeli jest ustawiony
+            $this->addShape(); // dodaj szukanie po kształcie karty, jeżeli jest ustawione
             $result = $this->find('all', $this->searchParams);
             return $result;
         }
         return ['kwa' => 'muu'];        
+    }
+
+    private function addShape() {
+
+        if( $this->otrzymane['sha'] != SHA_DEFAULT ) { // jakiś konkretny kształt wybrano 
+            $this->searchParams['conditions']['Badge.ksztalt'] =
+                $this->mapSearchOptionsToDbOptions['sha'][$this->otrzymane['sha']]; 
+        }
     }
 
     private function addMaterial() {
@@ -82,22 +101,6 @@ class Disposal extends AppModel {
             }  
         }
 
-    }
-
-    // dodaj parametry wyszukiwania do tablicy "AND" klucza 'conditions'
-    private function add2ANDx( $key, $val) {
-        if( !array_key_exists('conditions', $this->searchParams) ||
-            !array_key_exists('AND', $this->searchParams['conditions']) ) { /* klucze 'conditions' i/lub 'AND'  nie istnieją */
-                // to utwórz je
-                $this->searchParams['conditions'] = ['AND' => []];
-        }
-        
-        $this->searchParams['conditions'][$key] = $val;
-    }
-
-    // dodaj parametry wyszukiwania do tablicy "AND" klucza 'conditions'
-    private function add2AND( $key, $val) {
-        $this->searchParams['conditions'][$key] = $val;
     }
 
     private function convertDate( $date = null ) {
