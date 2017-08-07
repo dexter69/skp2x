@@ -29,7 +29,7 @@ class DisposalsController extends AppController {
         
         $data = $this->Disposal->otrzymane; 
         $this->set( compact( ['data', 'disposals']) ); 
-        $this->layout='ajax';
+        
     }
 
     public function searchx() {
