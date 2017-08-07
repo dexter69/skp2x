@@ -36,8 +36,9 @@
         // etykiety
         Router::connect('/etykiety', array('controller' => 'tasks', 'action' => 'label'));
 
-        // Handlowe po nowemu
+        // Handlowe po nowemu, special search
         Router::connect('/szukaj', array('controller' => 'requests', 'action' => 'index'));
+        Router::connect('/handlowe', array('controller' => 'disposals', 'action' => 'index'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
