@@ -254,7 +254,7 @@ class Disposal extends AppModel {
         ]
     ];
 
-    private $searchParams = [
+    public $searchParams = [
         'fields' => ['Disposal.id', 'Disposal.nr', 'Disposal.data_publikacji', 'Disposal.stop_day']
         ,'limit' => 50
         //To potrzebne, by mozna warunki dla obu modeli zapodawać
@@ -269,16 +269,27 @@ class Disposal extends AppModel {
         ,'conditions' => []
     ];
 
-    /*
-        Metoda do naszego srogiego szukania */
-    public function theSearch() {
+    public function setTheSearchParams( $otrzymane = [] ) {
 
+        $this->otrzymane = $otrzymane;
         if( !empty( $this->otrzymane ) ) {            
             $this->addDates(); // dodaj zakres date, jeżeli jest ustawiony
             $this->addMaterial(); // dodaj materiał karty, jeżeli jest ustawiony
             $this->addShape(); // dodaj szukanie po kształcie karty, jeżeli jest ustawione
             $this->addChip(); // dodaj szukanie po chip'ie, jeżeli jest ustawione
             $this->addMag(); // dodaj szukanie po pasku mag., jeżeli jest ustawione
+        }
+        return $this->searchParams;
+    }
+
+    /*
+        Metoda do naszego srogiego szukania
+        Deprec - używamy paginatora
+     */
+    public function theSearch() {
+
+        if( !empty( $this->otrzymane ) ) { 
+            $this->setTheSearchParams();                       
             $result = $this->find('all', $this->searchParams);
             array_unshift($result, $this->searchParams['conditions']);
             return $result;
