@@ -48,8 +48,11 @@ class BootHelper extends AppHelper {
     }
 
     // convert base nr to nrh - numer handlowego
-	public function bnr2nrh( $bnr = null ) {
+	public function bnr2nrh( $bnr = null, $inic = null ) {
         
-        return (int)substr((int)$bnr,2).'/'.substr((int)$bnr,0,2).' H';
+        $formed = "<strong>" . (int)substr((int)$bnr,2) . "</strong>" . '/' . substr((int)$bnr,0,2);
+        //.' H';
+        $formed .= $inic ? " $inic" : " H";
+        return $formed;
     }
 }

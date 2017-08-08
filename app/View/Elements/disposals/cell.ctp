@@ -1,22 +1,15 @@
-<div class="col-md-1">
+<div class="col-md-2">  
     <p>
-    id: 
-        <b>
-        <?= 
-            $piece['Disposal']['id'] 
-            
-        ?>
-        </b>
-    </p>
-    <p><?= 
+    <?= 
         $this->Html->link(
-            $this->Boot->bnr2nrh( $piece['Disposal']['nr'] )
+            $this->Boot->bnr2nrh( $piece['Disposal']['nr'], $piece['User']['inic'] )
             , array(
                 'controller' => 'orders',
                 'action' => 'view',
                 $piece['Disposal']['id']
             )
-            , ['target' => '_blank']
+            , ['target' => '_blank', 'escape' => false]
         )
-    ?></p>
+    ?>
+    </p>
 </div>

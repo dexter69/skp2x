@@ -45,7 +45,11 @@ else
                 $klasaDolara = $this->Ma->klasaDolara($order['Order']['forma_zaliczki'], $order['Order']['stan_zaliczki']); ?>
             <td class="<?php echo $klasaDolara ?>"><i class="fa fa-usd" aria-hidden="true"></i></td>            
             <td class="nr"><?php 
-                echo $this->Html->link($this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic']), array('action' => 'view', $order['Order']['id']), array('escape' => false)); ?>
+                echo $this->Html->link(
+                    $this->Ma->bnr2nrh($order['Order']['nr'], $order['User']['inic']),
+                    array('action' => 'view', $order['Order']['id']),
+                    array('escape' => false)
+                ); ?>
             </td>
             <td>
                     <?php echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id']), array('title' => $order['Customer']['name'])); ?>

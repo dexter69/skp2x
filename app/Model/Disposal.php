@@ -14,6 +14,8 @@ class Disposal extends AppModel {
         )        
     );   
 
+    public $belongsTo = 'User';
+
     /*
         Tu zapisana cała struktura, która zawiera dane konfiguracyjne
         dla formularza do wyszukiwania zamówień po specyficznych cechach kart
@@ -255,7 +257,11 @@ class Disposal extends AppModel {
     ];
 
     public $searchParams = [
-        'fields' => ['Disposal.id', 'Disposal.nr', 'Disposal.data_publikacji', 'Disposal.stop_day']
+        'fields' => [
+            'Disposal.id', 'Disposal.nr', 'Disposal.user_id',
+            'Disposal.data_publikacji', 'Disposal.stop_day',
+            'User.id', 'User.inic'
+        ]
         ,'limit' => 50
         //To potrzebne, by mozna warunki dla obu modeli zapodawać
         ,'joins' => [
