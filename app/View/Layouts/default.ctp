@@ -48,13 +48,8 @@ $cakeDescription = __d('cake_dev', 'SKP');
 </head>
 <body>        
 	<div id="container">
-		<div id="header">
-			<?php if($departament == SUA) { ?>
-				<a href="/db" target="_blank" class="layout-link"><i class="fa fa-database" aria-hidden="true"></i></a>
-			<?php } ?>
-			<?php if($departament == SUA) { ?>
-				<a href="/szukaj" target="_blank" class="layout-link"><i class="fa fa-search" aria-hidden="true"></i></a>
-			<?php } ?>
+		<div id="header">			
+			<?=	$this->element('forLayouts/leftIcons', ['departament' => $departament] ) ?>
 			<div class="out"><a href="<?php echo $this->webroot;?>users/logout"><div></div></a></div>
 			<p><span><?php echo $juzer; ?></span></p>
 			<div id="szukanie" class="hid">
