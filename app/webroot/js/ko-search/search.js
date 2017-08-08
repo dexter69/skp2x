@@ -46,6 +46,7 @@ function updateDOM(dane) {
     var domElId = 'rezultat';
 
     $('#' + domElId + '>#czas').append( Date() + '<br>');
-    $('#' + domElId + '>#tmp').html(dane);
+    //$('#' + domElId + '>#tmp').html(dane);
+    $('#wyniki').html(dane);
     
 }

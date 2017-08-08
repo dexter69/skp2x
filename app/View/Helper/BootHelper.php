@@ -46,4 +46,10 @@ class BootHelper extends AppHelper {
         }        
         return $options;
     }
+
+    // convert base nr to nrh - numer handlowego
+	public function bnr2nrh( $bnr = null ) {
+        
+        return (int)substr((int)$bnr,2).'/'.substr((int)$bnr,0,2).' H';
+    }
 }

@@ -57,6 +57,8 @@
         </table>        
     </div>
 </div>
+<div id="wyniki" class="row">
+</div>
 <div id="rezultat" class="row">    
     <div id="tmp" class="col-md-12"></div>
     <div id="czas" class="col-md-12"></div>
