@@ -32,9 +32,14 @@ function getData( doItWhenYouHaveData ) {
 
     var posting = $.post( theUrl, request );
 
-    posting.done(function( answer ) { // sukces, dostaliśmy dane        
-        console.log("Data: " + answer);
+    posting.done(function( answer ) { // sukces, dostaliśmy dane                
         updateDOM(answer); //wpisz otrzymane dane
+        doItWhenYouHaveData();
+    });
+
+    posting.fail(function( ) { // sukces, dostaliśmy dane        
+        console.log(posting.status);
+        updateDOM(posting.responseText); //wpisz otrzymane dane
         doItWhenYouHaveData();
     });
 
