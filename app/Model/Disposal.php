@@ -263,7 +263,7 @@ class Disposal extends AppModel {
             'User.id', 'User.inic'
         ]
         ,'limit' => 50
-        //To potrzebne, by mozna warunki dla obu modeli zapodawać
+        //To potrzebne, by mozna warunki dla obu modeli zapodawać        
         ,'joins' => [
             [
                 'table' => 'cards',
@@ -271,7 +271,7 @@ class Disposal extends AppModel {
                 'type' => 'Left',
                 'conditions' => ['Disposal.id = Badge.order_id']
             ]
-        ]        
+        ]               
         ,'conditions' => []
     ];
 
