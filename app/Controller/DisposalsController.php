@@ -26,9 +26,10 @@ class DisposalsController extends AppController {
 
         $this->Paginator->settings = $this->paginate;                
         $disposals = $this->Disposal->theSpecialFind();
+        $howmuc = 0;//$this->Disposal->theSpecialFindIle(); // ile wszystkich rekordów
         
         $data = $this->Disposal->otrzymane; 
-        $this->set( compact( ['data', 'disposals']) ); 
+        $this->set( compact( ['data', 'disposals', 'howmuc']) ); 
         
     }
 

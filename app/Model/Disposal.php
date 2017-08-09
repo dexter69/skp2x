@@ -262,7 +262,8 @@ class Disposal extends AppModel {
             'Disposal.data_publikacji', 'Disposal.stop_day',
             'User.id', 'User.inic'
         ]
-        ,'limit' => 50
+        ,'order' => 'Disposal.nr'
+        ,'limit' => 1000
         //To potrzebne, by mozna warunki dla obu modeli zapodawać        
         ,'joins' => [
             [
@@ -288,6 +289,14 @@ class Disposal extends AppModel {
         return $this->searchParams;
     }
 
+    // to ponizej, do doopy
+    public function theSpecialFindIle() {
+
+        $options = $this->searchParams;
+        unset($options['limit']);
+        return $this->find('count', $options);
+    }
+
     public function theSpecialFind() {
 
         $getit = $this->find('all', $this->searchParams);
@@ -300,11 +309,11 @@ class Disposal extends AppModel {
      */
     private function oczysc( $dataToClean = [] ) {
         
-        $id = 0; $result = [];        
+        $nr = 1400000; $result = [];        
         foreach( $dataToClean as $key => $row ) {
-            if( $row['Disposal']['id'] != $id ) { // nowe, przepisujemy i zapamietujemy id
+            if( $row['Disposal']['nr'] != $nr ) { // nowe, przepisujemy i zapamietujemy id
                 $result[] = $row;
-                $id = $row['Disposal']['id'];
+                $nr = $row['Disposal']['nr'];
             } 
         }
         return $result;
