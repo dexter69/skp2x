@@ -24,8 +24,8 @@ class DisposalsController extends AppController {
         // Ustawiamy parametry szukania, na podstawie otrzymanych danych
         $this->paginate = $this->Disposal->setTheSearchParams($this->request->data);
 
-        $this->Paginator->settings = $this->paginate;        
-        $disposals = $this->Paginator->paginate( 'Disposal');        
+        $this->Paginator->settings = $this->paginate;                
+        $disposals = $this->Disposal->theSpecialFind();
         
         $data = $this->Disposal->otrzymane; 
         $this->set( compact( ['data', 'disposals']) ); 

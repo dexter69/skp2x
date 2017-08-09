@@ -288,19 +288,26 @@ class Disposal extends AppModel {
         return $this->searchParams;
     }
 
-    /*
-        Metoda do naszego srogiego szukania
-        Deprec - używamy paginatora
-     */
-    public function theSearch() {
+    public function theSpecialFind() {
 
-        if( !empty( $this->otrzymane ) ) { 
-            $this->setTheSearchParams();                       
-            $result = $this->find('all', $this->searchParams);
-            array_unshift($result, $this->searchParams['conditions']);
-            return $result;
+        $getit = $this->find('all', $this->searchParams);
+
+        return $this->oczysc( $getit);
+    }
+
+    /*
+     *  Usuń duplikaty
+     */
+    private function oczysc( $dataToClean = [] ) {
+        
+        $id = 0; $result = [];        
+        foreach( $dataToClean as $key => $row ) {
+            if( $row['Disposal']['id'] != $id ) { // nowe, przepisujemy i zapamietujemy id
+                $result[] = $row;
+                $id = $row['Disposal']['id'];
+            } 
         }
-        return ['kwa' => 'muu'];        
+        return $result;
     }
 
     private function addMag() {
