@@ -136,13 +136,21 @@ class AppHelper extends Helper {
         'short1' =>  array (
                         'lbly' => array(0 => null, 1 => 'LB'),
                         'lpuch' => array(0 => null, 1 => 'LP'),
+                        'lmat' => array(0 => null, 1 => 'LM'),
                         'zdra' => array(0 => null, 1 => 'ZD')
                     ),
         'short2' =>  array (
                         'lbly' => array(0 => null, 1 => 'LAK BŁYS'),
                         'lpuch' => array(0 => null, 1 => 'LAK PUCH'),
+                        'lmat' => array(0 => null, 1 => 'LAK MAT'),
                         'zdra' => array(0 => null, 1 => 'ZDRAP')
-                    )
+                    ),
+        'short3' =>  array (
+            'lbly' => array(0 => null, 1 => 'LBŁYS'),
+            'lpuch' => array(0 => null, 1 => 'LPUCH'),
+            'lmat' => array(0 => null, 1 => 'LMAT'),
+            'zdra' => array(0 => null, 1 => 'ZDRAP')
+        )
     );
     
     // Pasek do podpisu

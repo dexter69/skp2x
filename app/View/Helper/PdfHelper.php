@@ -395,21 +395,28 @@ class PdfHelper extends AppHelper {
     // Sito po
     private function sipoJobPdf( $karta = array() )  {
         
-        if( $karta['a_zdrapka'] || $karta['r_zdrapka'] || $karta['a_lakpuch'] ||
-            $karta['r_lakpuch'] || $karta['a_lakblys'] || $karta['r_lakblys'] ) {
+        if( $karta['a_zdrapka'] || $karta['r_zdrapka'] ||
+            $karta['a_lakpuch'] || $karta['r_lakpuch'] ||
+            $karta['a_lakblys'] || $karta['r_lakblys'] ||
+            $karta['a_lakmat'] || $karta['r_lakmat'] ) {
             
-            $a = $this->sipo['short2']['lbly'][$karta['a_lakblys']];
+            $a = $this->sipo['short3']['lbly'][$karta['a_lakblys']];
             if( $a != null && $karta['a_lakpuch']) { $a .= '+'; }
-            $a .= $this->sipo['short2']['lpuch'][$karta['a_lakpuch']];
+            $a .= $this->sipo['short3']['lpuch'][$karta['a_lakpuch']];
+            if( $a != null && $karta['a_lakmat']) { $a .= '+'; }
+            $a .= $this->sipo['short3']['lmat'][$karta['a_lakmat']];
             if( $a != null && $karta['a_zdrapka']) { $a .= '+'; }
-            $a .= $this->sipo['short2']['zdra'][$karta['a_zdrapka']];
+            $a .= $this->sipo['short3']['zdra'][$karta['a_zdrapka']];
             if( $a ==  null ) { $a = $this->brak; }            
             $a .= '<br>';
-            $r = $this->sipo['short2']['lbly'][$karta['r_lakblys']];
+
+            $r = $this->sipo['short3']['lbly'][$karta['r_lakblys']];
             if( $r != null && $karta['r_lakpuch']) { $r .= '+'; }
-            $r .= $this->sipo['short2']['lpuch'][$karta['r_lakpuch']];
+            $r .= $this->sipo['short3']['lpuch'][$karta['r_lakpuch']];
+            if( $a != null && $karta['r_lakmat']) { $a .= '+'; }
+            $a .= $this->sipo['short3']['lmat'][$karta['r_lakmat']];
             if( $r != null && $karta['r_zdrapka']) { $r .= '+'; }
-            $r .= $this->sipo['short2']['zdra'][$karta['r_zdrapka']];
+            $r .= $this->sipo['short3']['zdra'][$karta['r_zdrapka']];
             if( $r ==  null ) { $r = $this->brak;} 
             $sipo = $a . $r;
         } else { 
