@@ -41,6 +41,12 @@ if( $card['a_lakblys'] || $card['r_lakblys'] ) {
                     $vju['yesno']['options'][$card['r_lakblys']]
     ); 
 }
+if( $card['a_lakmat'] || $card['r_lakmat'] ) {
+    $cells[] = array('lakier matowy',
+                    $vju['yesno']['options'][$card['a_lakmat']],
+                    $vju['yesno']['options'][$card['r_lakmat']]
+    ); 
+}
 if( !empty($cells) ) {
     echo $this->Ma->viewheader('OPCJE SITA', array('class' => 'masymetric'));
     echo $this->Html->tag('table', null, array('id' => 'cardsito', 'class' => 'cardviewtable'));

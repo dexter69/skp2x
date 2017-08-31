@@ -428,8 +428,8 @@ class CardsController extends AppController {
                     throw new NotFoundException('Nie ma tekiej karty!');
             }
             if ($this->request->is(array('post', 'put'))) {
-//			$this->Card->print_r2($this->request->data);
-//			return;			
+			//$this->Card->print_r2($this->request->data); return;
+			
                     if ($this->Card->saveitAll($this->request->data, $blad)) {
                             $this->Session->setFlash('KARTA ZOSTAŁA ZAPISANA!', 'default', array('class' => GOOD_FLASH));
                             return $this->redirect(array('action' => 'view', $this->Card->id));

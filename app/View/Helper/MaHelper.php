@@ -1384,9 +1384,16 @@ class MaHelper extends AppHelper {
 			$this->Form->input('Card.a_lakblys',$vju['yesno']),
 			$this->Form->input('Card.r_lakblys',$vju['yesno'])
 		);
+		// lakier matowy
+		$lakierM = ['lakier matowy',
+			$this->Form->input('Card.a_lakmat',$vju['yesno']),
+			$this->Form->input('Card.r_lakmat',$vju['yesno'])
+		];
 		
 		
-		$tablica = array( $podklad, $wybranie, $zadruk, $pasek, $zdrapka, $lakierP, $lakierB );
+		$tablica = array( 
+					$podklad, $wybranie, $zadruk, $pasek, $zdrapka,
+					$lakierP, $lakierB, $lakierM );
 		
 		$markup =	$this->Html->tag('div', null, array('class' => 'sitodiv')) .
 					$this->Html->tag('table', null, array('class' => 'sitotable')) .
