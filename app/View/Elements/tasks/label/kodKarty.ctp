@@ -27,4 +27,5 @@ $ext ='act="' . $karta['active'] . '" nor="' . $karta['normal'] . '"';
     ?>
         <li class="bg-info input"><input type="text" class="form-controlx" value="<?php echo $karta['kontrol']['input'];?>" <?php echo $karta['linput'];?>></li>
     </ul>
+    <?= $karta['etykieta'] ?>
 </div>

@@ -33,8 +33,9 @@ if( $result != null ) { // znaczy było POST
                         'lp' => ++$i,
                         'box' => $box,
                         'parcel' => $parcel,
-                        'produkcyjne' => $produkcyjne
+                        'produkcyjne' => $produkcyjne,
                     ));
+                    $this->App->print_r2($karta); 
                 //}                
             } ?>
         </div>        
