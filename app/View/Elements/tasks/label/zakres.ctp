@@ -9,8 +9,8 @@
     </ul>
     <form>
         <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            <label for="exampleInput">Email address</label>
+            <input type="text" class="form-control" id="exampleInput" placeholder="Email">
         </div>
     <form>
 </p>
