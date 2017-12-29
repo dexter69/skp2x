@@ -1,16 +1,19 @@
 <!-- Element z kontrolkami do drukowania zakresu
 -->
 <p class="zakres-bar">
-    <?= $etyk ?>
-    <ul class="list-inline">
-     <li><input></li>     
-     <li><input></li>
-     <li><input></li>
-    </ul>
-    <form>
+    <?= $etyk ?>    
+    <form class="form-inline">
         <div class="form-group">
-            <label for="exampleInput">Email address</label>
-            <input type="text" class="form-control" id="exampleInput" placeholder="Email">
+            <label for="prefix">Prefix</label>
+            <input type="text" class="form-control" id="prefix" placeholder="prefix">
+        </div>
+        <div class="form-group">
+            <label for="start">Start</label>
+            <input type="text" class="form-control" id="start" placeholder="start">
+        </div>
+        <div class="form-group">
+            <label for="suffix">Prefix</label>
+            <input type="text" class="form-control" id="suffix" placeholder="suffix">
         </div>
     <form>
 </p>
