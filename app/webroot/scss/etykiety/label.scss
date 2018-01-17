@@ -93,3 +93,15 @@ p.infobar {
 .kod-karty {
     padding-left: 0.45em;
 }
+
+// formularz do zakresów
+form.zakres .form-control {
+    width: 100%;
+}
+form.zakres .form-group {
+    width: 50%;    
+}
+form.zakres .form-group:first-child,  form.zakres .form-group:last-child {
+    width: 19%;
+}
+

@@ -26,12 +26,14 @@ $ext ='act="' . $karta['active'] . '" nor="' . $karta['normal'] . '"';
         }
     ?>
         <li class="bg-info input"><input type="text" class="form-controlx" value="<?php echo $karta['kontrol']['input'];?>" <?php echo $karta['linput'];?>></li>
-    </ul>       
+    </ul>    
+    
     <?php
         if( $karta['etykieta'] == 'zakres' ) {
             echo $this->element('tasks/label/zakres', [
                 'etyk' => $karta['etykieta']
             ]);
         }        
-    ?>    
+    ?>  
+    
 </div>

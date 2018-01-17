@@ -1,19 +1,16 @@
 <!-- Element z kontrolkami do drukowania zakresu
--->
-<p class="zakres-bar">
-    <?= $etyk ?>    
-    <form class="form-inline">
+-->    
+    <form class="form-inline zakres">
         <div class="form-group">
-            <label for="prefix">Prefix</label>
+            <label class="sr-only" for="prefix">Prefix</label>
             <input type="text" class="form-control" id="prefix" placeholder="prefix">
         </div>
         <div class="form-group">
-            <label for="start">Start</label>
+            <label class="sr-only" for="start">Start</label>
             <input type="text" class="form-control" id="start" placeholder="start">
         </div>
         <div class="form-group">
-            <label for="suffix">Prefix</label>
+            <label class="sr-only" for="suffix">Prefix</label>
             <input type="text" class="form-control" id="suffix" placeholder="suffix">
         </div>
     <form>
-</p>
