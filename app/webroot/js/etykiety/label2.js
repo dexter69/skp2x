@@ -29,10 +29,9 @@ $( document ).ready(function() {
         var theDiv = $(this).parent();
         if( !$(theDiv).hasClass('niebyc') &&
             !$(theDiv).hasClass('plik') ||
-            $(theDiv).hasClass('zbiorcza') // na zbiorcze zawsze da się wydrukować
-        ) {
-            makeLabPdf( // wykreuj pdf
-                getLabelData(this) // odczytaj dane dla etykiety i zwróć w formie obiektu
+            $(theDiv).hasClass('zbiorcza') ) { // na zbiorcze zawsze da się wydrukować        
+                makeLabPdf( // wykreuj pdf
+                    getLabelData(this) // odczytaj dane dla etykiety i zwróć w formie obiektu
             );    
         }        
     });
@@ -137,7 +136,8 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
             naklad: langoza.naklad[$(obj).data('lang')],
             wbatonie: langoza.wbatonie[$(obj).data('lang')],
             onr: langoza.onr[$(obj).data('lang')]
-        }        
+        },
+        zakres: rangeService(obj)     
     };
     
     if( label.baton === "" || label.baton === null ) {
@@ -154,10 +154,30 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
     return label;
 }
 
+// W wypadku etykiet z zakresami ta funkcja robi obsługę tego
+function rangeService( obj ) { // obj reprezentuje H3 w DOM
+
+    var zakres = {
+        form_exists: false,
+        prefix: null,
+        start: null,
+        suffix: null
+    };
+
+    var form = $(obj).parent().find("form");
+    
+    if( form.length ) {
+        zakres.form_exists = true;
+        zakres.prefix = $(form).find("#prefix").val();
+        zakres.start = $(form).find("#start").val();
+        zakres.suffix = $(form).find("#suffix").val();       
+    }
+    return zakres;
+}
 
 // generujemy etykietę z danych umieszczonych w label
 function makeLabPdf( label ) {
-    
+    console.log(label);
     var maxdl = 52; // maksymalna długość nazwy produktu (przy czcionce 11)
     // obcinamy, gdy za długie, nie chcemy by wyszło nam na 3 linijki
     label.name = label.name.substr(0,maxdl); 
