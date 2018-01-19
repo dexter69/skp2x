@@ -166,11 +166,11 @@ function rangeService( obj ) { // obj reprezentuje H3 w DOM
 
     var form = $(obj).parent().find("form");
     
-    if( form.length ) {
-        zakres.form_exists = true;
+    if( form.length ) {        
         zakres.prefix = $(form).find("#prefix").val();
         zakres.start = $(form).find("#start").val();
-        zakres.suffix = $(form).find("#suffix").val();       
+        zakres.suffix = $(form).find("#suffix").val();
+        zakres.form_exists = !!zakres.start;
     }
     return zakres;
 }
