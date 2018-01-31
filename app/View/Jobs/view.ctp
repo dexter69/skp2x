@@ -32,47 +32,47 @@
 			
 </h2>
 	<dl>
-		<dt><?php echo __('Id'); ?></dt>
+		<dt><?php echo 'id'; ?></dt>
 		<dd>
-			<?php echo h($job['Job']['id']); ?>
+			<?php echo $job['Job']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Stworzył/a'); ?></dt>
+		<dt><?php echo 'Stworzył/a'; ?></dt>
 		<dd>
 			<?php echo $job['User']['name']; ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Numer'); ?></dt>
+		<dt><?php echo 'Numer'; ?></dt>
 		<dd class="nium">
 			<?php echo $this->Ma->bnr2nrj($job['Job']['nr'], null); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Termin'); ?></dt>
+		<dt><?php echo 'Termin'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->md($job['Job']['stop_day']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Rodzaj arkusza'); ?></dt>
+		<dt><?php echo 'Rodzaj arkusza'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->arkusz[$job['Job']['rodzaj_arkusza']]; ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Arkusze netto'); ?></dt>
+		<dt><?php echo 'Arkusze netto'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->tys( $job['Job']['arkusze_netto']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Dla laminacji'); ?></dt>
+		<dt><?php echo 'Dla laminacji'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->tys($job['Job']['dla_laminacji']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Zwyżka offset'); ?></dt>
+		<dt><?php echo 'Zwyżka offset'; ?></dt>
 		<dd>
-			<?php echo h($job['Job']['dla_drukarzy']); ?>
+			<?php echo $job['Job']['dla_drukarzy']; ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Status'); ?></dt>
+		<dt><?php echo 'Status'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->job_stat[$job['Job']['status']]; ?>
 			&nbsp;
@@ -82,12 +82,12 @@
 			<?php echo nl2br($job['Job']['comment']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Stworzone'); ?></dt>
+		<dt><?php echo 'Stworzone'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->mdt($job['Job']['created']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Zmodyfikowane'); ?></dt>
+		<dt><?php echo 'Zmodyfikowane'; ?></dt>
 		<dd>
 			<?php echo $this->Ma->mdt($job['Job']['modified']); ?>
 			&nbsp;
