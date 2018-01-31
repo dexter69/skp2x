@@ -5,3 +5,13 @@
 #lista-kart .opcje {width: 6em;}
 #lista-kart .order {width: 8em;}
 #lista-kart .opiekun {width: 7em;}
+
+// Widok zlecenia, sumowane IKNA
+
+tr.sigma td {
+    border-bottom-style: none;
+}
+
+tr.sigma td.ikna {
+    font-weight: bold;
+}

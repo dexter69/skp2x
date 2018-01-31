@@ -18,3 +18,9 @@
 
 #lista-kart .opiekun {
   width: 7em; }
+
+tr.sigma td {
+  border-bottom-style: none; }
+
+tr.sigma td.ikna {
+  font-weight: bold; }

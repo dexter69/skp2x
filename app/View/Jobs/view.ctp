@@ -1,6 +1,6 @@
 <?php
 	echo $this->Html->script(array(/*'jquery',*/ 'event'), array('inline' => false)); 
-	echo $this->Html->css('job/job-view.css?v=1204171554' //. time()
+	echo $this->Html->css('job/job-view.css?v=3101181236' //. time()
 						 , array('inline' => false));
 	//echo '<pre>';	print_r($submits); echo  '</pre>';	
 	//echo '<pre>';	print_r($ordery); echo  '</pre>';
@@ -122,7 +122,10 @@
 		<th class="order"><?php echo 'Zamówienie'; ?></th>
 		<!--<th class="opiekun"><?php echo 'Opiekun'; ?></th>-->
 	</tr>
-	<?php foreach ($job['Card'] as $card): ?>
+	<?php
+			$sigma = 0; // sumujemy IKNA
+			foreach ($job['Card'] as $card):
+	?>
 		<tr>
 			<td  class="id"><?php echo $card['id']; ?></td>
 			<td><?php echo $this->Html->link($card['name'], array(
@@ -153,7 +156,19 @@
 			
 			
 		</tr>
-	<?php endforeach; ?>
+	<?php
+		$sigma += $card['ikna'];
+		endforeach;
+		
+	?>
+		<!-- Sumowanie IKNA -->
+		<tr class="sigma">
+			<td  class="id"></td><td></td><td  class="status"></td><td  class="ile"></td>
+
+			<td  class="ikna"><?= $sigma ?></td>
+			
+			<td  class="opcje"></td><td  class="order"></td>
+		</tr>
 	</table>
 <?php endif; ?>
 	<!--
