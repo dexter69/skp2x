@@ -160,7 +160,10 @@ $this->Ma->displayActions($links);
 			$markup = 
 				$this->Html->tag('div', null, array('id' => 'paywrap')) .
 					$this->Ma->viewheader('OPCJE PŁATNOŚCI', array( 'id' => 'p_pay', 'class' => 'margin03')) .
-					$this->Ma->responsive_divs2( $markup, 'platnosci') .					
+					$this->Ma->responsive_divs2( $markup, 'platnosci') .	
+					$this->Html->tag('div') .
+						$this->Form->input('newcustomer', $vju['newcustomer']) .
+					$this->Html->tag('/div') .				
 				$this->Html->tag('/div');
 			
 				

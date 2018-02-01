@@ -181,7 +181,9 @@ class Order extends AppModel {
    			$this->view_options['termin_platnosci'] = $this->Customer->view_options['termin_platnosci'];
    			$this->view_options['termin_platnosci']['required'] = $edit;
    			$this->view_options['termin_platnosci']['disabled'] = !$edit;
-   			$this->view_options['termin_platnosci']['default'] = null;
+			$this->view_options['termin_platnosci']['default'] = null;
+			   
+			$this->view_options['newcustomer'] = $this->Customer->view_options['newcustomer'];
    			
    			$this->view_options['osoba_kontaktowa'] = $this->Customer->view_options['osoba_kontaktowa'];
    			$this->view_options['osoba_kontaktowa']['required'] = $edit;

@@ -281,7 +281,12 @@ class Customer extends AppModel {
 								//'max' => 90, testowałem, diała!
 								'disabled' => false,
 								'required' => true
-							),					
+							),
+			'newcustomer' => [
+								'label' => 'Klient',
+								'default' => false, //defaultowo klient stały
+								'options' => [false => 'STAŁY', true => 'NOWY'],
+							],
 			'comment'	=>	array( 
 								'label' => 'Uwagi',
 								'rows' => '3',

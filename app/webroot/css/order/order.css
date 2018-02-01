@@ -92,6 +92,10 @@ dl.in-order {
   font-weight: bold;
   margin-top: 0.4em; }
 
+.in-order .rodzcust {
+  color: #0096a1;
+  font-weight: bold; }
+
 /* 
     Prepaid po nowemu
 */

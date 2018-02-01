@@ -56,9 +56,13 @@ if( $order['Order']['procent_zaliczki'] ) {
 	<?php //$this->Ma->nawiguj( $links, $order['Order']['id'] ); //nawigacyjne do dodaj, usuń, edycja itp. ?>
 	<dl id="dexview" class="in-order">
 		
-		<dt><?php echo __('Klient'); ?></dt>
+		<dt><?php echo 'Klient'; ?></dt>
 		<dd>
-			<?php echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id'])); ?>
+			<?php
+				if( $order['Order']['newcustomer'] ) { $rodz = " [N]"; } else { $rodz = " [S]"; }
+				echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id']))
+				. '<span class="rodzcust">' . "$rodz</span>";
+			?>
 			&nbsp;
 		</dd>
 		
