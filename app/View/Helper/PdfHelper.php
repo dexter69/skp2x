@@ -108,7 +108,7 @@ class PdfHelper extends AppHelper {
                             '<p><label>Forma płatności:</label>' . $zam['Order']['forma'] . '</p>' .
                             '<p><label>Waluta:</label>' . $zam['Customer']['waluta'] . '</p></div>'.
                             '<div class="customer-type"><p class="grubszy-nag">' .
-                            ($zam["newcustomer"] ? "N" : "S") . '</p></div>'     
+                            ($zam["Order"]["newcustomer"] ? "N" : "S") . '</p></div>'     
                     ;
                         
             $markup = '<table cellspacing="0" cellpadding="0">' .
