@@ -99,7 +99,8 @@ class PdfHelper extends AppHelper {
                         '<p class="grubszy-nag">Uwagi</p>' . nl2br($zam['Order']['comment']);
             $kolumna2 = '<div><p class="grubszy-nag">Adres do faktury</p>' . 
                             $this->Ma->adresFaktury($zam) . 
-                            '<p><label>NIP</label>' . $zam['Customer']['vatno_txt'] . '</p>' .
+                            '<p><label>NIP</label>' . $zam['Customer']['vatno_txt'] . '</p><p class="grubszy-nag customer-type">' .
+                            ($zam["Order"]["newcustomer"] ? "NOWY" : "STAŁY") . '</p>' .
                         '</div>' .
                         '<div><p class="grubszy-nag">Adres dostawy</p>' . $this->Ma->adresDostawy($zam) . '</div>' .
                         '<div><p class="grubszy-nag">Osoba kontaktowa</p>' . 
