@@ -748,7 +748,15 @@ class OrdersController extends AppController {
 			$users = $this->Order->User->find('list');
 			$customers = $this->Order->Customer->find('list');
 			$vju = $this->Order->get_view_options(true);
-			$this->set(compact('users', 'customers', 'vju', 'karty', 'dt'));
+			$test = $this->request->data['Order'];	
+			//$vju['newcustomer']['default'] = $this->request->data['Order']['newcustomer'];
+			unset($vju['newcustomer']['options'][null]);
+			if( $this->request->data['Order']['newcustomer'] ) {
+				$vju['newcustomer']['default'] = true;
+			} else {
+				$vju['newcustomer']['default'] = false;
+			}
+			$this->set(compact('users', 'customers', 'vju', 'karty', 'dt', 'test'));
 		
 	}
 

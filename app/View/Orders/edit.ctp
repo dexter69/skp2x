@@ -1,7 +1,9 @@
 <?php 
 // do sekcji head zostanie dodany customer.css
 //jquery-ui-1.10.4.custom.min
+
 $tedane = $this->request->data;
+
 echo $this->Html->css(array('order', 'sunny/jquery-ui-1.10.4.custom.min'), null, array('inline' => false));
 echo $this->Html->script(array('jquery', 'jquery-ui', 'jquery.ui.datepicker-pl'/*, 'common'*/), array('inline' => false)); 
 $code = //"var platnosci = " . json_encode($tedane['platnosci']) . ";\n" .

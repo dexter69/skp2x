@@ -284,8 +284,9 @@ class Customer extends AppModel {
 							),
 			'newcustomer' => [
 								'label' => 'Klient',
-								'default' => false, //defaultowo klient stały
-								'options' => [false => 'STAŁY', true => 'NOWY'],
+								'default' => null, //defaultowo klient stały
+								'options' => [null=>"- wybierz -", false => 'STAŁY', true => 'NOWY'],
+								'required' => true
 							],
 			'comment'	=>	array( 
 								'label' => 'Uwagi',
