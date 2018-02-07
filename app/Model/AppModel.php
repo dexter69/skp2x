@@ -212,6 +212,7 @@ class AppModel extends Model {
                 $uids[$karta['user_id']] = 1; } //przypisz na razie cokolwiek					
         }
         $uids[4] = 1; // Jola zawsze dostaje			
+        $uids[15] = 1; // Kubuś zawsze dostaje			
         unset($uids[AuthComponent::user('id')]); // generujący zdarzenie nie dostaje maila
         $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
         $tab = array();
