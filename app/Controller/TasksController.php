@@ -52,8 +52,6 @@ class TasksController extends AppController {
         return $rqdata;
     }    
 
-    // ################## TEST / DEPREC <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    
     // wylicz dane, który przycisk ma być aktywny i czy coś ma być w polu input
     private function batonSize( $naklad ) {
         
@@ -77,7 +75,11 @@ class TasksController extends AppController {
             'active' => null, // żaden "klikacz" nie jest aktywny
             'input' => $naklad // w input wpisujemy nakład
         );
-    }
+    }    
+
+    // ################## TEST / DEPREC <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    
+
     
     //testowa metoda
     public function index() {
