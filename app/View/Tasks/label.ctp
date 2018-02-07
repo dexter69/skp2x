@@ -34,6 +34,8 @@ if( $result != null ) { // znaczy było POST
                         'box' => $box,
                         'parcel' => $parcel,
                         'produkcyjne' => $produkcyjne,
+                        // info, czy osoba jest z odpowiedniego działu, tylko perso i ew. inni, którzy potrzebują, beda mieli wyświetlany zakres
+                        'properDzial' => $result['properDzial']
                     ));
                     //$this->App->print_r2($karta); 
                 //}                
@@ -41,9 +43,8 @@ if( $result != null ) { // znaczy było POST
         </div>        
         <?php
         // umieszczamy "szkielet" skryptu pod pdfmake w elemencie, bo tak nam wygodnie
-        echo $this->element('tasks/label/pdfSkeleton');
-        //echo "<br>";
-        //$this->App->print_r2($result['data']/*['Ticket']*/); 
-        //$this->App->print_r2($parcel); 
+        echo $this->element('tasks/label/pdfSkeleton');        
     } 
 }
+
+//$this->App->print_r2($result);

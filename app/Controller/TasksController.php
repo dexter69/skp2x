@@ -47,7 +47,9 @@ class TasksController extends AppController {
                    $karta['etykieta'] = 'plik'; // mamy załączony gotowy plik
                }
                //unset($karta['Upload'], $karta['Request']);
-            }
+            }            
+            $rqdata['properDzial'] = $this->Auth->user('dzial') == SUA; // PER - dział perso
+            
         }
         return $rqdata;
     }    
