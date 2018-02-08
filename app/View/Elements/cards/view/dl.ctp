@@ -50,7 +50,9 @@
     }
     $this->Proof->dtdd('Zlecenie (P)', $dd);
     
-    $this->Proof->dtdd('Cena', $comm['cena']);
+    if( !$limited ) {
+        $this->Proof->dtdd('Cena', $comm['cena']);
+    }    
     $this->Proof->dtdd('Ilość', $comm['ilosc']);
     
     if( $card['status'] == PRIV && $order['id'] )

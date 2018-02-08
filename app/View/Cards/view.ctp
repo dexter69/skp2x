@@ -1,4 +1,5 @@
 <?php 
+
 echo $this->element('cards/view/head', array(
     'title' => $card['Card']['name'],
     'card_id' => $card['Card']['id']    )); ?>
@@ -26,7 +27,8 @@ echo $this->element('cards/view/head', array(
             'job' => $card['Job'],
             'comm' => $comm,
             'etykieta' => $vju['etykieta']['options'],
-            'etylang' => $vju['etylang']['view']
+            'etylang' => $vju['etylang']['view'],
+            'limited' => $limited
         )); 
 
         // CMYK
@@ -41,7 +43,7 @@ echo $this->element('cards/view/head', array(
         ));  
         // Pliki
         if( !empty($card['Upload']) ) {
-            echo $this->element('cards/view/pliki', array('uploads' => $card['Upload'])); 
+            echo $this->element('cards/view/pliki', array('limited' => $limited, 'uploads' => $card['Upload'])); 
         } 
         $this->Ma->kontrolka($card, $evcontrol);?>
         </div>

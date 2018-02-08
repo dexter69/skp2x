@@ -354,6 +354,7 @@ define('EDIT_SAL', 9); //edycja super wszystkich
 define('VIEW_OWN', 1); //ogladanie swoich
 define('VIEW_SHR', 2); //ogladanie wspólnych
 define('VIEW_NO_KOR', 3);  // jak NO_PRIV, ale bez kart/zamówień widocznych dla koordynatora
+define('VIEW_LIM_1', 4);  // oglądanie limitowane, typ 1 - myślimy tu o produkcji i widoku karty
 define('VIEW_NO_PRIV', 5); /* ogladanie wszystkich za wyjątkiem prywatnych zamówień innych ludzi
 						 dla kart: wszystkie karty za wyjątkiem samotnych
 						   lub podpiętych do prywatnych zleceń innych ludzi 

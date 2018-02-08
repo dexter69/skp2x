@@ -173,6 +173,15 @@ class CardsController extends AppController {
  * @param string $id
  * @return void
  */
+
+    /*
+    Zmienna regulująca sposób wyświetlania danych o karcie
+    - 0 - brak limitów
+    - 1 - wyśwetlaie z limitami, typ 1
+    - 2 - wyśwetlaie z limitami, typ 2
+    Zminne jest, ewentualnie, ustawiana przez metodę $this->akcjaOK */
+    private $limitedView = 0;
+
 	public function view($id = null) {
             if (!$this->Card->exists($id)) {
                     throw new NotFoundException(__('Invalid card'));
@@ -188,7 +197,8 @@ class CardsController extends AppController {
             $vju = $this->Card->get_view_options();
             //$card['Card']['upc'] = $this->userPersoChange();
             $card['Card']['pvis'] = $this->userPersoVis();
-            $this->set(compact('card', 'evcontrol', 'links', 'vju'));
+            $limited = $this->limitedView;
+            $this->set(compact('card', 'evcontrol', 'links', 'vju', 'limited'));
 
             //test
             /*
@@ -569,7 +579,11 @@ class CardsController extends AppController {
                                     case VIEW_NO_KOR:
                                             if( $card['status'] != PRIV && $card['status'] != NOWKA )
                                                     return true;
-                                    break;								
+                                    break;	
+                                    case VIEW_LIM_1:
+                                        $this->limitedView=1; // użytkownik będzie miał ograniczony widok karty, typ 1
+                                        return true;
+                                    break;							
                                     case NO_RIGHT:
                                     case VIEW_SHR:
                                             return false;

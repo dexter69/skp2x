@@ -11,10 +11,22 @@
             <th class="data"><?php echo 'Data'; ?></th>
         </tr>
     <?php foreach ($uploads as $upload): ?>
+        <?php
+          if( $limited ) {
+            $fileOK = justify($upload['role']);
+          } else {
+            $fileOK = true; // wyświetlamy bez limitów
+          }
+        ?>
         <tr>
-            <td class="id"><?php echo $upload['id']; ?></td>
+            <td class="id"><?php echo $fileOK ? $upload['id'] : ""; ?></td>
             <td class="filename"><?php
-                echo $this->Html->link( $upload['filename'], array('controller' => 'uploads', 'action' => 'download', $upload['id'] ) ); ?>
+                if( $fileOK ) {
+                    echo $this->Html->link( $upload['filename'], array('controller' => 'uploads', 'action' => 'download', $upload['id'] ) );
+                } else {
+                    echo $upload['filename'];
+                }
+            ?>
             </td>
                 <td class="rola"><?php echo $upload['roletxt']; ?></td>
                 <td class="size"><?php 
@@ -34,3 +46,11 @@
     <?php endforeach; ?>
     </table>
 </div>
+
+<?php
+
+    /* Sprawdź, czy dana rola pliku jest OK do wyświetlenia limitowanego */
+    function justify( $rola ) {
+        // dozwolone typy plików w ograniczonym widoku
+        return in_array($rola, [PROJ, PODPERSO, PODGLAD, ETYKIETA]); 
+    }
