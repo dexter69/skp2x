@@ -259,6 +259,7 @@ define('DTP',4); //dtp - Frank
 define('PER',5); //peronalizacja
 define('SEK',6); //sekretarka
 define('KON',7); //kontrola jakości (przebieranie kart)
+define('PRO',8); //generalnie produkcja
 
 
 //KARTY

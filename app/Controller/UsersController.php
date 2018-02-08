@@ -90,12 +90,17 @@ class UsersController extends AppController {
 	public function login() {
             if ($this->request->is('post')) {
                 if ($this->Auth->login()) {
-                    if( $this->Auth->user('dzial') == KON ) {
-                    //kontrola jakości - przekierowujemy na etykiety  
-                        return $this->redirect(array('controller'=>'tasks', 'action' => 'label'));
-                    } else {
-                        return $this->redirect($this->Auth->redirect());
+                    switch( $this->Auth->user('dzial') ) {
+                        case KON: // kontrola jakości
+                            $red = array('controller'=>'tasks', 'action' => 'label');
+                            break;
+                        case PRO: // produkcja 
+                            $red = array('controller'=>'jobs', 'action' => 'index');
+                            break;
+                        default:
+                            $red = $this->Auth->redirect();
                     }
+                    return $this->redirect($red);                                       
                 }
                 $this->Session->setFlash(__('Błędna nazwa użytkownika lub hasło, spróbuj ponownie'));
             }    	
