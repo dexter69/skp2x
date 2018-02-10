@@ -170,7 +170,7 @@ function rangeService( obj ) { // obj reprezentuje H3 w DOM
         zakres.prefix = $(form).find("#prefix").val();
         zakres.start = $(form).find("#start").val();
         zakres.suffix = $(form).find("#suffix").val();
-        zakres.form_exists = !!zakres.start;
+        zakres.form_exists = !!zakres.start && /^[0-9]+$/.test(zakres.start);// niepuste i składa się z wyłącznie cyfr        
     }
     return zakres;
 }
