@@ -260,22 +260,32 @@ function constructPageWithZakres(etyk) {
 // przygotuj strukturę strony dokumentu
 function constructPage(etyk) {
 
-    if( etyk.zbiorcza )   { //ma być etykieta na zbiorcze
-        pdfdata.push(                
-            new pagez.firstLine(etyk.name),  
-            new pagez.secondLine(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),            
-            new pagez.thirdLine(etyk.labels.onr, true),
-            new pagez.thirdLine(etyk.valtxt, false),
-            new pagez.fourthLine(etyk.job)            
-        );
+    if( etyk.zbiorcza )   { //ma być etykieta na zbiorcze        
+        prepareZbiorcza(etyk);
     } else {
-        pdfdata.push(                
-            new page.firstLine(etyk.order, etyk.job),  
-            new page.secondLine(etyk.labels.produkt, true),        
-            new page.secondLine(etyk.name, false),
-            new page.thirdLineV2(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),
-            new page.fourthLineV2(etyk.labels.onr, true),
-            new page.fourthLineV2(etyk.valtxt, false)
-        );
+        prepareBaton(etyk);        
     }
+}
+
+function prepareZbiorcza(etyk) {
+
+    pdfdata.push(                
+        new pagez.firstLine(etyk.name),  
+        new pagez.secondLine(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),            
+        new pagez.thirdLine(etyk.labels.onr, true),
+        new pagez.thirdLine(etyk.valtxt, false),
+        new pagez.fourthLine(etyk.job)            
+    );
+}
+
+function prepareBaton(etyk) {
+
+    pdfdata.push(                
+        new page.firstLine(etyk.order, etyk.job),  
+        new page.secondLine(etyk.labels.produkt, true),        
+        new page.secondLine(etyk.name, false),
+        new page.thirdLineV2(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),
+        new page.fourthLineV2(etyk.labels.onr, true),
+        new page.fourthLineV2(etyk.valtxt, false)
+    );
 }
