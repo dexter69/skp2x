@@ -246,8 +246,7 @@ function addStructureOfOnePage(etyk) {
     }
     
     if( etyk.zakres.form_exists ) {
-        constructPageWithZakres(etyk);
-        //constructPage(etyk);
+        constructPageWithZakres(etyk); // wersja z zakresem        
     } else {
         constructPage(etyk);
     }        
@@ -255,6 +254,13 @@ function addStructureOfOnePage(etyk) {
 
 // przygotuj strukturę strony dokumentu - nowa wrsja pod etykietę z zakresami 2018-02-12
 function constructPageWithZakres(etyk) {
+
+    //console.log("We are here!");
+    if( etyk.zbiorcza )   { //ma być etykieta na zbiorcze        
+        prepareZbiorcza(etyk);
+    } else {
+        prepareBaton(etyk);        
+    }
 }
 
 // przygotuj strukturę strony dokumentu
