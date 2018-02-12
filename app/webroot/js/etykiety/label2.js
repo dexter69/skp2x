@@ -244,8 +244,17 @@ function addStructureOfOnePage(etyk) {
     } else {
         etyk.labels.onr = ""; // nie chcemy tego, gdy wpisywanie ręczne
     }
+    
+    if( etyk.zakres.form_exists ) {
+        constructPageWithZakres(etyk);
+        //constructPage(etyk);
+    } else {
+        constructPage(etyk);
+    }        
+}
 
-    constructPage(etyk);    
+// przygotuj strukturę strony dokumentu - nowa wrsja pod etykietę z zakresami 2018-02-12
+function constructPageWithZakres(etyk) {
 }
 
 // przygotuj strukturę strony dokumentu
