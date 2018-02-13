@@ -4,27 +4,30 @@
     var docDefinition = {
         content: [],        
         styles: {
-          textlabel: {
-              fontSize: 8
-          },          
-          product: {
-            fontSize: 11,
-            margin: [0, 0, 0, 3],
-            bold: true
-          },
-          normal: {
-            fontSize: 11,
-            margin: [0, 0, 0, 3]
-          },
-          numer: {
-            fontSize: 8,
-            alignment: 'right'
-          },
-          numer2: {
-            fontSize: 15,
-            alignment: 'left',
-            bold: true
-          }
+            textlabel: {
+                fontSize: 8
+            },          
+            product: {
+              fontSize: 11,
+              margin: [0, 0, 0, 3],
+              bold: true
+            },
+            normal: {
+              fontSize: 11,
+              margin: [0, 0, 0, 3]
+            },
+            numer: {
+              fontSize: 8,
+              alignment: 'right'
+            },
+            numer2: {
+              fontSize: 15,
+              alignment: 'left',
+              bold: true
+            },
+            zakres: {
+                fontSize: 10
+            },
         },
         
         pageSize: { width: 113, height: 198 }, // w pkt => to daje mniej więcej 40 x 70 mm

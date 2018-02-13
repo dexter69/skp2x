@@ -62,7 +62,7 @@ var pageRange = {
     },        
     thirdLine: function(naklad, inbaton, etyk) { 
     
-        var labtexts = etyk.labels;
+        var labtexts = etyk.zakres.labels;
 
         this.columns = [
             [
@@ -81,7 +81,7 @@ var pageRange = {
     },        
     fourthLine: function(etykobj, od) {
 
-        this.style = 'normal';
+        this.style = 'zakres';
         if( od ) {
             this.text = "ODDDDDDDDDDDD";            
         } else {

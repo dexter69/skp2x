@@ -114,8 +114,8 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
         onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:', 'de': 'Karton'},
         short:      { // wersje krótkie, gdy ciasno
             produkt:    {'pl': 'produkt:', 'en': 'product:', 'de': 'Produkt'},  
-            naklad:     {'pl': 'zamówiona ilość:', 'en': 'ordered quantity:', 'de': 'Bestellmenge'},
-            wbatonie:   {'pl': 'ilość w opakowaniu:', 'en': 'batch:', 'de': 'Inhalt'},
+            naklad:     {'pl': 'zamówione:', 'en': 'ordered amount:', 'de': 'Bestellmenge'},
+            wbatonie:   {'pl': 'w opakowaniu:', 'en': 'batch:', 'de': 'Inhalt'},
             onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:', 'de': 'Karton'},
         }
     },
@@ -143,7 +143,12 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
             wbatonie: langoza.wbatonie[$(obj).data('lang')],
             onr: langoza.onr[$(obj).data('lang')]
         },
-        zakres: rangeService(obj)     
+        zakres: rangeService(obj, {
+                produkt: langoza.short.produkt[$(obj).data('lang')],
+                naklad: langoza.short.naklad[$(obj).data('lang')],
+                wbatonie: langoza.short.wbatonie[$(obj).data('lang')],
+                onr: langoza.short.onr[$(obj).data('lang')]
+        })     
     };
     
     if( label.baton === "" || label.baton === null ) {
@@ -161,13 +166,14 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
 }
 
 // W wypadku etykiet z zakresami ta funkcja robi obsługę tego
-function rangeService( obj ) { // obj reprezentuje H3 w DOM
+function rangeService( obj, shortlabels ) { // obj reprezentuje H3 w DOM
 
     var zakres = {
         form_exists: false,
         prefix: null,
         start: null,
-        suffix: null
+        suffix: null,
+        labels: shortlabels
     };
 
     var form = $(obj).parent().find("form");
@@ -307,11 +313,14 @@ function prepareBatonZakres(etyk) {
     //console.log("prepareBatonZakres");
     pdfdata.push(                
         new pageRange.firstLine(etyk.order, etyk.job),  
-        //new pageRange.secondLine(etyk.labels.produkt, true),        
+        
         new pageRange.secondLine(etyk.name, false),
+
+        new pageRange.secondLine(" ", true),        // odstęp
 
         new pageRange.thirdLine(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk),
 
+        new pageRange.secondLine(" ", true),        // odstęp
         
         new pageRange.fourthLine(etyk, true ), 
         new pageRange.fourthLine(etyk, false ) 
