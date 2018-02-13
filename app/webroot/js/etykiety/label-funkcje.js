@@ -43,6 +43,54 @@ var page = {
     }
 };
 
+/* Konstruktory strony etykiety dla batona z zakresem */
+var pageRange = {
+    firstLine: function(order, job) {
+        this.text = [
+            { text: job, style: 'numer', bold: true},
+            { text: '  <' + order + '>', style: 'numer'}
+        ];
+    },
+    secondLine: function(val, lbltxt) {       
+       this.text = val;
+       if(lbltxt) { //znaczy tprodukujemy treść label'a  
+           this.style = 'textlabel';
+           this.margin = [ 0, 0, 0, 0 ]; 
+       } else { //nazwa produktu      
+           this.style = 'product';
+       }
+    },        
+    thirdLine: function(naklad, inbaton, etyk) { 
+    
+        var labtexts = etyk.labels;
+
+        this.columns = [
+            [
+                { text: labtexts.naklad, style: 'textlabel' },
+                { text: naklad, style: 'normal' }
+            ],
+            [
+                { text: labtexts.wbatonie, style: 'textlabel', alignment: 'center' },
+                { text: inbaton, style: 'normal', alignment: 'center' }
+            ],
+            [
+                { text: labtexts.onr, style: 'textlabel', alignment: 'right' },
+                { text: etyk.valtxt, style: 'normal', alignment: 'right' }
+            ]
+        ];
+    },        
+    fourthLine: function(etykobj, od) {
+
+        this.style = 'normal';
+        if( od ) {
+            this.text = "ODDDDDDDDDDDD";            
+        } else {
+            this.text = "DOOOOOOOOOOOO";
+            this.pageBreak = 'after';
+        }
+    }
+};
+
 /* Konstruktory strony etykiety dla zbiorczej */
 var pagez = {
     firstLine: function(val) {

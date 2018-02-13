@@ -111,7 +111,13 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
         produkt:    {'pl': 'produkt:', 'en': 'product:', 'de': 'Produkt'},  
         naklad:     {'pl': 'zamówiona ilość:', 'en': 'ordered quantity:', 'de': 'Bestellmenge'},
         wbatonie:   {'pl': 'ilość w opakowaniu:', 'en': 'batch:', 'de': 'Inhalt'},
-        onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:', 'de': 'Karton'}  
+        onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:', 'de': 'Karton'},
+        short:      { // wersje krótkie, gdy ciasno
+            produkt:    {'pl': 'produkt:', 'en': 'product:', 'de': 'Produkt'},  
+            naklad:     {'pl': 'zamówiona ilość:', 'en': 'ordered quantity:', 'de': 'Bestellmenge'},
+            wbatonie:   {'pl': 'ilość w opakowaniu:', 'en': 'batch:', 'de': 'Inhalt'},
+            onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:', 'de': 'Karton'},
+        }
     },
     
     label = { 
@@ -259,7 +265,7 @@ function constructPageWithZakres(etyk) {
     if( etyk.zbiorcza )   { //ma być etykieta na zbiorcze        
         prepareZbiorcza(etyk);
     } else {
-        prepareBaton(etyk);        
+        prepareBatonZakres(etyk);      // etykieta dla batona z zakesem  
     }
 }
 
@@ -293,5 +299,21 @@ function prepareBaton(etyk) {
         new page.thirdLineV2(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk.labels),
         new page.fourthLineV2(etyk.labels.onr, true),
         new page.fourthLineV2(etyk.valtxt, false)
+    );
+}
+
+function prepareBatonZakres(etyk) {
+
+    //console.log("prepareBatonZakres");
+    pdfdata.push(                
+        new pageRange.firstLine(etyk.order, etyk.job),  
+        //new pageRange.secondLine(etyk.labels.produkt, true),        
+        new pageRange.secondLine(etyk.name, false),
+
+        new pageRange.thirdLine(numberSeparator(etyk.naklad, " "), etyk.baton2.toString(), etyk),
+
+        
+        new pageRange.fourthLine(etyk, true ), 
+        new pageRange.fourthLine(etyk, false ) 
     );
 }
