@@ -114,7 +114,7 @@ function getLabelData( obj ) { // obj reprezentuje kliknięty element
         onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:', 'de': 'Karton'},
         short:      { // wersje krótkie, gdy ciasno
             produkt:    {'pl': 'produkt:', 'en': 'product:', 'de': 'Produkt'},  
-            naklad:     {'pl': 'zamówione:', 'en': 'ordered amount:', 'de': 'Bestellmenge'},
+            naklad:     {'pl': 'zamówione:', 'en': 'ordered qty:', 'de': 'Bestellmenge'},
             wbatonie:   {'pl': 'w opakowaniu:', 'en': 'batch:', 'de': 'Inhalt'},
             onr:        {'pl': 'opakowanie nr:', 'en': 'batch no.:', 'de': 'Karton'},
         }
