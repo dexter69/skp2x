@@ -189,7 +189,7 @@ function rangeService( obj, shortlabels ) { // obj reprezentuje H3 w DOM
 
 // generujemy etykietę z danych umieszczonych w label
 function makeLabPdf( label ) {
-    console.log(label);
+    
     var maxdl = 52; // maksymalna długość nazwy produktu (przy czcionce 11)
     // obcinamy, gdy za długie, nie chcemy by wyszło nam na 3 linijki
     label.name = label.name.substr(0,maxdl); 
@@ -208,7 +208,7 @@ function kontent(etyk) {
     
     pdfdata = [];    
     etyk = kontentPart1(etyk);
-    
+    console.log(etyk);
     do {
       addStructureOfOnePage(etyk);      
       etyk.pages--;  
@@ -232,6 +232,10 @@ function kontentPart1(etyk) {
             etyk.labtxt = 'opakowanie nr:';
             if( etyk.suma ) { // drukujemy sume batonów, czyli np. /12
                 etyk.sumb = "/" + etyk.pages;
+            }
+            if( etyk.zakres.form_exists ) { // jeżeli etykiety z zakrsem to odpowiednie dane
+                etyk.zakres.od = Number(etyk.zakres.start);
+                etyk.zakres.length = etyk.zakres.start.length;
             }
         } else {
             etyk.pages = 1;
@@ -272,6 +276,7 @@ function constructPageWithZakres(etyk) {
         prepareZbiorcza(etyk);
     } else {
         prepareBatonZakres(etyk);      // etykieta dla batona z zakesem  
+        etyk.zakres.od += etyk.baton;        
     }
 }
 

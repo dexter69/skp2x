@@ -25,8 +25,13 @@
               alignment: 'left',
               bold: true
             },
-            zakres: {
-                fontSize: 10
+            zakres_od: {
+                fontSize: 10,
+                alignment: 'left'
+            },
+            zakres_do: {
+                fontSize: 10,
+                alignment: 'left'
             },
         },
         

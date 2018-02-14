@@ -81,11 +81,14 @@ var pageRange = {
     },        
     fourthLine: function(etykobj, od) {
 
-        this.style = 'zakres';
         if( od ) {
-            this.text = "ODDDDDDDDDDDD";            
+            //'abc'.padStart(etykobj.zakres.length, "0");
+            this.text = etykobj.zakres.prefix + etykobj.zakres.od.toString().padStart(etykobj.zakres.length, "0") + etykobj.zakres.suffix;
+            this.style = 'zakres_od';
         } else {
-            this.text = "DOOOOOOOOOOOO";
+            var doo = etykobj.zakres.od + etykobj.baton2 -1;
+            this.text = etykobj.zakres.prefix + doo.toString().padStart(etykobj.zakres.length, "0") + etykobj.zakres.suffix;
+            this.style = 'zakres_do';
             this.pageBreak = 'after';
         }
     }
