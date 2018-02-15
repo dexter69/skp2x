@@ -273,7 +273,7 @@ function constructPageWithZakres(etyk) {
 
     //console.log("We are here!");
     if( etyk.zbiorcza )   { //ma być etykieta na zbiorcze        
-        prepareZbiorcza(etyk);
+        prepareZbiorczaZakres(etyk);
     } else {
         prepareBatonZakres(etyk);      // etykieta dla batona z zakesem  
         etyk.zakres.od += etyk.baton;        
@@ -288,6 +288,10 @@ function constructPage(etyk) {
     } else {
         prepareBaton(etyk);        
     }
+}
+
+function prepareZbiorczaZakres(etyk) {
+    prepareZbiorcza(etyk);
 }
 
 function prepareZbiorcza(etyk) {
