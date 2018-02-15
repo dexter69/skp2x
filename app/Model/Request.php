@@ -1,7 +1,7 @@
 <?php
 
 /*  To ma być nowy model operujący na tablicy orders dla celów zrobienia lebszego listingu
- *  i wyszukiwania handlowych. Oraz obsługi etykiet.
+ *  i wyszukiwania handlowych. Oraz obsługi etykiet. Oraz nowe Dodawanie/Edytowanie zamówienia - test WEBIX
  *  Po prostu chcemy czysty kod */
 
 App::uses('AppModel', 'Model');
