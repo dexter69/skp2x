@@ -4,17 +4,17 @@
 
 webix.ready(function(){
     webix.ui({
+        container:"app_here",
+        view:"layout", // optional
         rows:[
-            { view:"template", 
-                type:"header", template:"My App!" },
-            { view:"datatable", 
-                autoConfig:true, 
-                data:{
-                title:"My Fair Lady", year:1964, votes:533848, rating:8.9, rank:5
-                }
-            }
-        ]
-    });
+            { view:"template", type:"header", template:"My App!"},
+              { cols:[
+                 {},
+                 {},
+                 {}
+              ]}      
+          ]   
+      });
 });
 
 if( edycja ) {
