@@ -16,8 +16,10 @@ class RequestsController extends AppController {
 
         if( $id ) {            
             $edycja = $id;
+            $this->set('title_for_layout', 'Edycja zamówienia');
         } else {            
             $edycja = 0;
+            $this->set('title_for_layout', 'Nowe zamówienie');
         }        
         $this->set( compact( 'edycja') ); 
         $this->layout='webix';
