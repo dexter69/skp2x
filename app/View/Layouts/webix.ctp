@@ -15,10 +15,11 @@
         // Webix CSS & JavaScript =====================
         echo $this->Html->css(['/webix/v5.1.1/codebase/webix']);
         echo $this->Html->script(['/webix/v5.1.1/codebase/webix']);
-        
+        /*
         echo $this->fetch('meta');
         echo $this->fetch('css');
         echo $this->fetch('script');
+        */
         ?>
     </head>
     <body>
@@ -39,7 +40,7 @@
 
         
         <?php            
-        echo $this->fetch('scriptBottom');
+        //echo $this->fetch('scriptBottom');
         ?>
     </body>
 </html>
