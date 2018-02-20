@@ -47,21 +47,15 @@ var buttony = [
     { view:"button", value:"Clear Form", width:85, click:"$$('myform').clear()"}
 ];
 
-var empty = [
-    //{ view:"button", value:"Add", width:70, click:"add_row" },
-    {},{},{}
+var empty = [    
+    {},{},{},{}
 ];
 
 var test2 = {
     rows: [
-        { view:"toolbar", id:"mybar", elements: empty//buttony
-            /*
-                { view:"button", value:"Add", width:70, click:"add_row" },
-                { view:"button", value:"Delete", width:70, click:"delete_row" },
-                { view:"button", value:"Update", width:70, click:"update_row" },
-                { view:"button", value:"Clear Form", width:85, click:"$$('myform').clear()"}
-            */
-            
+        { view:"toolbar", id:"mybar", elements: 
+            empty
+            //buttony                     
         },
         { cols:[
                 {view:"form", id:"myform", width:200, elements:[
