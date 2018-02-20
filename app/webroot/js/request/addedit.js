@@ -1,24 +1,35 @@
 /*
-* Starting poin of webix addedit request app
+* Starting point of webix addedit request app
 */
+var tekst = "";
+
+if( edycja ) {
+    tekst = " - edycja";
+    console.log(edycja);
+} else {
+    tekst = " - nowe";
+    console.log("NOWE");
+}
+
+//var gornyNaglowek = { view:"toolbar", /*type:"header",*/ template:"My App!" + tekst};
+var gornyNaglowek = {
+    view:"toolbar", elements: [
+        {template: "My App!" + tekst},
+        {}]
+};
 
 webix.ready(function(){
     webix.ui({
-        container:"app_here",
-        view:"layout", // optional
+        //container:"app_here",
+        //view:"layout", // optional
         rows:[
-            { view:"template", type:"header", template:"My App!"},
-              { cols:[
-                 {},
-                 {},
-                 {}
-              ]}      
+            gornyNaglowek,
+            { cols:[
+                {},
+                {},
+                {}
+            ]}      
           ]   
       });
 });
 
-if( edycja ) {
-    console.log(edycja);
-} else {
-    console.log("NOWE");
-}

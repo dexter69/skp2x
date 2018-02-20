@@ -14,12 +14,12 @@
 
         // Webix CSS & JavaScript =====================
         echo $this->Html->css(['/webix/v5.1.1/codebase/webix', '/webix/core']);
-        echo $this->Html->script(['/webix/v5.1.1/codebase/webix']);
+        echo $this->Html->script(['/webix/v5.1.1/codebase/webix_debug']);
         
         ?>
     </head>
     <body>
-        <div id="app_here"></div>    
+        <!-- <div id="app_here"></div> -->
         <?php echo $this->fetch('content'); ?>        
     </body>
 </html>
