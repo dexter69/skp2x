@@ -47,7 +47,10 @@ var buttony = [
     { view:"button", value:"Clear Form", width:85, click:"$$('myform').clear()"}
 ];
 
-var empty = [{ view:"button", value:"Add", width:70, click:"add_row" },{},{},{}];
+var empty = [
+    //{ view:"button", value:"Add", width:70, click:"add_row" },
+    {},{},{}
+];
 
 var test2 = {
     rows: [
