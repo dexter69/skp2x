@@ -40,13 +40,25 @@ var filmset = [
     { id:6, title:"12 Angry Men", year:1957}
 ];
 
+var buttony = [
+    { view:"button", value:"Add", width:70, click:"add_row" },
+    { view:"button", value:"Delete", width:70, click:"delete_row" },
+    { view:"button", value:"Update", width:70, click:"update_row" },
+    { view:"button", value:"Clear Form", width:85, click:"$$('myform').clear()"}
+];
+
+var empty = [{ view:"button", value:"Add", width:70, click:"add_row" },{},{},{}];
+
 var test2 = {
     rows: [
-        { view:"toolbar", id:"mybar", elements:[
+        { view:"toolbar", id:"mybar", elements: empty//buttony
+            /*
                 { view:"button", value:"Add", width:70, click:"add_row" },
                 { view:"button", value:"Delete", width:70, click:"delete_row" },
                 { view:"button", value:"Update", width:70, click:"update_row" },
-                { view:"button", value:"Clear Form", width:85, click:"$$('myform').clear()"}]
+                { view:"button", value:"Clear Form", width:85, click:"$$('myform').clear()"}
+            */
+            
         },
         { cols:[
                 {view:"form", id:"myform", width:200, elements:[
@@ -68,21 +80,7 @@ var test2 = {
 
 webix.ready(function(){
     
-    webix.ui(test2//{
-    /*    
-        //container:"app_here",
-        //view:"layout", // optional
-        rows:[
-            gornyNaglowek,
-            { cols:[
-                {},
-                {},
-                {}
-            ]}      
-          ]   
-    */
-    //    }
-);
+    webix.ui(test2);
     
 });
 
