@@ -73,7 +73,52 @@ class Disposal extends AppModel {
                     ],
                     'default' => 0 // która opcja jest domyślna
                 ]
-            ], 
+            ],
+            'per' => [ // konfiguracja selecta pod personalizację
+                'id' => 'persel', // id elementu html
+                'acc' => NEW_OBJ_NAME . '.per',                
+                // opcje elementu select
+                'opcje' => [
+                    // opcja 0
+                    [
+                         // wartość wybranej opcji - ta wartość będzie przesyłana na serwer
+                        'value' => PER_DEFAULT,                        
+                        'display' => 'Personalizacja?', // wartość wyświetlana w elemencie select
+                        'title' => 'Karta z personazlizacją lub bez.' // podpowiedź dla użytkownika
+                    ],
+                    // opcja 1
+                    [                         
+                        'value' => 'term',                        
+                        'display' => 'Termodruk', 
+                        'title' => 'Personalizacja termodrukiem' 
+                    ],
+                    // opcja 2
+                    [                         
+                        'value' => 'embo',                        
+                        'display' => 'Embossing', 
+                        'title' => 'Personalizacja embossingiem' 
+                    ],
+                    // opcja 3
+                    [                         
+                        'value' => 'lami',                        
+                        'display' => 'Pod laminatem', 
+                        'title' => 'Personalizacja pod laminatem' 
+                    ],
+                    // opcja 4
+                    [                         
+                        'value' => 'any',                        
+                        'display' => 'Jakakolwiek', 
+                        'title' => 'Personalizacja dowolnego typu' 
+                    ],
+                    // opcja 5
+                    [                         
+                        'value' => 'no',                        
+                        'display' => 'BEZ personalizacji', 
+                        'title' => 'Karty bez personalizacji.' 
+                    ],
+                    'default' => 0 // która opcja jest domyślna
+                ]
+            ],
             'chip' => [
                 'id' => 'ischip',
                 'acc' => NEW_OBJ_NAME . '.chip',                
