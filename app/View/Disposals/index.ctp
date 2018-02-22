@@ -21,6 +21,18 @@
         </table>
     </div>
     <div class="col-md-7">
+    </div>
+    <div class="col-md-1">
+        <table  class="table">  
+            <tr>
+                <td class="text-primary ikony">
+                    <span id="loopka" class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span id="loading" class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                </td>
+            </tr>  
+        </table>        
+    </div>
+    <div class="col-md-7">
         <table  class="table">  
             <tr>
                 <!-- Pasek PVC -->
@@ -45,16 +57,6 @@
                 </td>
             </tr>  
         </table>
-    </div>
-    <div class="col-md-1">
-        <table  class="table">  
-            <tr>
-                <td class="text-primary ikony">
-                    <span id="loopka" class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span id="loading" class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
-                </td>
-            </tr>  
-        </table>        
     </div>
 </div>
 <div id="wyniki" class="row">
