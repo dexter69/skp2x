@@ -18,4 +18,9 @@ $( document ).ready(function() {
 		else
 			$('#' + id ).val(0);
 	});
+
+	$('th.clickable').click(function() {		
+		$( this ).toggleClass( "on" );
+	});
+
 });

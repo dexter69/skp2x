@@ -305,14 +305,28 @@ class OrdersController extends AppController {
                  );
                 
 		/* kwestia czy wyświetlać danemu użytkownikowi info o przedpłacie
-                 * oraz czy można klikać i (co za tym idzie) zmieniać stan zaliczki                 * 
-                 */
-                $order['Order'] = $this->add_prepaid_data($order['Order']);
-                //$order['Order']['zal_clickable'] = $this->is_prepaid_clickable();
-                $dzial = $this->Auth->user('dzial');
+		* oraz czy można klikać i (co za tym idzie) zmieniać stan zaliczki                 * 
+		*/
+		$order['Order'] = $this->add_prepaid_data($order['Order']);
+		/*
+		*  Chcemy móc modyfikować status kart*/
+		$order['Order'] = $this->addStatusModCap($order['Order']);
+
+		$dzial = $this->Auth->user('dzial');
 		$this->set( compact('order', 'evcontrol', 'users', 'ludz', 'vju', 'evtext', 'dzial') );
 		//$this -> render('druknij');
 	}
+		/*
+		* Dodanie możliwości modyfikacji statusu karty dla niektórych osób */
+		private function addStatusModCap( $order_arr = array() ) {
+
+			if( in_array( $this->Auth->user('dzial'), [SUA, KOR] ) ) { // uprawnione działy
+				$order_arr['statusKartyMoznaModyfikowac'] = true;
+			} else {
+				$order_arr['statusKartyMoznaModyfikowac'] = false;
+			}
+			return $order_arr;
+		}
 
         // czy wyświetlać danemu użytkownikowi czy dany użytkownik,
         // któremu się wyświetla handlowe, może klikać w zaliczkę

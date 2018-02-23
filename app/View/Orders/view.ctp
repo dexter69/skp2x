@@ -1,5 +1,5 @@
 <?php
-$pokaz = false; // decyduje o wyswietlaniu w linii ~121
+$pokaz = true; // decyduje o wyswietlaniu w linii ~121 -> $order['Order']
 //echo '<pre>';	print_r($order['Event']); echo  '</pre>';
 //echo '<pre>';	print_r($evtext); echo  '</pre>';
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
@@ -129,10 +129,14 @@ if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
 	
 <div class="related">
 	<!--<h3>-->
-	<?php echo $this->Ma->viewheader('KARTY', array('class' => 'margin02') ); ?>
-		
-	<!--</h3>-->
-	<?php if (!empty($order['Card'])): ?>
+	<?php echo $this->Ma->viewheader('KARTY', array('class' => 'margin02') ); 
+	// Jezeli użytkownik może zmieniać status kart, to musimy nadać odpowiednią klasę
+	if( $order['Order']['statusKartyMoznaModyfikowac'] ) {
+		$ta_klasa = "card_status_fix clickable";
+	} else {
+		$ta_klasa = "card_status_fix";
+	}
+	if (!empty($order['Card'])): ?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th class="card_id_fix"><?php echo 'Id'; ?></th>
@@ -144,7 +148,7 @@ if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
 		<th class="card_zlec_fix"><?php echo 'Zlecenie(P)'; ?></th>		
 		<th class="card_ilosc_fix"><?php echo 'Ilość'; ?></th>
 		<th class="card_cena_fix"><?php echo 'Cena'; ?></th>
-		<th class="card_status_fix"><?php echo 'Status'; ?></th>
+		<th class="<?php echo $ta_klasa; ?>"><?php echo 'Status'; ?></th>
 		<?php
 			if( $evcontrol['bcontr'][push4checking] ) {
 				echo '<th class="card_dpcheck_fix">'.'D'.'</th>'.'<th class="card_dpcheck_fix">'.'P'.'</th>';
