@@ -20,7 +20,12 @@ $( document ).ready(function() {
 	});
 
 	$('th.clickable').click(function() {		
-		$( this ).toggleClass( "on" );
+		//$( this ).toggleClass( "on" );
+		toggleStatusEditablePossibility( this );
 	});
 
 });
+
+function toggleStatusEditablePossibility( obj ) {
+	$( obj ).toggleClass( "on" );
+}
