@@ -238,25 +238,25 @@ class Event extends AppModel {
 			$i = 0;
 			foreach ($tableOfCards as $karta) {
 				
-					switch( $karta['status'] ) {
-						case DNO:
-							$tableOfCards[$i]['status'] = W4D;
-						break;
-						case DNOPOK:
-							$tableOfCards[$i]['status'] = W4DPOK;
-						break;
-						case DNOPNO:
-						case W4PDNO:
-						case W4DPNO:
-							$tableOfCards[$i]['status'] = W4DP;
-						break;
-						case DOKPNO:
-							$tableOfCards[$i]['status'] = W4PDOK;
-						break;						
-					}
-					unset($tableOfCards[$i++]['isperso']);
-					// To unset musi być, podobnie jak w status_kart, bo save Associated
-					// nie może zapisac, prawdop coś z walidacją, czy cóś
+                                switch( $karta['status'] ) {
+                                        case DNO:
+                                                $tableOfCards[$i]['status'] = W4D;
+                                        break;
+                                        case DNOPOK:
+                                                $tableOfCards[$i]['status'] = W4DPOK;
+                                        break;
+                                        case DNOPNO:
+                                        case W4PDNO:
+                                        case W4DPNO:
+                                                $tableOfCards[$i]['status'] = W4DP;
+                                        break;
+                                        case DOKPNO:
+                                                $tableOfCards[$i]['status'] = W4PDOK;
+                                        break;						
+                                }
+                                unset($tableOfCards[$i++]['isperso']);
+                                // To unset musi być, podobnie jak w status_kart, bo save Associated
+                                // nie może zapisac, prawdop coś z walidacją, czy cóś
 			}
 		}
 	
@@ -385,8 +385,7 @@ class Event extends AppModel {
                             $rqdata['Event'] = array( $rqdata['Event'] );
                     break;
                     case update_o:
-                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
-
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];                            
                             $rqdata['Order']['status'] = UZUPED; //na razie bezwarunkowo
                             unset($rqdata['Card']);
                     break;
@@ -599,6 +598,9 @@ class Event extends AppModel {
 		return $rqdata;                
 	}
         
+        private function setProperStatusIfNewCardAddedToTheOldOnes() {
+
+        }
 
 	private function saveStuff( $event, $rqdata = array() ) {
             
