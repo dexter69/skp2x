@@ -19,10 +19,11 @@ $( document ).ready(function() {
 			$('#' + id ).val(0);
 	});
 
-	$('th.clickable').click(function() {		
-		//$( this ).toggleClass( "on" );
+	/*
+	$('th.clickable').click(function() {				
 		toggleStatusEditablePossibility( this );
 	});
+	*/
 
 });
 
