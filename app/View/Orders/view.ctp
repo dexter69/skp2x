@@ -1,5 +1,5 @@
 <?php
-$pokaz = true; // decyduje o wyswietlaniu w linii ~121 -> $order['Order']
+$pokaz = false; // decyduje o wyswietlaniu w linii ~121 -> $order['Order']
 //echo '<pre>';	print_r($order['Event']); echo  '</pre>';
 //echo '<pre>';	print_r($evtext); echo  '</pre>';
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
