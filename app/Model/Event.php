@@ -152,12 +152,7 @@ class Event extends AppModel {
 						// czyli wiadomo już, że to nie zamyka
 						 $ret['konec'] = false;
 						 break;
-					} /*else {
-						if( $orderAndCards['Order']['status'] == UZU_CHECK ) {
-							$ret['dane']['Card'][$i]['status'] = $ret['dane']['Card'][$i]['remstatus'];
-							$ret['dane']['Card'][$i]['remstatus'] = 0;
-						}
-					}*/						
+					} 						
 				} else { // inna karta musi być już zatwierdzona, by była to akcja zamykająca
 					// 1. if( $karta['status'] != DOK && $karta['status'] != DOKPOK ) {
 					// 2. if( $karta['status'] != DOK && $karta['status'] != DOKPOK && $orderAndCards['Order']['status'] != UZU_CHECK) {
@@ -170,12 +165,17 @@ class Event extends AppModel {
 				unset($ret['dane']['Card'][$i]['order_id']);
 				// Jakby to była zamukajaca akcja w trubie usupełniania, to przygotowujemy karty.
 				if( $orderAndCards['Order']['status'] == UZU_CHECK  ) {
-					if( $ret['dane']['Card'][$i]['remstatus'] ) {//
-						$ret['dane']['Card'][$i]['status'] = $ret['dane']['Card'][$i]['remstatus'];
-						$ret['dane']['Card'][$i]['remstatus'] = 0;
-					} else {
-						unset($ret['dane']['Card'][$i]);
-					}
+                                        if( $eventarr['co'] == d_ok || $eventarr['co'] == p_ok ) { // akceptacja karty dodanej przy uzupełnianiy 
+                                                $ret['dane']['Card'][$i]['status'] = R2BJ;                                          
+                                        }
+                                        else {
+                                                if( $ret['dane']['Card'][$i]['remstatus'] ) {//
+                                                        $ret['dane']['Card'][$i]['status'] = $ret['dane']['Card'][$i]['remstatus'];
+                                                        $ret['dane']['Card'][$i]['remstatus'] = 0;
+                                                } else {
+                                                        unset($ret['dane']['Card'][$i]);
+                                                }
+                                        }
 				}
 				else {
 					$ret['dane']['Card'][$i]['status'] = R2BJ;
@@ -186,9 +186,6 @@ class Event extends AppModel {
 			}
 			// przeszlismy foreach - jeżeli $ret['konec'], to wszystkie kary są klepnięte
 			
-			//if( $ret['konec'] && $eventarr['co'] != kor_ok && $orderAndCards['Order']['status'] != O_FINE )
-			// wszystkie karty ok, akcja na ostatniej karcie, a zamówienie nie klepnięte
-				//$ret['konec'] = false;			
 			if( $ret['konec'] ) { //karty sprawdzone, a co ze zleceniem
 				if( $eventarr['co'] != kor_ok ) {
 					if( $orderAndCards['Order']['status'] != O_FINE && $orderAndCards['Order']['status'] != UZU_CHECK) {
