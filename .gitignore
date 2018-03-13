@@ -9,7 +9,7 @@
 /build
 /dist
 /tags
-/app/Skrypty/raporty/2018-03-07/*.csv
+
 
 # OS generated files #
 ######################
@@ -25,4 +25,5 @@ Thumbs.db
 /nbproject/private/
 /.project
 /app/Skrypty/xyz/
-app/Config/email.php
+/app/Skrypty/raporty/2018-03-07/*.csv
+/app/Config/email.php
