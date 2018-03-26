@@ -41,11 +41,11 @@ class EmailConfig {
 
 	public $homepl_smtp = array(
 		'transport' => 'Smtp',
-		'from' => array('skp@polskiekarty.pl' => 'SKP'),
-		'host' => 'pk7.nazwa.pl',
+		'from' => array('abc@xyz.pl' => 'SKP'),
+		'host' => 'xyz.nazwa.pl',
 		'port' => 587,
 		'timeout' => 30,
-		'username' => 'skp@polskiekarty.pl',
+		'username' => 'abc@xyz.pl',
 		'password' => 'rL8$aWAKuC@u',
 		'client' => null,
 		'log' => false,
@@ -55,26 +55,26 @@ class EmailConfig {
         
         public $homepl_smtp1 = array(
 			'transport' => 'Smtp',
-			'from' => array('skp@polskiekarty.pl' => 'SKP'),
-			'host' => 'pk7.nazwa.pl',
+			'from' => array('abc@xyz.pl' => 'SKP'),
+			'host' => 'xyz.nazwa.pl',
 			'port' => 587,
 			'timeout' => 30,
-			'username' => 'skp@polskiekarty.pl',
+			'username' => 'abc@xyz.pl',
 			'password' => 'rL8$aWAKuC@u',
 			'client' => null,
-			'log' => false
+			'log' => false,
 	);
         
         public $homepl_smtp2 = array(
-		'transport' => 'Smtp',
-		'from' => array('skp2@pvc-cards.eu' => 'SKP'),
-		'host' => 'pvc-cards.eu',
-		'port' => 587,
-		'timeout' => 30,
-		'username' => 'skp2@pvc-cards.eu',
-		'password' => 'rL8$aWAKuC@u',
-		'client' => null,
-		'log' => false
+			'transport' => 'Smtp',
+			'from' => array('abc@xyz.pl' => 'SKP'),
+			'host' => 'xyz.nazwa.pl',
+			'port' => 587,
+			'timeout' => 30,
+			'username' => 'abc@xyz.pl',
+			'password' => 'rL8$aWAKuC@u',
+			'client' => null,
+			'log' => false,
 	);
 
 }
