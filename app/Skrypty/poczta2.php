@@ -14,7 +14,7 @@ define("START_STR", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   ");
 define("START_STR2", "#########################################   "); 
 
 require_once '../Config/database.php';
-require_once '../Config/email.php'; // dane do serwera smtp
+require_once '../Config/email2.php'; // dane do serwera smtp
 require_once 'class.phpmailer.php';
 require_once 'class.smtp.php';
 require_once 'class.poczta2.php';
