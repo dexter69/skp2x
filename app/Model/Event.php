@@ -165,17 +165,13 @@ class Event extends AppModel {
 				unset($ret['dane']['Card'][$i]['order_id']);
 				// Jakby to była zamukajaca akcja w trubie usupełniania, to przygotowujemy karty.
 				if( $orderAndCards['Order']['status'] == UZU_CHECK  ) {
-                                        if( $eventarr['co'] == d_ok || $eventarr['co'] == p_ok ) { // akceptacja karty dodanej przy uzupełnianiy 
-                                                $ret['dane']['Card'][$i]['status'] = R2BJ;                                          
+                                        if( $ret['dane']['Card'][$i]['remstatus'] ) {//
+                                                $ret['dane']['Card'][$i]['status'] = $ret['dane']['Card'][$i]['remstatus'];
+                                                $ret['dane']['Card'][$i]['remstatus'] = 0;
+                                        } else {
+                                                unset($ret['dane']['Card'][$i]);
                                         }
-                                        else {
-                                                if( $ret['dane']['Card'][$i]['remstatus'] ) {//
-                                                        $ret['dane']['Card'][$i]['status'] = $ret['dane']['Card'][$i]['remstatus'];
-                                                        $ret['dane']['Card'][$i]['remstatus'] = 0;
-                                                } else {
-                                                        unset($ret['dane']['Card'][$i]);
-                                                }
-                                        }
+                                        
 				}
 				else {
 					$ret['dane']['Card'][$i]['status'] = R2BJ;
