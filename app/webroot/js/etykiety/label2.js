@@ -223,6 +223,8 @@ function kontent(etyk) {
 // Czysto dla skrócenia kodu
 function kontentPart1(etyk) {
 
+    let maxdlZ = 30; // maksymalna długość nazwy produktu (przy czcionce 11) dla etykiet z zakresem
+
     etyk.labtxt = etyk.valtxt = ' ';
     
     if( etyk.baton !== 0 ) {
@@ -236,6 +238,7 @@ function kontentPart1(etyk) {
             if( etyk.zakres.form_exists ) { // jeżeli etykiety z zakrsem to odpowiednie dane
                 etyk.zakres.od = Number(etyk.zakres.start);
                 etyk.zakres.length = etyk.zakres.start.length;
+                etyk.name = etyk.name.substr(0, maxdlZ); //"Muu";//etyk.name.substr(0, 35); 
             }
         } else {
             etyk.pages = 1;
