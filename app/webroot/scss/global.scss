@@ -1,3 +1,14 @@
 .layout-link {
     padding: 0 0.7em 0 0;
 }
+
+#header > .prawe-ikony .fa {
+    color: #59cef0;
+    font-size: 20px;
+}
+// Workaround starego rozwiązania - dotyczy wyskakującego okna z szukaniem
+.vis .klose-mark {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}

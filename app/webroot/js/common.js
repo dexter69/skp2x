@@ -13,5 +13,11 @@ $(function() {
         fireSearch();
     });
     
+
+    $('.prawe-ikony .znajdz').click(function(event) {
+       event.preventDefault();
+       fireSearch();       
+    });
+    
 });
 

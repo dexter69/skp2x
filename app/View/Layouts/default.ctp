@@ -30,7 +30,7 @@ $cakeDescription = __d('cake_dev', 'SKP');
             echo $this->Html->meta('icon');
             //echo $this->Html->script(array('jquery', 'funkcje')); 
             echo $this->Html->script(array('lib/jquery-2.1.4.min', 'funkcje')); 
-            echo $this->Html->script('common', array('block' => 'scriptBottom'));
+            echo $this->Html->script('common.js?v=201804031259' /*. time()*/, array('block' => 'scriptBottom'));
             echo $this->Html->css(array(
 				'cake.generic.css?v=201704181002',
 				'global.css?v=' . time()
@@ -49,13 +49,14 @@ $cakeDescription = __d('cake_dev', 'SKP');
 <body>        
 	<div id="container">
 		<div id="header">			
-			<?=	$this->element('forLayouts/leftIcons', ['departament' => $departament] ) ?>
+			<?=	$this->element('forLayouts/leftIcons', ['departament' => $departament] ); ?>			
 			<div class="out"><a href="<?php echo $this->webroot;?>users/logout"><div></div></a></div>
 			<p><span><?php echo $juzer; ?></span></p>
 			<div id="szukanie" class="hid">
 				<?php echo $this->Ma->formularzSzukajKarty(); ?>
 			</div>
-			<div class="stopfloat"></div>
+			<?=	$this->element('forLayouts/rightIcons'/*, ['departament' => $departament] */); ?>
+			<div class="stopfloat"></div>			
 		</div>
 		<div id="content" class="dexmodif">
 

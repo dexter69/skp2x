@@ -1418,17 +1418,6 @@ div#szukanie {	float: right; width: auto;}
 	width: 600px;
 }
 
-.klose-mark {
-	width: 32px;
-	height: 32px;	
-	cursor: pointer;
-	background: no-repeat center;
-}
-
-#szukanie.hid .klose-mark {
-	background-image: url('../img/lupka5_24.png');	
-}
-
 #szukanie.vis .klose-mark {
 	background-image: url('../img/close_32.png');
 	position: absolute;
