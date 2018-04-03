@@ -12,3 +12,13 @@
     height: 32px;
     cursor: pointer;
 }
+
+#header > .prawe-ikony a.logout-link {
+    color: #59cef0;
+    text-decoration-line: none;
+    font-weight: bold;
+}
+
+#header > .prawe-ikony a.logout-link:hover {
+    color: darken( #59cef0, 10% );
+}

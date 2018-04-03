@@ -49,13 +49,11 @@ $cakeDescription = __d('cake_dev', 'SKP');
 <body>        
 	<div id="container">
 		<div id="header">			
-			<?=	$this->element('forLayouts/leftIcons', ['departament' => $departament] ); ?>			
-			<div class="out"><a href="<?php echo $this->webroot;?>users/logout"><div></div></a></div>
-			<p><span><?php echo $juzer; ?></span></p>
+			<?=	$this->element('forLayouts/leftIcons', ['departament' => $departament] ); ?>
 			<div id="szukanie" class="hid">
 				<?php echo $this->Ma->formularzSzukajKarty(); ?>
 			</div>
-			<?=	$this->element('forLayouts/rightIcons'/*, ['departament' => $departament] */); ?>
+			<?=	$this->element('forLayouts/rightIcons', ['juzer' => $juzer]/*['departament' => $departament]*/ ); ?>
 			<div class="stopfloat"></div>			
 		</div>
 		<div id="content" class="dexmodif">
