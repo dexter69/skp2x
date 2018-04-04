@@ -33,12 +33,10 @@ $cakeDescription = __d('cake_dev', 'SKP');
             echo $this->Html->script('common.js?v=201804031259' /*. time()*/, array('block' => 'scriptBottom'));
             echo $this->Html->css(array(
 				'cake.generic.css?v=201804041002',
-				'global.css?v=' . time()
+				'global.css?v=' . time(),
+				//'font-awesome-4.6.1/css/font-awesome.min.css?v=201804041209'
 			));
-			if($departament == SUA) {
-				echo $this->Html->css(array('font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
-			}
-            //echo $this->Html->css('dex');
+			
 
             echo $this->fetch('meta');
             echo $this->fetch('css');
