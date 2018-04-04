@@ -4,8 +4,7 @@ $pokaz = false; // decyduje o wyswietlaniu w linii ~121 -> $order['Order']
 //echo '<pre>';	print_r($evtext); echo  '</pre>';
 //echo '<pre>';	print_r($evcontrol); echo  '</pre>';
 //echo $this->Html->url('/css/order-pdf.css', true);
-echo $this->Html->css(array('order', 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
-echo $this->Html->css('order/order.css?v=' . time(), array('inline' => false));
+echo $this->Html->css(array('order', 'order/order.css?v=201804041230'), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 
 echo $this->Ma->walnijJqueryUI();
 $this->Ma->displayActions('orders');

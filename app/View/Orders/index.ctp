@@ -5,7 +5,7 @@
 //$time_start2 = microtime(true);
 //echo $par;
 $this->set('title_for_layout', 'Handlowe');
-echo $this->Html->css(array('order', 'order/order-index.css?v=' . time(), 'font-awesome-4.6.1/css/font-awesome.min'), array('inline' => false));
+echo $this->Html->css(array('order', 'order/order-index.css?v=201804041230'), array('inline' => false));
 //echo $this->Html->script(array('jquery', 'common'), array('inline' => false)); 
 $this->Ma->displayActions('orders');
 $klasa = array(

@@ -33,8 +33,8 @@ $cakeDescription = __d('cake_dev', 'SKP');
             echo $this->Html->script('common.js?v=201804031259' /*. time()*/, array('block' => 'scriptBottom'));
             echo $this->Html->css(array(
 				'cake.generic.css?v=201804041002',
-				'global.css?v=' . time(),
-				//'font-awesome-4.6.1/css/font-awesome.min.css?v=201804041209'
+				'global.css?v=201804041230',
+				'font-awesome-4.6.1/css/font-awesome.min.css?v=201804041230'
 			));
 			
 
