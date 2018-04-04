@@ -1,6 +1,6 @@
--- A TAK NAPRAWDĘ TO! Chcemy opiekuna (przypisanego do klienta) a nie tego, który złożył to zamówienie
+-- A TAK NAPRAWDĘ TO! Chcemy opiekuna stałego (opiekun_id)
 SELECT
-customers.user_id AS opiekun,
+customers.opiekun_id AS opiekun,
 orders.customer_id AS idKlienta,
 customers.name AS nazwaKlienta,
 orders.id AS idZamowienia,
@@ -11,7 +11,7 @@ orders.data_publikacji AS data
 FROM (( cards
 INNER JOIN orders ON cards.order_id=orders.id )
 INNER JOIN customers ON orders.customer_id=customers.id)
-WHERE orders.data_publikacji > '2017-11-01' AND orders.data_publikacji < '2017-11-31' AND customers.user_id != 17
+WHERE orders.data_publikacji > '2017-12-31' AND orders.data_publikacji < '2018-01-32' AND customers.user_id != 17
 ORDER BY opiekun, idKlienta, nr
 
 -- Teraz chcemy wszystkich klientów posortowanych po opiekunach i nazwach klientów, wszystkich handlowców za wyjątkiem Anii
@@ -23,3 +23,7 @@ FROM customers
 INNER JOIN users ON customers.user_id = users.id
 WHERE customers.user_id!=1 AND customers.user_id!=17
 ORDER BY Opiekun, Klient
+
+-- Przypisanie nowemu id (opiekun_id) wartości user_id
+UPDATE `customers`
+SET opiekun_id=user_id
