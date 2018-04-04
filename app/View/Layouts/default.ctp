@@ -32,7 +32,7 @@ $cakeDescription = __d('cake_dev', 'SKP');
             echo $this->Html->script(array('lib/jquery-2.1.4.min', 'funkcje')); 
             echo $this->Html->script('common.js?v=201804031259' /*. time()*/, array('block' => 'scriptBottom'));
             echo $this->Html->css(array(
-				'cake.generic.css?v=201704181002',
+				'cake.generic.css?v=201804041002',
 				'global.css?v=' . time()
 			));
 			if($departament == SUA) {
