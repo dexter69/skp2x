@@ -1,6 +1,7 @@
 ﻿<?php
+define(CSV, ";");
+$in = "./2018-03-07/luty.csv";
 
-$in = "./2018-03-07/styczen.csv";
 
 $arr = []; // tu wrzucimy dane z pliku
 
@@ -21,7 +22,7 @@ if( $h ) {
 function putItOut( $tab ) {
  
     foreach( $tab as $row ) {
-      echo implode(",",$row) . "\n";
+      echo implode(CSV, $row) . "\n";
     }    
 }
 // Karty zamieniamy w pojedyncze zlecenie
@@ -69,7 +70,7 @@ function fillUpArr( $inH ) {
 
   while( !feof($inH) )  {
     $l = trim(fgets($inH)); 
-    $tmpArr[] = explode(",", $l);
+    $tmpArr[] = explode(CSV, $l);
   }
   return $tmpArr;
 }
