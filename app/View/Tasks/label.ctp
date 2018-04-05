@@ -1,12 +1,12 @@
 <?php
 echo $this->Html->css(array(
-        'etykiety/label.css?v=' . time()
+        'etykiety/label.css?v=201804051418' //. time()
         //,'font-awesome-4.6.1/css/font-awesome.min'
     ),
     array('inline' => false));
 echo $this->Html->script(array(
-    'etykiety/label-funkcje.js?v='. time(),
-    'etykiety/label2.js?v='. time()
+    'etykiety/label-funkcje.js?v=201804051418', //. time(),
+    'etykiety/label2.js?v=201804051418'//. time()
     ),
     array('block' => 'scriptBottom')
 ); 
