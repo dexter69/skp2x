@@ -115,9 +115,10 @@ class CustomersController extends AppController {
 		
             if ($this->request->is('post')) {
                     $this->request->data['Customer']['user_id'] = $this->Auth->user('id');
+                    // stały opiekun -> ten kto dodaje, staje się stałym opiekunem
+                    $this->request->data['Customer']['opiekun_id'] = $this->Auth->user('id');
                     $this->request->data['AdresSiedziby']['user_id'] = $this->Auth->user('id');
-                    //$this->Customer->print_r2($this->request->data);
-                    //return;
+                    //$this->Customer->print_r2($this->request->data);  return;
 
                     // Sprawdźmy czy klient z takim NIP'em czsem nie istnieje już
                     if( $this->Customer->NIPisOK($this->request->data) )	{ 	
