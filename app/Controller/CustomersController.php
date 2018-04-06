@@ -192,7 +192,7 @@ class CustomersController extends AppController {
                 
                 // użytkownicy, coby opiekuna mozna zmienić
 		$users = $this->Customer->Creator->find('list', array(
-                    'conditions' => array('dzial <' => 3)
+                    'conditions' => array('dzial <' => 3, 'id !=' => [1,4,28]) //darek, Jola, Agnieszka - dummy
                 ));
 		$vju = $this->Customer->get_view_options($this->request->data['Customer']);
 		$links = $this->links;
