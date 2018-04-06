@@ -11,7 +11,7 @@ orders.data_publikacji AS data
 FROM (( cards
 INNER JOIN orders ON cards.order_id=orders.id )
 INNER JOIN customers ON orders.customer_id=customers.id)
-WHERE orders.data_publikacji > '2017-12-31' AND orders.data_publikacji < '2018-01-32' AND customers.user_id != 17
+WHERE orders.data_publikacji > '2018-02-31' AND orders.data_publikacji < '2018-04-01' AND customers.user_id != 17
 ORDER BY opiekun, idKlienta, nr
 
 -- Teraz chcemy wszystkich klientów posortowanych po opiekunach i nazwach klientów, wszystkich handlowców za wyjątkiem Anii
