@@ -2,7 +2,7 @@
 // do sekcji head zostanie dodany customer.css
 //jquery-ui-1.10.4.custom.min
 echo $this->Html->css(array('order', 'sunny/jquery-ui-1.10.4.custom.min'), array('inline' => false));
-echo $this->Html->script(array('jquery', 'jquery-ui', 'jquery.ui.datepicker-pl'/**/, 'common'), array('inline' => false)); 
+echo $this->Html->script(array('jquery', 'jquery-ui', 'jquery.ui.datepicker-pl'), array('inline' => false)); 
 $code = "var platnosci = " . json_encode($tedane['platnosci']) . ";\n" .
 		"var pay = " . json_encode( array( PRZE, CASH ) ) . ";\n" .
 		"var defproc = " . json_encode(DEF_ZAL_PROC) . ";\n" .
