@@ -691,7 +691,57 @@ class OrdersController extends AppController {
 		$this->set(compact( 'vju', 'tedane' ));
 		
 	}
+
+/**
+ * add2 method
+ *
+ * @return void
+ */
+public function add2() {
+		
+	if ($this->request->is('post')) {
+		/*
+		$this->Order->print_r2($this->request->data);
+		
+		$this->request->data = $this->Order->cleanData($this->request->data);
+		$this->Order->print_r2($this->request->data);
+		return;
+		*/
+		
+		$this->request->data = $this->Order->cleanData($this->request->data);
+		if( empty($this->request->data['Card']) )
+		  $this->Session->setFlash(__('NIE WYBRAŁEŚ ŻADNEJ KARTY!'));
+		else {
+			//$this->Order->print_r2( $this->Order->saveItAll($this->request->data) );
+			//return;
+			if ($this->Order->saveItAll($this->request->data)) {
+				$this->Session->setFlash('Zamówienie zostało zapisane.', 'default', array('class' => GOOD_FLASH));
+				//return $this->redirect(array('action' => 'index'));
+									return $this->redirect(array('action' => 'view', $this->Order->id));
+			} else {
+				$blad = $this->Order->siaErr;
+				$this->Session->setFlash(__('Nie można zapisać zamówienia. Proszę, spróbuj ponownie: '.$blad));
+			}
+			
+		}
+			//$this->Order->print_r2($this->request->data);
+		
+		
+	}
+	$vju = $this->Order->get_view_options();
+	$tedane = $this->Order->getTheCardsAndRelated($this->Auth->user('id'));
+	if( empty($tedane) ) //nie ma 'nie podpiętych' kart
+	{
+		$this->Session->setFlash(__('Musisz najpierw dodać jakąś kartę!'));
+		return $this->redirect( array(
+				'controller' => 'cards', 'action' => 'index'
+		));
+	}
 	
+	$this->set(compact( 'vju', 'tedane' ));
+	
+}
+
 
 
 /**
