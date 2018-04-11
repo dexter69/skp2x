@@ -1,7 +1,7 @@
 <?php
 /**
 * Layout for webix: https://webix.com/
- */
+*/
 ?>
 
 <!DOCTYPE HTML>
