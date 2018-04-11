@@ -1,5 +1,5 @@
 /*
-* Starting point of webix addedit request app
+* Testing webix addedit request app
 */
 var tekst = "";
 

@@ -13,13 +13,16 @@
         echo $this->Html->meta('icon');
 
         // Webix CSS & JavaScript =====================
-        echo $this->Html->css(['/webix/v5.2.1/codebase/webix', '/webix/core']);
+        echo $this->Html->css(['/webix/v5.2.1/codebase/webix', '/webix/core.css?v=' . time()]);
         echo $this->Html->script(['/webix/v5.2.1/codebase/webix_debug']);
         
         ?>
     </head>
     <body>
-        <!-- <div id="app_here"></div> -->
-        <?php echo $this->fetch('content'); ?>        
+        <div id="myApp"></div> <!-- kontener dla naszej aplikacji -->
+        <?php
+            echo $this->fetch('content');         
+            echo $this->Html->script('./request/app.js?v=' . time(), ['charset' => 'utf-8']);
+        ?>
     </body>
 </html>

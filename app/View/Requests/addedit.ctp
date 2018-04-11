@@ -4,4 +4,4 @@
 
 echo $this->Html->scriptBlock("var edycja = $edycja;", array('inline' => true));
 
-echo $this->Html->script('./request/addedit', ['charset' => 'utf-8']);
+//echo $this->Html->script('./request/addedit', ['charset' => 'utf-8']);
