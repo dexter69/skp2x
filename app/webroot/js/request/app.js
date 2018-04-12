@@ -9,12 +9,12 @@ webix.ready(function(){
     webix.ui({
         container:"myApp",
           rows:[
-            { view:"template", type:"header", template:"My App!"},
-              { cols:[
+            { type:"header", template:"My App!"},
+            { cols:[
                  {},
                  {},
                  {}
-              ]}      
+            ]}      
           ]   
       });
     
