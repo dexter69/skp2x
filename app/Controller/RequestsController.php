@@ -9,20 +9,24 @@ App::uses('AppController', 'Controller');
 class RequestsController extends AppController {       
     
     /*
-    * Gdy nie ma podanego $id (zamówienia handlowego), to znaczy, że dodajemy nowe.
-    * W przeciwnym wypadku edycja
-    */
-    public function addedit($id = null) {
+    Dodaj nowe zamówienie */
+    public function dodaj() {
 
-        if( $id ) {            
-            $edycja = $id;
-            $this->set('title_for_layout', 'Edycja zamówienia');
-        } else {            
-            $edycja = 0;
-            $this->set('title_for_layout', 'Nowe zamówienie');
-        }        
-        $this->set( compact( 'edycja') ); 
+        $id = 0;
+        $this->set( compact( 'id' ) ); 
+        $this->set('title_for_layout', 'Nowe zamówienie');
         $this->layout='webix';
+        $this->render('addedit');
+    }
+
+    /*
+    Edytuj zamówienie */
+    public function edytuj( $id = null ) {
+
+        $this->set( compact( 'id' ) ); 
+        $this->set('title_for_layout', 'Edycja zamówienia');
+        $this->layout='webix';
+        $this->render('addedit');
     }
 
 }
