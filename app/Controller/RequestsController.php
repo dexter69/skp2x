@@ -14,7 +14,7 @@ class RequestsController extends AppController {
 
         $id = 0;
         $this->set( compact( 'id' ) ); 
-        $this->set('title_for_layout', 'Nowe zamówienie');
+        $this->set('title_for_layout', 'Dodaj ZAMÓWIENIE');
         $this->layout='webix';
         $this->render('addedit');
     }
@@ -24,7 +24,7 @@ class RequestsController extends AppController {
     public function edytuj( $id = null ) {
 
         $this->set( compact( 'id' ) ); 
-        $this->set('title_for_layout', 'Edycja zamówienia');
+        $this->set('title_for_layout', 'Edytuj ZAMÓWIENIE');
         $this->layout='webix';
         $this->render('addedit');
     }
