@@ -22,7 +22,13 @@
         <div id="myApp"></div> <!-- kontener dla naszej aplikacji -->
         <?php
             echo $this->fetch('content');         
-            echo $this->Html->script('./request/app.js?v=' . time(), ['charset' => 'utf-8']);
+            echo $this->Html->script(
+                [
+                    './request/vars.js?v=' . time(),
+                    './request/app.js?v=' . time()
+                ],
+                ['charset' => 'utf-8']
+            );
         ?>
     </body>
 </html>

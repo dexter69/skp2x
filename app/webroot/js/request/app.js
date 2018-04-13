@@ -1,21 +1,12 @@
 /*
 * Starting point of webix addedit request app
+  allData - globalna zmienna ze wszystkimi danymi
 */
 
 webix.ready(function(){
     
-    console.log("App - I'm here");
+   console.log(allData);
 
-    webix.ui({
-        container:"myApp",
-          rows:[
-            { type:"header", template:"My App!"},
-            { cols:[
-                 {},
-                 {},
-                 {}
-            ]}      
-          ]   
-      });
+   webix.ui(appStructure);         
     
 });

@@ -2,6 +2,12 @@
 /*  $id, przypisywane do js var idh, id zamówienia, które ma być edytowane.
     Jeżeli jest to nowe zamówienie, to $id = 0; */
 
-echo $this->Html->scriptBlock("var idh = $id;", array('inline' => true));
+$dataForApp = [
+    'id' => $id,
+    'cos' => 'ktos'
+];
 
-//echo $this->Html->script('./request/addedit', ['charset' => 'utf-8']);
+echo $this->Html->scriptBlock(    
+    "\nvar allData =  "  .  json_encode($dataForApp),
+    ['inline' => true]
+);
