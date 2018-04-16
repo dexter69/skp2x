@@ -375,21 +375,72 @@ class CardsController extends AppController {
 		
 		return $card['isperso'];
 	}
-	
+    
+    private function isMulti() {
+
+        if( $this->request->data['Card']['multi'] > 1 ) {
+            //$this->request->data['Card']['detected'] = 'Multi';
+            return true;
+        }
+        //$this->request->data['Card']['detected'] = 'Mono';
+        return false;
+    }
+
+    /* zduplikuj kartę i zapisz wiele */
+    private function saveMulti( &$err ) {
+
+        // oryginalne dane wysłane przez użytkownika
+        $master = $this->request->data;
+
+        // Na razie próba z jedną
+        //$master['Card']['name'] .= '-KWA'; // taki mark
+        /*
+        if ( !$this->Card->saveitAll( $master, $err) ) {
+            return false;
+        }
+        */
+        //Ile mamy kart zapisać
+        $ile = (int)$master['Card']['multi'];
+        $i=0;
+        //for( $i=0; $i<$ile; $i++ ) {}
+        do {
+            if ( $this->Card->saveitAll( $master, $err) ) {
+                // modyfikuj nazwę karty
+                $i++;
+                $prefix = ( $i < 10 ? "k0$i-" : "k$i-" );
+                $master['Card']['name'] = $prefix . $this->request->data['Card']['name'];
+            } else {
+                return false;
+            }
+        } while( $i < $ile );
+        return true;
+    }
+
 /**
  * add method
  *
  * @return void
  */
 	public function add() {
-            if ($this->request->is('post')) {
-                $this->Card->print_r2($this->request->data); return;			                    
-                if ( $this->Card->saveitAll( $this->request->data, $blad ) ) {
+            if ($this->request->is('post')) {                
+                //$this->Card->print_r2($this->request->data); return;			                    
+
+                if( $this->isMulti() ) { // Jezeli uzytkownik chce zapisać wiele kart
+                    if( $this->saveMulti( $blad ) ) {
+                        $this->Session->setFlash('KARTY ZOSTAŁY ZAPISANE!', 'default', array('class' => GOOD_FLASH));
+                        return $this->redirect(array('action' => 'view', $this->Card->id));
+                    } else {
+                        $this->Session->setFlash('Nie można zapisac kart. Proszę spróbuj ponownie. (blad = ' . $blad . ')');
+                    }
+                } else { // business as usual
+                    if ( $this->Card->saveitAll( $this->request->data, $blad ) ) {
                         $this->Session->setFlash('KARTA ZOSTAŁA ZAPISANA!', 'default', array('class' => GOOD_FLASH));
                         return $this->redirect(array('action' => 'view', $this->Card->id));
-                } else {
-                        $this->Session->setFlash(__('Nie można zapisac karty. Proszę spróbuj ponownie. (blad = ' . $blad . ')'));
+                    } else {
+                        $this->Session->setFlash('Nie można zapisac karty. Proszę spróbuj ponownie. (blad = ' . $blad . ')');
+                    }
                 }
+                
             }
 
             //chcemy tylko klientów, którzy są "własnością" zalogowanego użytkownika
