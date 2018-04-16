@@ -1,5 +1,5 @@
 <?php
-/*  $id, przypisywane do js var idh, id zamówienia, które ma być edytowane.
+/*  $id ma wartość id zamówienia, które ma być edytowane.
     Jeżeli jest to nowe zamówienie, to $id = 0; */
 
 $dataForApp = [
@@ -8,6 +8,6 @@ $dataForApp = [
 ];
 
 echo $this->Html->scriptBlock(    
-    "\nvar allData =  "  .  json_encode($dataForApp),
+    "\n" . "var allData =  "  .  json_encode($dataForApp),
     ['inline' => true]
 );

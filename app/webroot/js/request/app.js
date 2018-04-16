@@ -7,26 +7,22 @@ webix.ready(function(){
     
    console.log(allData);
 
-   //webix.ui(appStructure);         
+  // Szerzej mówiąc cały komponent ze wszystkimi rzeczami do kart
+  let theCardManager =  tabelaDlaKart;
 
-   //webix.ui(tabelaKart);
-
-   
-
-  webix.ui({
+  let theApp = {
     container:"myApp",
     rows: [
       { type:"header", template:"My App!"},
       {
         cols: [
-          tabelaDlaKart,
-          //{ template: "Something else 1" },
+          theCardManager,          
           { template: "Something else 2" }
         ]
       }
     ]
-  });
-   
-   //webix.ui(    tabelaDlaKart  );
+  };
+
+  webix.ui( theApp );
 
 });

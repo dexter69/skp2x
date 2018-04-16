@@ -1,8 +1,11 @@
 #myApp{
     max-width: 1170px;
-    min-height: 500px;
+    height: 800px;
+    /*
+    min-height: 600px;
     max-height: 800px;
     background-color: #08e6cf;
+    */
     margin-left: auto;
     margin-right: auto;    
 }
