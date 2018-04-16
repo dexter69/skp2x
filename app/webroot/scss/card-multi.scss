@@ -10,11 +10,24 @@ $cake_legend: #e32; // cake'owy kolor w fieldset -> legend
 }
 
 // Gdy mamy tryb jednej karty, to drugi span (z liczbą mnogą) jest ukryty
-#CardAddForm fieldset > legend.mono > span:last-child {
+#CardAddForm fieldset.mono > legend > span:last-child {
     display: none;
 }
 
 // I vice versa
-#CardAddForm fieldset > legend.multi > span:first-child {
+#CardAddForm fieldset.multi > legend > span:first-child {
+    display: none;
+}
+
+// div mieszczący pole do wpisywania ilości wielu kart
+#CardAddForm fieldset div.mti {
+    position: absolute;
+    left: 200px;
+    top: -36px;
+    width: 60px;
+}
+
+// nie wyświetlamy formularza ilosci kart, jeżeli jest tryb mono
+#CardAddForm fieldset.mono > div.mti {
     display: none;
 }

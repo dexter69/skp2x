@@ -1,8 +1,18 @@
 <div id="kartadd" class="cards form">
     <?php echo $this->Form->create('Card', array('type' => 'file')); ?>
-    <fieldset>
-        <legend class="mono"><span>NOWA KARTA</span><span>NOWE KARTY</span></legend>
+    <fieldset  class="mono">
+        <legend><span>NOWA KARTA</span><span>NOWE KARTY</span></legend>
         <?php
+        /* */
+        echo $this->Form->input('multi', [
+            'default' => 1,
+            'type' => 'number',
+            'min' => 1,
+            'max' => 99,
+            'div' => ['class' => 'input number mti'],
+            'label' => false
+        ]);
+        
         echo $this->Form->hidden('Card.owner_id', array( 'default' => $ownerid ) );
         echo $this->Form->hidden('Card.customer_id', array('label' => 'Klient', 'type' => 'text', 'default' => 0));
 
@@ -38,6 +48,6 @@
 
     </fieldset>
 
-<?php echo $this->Form->end(__('Zapisz')); ?>
+<?php echo $this->Form->end('Zapisz'); ?>
 
 </div>

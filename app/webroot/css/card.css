@@ -5,10 +5,19 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
   color: #e32;
   cursor: pointer; }
 
-#CardAddForm fieldset > legend.mono > span:last-child {
+#CardAddForm fieldset.mono > legend > span:last-child {
   display: none; }
 
-#CardAddForm fieldset > legend.multi > span:first-child {
+#CardAddForm fieldset.multi > legend > span:first-child {
+  display: none; }
+
+#CardAddForm fieldset div.mti {
+  position: absolute;
+  left: 200px;
+  top: -36px;
+  width: 60px; }
+
+#CardAddForm fieldset.mono > div.mti {
   display: none; }
 
 #karta_klient input {
