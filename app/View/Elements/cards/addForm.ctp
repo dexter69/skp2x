@@ -1,7 +1,7 @@
 <div id="kartadd" class="cards form">
     <?php echo $this->Form->create('Card', array('type' => 'file')); ?>
     <fieldset>
-        <legend>NOWA KARTA</legend>
+        <legend class="mono"><span>NOWA KARTA</span><span>NOWE KARTY</span></legend>
         <?php
         echo $this->Form->hidden('Card.owner_id', array( 'default' => $ownerid ) );
         echo $this->Form->hidden('Card.customer_id', array('label' => 'Klient', 'type' => 'text', 'default' => 0));

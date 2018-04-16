@@ -183,6 +183,10 @@
 	$( document ).ready(function() {
             
             console.log(klienci);
+            
+            // obsługa multi - doadawania/edycji wielu kart - w card-multi.js
+            multi();
+
             check_podklady();
             check_is_perso();
             check_edit_pliki();

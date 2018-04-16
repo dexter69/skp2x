@@ -1,0 +1,12 @@
+@charset "UTF-8";
+/*
+Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie multi */
+#CardAddForm fieldset > legend > span {
+  color: #e32;
+  cursor: pointer; }
+
+#CardAddForm fieldset > legend.mono > span:last-child {
+  display: none; }
+
+#CardAddForm fieldset > legend.multi > span:first-child {
+  display: none; }

@@ -3,6 +3,8 @@ $data_perso: green;
 
 $perso: MidnightBlue;
 
+@import 'card-multi'; // definicje dla obsługi tworzenia/edycji wielu kart
+
 #karta_klient input { width: 97%; }
 
 #karta_klient > div:last-child { width: 40%; }

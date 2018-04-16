@@ -1,0 +1,20 @@
+/*
+Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie multi */
+
+$cake_legend: #e32; // cake'owy kolor w fieldset -> legend
+
+#CardAddForm fieldset > legend > span {
+
+    color: $cake_legend;
+    cursor: pointer;
+}
+
+// Gdy mamy tryb jednej karty, to drugi span (z liczbą mnogą) jest ukryty
+#CardAddForm fieldset > legend.mono > span:last-child {
+    display: none;
+}
+
+// I vice versa
+#CardAddForm fieldset > legend.multi > span:first-child {
+    display: none;
+}
