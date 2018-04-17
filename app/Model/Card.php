@@ -105,9 +105,27 @@ class Card extends AppModel {
 			}
 			$this->create();
 			$this->save( ['Card' => $karta] );
+			// skopiuj pliki z oryginalnej karty
+			$this->duplicateUploads( $this->id, $found['Upload']);
 		}
 		
 		return true;
+	}
+
+	/*
+		Chcemy pliki załączone do karty (informacja w $upload)
+		zduplikować do karty  id = $idNowejKarty */
+	private function duplicateUploads( $idNowejKarty = 0, $uploads = []) {
+
+		if( !empty($uploads) ) { // mamy jakies pliki
+
+			$data = [];
+			foreach( $uploads as $row ) {
+				$data[] = ['card_id' => $idNowejKarty, 'upload_id' => $row['CardsUpload']['upload_id'] ];
+			}
+			//$this->CardsUpload->create();
+			$this->CardsUpload->saveMany( $data );
+		}		
 	}
         
 	public function saveitAll( $puc = array(), &$errno ) { 
@@ -221,7 +239,7 @@ class Card extends AppModel {
 				));
 			$puc['Card']['owner_id'] = $oid['Customer']['owner_id'];
 			//pozostale indeksy zerowe
-			$puc['Card']['order_id'] = $puc['Card']['job_id'] = 0;
+			//$puc['Card']['order_id'] = $puc['Card']['job_id'] = 0;
 		}
 		
 		return $errno;

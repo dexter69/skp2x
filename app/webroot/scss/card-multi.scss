@@ -31,3 +31,22 @@ $cake_legend: #e32; // cake'owy kolor w fieldset -> legend
 #CardAddForm fieldset.mono > div.mti {
     display: none;
 }
+
+// Checbox decydujący o tym czy tworzymy puste zamówienie
+
+// Poprawa wyglądu
+#CardAddForm fieldset > div.zz > input {
+    margin: 3px 6px 0 0;
+}
+
+// nie wyświetlamy checkboxa, jeżeli jest tryb mono
+#CardAddForm fieldset.mono > div.zz {
+    display: none;
+}
+
+// modyfikujemy położenie check'boxa
+#CardAddForm fieldset div.zz {
+    position: absolute;
+    left: 300px;
+    top: -30px;
+}

@@ -12,6 +12,13 @@
             'div' => ['class' => 'input number mti'],
             'label' => false
         ]);
+
+        echo $this->Form->input('zrobZamo', [
+            'default' => 1,
+            'type' => 'checkbox',
+            'div' => ['class' => 'input checkbox zz'],
+            'label' => 'Zamówienie'
+        ]);
         
         echo $this->Form->hidden('Card.owner_id', array( 'default' => $ownerid ) );
         echo $this->Form->hidden('Card.customer_id', array('label' => 'Klient', 'type' => 'text', 'default' => 0));

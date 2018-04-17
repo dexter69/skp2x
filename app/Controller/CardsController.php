@@ -390,6 +390,20 @@ class CardsController extends AppController {
         //Ile mamy kart zapisać
         $ile = (int)$this->request->data['Card']['multi'];
 
+        // Jeżeli checbox zaznaczony, to tworzymy puste zamówienie
+        if( $this->request->data['Card']['zrobZamo'] ) {
+            
+            //$zwrotka = $klient;
+            //return true;
+            $this->request->data['Card']['order_id'] = $this->pusteZamowienie(); // zwraca id zamówienia lub zero            
+            //$zwrotka = $this->request->data;
+            //return true;
+        }
+
+        // Some default data
+        $this->request->data['Card']['ilosc'] = $this->request->data['Card']['quantity'] = 1;
+        $this->request->data['Card']['price'] = 0;
+
         // Zapiszmy standardowo pierwszą
         if ( !$this->Card->saveitAll( $this->request->data, $err) ) { return false; }
 
@@ -398,6 +412,34 @@ class CardsController extends AppController {
         
         return true;
     }
+
+    /*
+        Tworzymy puste zamówienie */
+    private function pusteZamowienie() {
+
+        $karta = $this->request->data['Card'];
+        $klient = $this->Card->Customer->find('first', [
+             'conditions' => ['Customer.id' => $karta['customer_id']]
+        ]);
+        $dane = ['Order' => [
+            'user_id' => $karta['owner_id'],
+            'customer_id' => $karta['customer_id'],
+            'siedziba_id' => $klient['AdresSiedziby']['id'],
+            'wysylka_id' => $klient['AdresSiedziby']['id'],
+            'osoba_kontaktowa' => $klient['Customer']['osoba_kontaktowa'],
+            'tel' => $klient['Customer']['tel'],
+            'forma_zaliczki' => $klient['Customer']['forma_zaliczki'],
+            'procent_zaliczki' => $klient['Customer']['procent_zaliczki'],
+            'forma_platnosci' => $klient['Customer']['forma_platnosci'],
+            'termin_platnosci' => $klient['Customer']['termin_platnosci'],
+            'newcustomer' => NULL
+        ]];
+        $this->Card->Order->create();
+        $this->Card->Order->save($dane, ['validate' => false]);
+
+        return $this->Card->Order->id;
+    }
+    
 
 /**
  * add method
@@ -411,8 +453,8 @@ class CardsController extends AppController {
                 if( $this->isMulti() ) { // Jezeli uzytkownik chce zapisać wiele kart
                     if( $this->saveMulti( $blad, $zwrotka ) ) {
                         //$this->Card->print_r2($zwrotka); return;
-                        $this->Session->setFlash('KARTY ZOSTAŁY ZAPISANE!', 'default', array('class' => GOOD_FLASH));
-                        return $this->redirect(array('action' => 'view', $this->Card->id));
+                        $this->Session->setFlash('JUPI!', 'default', array('class' => GOOD_FLASH));
+                        return $this->redirect(array('controller' => 'orders', 'action' => 'view', $this->Card->Order->id));
                     } else {
                         $this->Session->setFlash('Nie można zapisac kart. Proszę spróbuj ponownie. (blad = ' . $blad . ')');
                     }

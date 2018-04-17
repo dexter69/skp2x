@@ -14,6 +14,3 @@ echo $this->element('cards/addForm', array(
 
 echo $this->element('cards/bottomJS', array( 'vju' => $vju ));
 
-//$this->Proof->printR($tmp2);
-//$this->App->print_r2($customers);
-//$this->App->print_r2($klienci);

@@ -26,7 +26,7 @@ echo $this->Html->script( 'order-add', array('block' => 'scriptBottom'));
 //echo '<pre>'; print_r($adresy); echo '</pre>';
 //echo '<pre>'; print_r($adresy2); echo '</pre>';
 //echo '<pre>'; print_r($links); echo '</pre>';
-//echo '<pre>'; print_r($tedane['karty']); echo '</pre>';
+//echo '<pre>'; print_r($tedane); echo '</pre>';
 
 //if( $platnosci == $platnosci2 ) echo 'TO SAMO';
 $this->Ma->displayActions($links);

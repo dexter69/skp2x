@@ -20,6 +20,17 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #CardAddForm fieldset.mono > div.mti {
   display: none; }
 
+#CardAddForm fieldset > div.zz > input {
+  margin: 3px 6px 0 0; }
+
+#CardAddForm fieldset.mono > div.zz {
+  display: none; }
+
+#CardAddForm fieldset div.zz {
+  position: absolute;
+  left: 300px;
+  top: -30px; }
+
 #karta_klient input {
   width: 97%; }
 
