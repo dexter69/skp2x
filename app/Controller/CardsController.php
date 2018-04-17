@@ -378,41 +378,24 @@ class CardsController extends AppController {
     
     private function isMulti() {
 
-        if( $this->request->data['Card']['multi'] > 1 ) {
-            //$this->request->data['Card']['detected'] = 'Multi';
+        if( $this->request->data['Card']['multi'] > 1 ) {            
             return true;
-        }
-        //$this->request->data['Card']['detected'] = 'Mono';
+        }        
         return false;
     }
 
     /* zduplikuj kartę i zapisz wiele */
-    private function saveMulti( &$err ) {
+    private function saveMulti( &$err, &$zwrotka ) {
 
-        // oryginalne dane wysłane przez użytkownika
-        $master = $this->request->data;
-
-        // Na razie próba z jedną
-        //$master['Card']['name'] .= '-KWA'; // taki mark
-        /*
-        if ( !$this->Card->saveitAll( $master, $err) ) {
-            return false;
-        }
-        */
         //Ile mamy kart zapisać
-        $ile = (int)$master['Card']['multi'];
-        $i=0;
-        //for( $i=0; $i<$ile; $i++ ) {}
-        do {
-            if ( $this->Card->saveitAll( $master, $err) ) {
-                // modyfikuj nazwę karty
-                $i++;
-                $prefix = ( $i < 10 ? "k0$i-" : "k$i-" );
-                $master['Card']['name'] = $prefix . $this->request->data['Card']['name'];
-            } else {
-                return false;
-            }
-        } while( $i < $ile );
+        $ile = (int)$this->request->data['Card']['multi'];
+
+        // Zapiszmy standardowo pierwszą
+        if ( !$this->Card->saveitAll( $this->request->data, $err) ) { return false; }
+
+        // Powiel zapisaną jeszcze $ile-1 razy
+        if( !$this->Card->duplikujKarte( $this->Card->id, $ile-1, $err, $zwrotka ) ) { return false; }
+        
         return true;
     }
 
@@ -426,7 +409,8 @@ class CardsController extends AppController {
                 //$this->Card->print_r2($this->request->data); return;			                    
 
                 if( $this->isMulti() ) { // Jezeli uzytkownik chce zapisać wiele kart
-                    if( $this->saveMulti( $blad ) ) {
+                    if( $this->saveMulti( $blad, $zwrotka ) ) {
+                        //$this->Card->print_r2($zwrotka); return;
                         $this->Session->setFlash('KARTY ZOSTAŁY ZAPISANE!', 'default', array('class' => GOOD_FLASH));
                         return $this->redirect(array('action' => 'view', $this->Card->id));
                     } else {

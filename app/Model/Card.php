@@ -80,7 +80,35 @@ class Card extends AppModel {
                 return $gotowe;
             }
             return $normal;
-        }
+		}
+		
+	public function duplikujKarte( $id=0, $qty=0, &$errno, &$zwrotka ) {
+
+		if( !$id || !$qty ) { // niewłasciwe parametry
+			$errno = 'dupPar';
+			return false;
+		}
+		$found = $this->find('first', ['conditions' => ['Card.id' =>$id]]);
+		
+		$zwrotka['Card'] = $found['Card'];
+		$zwrotka['Upload'] = $found['Upload'];
+
+		$karta = $found['Card'];
+		unset($karta['id'], $karta['created'], $karta['modified']);
+
+		$orygName = $karta['name'];
+		for( $i=1; $i<=$qty; $i++ ) {
+			if( $i<10 ) {
+				$karta['name'] = "k0" . $i . "_$orygName";
+			} else {				
+				$karta['name'] = "k" . $i . "_$orygName";
+			}
+			$this->create();
+			$this->save( ['Card' => $karta] );
+		}
+		
+		return true;
+	}
         
 	public function saveitAll( $puc = array(), &$errno ) { 
 		
