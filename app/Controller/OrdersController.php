@@ -649,21 +649,13 @@ class OrdersController extends AppController {
  */
 	public function add() {
 		
-		if ($this->request->is('post')) {
-			/*
-			$this->Order->print_r2($this->request->data);
-			
-			$this->request->data = $this->Order->cleanData($this->request->data);
-			$this->Order->print_r2($this->request->data);
-			return;
-			*/
+		if ($this->request->is('post')) {			
 			
 			$this->request->data = $this->Order->cleanData($this->request->data);
 			if( empty($this->request->data['Card']) )
 			  $this->Session->setFlash(__('NIE WYBRAŁEŚ ŻADNEJ KARTY!'));
 			else {
-				//$this->Order->print_r2( $this->Order->saveItAll($this->request->data) );
-				//return;
+				//$this->Order->print_r2( $this->Order->saveItAll($this->request->data) ); return;
 				if ($this->Order->saveItAll($this->request->data)) {
 					$this->Session->setFlash('Zamówienie zostało zapisane.', 'default', array('class' => GOOD_FLASH));
 					//return $this->redirect(array('action' => 'index'));
@@ -674,9 +666,6 @@ class OrdersController extends AppController {
 				}
 				
 			}
-				//$this->Order->print_r2($this->request->data);
-			
-			
 		}
 		$vju = $this->Order->get_view_options();
 		$tedane = $this->Order->getTheCardsAndRelated($this->Auth->user('id'));

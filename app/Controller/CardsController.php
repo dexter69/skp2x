@@ -376,28 +376,23 @@ class CardsController extends AppController {
 		return $card['isperso'];
 	}
     
-    private function isMulti() {
-
-        if( $this->request->data['Card']['multi'] > 1 ) {            
-            return true;
-        }        
-        return false;
+    private function isMulti() {        
+        return !( $this->request->data['Card']['multi'] < 2 );
     }
 
     /* zduplikuj kartę i zapisz wiele */
-    private function saveMulti( &$err, &$zwrotka ) {
+    private function saveMulti( &$err /*, &$zwrotka*/ ) {
 
         //Ile mamy kart zapisać
         $ile = (int)$this->request->data['Card']['multi'];
 
         // Jeżeli checbox zaznaczony, to tworzymy puste zamówienie
-        if( $this->request->data['Card']['zrobZamo'] ) {
+        if( $this->request->data['Card']['zrobZamo'] ) { //$zwrotka = $klient; //return true;
             
-            //$zwrotka = $klient;
-            //return true;
-            $this->request->data['Card']['order_id'] = $this->pusteZamowienie(); // zwraca id zamówienia lub zero            
-            //$zwrotka = $this->request->data;
-            //return true;
+            // zwraca id zamówienia lub zero
+            $this->request->data['Card']['order_id'] = $this->pusteZamowienie();             
+            
+            //$zwrotka = $this->request->data; //return true;
         }
 
         // Some default data
@@ -408,7 +403,7 @@ class CardsController extends AppController {
         if ( !$this->Card->saveitAll( $this->request->data, $err) ) { return false; }
 
         // Powiel zapisaną jeszcze $ile-1 razy
-        if( !$this->Card->duplikujKarte( $this->Card->id, $ile-1, $err, $zwrotka ) ) { return false; }
+        if( !$this->Card->duplikujKarte( $this->Card->id, $ile-1, $err /*, $zwrotka*/ ) ) { return false; }
         
         return true;
     }
@@ -451,7 +446,7 @@ class CardsController extends AppController {
                 //$this->Card->print_r2($this->request->data); return;			                    
 
                 if( $this->isMulti() ) { // Jezeli uzytkownik chce zapisać wiele kart
-                    if( $this->saveMulti( $blad, $zwrotka ) ) {
+                    if( $this->saveMulti( $blad /*, $zwrotka*/ ) ) {
                         //$this->Card->print_r2($zwrotka); return;
                         $this->Session->setFlash('JUPI!', 'default', array('class' => GOOD_FLASH));
                         return $this->redirect(array('controller' => 'orders', 'action' => 'view', $this->Card->Order->id));

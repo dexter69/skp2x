@@ -82,7 +82,7 @@ class Card extends AppModel {
             return $normal;
 		}
 		
-	public function duplikujKarte( $id=0, $qty=0, &$errno, &$zwrotka ) {
+	public function duplikujKarte( $id=0, $qty=0, &$errno /*, &$zwrotka*/ ) {
 
 		if( !$id || !$qty ) { // niewłasciwe parametry
 			$errno = 'dupPar';
@@ -90,8 +90,7 @@ class Card extends AppModel {
 		}
 		$found = $this->find('first', ['conditions' => ['Card.id' =>$id]]);
 		
-		$zwrotka['Card'] = $found['Card'];
-		$zwrotka['Upload'] = $found['Upload'];
+		//$zwrotka['Card'] = $found['Card']; $zwrotka['Upload'] = $found['Upload'];
 
 		$karta = $found['Card'];
 		unset($karta['id'], $karta['created'], $karta['modified']);
