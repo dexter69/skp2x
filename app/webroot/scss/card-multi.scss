@@ -2,6 +2,8 @@
 Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie multi */
 
 $cake_legend: #e32; // cake'owy kolor w fieldset -> legend
+$position: absolute;
+$wiz: visible;
 
 #CardAddForm fieldset > legend > span {
 
@@ -19,34 +21,59 @@ $cake_legend: #e32; // cake'owy kolor w fieldset -> legend
     display: none;
 }
 
+#CardAddForm .multi-wrap {
+    width: 50%;
+    background-color: lightseagreen;
+    display: none;
+}
+
+#CardAddForm .multi-wrap > div {
+    display: inline-block;    
+}
+
+// Pole do wpisywania ilości wielu kart
+#CardAddForm .multi-wrap > div.mti {
+    width: 60px;
+    margin-right: 2em;
+}
+
+// Pole ceny
+#CardAddForm .multi-wrap > div.cenka {
+    width: 100px;
+    margin-right: 2em;
+}
+
+/*---------------------------------------------*/
+
+
 // div mieszczący pole do wpisywania ilości wielu kart
-#CardAddForm fieldset div.mti {
-    position: absolute;
-    left: 200px;
-    top: -36px;
+#xCardAddForm fieldset.multi div.mti {
+    position: $position;
+    left: 200px;        
+    top: -36px;    
     width: 60px;
 }
 
 // nie wyświetlamy formularza ilosci kart, jeżeli jest tryb mono
-#CardAddForm fieldset.mono > div.mti {
-    display: none;
+#xCardAddForm fieldset.mono > div.mti {
+    visibility: $wiz;
 }
 
 // Checbox decydujący o tym czy tworzymy puste zamówienie
 
 // Poprawa wyglądu
-#CardAddForm fieldset > div.zz > input {
+#xCardAddForm fieldset > div.zz > input {
     margin: 3px 6px 0 0;
 }
 
 // nie wyświetlamy checkboxa, jeżeli jest tryb mono
-#CardAddForm fieldset.mono > div.zz {
-    display: none;
+#xCardAddForm fieldset.mono > div.zz {
+    visibility: $wiz;
 }
 
 // modyfikujemy położenie check'boxa
-#CardAddForm fieldset div.zz {
-    position: absolute;
+#xCardAddForm fieldset.multi div.zz {
+    position: $position;
     left: 430px;
     top: -30px;
 }
@@ -55,14 +82,14 @@ $cake_legend: #e32; // cake'owy kolor w fieldset -> legend
     Kwestia ceny */
 
 // div mieszczący pole do wpisywania ceny kart
-#CardAddForm fieldset div.cenka {
-    position: absolute;
+#xCardAddForm fieldset.multi div.cenka {
+    position: $position;
     left: 305px;
     top: -36px;
     width: 90px;
 }
 
 // nie wyświetlamy tej ceny, jeżeli jest tryb mono
-#CardAddForm fieldset.mono > div.cenka {
-    display: none;
+#xCardAddForm fieldset.mono > div.cenka {
+    visibility: $wiz;
 }

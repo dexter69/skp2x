@@ -11,33 +11,50 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #CardAddForm fieldset.multi > legend > span:first-child {
   display: none; }
 
-#CardAddForm fieldset div.mti {
+#CardAddForm .multi-wrap {
+  width: 50%;
+  background-color: lightseagreen;
+  display: none; }
+
+#CardAddForm .multi-wrap > div {
+  display: inline-block; }
+
+#CardAddForm .multi-wrap > div.mti {
+  width: 60px;
+  margin-right: 2em; }
+
+#CardAddForm .multi-wrap > div.cenka {
+  width: 100px;
+  margin-right: 2em; }
+
+/*---------------------------------------------*/
+#xCardAddForm fieldset.multi div.mti {
   position: absolute;
   left: 200px;
   top: -36px;
   width: 60px; }
 
-#CardAddForm fieldset.mono > div.mti {
-  display: none; }
+#xCardAddForm fieldset.mono > div.mti {
+  visibility: visible; }
 
-#CardAddForm fieldset > div.zz > input {
+#xCardAddForm fieldset > div.zz > input {
   margin: 3px 6px 0 0; }
 
-#CardAddForm fieldset.mono > div.zz {
-  display: none; }
+#xCardAddForm fieldset.mono > div.zz {
+  visibility: visible; }
 
-#CardAddForm fieldset div.zz {
+#xCardAddForm fieldset.multi div.zz {
   position: absolute;
   left: 430px;
   top: -30px; }
 
 /*
     Kwestia ceny */
-#CardAddForm fieldset div.cenka {
+#xCardAddForm fieldset.multi div.cenka {
   position: absolute;
   left: 305px;
   top: -36px;
   width: 90px; }
 
-#CardAddForm fieldset.mono > div.cenka {
-  display: none; }
+#xCardAddForm fieldset.mono > div.cenka {
+  visibility: visible; }

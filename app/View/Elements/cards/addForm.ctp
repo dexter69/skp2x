@@ -4,28 +4,7 @@
         <legend><span>NOWA KARTA</span><span>NOWE KARTY</span></legend>
         <?php
         /* */
-        echo $this->Form->input('multi', [
-            'default' => 1,
-            'type' => 'number',
-            'min' => 1,
-            'max' => 99,
-            'div' => ['class' => 'input number mti'],
-            'label' => false
-        ]);
-
-        echo $this->Form->input('zrobZamo', [
-            'default' => 1,
-            'type' => 'checkbox',
-            'div' => ['class' => 'input checkbox zz'],
-            'label' => 'Zamówienie'
-        ]);
-
-        echo $this->Form->input('Card.price', [
-            'default' => 0,
-            'type' => 'text',
-            'div' => ['class' => 'input text cenka'],
-            'label' => false
-        ]);
+        echo $this->element('cards/multi');        
         
         echo $this->Form->hidden('Card.owner_id', array( 'default' => $ownerid ) );
         echo $this->Form->hidden('Card.customer_id', array('label' => 'Klient', 'type' => 'text', 'default' => 0));
