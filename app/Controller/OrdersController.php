@@ -653,7 +653,7 @@ class OrdersController extends AppController {
 			
 			$this->request->data = $this->Order->cleanData($this->request->data);
 			if( empty($this->request->data['Card']) )
-			  $this->Session->setFlash(__('NIE WYBRAŁEŚ ŻADNEJ KARTY!'));
+			  $this->Session->setFlash('NIE WYBRAŁEŚ ŻADNEJ KARTY!');
 			else {
 				//$this->Order->print_r2( $this->Order->saveItAll($this->request->data) ); return;
 				if ($this->Order->saveItAll($this->request->data)) {
@@ -749,7 +749,7 @@ public function add2() {
 		if ($this->request->is(array('post', 'put'))) {
 			
 			//$this->Order->print_r2($this->request->data);		
-						
+
 			if ( $this->Order->editItAll($this->request->data) ) {
 				$this->Session->setFlash( $this->Order->succMsg, 'default', array('class' => GOOD_FLASH));
 				//return $this->redirect(array('action' => 'index'));

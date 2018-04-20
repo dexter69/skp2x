@@ -389,7 +389,7 @@ class Order extends AppModel {
 			
 		}
 		else {
-			//mamy do czynienia z nowym zleceniem, interesują nas tylko checked
+			//mamy do czynienia z nowym zamówieniem, interesują nas tylko checked
 			
 			foreach ( $inarr['Card'] as $value) {
 				if( $value['checked'] ) {

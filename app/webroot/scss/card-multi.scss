@@ -47,6 +47,22 @@ $cake_legend: #e32; // cake'owy kolor w fieldset -> legend
 // modyfikujemy położenie check'boxa
 #CardAddForm fieldset div.zz {
     position: absolute;
-    left: 300px;
+    left: 430px;
     top: -30px;
+}
+
+/*
+    Kwestia ceny */
+
+// div mieszczący pole do wpisywania ceny kart
+#CardAddForm fieldset div.cenka {
+    position: absolute;
+    left: 305px;
+    top: -36px;
+    width: 90px;
+}
+
+// nie wyświetlamy tej ceny, jeżeli jest tryb mono
+#CardAddForm fieldset.mono > div.cenka {
+    display: none;
 }

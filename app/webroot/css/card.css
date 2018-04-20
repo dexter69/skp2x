@@ -28,8 +28,19 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 
 #CardAddForm fieldset div.zz {
   position: absolute;
-  left: 300px;
+  left: 430px;
   top: -30px; }
+
+/*
+    Kwestia ceny */
+#CardAddForm fieldset div.cenka {
+  position: absolute;
+  left: 305px;
+  top: -36px;
+  width: 90px; }
+
+#CardAddForm fieldset.mono > div.cenka {
+  display: none; }
 
 #karta_klient input {
   width: 97%; }

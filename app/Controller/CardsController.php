@@ -397,9 +397,11 @@ class CardsController extends AppController {
 
         // Some default data
         $this->request->data['Card']['ilosc'] = $this->request->data['Card']['quantity'] = 1;
-        $this->request->data['Card']['price'] = 0;
+        //$this->request->data['Card']['price'] = 0;
 
-        // Zapiszmy standardowo pierwszą
+        // Zapiszmy standardowo pierwszą, musimy poprawić cenę
+        //zamieniamy ew przecinek w cenie na '.'
+		$this->request->data['Card']['price'] = str_replace(',', '.', $this->request->data['Card']['price']);
         if ( !$this->Card->saveitAll( $this->request->data, $err) ) { return false; }
 
         // Powiel zapisaną jeszcze $ile-1 razy
