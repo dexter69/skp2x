@@ -13,19 +13,6 @@ $code = "var platnosci = " . json_encode($tedane['platnosci']) . ";\n" .
 echo $this->Html->scriptBlock($code, array('block' => 'scriptBottom'));
 echo $this->Html->script( 'order-add', array('block' => 'scriptBottom')); 
 
-
-//echo '<pre>'; print_r($this->validationErrors/*$errors*/); echo '</pre>';
-//echo '<pre>'; print_r($vju['kod']); echo '</pre>';
-//echo '<pre>'; print_r($vju['forma_platnosci']); echo '</pre>';
-//echo '<pre>'; print_r($vju['osoba_kontaktowa']); echo '</pre>';
-//echo '<pre>'; print_r($vju['tel']); echo '</pre>';
-//echo '<pre>'; print_r($vju['price']); echo '</pre>';
-
-//echo '<pre>'; print_r($karty); echo '</pre>';
-//echo '<pre>'; print_r($karty2); echo '</pre>';
-//echo '<pre>'; print_r($adresy); echo '</pre>';
-//echo '<pre>'; print_r($adresy2); echo '</pre>';
-//echo '<pre>'; print_r($links); echo '</pre>';
 //echo '<pre>'; print_r($tedane); echo '</pre>';
 
 //if( $platnosci == $platnosci2 ) echo 'TO SAMO';
@@ -36,7 +23,7 @@ $this->Ma->displayActions($links);
 <?php //$this->Ma->nawiguj( $links );
 	echo $this->Form->create('Order'); ?>
 	<fieldset>
-		<legend><?php echo __('NOWE ZAMÓWIENIE (H)'); ?></legend>
+		<legend><?php echo 'NOWE ZAMÓWIENIE (H)'; ?></legend>
 	<?php
 		//$this->Ma->nawiguj( $links ); //nawigacyjne do dodaj, usuń, edycja itp.
 		//echo $this->Form->input('user_id');

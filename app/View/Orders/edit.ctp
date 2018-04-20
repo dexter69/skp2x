@@ -26,17 +26,6 @@ else
 echo $this->Html->scriptBlock($code, array('block' => 'scriptBottom'));
 echo $this->Html->script( 'order-edit', array('block' => 'scriptBottom')); 
 
-//echo '<pre>'; print_r($vju['forma_zaliczki']); echo '</pre>';
-//echo '<pre>'; print_r($vju['forma_platnosci']); echo '</pre>';
-//echo '<pre>'; print_r($vju['osoba_kontaktowa']); echo '</pre>';
-//echo '<pre>'; print_r($vju['sposob_dostawy']); echo '</pre>';
-
-//echo '<pre>'; print_r($karty); echo '</pre>';
-//echo '<pre>'; print_r($karty2); echo '</pre>';
-//echo '<pre>'; print_r($adresy); echo '</pre>';
-//echo '<pre>'; print_r($adresy2); echo '</pre>';
-//echo '<pre>'; print_r($links); echo '</pre>';
-//echo '<pre>'; print_r($tedane); echo '</pre>';
 //echo '<pre>'; print_r($tedane); echo '</pre>';
 
 //if( $platnosci == $platnosci2 ) echo 'TO SAMO';
@@ -51,7 +40,7 @@ $this->Ma->displayActions($links);
 		echo $this->Form->create('Order');
 ?>
 	<fieldset>
-		<legend><?php echo __('EDYCJA ZAMÓWIENIA (H)'); ?></legend>
+		<legend><?php echo 'EDYCJA ZAMÓWIENIA (H)'; ?></legend>
 	<?php
 		
 		echo $this->Form->hidden('id');

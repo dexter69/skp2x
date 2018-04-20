@@ -662,7 +662,7 @@ class OrdersController extends AppController {
                                         return $this->redirect(array('action' => 'view', $this->Order->id));
 				} else {
 					$blad = $this->Order->siaErr;
-					$this->Session->setFlash(__('Nie można zapisać zamówienia. Proszę, spróbuj ponownie: '.$blad));
+					$this->Session->setFlash( 'Nie można zapisać zamówienia. Proszę, spróbuj ponownie: ' . $blad );
 				}
 				
 			}
@@ -749,18 +749,13 @@ public function add2() {
 		if ($this->request->is(array('post', 'put'))) {
 			
 			//$this->Order->print_r2($this->request->data);		
-			/*	
-			$this->request->data = $this->Order->cleanData($this->request->data);
-			$this->Order->print_r2($this->request->data);
-			return;
-			
-			*/
+						
 			if ( $this->Order->editItAll($this->request->data) ) {
-                            $this->Session->setFlash( $this->Order->succMsg, 'default', array('class' => GOOD_FLASH));
-                            //return $this->redirect(array('action' => 'index'));
-                            return $this->redirect(array('action' => 'view', $id));
+				$this->Session->setFlash( $this->Order->succMsg, 'default', array('class' => GOOD_FLASH));
+				//return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'view', $id));
 			} else {
-                            $this->Session->setFlash(__('Nie udało się zapisać zamówienia. Sprubój ponownie.' . ' eiaErr = '.$this->Order->eiaErr));
+                $this->Session->setFlash( 'Nie udało się zapisać zamówienia. Sprubój ponownie.' . ' eiaErr = ' . $this->Order->eiaErr );
 			}
 		} else {
 				$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
@@ -802,13 +797,16 @@ public function add2() {
 			$customers = $this->Order->Customer->find('list');
 			$vju = $this->Order->get_view_options(true);
 			$test = $this->request->data['Order'];	
-			//$vju['newcustomer']['default'] = $this->request->data['Order']['newcustomer'];
-			unset($vju['newcustomer']['options'][null]);
-			if( $this->request->data['Order']['newcustomer'] ) {
-				$vju['newcustomer']['default'] = true;
-			} else {
-				$vju['newcustomer']['default'] = false;
-			}
+			/* Jeżeli zamówienie wygenerowane autoamtycznie,
+			to mamy do czynieia z pierwszą edycją */
+			if( !$this->request->data['Order']['auto'] ) {
+				unset($vju['newcustomer']['options'][null]);
+				if( $this->request->data['Order']['newcustomer'] ) {
+					$vju['newcustomer']['default'] = true;
+				} else {
+					$vju['newcustomer']['default'] = false;
+				}	
+			}					
 			$this->set(compact('users', 'customers', 'vju', 'karty', 'dt', 'test'));
 		
 	}

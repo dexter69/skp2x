@@ -427,7 +427,7 @@ class CardsController extends AppController {
             'procent_zaliczki' => $klient['Customer']['procent_zaliczki'],
             'forma_platnosci' => $klient['Customer']['forma_platnosci'],
             'termin_platnosci' => $klient['Customer']['termin_platnosci'],
-            'newcustomer' => NULL
+            'auto' => true // znacznik zamówienia wygenerownego automatycznie
         ]];
         $this->Card->Order->create();
         $this->Card->Order->save($dane, ['validate' => false]);

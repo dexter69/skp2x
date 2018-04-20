@@ -430,6 +430,8 @@ class Order extends AppModel {
 			'year' => substr($inarr['Order']['hdate'], 0, 4)			
 		);
 		unset($inarr['Order']['hdate']);
+		// przy pierwszej edycji resetujemy wskaźnik zamówienia generowanego automatycznie
+		$inarr['Order']['auto'] = false; 
 		
 		return $inarr;
 	}
