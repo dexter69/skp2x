@@ -197,8 +197,7 @@ class Card extends AppModel {
             if( $this->save($ready) ) {
                 $errno = $this->Upload->eventually_kosz( $wynik['remove'] );
                 return TRUE; 
-            }
-            else {
+            } else {
                 //debug($this->validationErrors);
                     $errno = 6;
                     return FALSE;

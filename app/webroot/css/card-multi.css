@@ -1,19 +1,28 @@
 @charset "UTF-8";
 /*
 Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie multi */
-#CardAddForm fieldset > legend > span {
+#CardAddForm fieldset > span.legend {
   color: #e32;
+  display: inline-block;
+  font-size: 23px;
+  font-weight: bold;
+  padding-left: 6px;
+  margin-bottom: 15px;
   cursor: pointer; }
 
-#CardAddForm fieldset.mono > legend > span:last-child {
+#CardAddForm fieldset.mono > span.legend > span:last-child {
   display: none; }
 
-#CardAddForm fieldset.multi > legend > span:first-child {
+#CardAddForm fieldset.multi > span.legend > span:first-child {
   display: none; }
 
 #CardAddForm .multi-wrap {
   width: 50%;
-  background-color: lightseagreen;
+  position: absolute;
+  left: 200px;
+  top: 0; }
+
+#CardAddForm .mono > .multi-wrap {
   display: none; }
 
 #CardAddForm .multi-wrap > div {
@@ -24,37 +33,11 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
   margin-right: 2em; }
 
 #CardAddForm .multi-wrap > div.cenka {
-  width: 100px;
+  width: 110px;
   margin-right: 2em; }
 
-/*---------------------------------------------*/
-#xCardAddForm fieldset.multi div.mti {
-  position: absolute;
-  left: 200px;
-  top: -36px;
-  width: 60px; }
+#CardAddForm .multi-wrap > div.zz {
+  margin-top: 5px; }
 
-#xCardAddForm fieldset.mono > div.mti {
-  visibility: visible; }
-
-#xCardAddForm fieldset > div.zz > input {
+#CardAddForm .multi-wrap > div.zz > input {
   margin: 3px 6px 0 0; }
-
-#xCardAddForm fieldset.mono > div.zz {
-  visibility: visible; }
-
-#xCardAddForm fieldset.multi div.zz {
-  position: absolute;
-  left: 430px;
-  top: -30px; }
-
-/*
-    Kwestia ceny */
-#xCardAddForm fieldset.multi div.cenka {
-  position: absolute;
-  left: 305px;
-  top: -36px;
-  width: 90px; }
-
-#xCardAddForm fieldset.mono > div.cenka {
-  visibility: visible; }

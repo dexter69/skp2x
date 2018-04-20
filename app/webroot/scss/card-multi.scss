@@ -5,25 +5,38 @@ $cake_legend: #e32; // cake'owy kolor w fieldset -> legend
 $position: absolute;
 $wiz: visible;
 
-#CardAddForm fieldset > legend > span {
-
+// pseudo legend
+#CardAddForm fieldset > span.legend {
     color: $cake_legend;
+    display: inline-block;
+    font-size: 23px;
+    font-weight: bold;
+    padding-left: 6px;
+    margin-bottom: 15px;
     cursor: pointer;
 }
 
 // Gdy mamy tryb jednej karty, to drugi span (z liczbą mnogą) jest ukryty
-#CardAddForm fieldset.mono > legend > span:last-child {
+#CardAddForm fieldset.mono > span.legend > span:last-child {
     display: none;
 }
 
 // I vice versa
-#CardAddForm fieldset.multi > legend > span:first-child {
+#CardAddForm fieldset.multi > span.legend > span:first-child {
     display: none;
 }
 
 #CardAddForm .multi-wrap {
     width: 50%;
-    background-color: lightseagreen;
+    //background-color: lightseagreen;
+    position: absolute;
+    left: 200px;
+    top: 0;
+    //display: none;
+}
+
+// W trybie mono nie wyświetlamy
+#CardAddForm .mono > .multi-wrap {
     display: none;
 }
 
@@ -39,57 +52,16 @@ $wiz: visible;
 
 // Pole ceny
 #CardAddForm .multi-wrap > div.cenka {
-    width: 100px;
+    width: 110px;
     margin-right: 2em;
 }
 
-/*---------------------------------------------*/
-
-
-// div mieszczący pole do wpisywania ilości wielu kart
-#xCardAddForm fieldset.multi div.mti {
-    position: $position;
-    left: 200px;        
-    top: -36px;    
-    width: 60px;
+//Autom zamówienie
+#CardAddForm .multi-wrap > div.zz {
+    margin-top: 5px;
 }
 
-// nie wyświetlamy formularza ilosci kart, jeżeli jest tryb mono
-#xCardAddForm fieldset.mono > div.mti {
-    visibility: $wiz;
-}
-
-// Checbox decydujący o tym czy tworzymy puste zamówienie
-
-// Poprawa wyglądu
-#xCardAddForm fieldset > div.zz > input {
+// Poprawa wyglądu checkboxa
+#CardAddForm .multi-wrap > div.zz > input {
     margin: 3px 6px 0 0;
-}
-
-// nie wyświetlamy checkboxa, jeżeli jest tryb mono
-#xCardAddForm fieldset.mono > div.zz {
-    visibility: $wiz;
-}
-
-// modyfikujemy położenie check'boxa
-#xCardAddForm fieldset.multi div.zz {
-    position: $position;
-    left: 430px;
-    top: -30px;
-}
-
-/*
-    Kwestia ceny */
-
-// div mieszczący pole do wpisywania ceny kart
-#xCardAddForm fieldset.multi div.cenka {
-    position: $position;
-    left: 305px;
-    top: -36px;
-    width: 90px;
-}
-
-// nie wyświetlamy tej ceny, jeżeli jest tryb mono
-#xCardAddForm fieldset.mono > div.cenka {
-    visibility: $wiz;
 }

@@ -7,11 +7,11 @@ Wykorzystywane przez card.js */
 function multi() {
 
     let fieldset = '#CardAddForm fieldset';
-    let legend = '#CardAddForm fieldset > legend';
-    let span = '#CardAddForm fieldset > legend > span';
+    let legend = '#CardAddForm fieldset > .legend';
+    let span = '#CardAddForm fieldset > .legend > span';
 
     //Input do ust. ilosci kart
-    let theInput = '#CardAddForm fieldset > div.mti input';
+    let theInput = '#CardAddForm fieldset div.mti input';
 
     $(span).click( function() {
         
