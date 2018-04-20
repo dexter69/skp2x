@@ -30,7 +30,7 @@ $ext ='act="' . $karta['active'] . '" nor="' . $karta['normal'] . '"';
     
     <?php
         // Chcemy tylko osobom z działu Perso (i innym, które potrzebują) wyświetlać formularz do zakresów
-        if(  $properDzial && $karta['etykieta'] == 'zakres' ) {
+        if(  $properDzial ) { // && $karta['etykieta'] == 'zakres' ) { a teraz bezwarunkowo
             echo $this->element('tasks/label/zakres', [
                 'etyk' => $karta['etykieta'],
                 'id' => $karta['id']
