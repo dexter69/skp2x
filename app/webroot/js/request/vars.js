@@ -1,7 +1,16 @@
+/*
+    Nie wiem czym są id w wierszach danych - prawdopodobnie ma coś wspólnego z id komponentów.
+    Jak widać, gdy ominiemy, wszystko nadal działa. */
 let sample_cards = [
-    { id:1, lp:1, name:"Zielona", ile: 1000, cena: 0},
-    { id:2, lp:2, name:"Żółta", ile: 2000, cena: 0},
-    { id:3, lp:3, name:"Czerwona", ile: 3000, cena: 0}        
+    {   
+        //id:1,
+        lp:1, name:"Zielona", ile: 1000, cena: 0},
+    { 
+        //id:2,
+        lp:2, name:"Żółta", ile: 2000, cena: 0},
+    { 
+        //id:3,
+        lp:3, name:"Czerwona", ile: 3000, cena: 0}        
 ];
 
 let kolumny = [
