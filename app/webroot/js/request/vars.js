@@ -19,10 +19,10 @@ let tabelaKart = {
     view:"datatable",  
     autowidth: true,
 
-    /*  Wersja 1 */
+    /*  Wersja 1 - z definicją kolumn */
     // columns:kolumny, data: sample_cards,     
     
-    /* Wersja 2 */    
+    /* Wersja 2 - bez definicji kolumn */    
     autoConfig: true, data: sample_cards
    
   };
