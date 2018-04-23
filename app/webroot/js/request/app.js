@@ -1,19 +1,22 @@
 /*
 * Starting point of webix addedit request app
   allData - globalna zmienna ze wszystkimi danymi
+  Poniżej wykorzystujemy różne obiekty, które są zdefiniowane w vars.js
+  Ten plik jest załączany w layoucie webix.ctp powyżej app.js
 */
 
 webix.ready(function(){
     
-   console.log(allData);
+  console.log(allData);
 
   // Szerzej mówiąc cały komponent ze wszystkimi rzeczami do kart
-  let theCardManager =  tabelaDlaKart;
+  let theCardManager =  tabelaKart;
 
   let theApp = {
     container:"myApp",
     rows: [
-      { type:"header", template:"My App!"},
+      { view:"template", // nie musi być (tutaj, tzn działa bez, dałem w celach edukacyjnych)
+        type:"header", template:"Test App!"},
       {
         cols: [
           theCardManager,          
