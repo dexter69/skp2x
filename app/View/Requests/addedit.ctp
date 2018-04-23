@@ -4,10 +4,10 @@
 
 $dataForApp = json_encode([
     'id' => $id,
-    'cos' => 'ktos'
+    'cos' => 'ĘÓĄŚŁŻŹĆŃęóąśłżźćń'
 ]);
 
 echo $this->Html->scriptBlock(        
     "var allData =  $dataForApp;",
-    ['inline' => true]
+    ['inline' => true, 'charset' => 'utf-8']
 );
