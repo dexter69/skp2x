@@ -1,5 +1,7 @@
 /*
-    Nie wiem czym są id w wierszach danych - prawdopodobnie ma coś wspólnego z id komponentów.
+    Nie wiem czym są id w wierszach danych - 
+    Czy to ma coś wspólnego z id komponentów? Chyba nie - po prostu property - można chyba
+    odpowiadać id, jakie wiersz ma w bazie.
     Jak widać, gdy ominiemy, wszystko nadal działa. */
 let sample_cards = [
     {   
