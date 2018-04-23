@@ -19,15 +19,11 @@ let tabelaKart = {
     view:"datatable",  
     autowidth: true,
 
-    /*  Wersja 1
-    columns:kolumny,
-    data: sample_cards
-    */
+    /*  Wersja 1 */
+    // columns:kolumny, data: sample_cards,     
     
-    /*
-    Wersja 2 */
-    autoConfig: true,    
-    data: sample_cards
+    /* Wersja 2 */    
+    autoConfig: true, data: sample_cards
    
   };
 
