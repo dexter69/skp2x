@@ -5,13 +5,13 @@
     Jak widać, gdy ominiemy, wszystko nadal działa. */
 let sample_cards = [
     {   
-        //id:1,
+        id: 2847,
         lp:1, name:"Zielona", ile: 1000, cena: 0},
     { 
-        //id:2,
+        id: 3456,
         lp:2, name:"Żółta", ile: 2000, cena: 0},
     { 
-        //id:3,
+        id: 1234,
         lp:3, name:"Czerwona", ile: 3000, cena: 0}        
 ];
 
