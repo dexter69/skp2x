@@ -267,6 +267,7 @@ class Upload extends AppModel {
                                     NULL=>'- WYBIERZ COŚ -',
                                     PROJ=>'PROJEKT KARTY',
                                     BAZA=>'BAZA DANYCH',
+                                    BAZA_RODO => '!!! BAZA RODO !!!',
                                     PODPERSO=>'PODGLĄD PERSO',
                                     PODGLAD=>'PODGLĄD',
                                     PODPIS => 'PODPIS',
