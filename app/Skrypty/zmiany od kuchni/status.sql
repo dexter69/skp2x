@@ -3,6 +3,7 @@
 -- STATUSY
 -- 31 --> SPRAWDZONA
 -- 41 --> P.D.P
+-- 42 --> W_PROD
 -- 51 --> W4D
 
 -- Ustawiamy zmienne
