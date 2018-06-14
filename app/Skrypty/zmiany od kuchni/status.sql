@@ -3,16 +3,17 @@
 -- STATUSY
 -- 31 --> SPRAWDZONA
 -- 41 --> P.D.P
+-- 51 --> W4D
 
 -- Ustawiamy zmienne
 SET 
 -- id zamówienia
 @order_id=
 
-5816
+6238
 
 -- nr statusu jaki ma być
-, @new_status=41;
+, @new_status=51;
 
 
 -- Zmieniamy status
