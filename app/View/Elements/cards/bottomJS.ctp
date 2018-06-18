@@ -8,8 +8,12 @@
 $this->Html->scriptStart( array('block' => 'scriptBottom') ); 
 					
 $html2 = json_encode(
-    $this->Form->input('Upload.'.PATT.'.role',$vju['role']) .
-    '</td><td>' . $this->Form->input('Upload.'.PATT.'.roletxt',$vju['roletxt']) 
+    $this->Form->input('Upload.'.PATT.'.rodo', $vju['rodo']) . '</td><td>' .
+    $this->Form->input('Upload.'.PATT.'.role',$vju['role'])
+        . '</td><td>'
+        . $this->Form->input('Upload.'.PATT.'.roletxt',$vju['roletxt'])
+        //. '</td><td>'
+        //. $this->Form->input('Upload.'.PATT.'.rodo', $vju['rodo'])
 );
 
 $html1 = json_encode(

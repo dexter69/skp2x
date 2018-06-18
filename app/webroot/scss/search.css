@@ -1,0 +1,43 @@
+.sirczh2 {
+  color: #e59400;
+  margin: 0 0 20px 20px; }
+
+.sirczh2 > span {
+  color: #0e5d1c; }
+
+.sircz-div {
+  padding: 0 0 15px 20px; }
+
+td > p {
+  margin-bottom: 5px; }
+
+.wyniknag {
+  font-size: 150%;
+  color: #0e5d1c;
+  margin-bottom: 10px; }
+
+.lp {
+  width: 3em; }
+
+.handlowe {
+  width: 7em; }
+
+.zamnr {
+  width: 7em; }
+
+.produkcyjne {
+  width: 5em; }
+
+.data {
+  width: 7em; }
+
+.opiekun {
+  width: 8em; }
+
+th.data, th.produkcyjne, th.handlowe {
+  text-align: center; }
+
+td.produkcyjne, td.data, td.handlowe {
+  text-align: right; }
+
+/*# sourceMappingURL=search.css.map */

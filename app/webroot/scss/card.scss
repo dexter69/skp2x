@@ -28,9 +28,16 @@ $perso: MidnightBlue;
 }
 
 #wpliki td:first-child, #zpliki td:first-child,
-#filetable td:first-child, #filetable th:first-child  { width: 1em; }
-#wpliki td:nth-child(3), #zpliki td:nth-child(3), #filetable td:nth-child(3) { width: 12em;  }
-#wpliki td:last-child, #zpliki td:last-child, #filetable td:last-child, #filetable th:last-child { width: 17em; }
+#filetable td:first-child, #filetable th:first-child { width: 1em; }
+
+#filetable td:nth-child(3), #filetable th:nth-child(3)  { width: 4em; }
+#filetable td:nth-child(3)> input { margin: 5px 0 0 15px;}
+
+#wpliki td:nth-child(4), #zpliki td:nth-child(4) { width: 12em;  }
+
+#filetable th:nth-child(4), #filetable td:nth-child(4) { width: 12em;  }
+
+#wpliki td:last-child, #zpliki td:last-child, #filetable td:nth-child(5), #filetable th:nth-child(5) { width: 17em; }
 
 
 
@@ -39,11 +46,6 @@ $perso: MidnightBlue;
 }
 
 #zpliki select, #filetable select { font-size: 100%; }
-
-#filetable td:nth-child(3), #filetable th:nth-child(3) {
-	width: 13.5em;
-	
-}
 
 #CardAddForm td > input, #CardEditForm  td > input {
 	font-size: 120%;

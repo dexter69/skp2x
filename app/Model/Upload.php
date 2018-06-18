@@ -280,7 +280,11 @@ class Upload extends AppModel {
 								'div' => false,
 								'disabled' => false,
 								'required' => false
-							),
+                            ),
+            'rodo'  =>  array(
+                'label' => false,
+                'div' => false
+            ),
 			'file'=>	array( 
 								'label' => 'NOWE PLIKI:',
 							 	//'div' => array('required' => ''),

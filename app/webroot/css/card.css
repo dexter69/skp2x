@@ -68,10 +68,19 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #filetable td:first-child, #filetable th:first-child {
   width: 1em; }
 
-#wpliki td:nth-child(3), #zpliki td:nth-child(3), #filetable td:nth-child(3) {
+#filetable td:nth-child(3), #filetable th:nth-child(3) {
+  width: 4em; }
+
+#filetable td:nth-child(3) > input {
+  margin: 5px 0 0 15px; }
+
+#wpliki td:nth-child(4), #zpliki td:nth-child(4) {
   width: 12em; }
 
-#wpliki td:last-child, #zpliki td:last-child, #filetable td:last-child, #filetable th:last-child {
+#filetable th:nth-child(4), #filetable td:nth-child(4) {
+  width: 12em; }
+
+#wpliki td:last-child, #zpliki td:last-child, #filetable td:nth-child(5), #filetable th:nth-child(5) {
   width: 17em; }
 
 #filetable input, #filetable td:nth-child(2) {
@@ -79,9 +88,6 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 
 #zpliki select, #filetable select {
   font-size: 100%; }
-
-#filetable td:nth-child(3), #filetable th:nth-child(3) {
-  width: 13.5em; }
 
 #CardAddForm td > input, #CardEditForm td > input {
   font-size: 120%;
@@ -186,8 +192,8 @@ ul#fileList li div:last-child {
 
 #persokeep > select {
   /*    position:relative;
-    top:-41px;
-    left: 180px;*/ }
+      top:-41px;
+      left: 180px;*/ }
 
 .perso-types {
   margin: 0;
@@ -271,8 +277,8 @@ div.cards.view dl dt {
 
 #kartview {
   /*margin-left: 100px; 
-	border: 1px solid orange;
-	width: auto;*/
+  border: 1px solid orange;
+  width: auto;*/
   min-width: 850px;
   float: none;
   margin-bottom: 30px; }
@@ -283,7 +289,7 @@ div.cards.view dl dt {
 
 #cardviewdl dt {
   /*white-space:nowrap;
-	overflow: hidden;*/
+  overflow: hidden;*/
   padding-right: 5px;
   /*width: 10em;*/ }
 
@@ -462,3 +468,5 @@ dl#cardviewdl dd.busy {
 #innedl .konec {
   border: 2px solid green;
   border-radius: 7px; }
+
+/*# sourceMappingURL=card.css.map */

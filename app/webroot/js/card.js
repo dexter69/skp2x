@@ -23,7 +23,7 @@
 
                             if(i == 0)
                                     $filetable.append(
-                                            '<tr><th></th><th></th><th>ROLA PLIKU</th><th></th></tr>'
+                                            '<tr><th></th><th></th><th>RODO</th><th>ROLA PLIKU</th><th></th></tr>'
                                     );
                             $filetable.append(
                                     '<tr><td>' + htmloza1.replace(re,i) + '</td><td>' +

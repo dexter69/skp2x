@@ -1202,8 +1202,9 @@ class Card extends AppModel {
 			$this->view_options['file'] = $this->Upload->view_options['file'];
 			$this->view_options['role'] = $this->Upload->view_options['role'];
 			$this->view_options['roletxt'] = $this->Upload->view_options['roletxt'];
-                        $this->view_options['etykieta'] = $this->etyk_view['etykieta'];
-                        $this->view_options['etylang'] = $this->etyk_view['etylang'];
+			$this->view_options['rodo'] = $this->Upload->view_options['rodo'];
+            $this->view_options['etykieta'] = $this->etyk_view['etykieta'];
+            $this->view_options['etylang'] = $this->etyk_view['etylang'];
 			return $this->view_options;
 		}
                 
