@@ -68,6 +68,9 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #filetable td:first-child, #filetable th:first-child {
   width: 1em; }
 
+#filetable td:first-child > input {
+  margin: 4px 10px 0 0; }
+
 #filetable td:nth-child(3), #filetable th:nth-child(3) {
   width: 4em; }
 

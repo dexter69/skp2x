@@ -30,6 +30,8 @@ $perso: MidnightBlue;
 #wpliki td:first-child, #zpliki td:first-child,
 #filetable td:first-child, #filetable th:first-child { width: 1em; }
 
+#filetable td:first-child > input { margin: 4px 10px 0 0; }
+
 #filetable td:nth-child(3), #filetable th:nth-child(3)  { width: 4em; }
 #filetable td:nth-child(3)> input { margin: 5px 0 0 15px;}
 

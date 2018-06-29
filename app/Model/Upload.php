@@ -85,6 +85,7 @@ class Upload extends AppModel {
                             } else {
                                 $row['roletxt'] = $this->view_options['role']['options'][strval($row['role'])];
                             }
+                            $row['rodo'] = $inputarr['Upload'][$i-1]['rodo'];
                             $row['filename'] = $value['name'];
                             $row['filesize'] = $value['size'];
                             $row['filemime'] = $value['type'];
