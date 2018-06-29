@@ -67,7 +67,7 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
   overflow: hidden;
   white-space: nowrap; }
 
-#wpliki td:first-child, #filetable td:first-child, #filetable th:first-child {
+#filetable td:first-child, #filetable th:first-child {
   width: 1em; }
 
 #filetable td:first-child > input {
@@ -79,13 +79,10 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #filetable td:nth-child(3) > input {
   margin: 5px 0 0 15px; }
 
-#wpliki td:nth-child(4) {
-  width: 12em; }
-
 #filetable th:nth-child(4), #filetable td:nth-child(4) {
   width: 12em; }
 
-#wpliki td:last-child, #filetable td:nth-child(5), #filetable th:nth-child(5) {
+#filetable td:nth-child(5), #filetable th:nth-child(5) {
   width: 17em; }
 
 #zpliki th:first-child, #zpliki td:first-child {
@@ -105,6 +102,18 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 
 #zpliki td:last-child > input {
   width: 97%; }
+
+#wpliki tr.th {
+  display: table-row; }
+
+#wpliki th:first-child, #wpliki td:first-child {
+  width: 1.5em; }
+
+#wpliki th.role, #wpliki td.role {
+  width: 12em; }
+
+#wpliki th:last-child, #wpliki td:last-child {
+  width: 17em; }
 
 #filetable input, #filetable td:nth-child(2) {
   font-size: 110% !important; }

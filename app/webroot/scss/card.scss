@@ -28,18 +28,16 @@ $perso: MidnightBlue;
 	white-space: nowrap;
 }
 
-#wpliki td:first-child, #filetable td:first-child, #filetable th:first-child { width: 1em; }
+#filetable td:first-child, #filetable th:first-child { width: 1em; }
 
 #filetable td:first-child > input { margin: 4px 10px 0 0; }
 
 #filetable td:nth-child(3), #filetable th:nth-child(3)  { width: 4em; }
 #filetable td:nth-child(3)> input { margin: 5px 0 0 15px;}
 
-#wpliki td:nth-child(4) { width: 12em;  }
-
 #filetable th:nth-child(4), #filetable td:nth-child(4) { width: 12em;  }
 
-#wpliki td:last-child, #filetable td:nth-child(5), #filetable th:nth-child(5) { width: 17em; }
+#filetable td:nth-child(5), #filetable th:nth-child(5) { width: 17em; }
 
 // Załączone pliki przy edycji karty
 #zpliki th:first-child, #zpliki td:first-child { width: 1em; } // pierwszy checkbox
@@ -52,6 +50,15 @@ $perso: MidnightBlue;
 
 #zpliki th:last-child, #zpliki td:last-child { width: 17em; } // ostatnia kolumna - input na nietypową rolę
 #zpliki td:last-child > input { width: 97%; }
+
+//załączone pliki z innymi kartami
+#wpliki tr.th { display: table-row; }
+
+#wpliki th:first-child, #wpliki td:first-child { width: 1.5em; }
+
+#wpliki th.role, #wpliki td.role { width: 12em; } // rola pliku
+
+#wpliki th:last-child, #wpliki td:last-child { width: 17em; }
 
 #filetable input, #filetable td:nth-child(2) {
 	font-size: 110% !important;

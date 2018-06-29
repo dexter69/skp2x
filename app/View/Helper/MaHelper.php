@@ -1559,7 +1559,7 @@ class MaHelper extends AppHelper {
 							 '</td>';
 				$trs .= '<td>' . $this->Html->link( $value['filename'],	array(
 							'controller' => 'uploads', 'action' => 'download', $value['id'] )) . '</td>';
-				$trs .= '<td>' . $value['roletxt'] . '</td>';
+				$trs .= '<td class="role">' . $value['roletxt'] . '</td>';
 				$trs .= '<td>' . $value['cardname'] . '</td></tr>';
 				
 				//unset( $wspolne[$i++]['customer_id'] );
@@ -1568,6 +1568,7 @@ class MaHelper extends AppHelper {
 			$markup =	$this->Html->tag('div', null, array('id' => 'wdiv')) .
 							$this->Html->tag('label', 'PLIKI DODANE WCZEŚNIEJ Z INNYMI KARTAMI:') .
 							$this->Html->tag('table', null, array('id' => 'wpliki')) .
+							"<tr class=\"th\"><th></th><th></th><th class=\"role\"></th><th>Karta</th></tr>" .
 								$trs .	
 							$this->Html->tag('/table') .
 						$this->Html->tag('/div');
