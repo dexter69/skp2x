@@ -1543,7 +1543,7 @@ class MaHelper extends AppHelper {
 		return $oczyszczone;
 	}
 
-	public function wspolne_pliki( $wspolne = array() ) {
+	public function wspolne_pliki( $wspolne = array(), $edit = false ) {
 		
 		$markup = null;
 		if ( !empty($wspolne) ) {
@@ -1564,11 +1564,11 @@ class MaHelper extends AppHelper {
 				
 				//unset( $wspolne[$i++]['customer_id'] );
 			}
-			
+			$klasa = $edit ? "th" : "";
 			$markup =	$this->Html->tag('div', null, array('id' => 'wdiv')) .
 							$this->Html->tag('label', 'PLIKI DODANE WCZEŚNIEJ Z INNYMI KARTAMI:') .
 							$this->Html->tag('table', null, array('id' => 'wpliki')) .
-							"<tr class=\"th\"><th></th><th></th><th class=\"role\"></th><th>Karta</th></tr>" .
+							"<tr class=$klasa><th></th><th></th><th class=\"role\"></th><th>Karta</th></tr>" .
 								$trs .	
 							$this->Html->tag('/table') .
 						$this->Html->tag('/div');

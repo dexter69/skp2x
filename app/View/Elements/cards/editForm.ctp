@@ -44,7 +44,7 @@ echo $this->Ma->zalaczone_pliki($this->request->data['Upload'], $vju );
 //pozbywamy się plików które są już wyświetlane jako załączone do tej karty.
 $wspolne = $this->Ma->oczysc_wspolne($wspolne, $this->request->data['Upload']);
 
-echo $this->Ma->wspolne_pliki($wspolne); 
+echo $this->Ma->wspolne_pliki($wspolne, true); 
 //echo $this->Html->tag('hr');
 
 echo $this->Form->input('Upload.files.',$vju['file']);
