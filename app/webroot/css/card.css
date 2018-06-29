@@ -51,8 +51,11 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #wpliki tr {
   display: none; }
 
-#wdiv > label, #zdiv > label {
+#wdiv > label {
   margin: 0.6em 0; }
+
+#zdiv > label {
+  margin: 0.9em 0 0 0; }
 
 #wdiv > label {
   display: none; }
@@ -64,8 +67,7 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
   overflow: hidden;
   white-space: nowrap; }
 
-#wpliki td:first-child, #zpliki td:first-child,
-#filetable td:first-child, #filetable th:first-child {
+#wpliki td:first-child, #filetable td:first-child, #filetable th:first-child {
   width: 1em; }
 
 #filetable td:first-child > input {
@@ -77,14 +79,32 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #filetable td:nth-child(3) > input {
   margin: 5px 0 0 15px; }
 
-#wpliki td:nth-child(4), #zpliki td:nth-child(4) {
+#wpliki td:nth-child(4) {
   width: 12em; }
 
 #filetable th:nth-child(4), #filetable td:nth-child(4) {
   width: 12em; }
 
-#wpliki td:last-child, #zpliki td:last-child, #filetable td:nth-child(5), #filetable th:nth-child(5) {
+#wpliki td:last-child, #filetable td:nth-child(5), #filetable th:nth-child(5) {
   width: 17em; }
+
+#zpliki th:first-child, #zpliki td:first-child {
+  width: 1em; }
+
+#zpliki th.rodo_box, #zpliki td.rodo_box {
+  width: 3em; }
+
+#zpliki td.rodo_box > input {
+  margin: 6px 0 0 11px; }
+
+#zpliki th.role, #zpliki td.role {
+  width: 12em; }
+
+#zpliki th:last-child, #zpliki td:last-child {
+  width: 17em; }
+
+#zpliki td:last-child > input {
+  width: 97%; }
 
 #filetable input, #filetable td:nth-child(2) {
   font-size: 110% !important; }

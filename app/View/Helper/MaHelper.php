@@ -1474,6 +1474,16 @@ class MaHelper extends AppHelper {
 				$rolearr = $thevju['role'];
 				unset($rolearr['options'][NULL]);
 				$roletxtarr = $thevju['roletxt'];
+
+				$rodo_checkbox = $this->Form->input('Zalaczone.'.$i.'.rodo', array(
+									'type' => 'checkbox', 'label' => false, 'div' => false,							
+									'checked' => $value['rodo'] 
+				));
+
+				$rolearr['default'] = $value['role'];
+				$role_select = $this->Form->input('Zalaczone.'.$i.'.role', $rolearr);
+				
+
 				$trs .= '<tr><td>' . 
 						$this->Form->hidden('Zalaczone.'.$i.'.id', array('default' =>  $value['id'])) .
 						$this->Form->input( 'Zalaczone.'.$i.'.taken', array(
@@ -1482,9 +1492,11 @@ class MaHelper extends AppHelper {
 							 'checked' => true ))	. 							 
 						'</td>';
 				$trs .= '<td>' . $this->Html->link( $value['filename'], array('controller' => 'uploads', 'action' => 'download', $value['id'] ) ) . '</td>';
-				//$trs .= '<td>' . $value['roletxt'] . '</td></tr>';
-				$rolearr['default'] = $value['role'];
-				$trs .= '<td>' . $this->Form->input('Zalaczone.'.$i.'.role', $rolearr) . '</td>';
+
+				$trs .= "<td class=\"rodo_box\">$rodo_checkbox</td>";
+
+				$trs .= "<td class=\"role\">$role_select</td>";
+
 				//$trs .= '<td></td></tr>';
 				if( $value['role'] != OTHER_ROLE ) 
 					$roletxtarr['disabled'] = true;
@@ -1493,19 +1505,7 @@ class MaHelper extends AppHelper {
 					$roletxtarr['default'] = $value['roletxt'];
 				}
 				$trs .= '<td>' . $this->Form->input('Zalaczone.'.$i++.'.roletxt', $roletxtarr) . '</td></tr>';
-				/*
-				if( $value['filesize'] < KILO ) {
-					$size = $value['filesize'] . ' B';
-				}
-				elseif ( $value['filesize'] < MEGA ) {
-					$size = $this->colon(strval(round($value['filesize'] / KILO, 2)), 2) . ' kB'; 
-				}
-				else {
-					$size = $this->colon(strval( round($value['filesize'] / MEGA, 2) ), 2) . ' MB'; 
-				}
-				
-				$trs .= '<td>' . $size . '</td></tr>';*/
-				
+								
 			}
 			
 			
@@ -1513,7 +1513,8 @@ class MaHelper extends AppHelper {
 						//$this->Html->tableHeaders(array('Id', 'Nazwa Pliku', 'Przeznaczenie', 'Rozmiar')) .
 						$this->Html->tag('label', 'PLIKI DOŁĄCZONE DO TEJ KARTY:') .
 						$this->Html->tag('table', null, array('id' => 'zpliki')) .
-								$trs .	
+							"<tr><th></th><th></th><th class=\"rodo_box\">RODO</th><th class=\"role\"></th><th></th></tr>" .
+							$trs .	
 							$this->Html->tag('/table') .
 						$this->Html->tag('/div');
 		} 

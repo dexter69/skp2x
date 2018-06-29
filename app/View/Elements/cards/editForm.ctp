@@ -56,3 +56,7 @@ echo $this->Html->tag('table', '', array('id' => 'filetable'));
 <?php echo $this->Form->end('Zapisz'); ?>
  
 </div>
+
+<?php
+
+//$this->App->print_r2($this->request->data['Upload']); $this->App->print_r2($vju['rodo']);

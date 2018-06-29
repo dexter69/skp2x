@@ -284,7 +284,8 @@ class Upload extends AppModel {
                             ),
             'rodo'  =>  array(
                 'label' => false,
-                'div' => false
+                'div' => false,
+                'type' => 'checkbox'
             ),
 			'file'=>	array( 
 								'label' => 'NOWE PLIKI:',
