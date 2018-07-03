@@ -211,8 +211,9 @@ class AppModel extends Model {
             foreach( $this->e_data['value']['Card'] as $karta ) {
                 $uids[$karta['user_id']] = 1; } //przypisz na razie cokolwiek					
         }
-        $uids[4] = 1; // Jola zawsze dostaje			
+        $uids[4] = 1; // Jola zawsze dostaje (a teraz to obsługuje Anię)			
         $uids[15] = 1; // Kubuś zawsze dostaje			
+        $uids[34] = 1; // Karolina zawsze dostaje			
         unset($uids[AuthComponent::user('id')]); // generujący zdarzenie nie dostaje maila
         $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
         $tab = array();
