@@ -120,7 +120,6 @@ class CustomersController extends AppController {
                     $this->request->data['AdresSiedziby']['user_id'] = $this->Auth->user('id');
                     //$this->Customer->print_r2($this->request->data);  return;
 
-                    /* */ //['Customer']['vatno_txt']
                     $caseNR = $this->Customer->validateNIP( $this->request->data );                    
                     //echo '<pre>'; print_r($caseNR); echo  '</pre>'; return;
                     //echo $mth; return;
