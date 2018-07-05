@@ -180,9 +180,9 @@ class Customer extends AppModel {
 			- ostatni znak, to cyfra
 			LUB zamiast NIP'u mamy słowo "BRAK" - dla klientów bez NIP'u */
 
-		$nipWpisanyPrzezHandlowca = $request_data['Customer']['vatno_txt'];
+		$nip = $request_data['Customer']['vatno_txt']; // Wpisany przez handlowca
 		
-		preg_match( NIP_PATTERN, $nipWpisanyPrzezHandlowca, $matches );		
+		preg_match( NIP_PATTERN, $nip, $matches );		
 		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
 			return 1;
 		}
@@ -199,7 +199,13 @@ class Customer extends AppModel {
 			return false; // sytuacja OK
 		}
 		// Chodzi chyba o sprawdzenie, czy edycja
-		$cid = array_key_exists('id' , $request_data['Customer']) ? request_data['Customer']['id'] : 0;
+		//$cid = array_key_exists('id' , $request_data['Customer']) ? request_data['Customer']['id'] : 0;
+
+		$cid = 0;
+		if( array_key_exists('id' , $request_data['Customer']) ) {
+			$cid = $request_data['Customer']['id'];
+		}
+
 
 		// vatno chcemy bez kresek
 		$request_data['Customer']['vatno'] = str_replace('-', '', $request_data['Customer']['vatno_txt']);
