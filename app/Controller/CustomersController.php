@@ -120,23 +120,31 @@ class CustomersController extends AppController {
                     $this->request->data['AdresSiedziby']['user_id'] = $this->Auth->user('id');
                     //$this->Customer->print_r2($this->request->data);  return;
 
-                    // Sprawdźmy czy klient z takim NIP'em czsem nie istnieje już
-                    if( $this->Customer->NIPisOK($this->request->data) )	{ 	
-                            ///$this->Customer->print_r2( $this->request->data );
-                            //return;				
-                            $this->Customer->create();
-                            if ($this->Customer->saveAssociated($this->request->data)) {
-                                /* nie jest flash wymodelowany dla Bootstrapa
-                                $this->Session->setFlash('Klient został zapisany.')); */
-                                return $this->redirect(array('action' => 'view', $this->Customer->id));
-                            } else {					
-                                    $this->Session->setFlash(__('Nie udało się zapisać. Proszę, spróbuj ponownie.'));
-                            }
-                    } else {
-                                    $name = $this->request->data['result']['Customer']['name'];
-                                    $cuid = $this->request->data['result']['Customer']['id'];
-                                    $url = Router::url(array('controller'=>'customers', 'action'=>'view', $cuid));
-                                    $this->Session->setFlash('Klient z tym numerem NIP-u już istnieje: <a href="' . $url . '">' . $name . '</a>');
+                    /* */ //['Customer']['vatno_txt']
+                    $caseNR = $this->Customer->validateNIP( $this->request->data );                    
+                    //echo '<pre>'; print_r($caseNR); echo  '</pre>'; return;
+                    //echo $mth; return;
+
+                    switch( $caseNR ) { // egzaminujemy rezultat sprawdzania NIP'u
+                        case 0: //wsio OK
+                                $this->Customer->create();
+                                if ($this->Customer->saveAssociated($this->request->data)) {                                
+                                        return $this->redirect(array('action' => 'view', $this->Customer->id));
+                                } else {					
+                                        $this->Session->setFlash( ('Nie udało się zapisać. Proszę, spróbuj ponownie.') );
+                                }
+                                break;
+                        case 1: // nieprawidłowy format
+                                $this->Session->setFlash( ('Wpisany NIP ma nieprawidłowy format!') );
+                                break;
+                        case 2: // taki nip już istnieje
+                                $name = $this->request->data['result']['Customer']['name'];
+                                $cuid = $this->request->data['result']['Customer']['id'];
+                                $url = Router::url(array('controller'=>'customers', 'action'=>'view', $cuid));
+                                $this->Session->setFlash('Klient z tym numerem NIP-u już istnieje <a href="' . $url . '">' . $name . '</a>');
+                                break;
+                        default:
+                                $this->Session->setFlash('Nieznany błąd. Zapytaj Darka, jeżeli tu jeszcze pracuje.');
                     }
             }
             if( $this->Auth->user('dzial') == KON ) {

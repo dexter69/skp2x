@@ -146,6 +146,7 @@ class Customer extends AppModel {
 		return null;
 	}
 	
+	// DEPREC
 	public function NIPisOK( &$request_data ) {
 		
 		if( $request_data['Customer']['vatno_txt'] == null ) return true;
@@ -163,14 +164,60 @@ class Customer extends AppModel {
 			$request_data['result'] = $result;
 			return false;	
 		}
-	}        
-        
-	
+	}  
 	
 	/*
-		$options = array('conditions' => array('Customer.' . $this->Customer->primaryKey => $id));
-			$this->request->data = $this->Customer->find('first', $options);
-	*/
+		Zwraca:
+		0 - NIP jest OK i nie ma takiego w bazie,
+		1 - NIP ma nieprawidłowy format,
+		2 - jest już taki NIP w bazie */
+	public function validateNIP(  &$request_data ) {
+
+		/*	Chcemy następujący wzorzec:
+			- 0-3 zaków, będących dużą literą
+			- jedna cyfra
+			- dowolna ilośc cyfr lub "-"
+			- ostatni znak, to cyfra
+			LUB zamiast NIP'u mamy słowo "BRAK" - dla klientów bez NIP'u */
+
+		$nipWpisanyPrzezHandlowca = $request_data['Customer']['vatno_txt'];
+		
+		preg_match( NIP_PATTERN, $nipWpisanyPrzezHandlowca, $matches );		
+		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
+			return 1;
+		}
+		if( $this->jestJuzTakiNIP( $request_data ) ) { // taki NIP jest już w bazie			
+			return 2;
+		}
+		return 0; // Wsio OK
+	}
+	
+	/* Sprawdza, czy podany przez handlowca NIP jest już w bazie */
+	private function jestJuzTakiNIP( &$request_data) {
+
+		if( $request_data['Customer']['vatno'] ==  NO_NIP ) { // Klient z brakiem NIP'u
+			return false; // sytuacja OK
+		}
+		// Chodzi chyba o sprawdzenie, czy edycja
+		$cid = array_key_exists('id' , $request_data['Customer']) ? request_data['Customer']['id'] : 0;
+
+		// vatno chcemy bez kresek
+		$request_data['Customer']['vatno'] = str_replace('-', '', $request_data['Customer']['vatno_txt']);
+
+		// poszukajmy czy taki NIP już jest
+		$result = $this->find('first', array(
+					'conditions' => array(
+						'Customer.vatno' => $request_data['Customer']['vatno'],
+						'Customer.id !=' => $cid )
+		));
+
+		if( !empty($result) ) { // jest już taki NIP
+			$request_data['result'] = $result;
+			return true;
+		}
+		return false;
+	}
+	
 
 /**
  * Zmienna regulująca zależności między wyświetlaniem w widokach a bazą danych

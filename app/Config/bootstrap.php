@@ -143,6 +143,11 @@ if( DS == WIN) { // We are on Windows!
 //Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');
 
 /*
+Lepsza wersja sprawdzania NIP'u */
+define('NIP_PATTERN', '/([A-Z]{0,3}[\d]{2,3}\-?[\d]{2,3}\-?[\d]{2,3}\-?[\d]{0,3})|BRAK/'); // Wzorzec
+define('NO_NIP', 'BRAK'); // Jaki str używamy do zapisu w bazie klienta bbez NIP'u
+
+/*
 	1.08.2017 - stałe do "ANIA serach", update 22.02.2018 */
 // nazwa obiektu w którym bedą przetrzymywane wybrane dane do szukania
 define('NEW_OBJ_NAME','request');
