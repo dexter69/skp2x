@@ -56,4 +56,4 @@ DELIMITER ;
 -- select WYWAL_SPACJE(82) INTO @zmienna;
 -- SET @zmienna = WYWAL_SPACJE(282); SELECT @zmienna;
 
-CALL WYWAL_OD_DO(396, 397);
+CALL WYWAL_OD_DO(1, 1070);
