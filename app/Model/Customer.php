@@ -146,26 +146,6 @@ class Customer extends AppModel {
 		return null;
 	}
 	
-	// DEPREC
-	public function NIPisOK( &$request_data ) {
-		
-		if( $request_data['Customer']['vatno_txt'] == null ) return true;
-		$request_data['Customer']['vatno'] = str_replace('-', '', $request_data['Customer']['vatno_txt']);
-		$cid = 0;
-		if( array_key_exists('id' , $request_data['Customer']) )
-			$cid = $request_data['Customer']['id'];
-		
-		$options = array('conditions' => array( 'Customer.vatno' => $request_data['Customer']['vatno'],
-												'Customer.id !=' => $cid ));
-		$result = $this->find('first', $options);
-		if( empty($result) )		
-			return true;
-		else {
-			$request_data['result'] = $result;
-			return false;	
-		}
-	}  
-	
 	/*
 		Zwraca:
 		0 - NIP jest OK i nie ma takiego w bazie,
