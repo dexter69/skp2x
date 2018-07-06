@@ -4,38 +4,56 @@
 
 DROP FUNCTION IF EXISTS WYWAL_SPACJE;
 
+-- procedura wywalenie spacji z pewnego zakresu rekordow
+DROP PROCEDURE IF EXISTS WYWAL_OD_DO;
+
 DELIMITER $$
 
-CREATE FUNCTION WYWAL_SPACJE(customerId INT) RETURNS VARCHAR(45) -- INT
+CREATE FUNCTION WYWAL_SPACJE(customerId INT) RETURNS INT
 BEGIN
-   DECLARE JEST INT DEFAULT 0;
-   DECLARE WYNIK VARCHAR(45) DEFAULT ""; -- INT DEFAULT 0;
-   DECLARE VATNO_TXTB VARCHAR(45) DEFAULT "ALA MA KOTA";
+   -- DECLARE JEST INT DEFAULT 0;
+   DECLARE WYNIK INT DEFAULT 2; -- INT DEFAULT 0;
+   DECLARE VATNOTXT VARCHAR(45) DEFAULT "";
+   DECLARE VATNONR VARCHAR(45) DEFAULT "";
+   DECLARE VACIK  VARCHAR(45) DEFAULT "";
 
-   -- SET JEST = EXISTS(SELECT * FROM `customers` WHERE id=customerId);
+   IF EXISTS(SELECT * FROM `customers` WHERE id=customerId) > 0 THEN -- Jeżeli taki rekord istnieja
+    SET VACIK = (SELECT  vatno FROM `customers` WHERE id=customerId); 
+    SET VATNONR = (SELECT REPLACE(VACIK, ' ', ''));
+    SET VACIK = (SELECT  vatno_txt FROM `customers` WHERE id=customerId); 
+    SET VATNOTXT = (SELECT REPLACE(VACIK, ' ', ''));
 
-   IF EXISTS(SELECT * FROM `customers` WHERE id=customerId) > 0 THEN
-   -- IF JEST > 0 THEN
-    -- SET WYNIK = "A";
-    -- SET VATNO_TXT = (SELECT  vatno_txt FROM `customers` WHERE id=customerId);
-    -- SET VATNO_TXT = (SELECT  vatno_txt FROM `customers` WHERE id=customerId);
-    -- SELECT  vatno_txt FROM `customers` WHERE id=customerId;
+    -- UAKTUALNIJ NRy, ale bez SPACJI
+    UPDATE `customers`
+        SET vatno = VATNONR, vatno_txt = VATNOTXT
+    WHERE id=customerId;
 
-    SET WYNIK = (SELECT  vatno_txt FROM `customers` WHERE id=customerId); -- = VATNO_TXT;
+    SET WYNIK = 1; 
 
    ELSE
-    SET WYNIK = "DUPA!";
+    SET WYNIK = 0;
    END IF;
 
    RETURN WYNIK;   
 END
 $$
 
+CREATE PROCEDURE WYWAL_OD_DO(od INT, do INT)
+BEGIN
+    DECLARE theId INT;    
+    SET theId = od;
+
+    REPEAT
+        SELECT WYWAL_SPACJE(theId);
+        SET theId = theId + 1;
+    UNTIL theId > do
+    END REPEAT;
+END
+$$
+
 DELIMITER ;
 
 -- select WYWAL_SPACJE(82) INTO @zmienna;
-SET @zmienna = WYWAL_SPACJE(82);
+-- SET @zmienna = WYWAL_SPACJE(282); SELECT @zmienna;
 
-SELECT @zmienna;
-
--- SELECT IF(@zmienna>0, "Rekord istnieje", "Nie ma takiego rekordu");
+CALL WYWAL_OD_DO(396, 397);
