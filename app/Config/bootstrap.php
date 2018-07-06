@@ -144,9 +144,11 @@ if( DS == WIN) { // We are on Windows!
 
 /*
 Lepsza wersja sprawdzania NIP'u */
+// ([A-Z]{2,3})?\d{2,3}\-?\d{2,3}\-?\d{2,3}\-?\d{2,3}
 define('NIP_PATTERN', 
-	//'/([A-Z]{0,3}[\d]{2,3}\-?[\d]{2,3}\-?[\d]{2,3}\-?[\d]{0,3})|BRAK/'
-	'/(([A-Z]{2,3})?\d{2,3}(\-?\d{2,3}){2,3})|BRAK/'
+	// '/([A-Z]{0,3}[\d]{2,3}\-?[\d]{2,3}\-?[\d]{2,3}\-?[\d]{0,3})|BRAK/' - v1
+	// '/(([A-Z]{2,3})?\d{2,3}(\-?\d{2,3}){2,3})|BRAK/' -v2
+	'/(([A-Z]{2,3})?\d{2,3}\-?\d{2,3}\-?\d{2,3}\-?\d{2,3})|BRAK/'
 ); // Wzorzec
 define('NO_NIP', 'BRAK'); // Jaki str używamy do zapisu w bazie klienta bbez NIP'u
 
