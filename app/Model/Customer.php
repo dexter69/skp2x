@@ -175,7 +175,7 @@ class Customer extends AppModel {
 	/* Sprawdza, czy podany przez handlowca NIP jest już w bazie */
 	private function jestJuzTakiNIP( &$request_data) {
 
-		if( $request_data['Customer']['vatno'] ==  NO_NIP ) { // Klient z brakiem NIP'u
+		if( $request_data['Customer']['vatno_txt'] ==  NO_NIP ) { // Klient z brakiem NIP'u
 			return false; // sytuacja OK
 		}
 		// Chodzi chyba o sprawdzenie, czy edycja
