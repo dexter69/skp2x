@@ -1,6 +1,6 @@
 ﻿<?php
 define(CSV, ";");
-$in = "./2018-06-14/maj.csv";
+$in = "./2018-07-12/cze.csv";
 
 
 $arr = []; // tu wrzucimy dane z pliku
