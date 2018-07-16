@@ -7,17 +7,22 @@ SET -- Ustawiamy zmienne
 
 SELECT
 cards.name AS 'Nazwa karty',
-orders.nr AS 'Nr Handlowy',
-cards.ksztalt AS 'Typowa?',
-cards.chip AS "Rodzaj chip'a",
+KSZTALT_KARTY(cards.ksztalt) AS 'Kształt',
+RODZAJ_CHIPA(cards.chip) AS "Rodzaj chip'a",
 cards.ilosc AS 'Ilość',
 cards.price AS 'Kwota jednostkowa',
-cards.id AS idKarty,
-cards.user_id AS Opiekun,
-orders.id AS idZamówienia,
+cards.ilosc * cards.price AS 'Kwota netto',
+IMIE_HANDLOWCA(customers.opiekun_id) AS Opiekun,
 orders.data_publikacji AS 'Data publikacji',
-orders.stop_day AS Termin
+-- orders.stop_day AS Termin,
+orders.id AS idZamówienia,
+orders.nr AS 'Nr Handlowy'
 FROM
-cards INNER JOIN orders ON cards.order_id=orders.id
-WHERE (cards.ksztalt>0 OR cards.chip>0) AND orders.stop_day >= @od AND orders.stop_day < @do AND cards.user_id IN (2,11)
-ORDER BY cards.user_id, orders.stop_day;
+( cards INNER JOIN orders ON cards.order_id=orders.id )
+INNER JOIN customers ON orders.customer_id=customers.id
+WHERE 
+        (cards.ksztalt>0 OR cards.chip>0) AND
+        orders.data_publikacji >= @od AND
+        orders.data_publikacji <= @do AND
+        customers.opiekun_id IN (2,11)
+ORDER BY customers.opiekun_id, orders.nr;
