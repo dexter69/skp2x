@@ -9,11 +9,14 @@ SELECT
 cards.name AS 'Nazwa karty',
 orders.nr AS 'Nr Handlowy',
 cards.ksztalt AS 'Typowa?',
-cards.chip AS "Rodzaj chop'a",
+cards.chip AS "Rodzaj chip'a",
 cards.ilosc AS 'Ilość',
 cards.price AS 'Kwota jednostkowa',
-cards.id,
-cards.user_id,    orders.id, orders.data_publikacji, orders.stop_day
+cards.id AS idKarty,
+cards.user_id AS Opiekun,
+orders.id AS idZamówienia,
+orders.data_publikacji AS 'Data publikacji',
+orders.stop_day AS Termin
 FROM
 cards INNER JOIN orders ON cards.order_id=orders.id
 WHERE (cards.ksztalt>0 OR cards.chip>0) AND orders.stop_day >= @od AND orders.stop_day < @do AND cards.user_id IN (2,11)

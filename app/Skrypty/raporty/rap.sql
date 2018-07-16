@@ -4,32 +4,6 @@ SET -- Ustawiamy zmienne
 @od = '2018-06-01 00:00:00', -- data od
 @do = '2018-06-30 23:59:00'; -- data do
 
-DROP FUNCTION IF EXISTS IMIE_HANDLOWCA;
-
-DELIMITER $$
-
--- Chcemy funkcję zwracającą imię handlowca w zależności od jego id
-CREATE FUNCTION IMIE_HANDLOWCA(handlowiecId INT) RETURNS VARCHAR(25)
-BEGIN
-    -- DECLARE WYNIK VARCHAR(25) DEFAULT "INNY";
-    IF handlowiecId = 2 THEN
-        RETURN "Beata";
-    ELSEIF handlowiecId = 3 THEN
-        RETURN "Agnieszka";
-    ELSEIF handlowiecId = 10 THEN
-        RETURN "Renata";
-    ELSEIF handlowiecId = 11 THEN
-        RETURN "Marzena";
-    ELSEIF handlowiecId = 31 THEN
-        RETURN "Piotr";
-    ELSE 
-        RETURN "INNY";
-    END IF;    
-END
-$$
-
-DELIMITER ;
-
 CREATE TEMPORARY TABLE IF NOT EXISTS table1 AS (
 SELECT
 customers.opiekun_id AS opiekun,
