@@ -67,4 +67,49 @@ BEGIN
 END
 $$
 
+DROP FUNCTION IF EXISTS DB_NR_2_HUMAN
+$$
+
+-- Chcemy funkcję zaminiającą bazodanowy format numeru na ludzki
+CREATE FUNCTION DB_NR_2_HUMAN(dbnr VARCHAR(7)) RETURNS VARCHAR(8)
+BEGIN
+    RETURN CONCAT(
+                    CONVERT( SUBSTRING(dbnr, 3, 5), UNSIGNED INTEGER ),
+                    "/",
+                    SUBSTRING(dbnr, 1, 2)
+            );
+    -- RETURN SUBSTRING(dbnr, 1, 2);
+    
+END
+$$
+
+-- chcemy procedurę, która zmienia "właściciela" podanego zamówienia (id)
+-- zmienia również opiekuna klienta (DEEP), którego to było zamówienie
+DROP PROCEDURE IF EXISTS CHANGE_OWNER_OF_AN_ORDER_DEEP
+$$
+
+CREATE PROCEDURE CHANGE_OWNER_OF_AN_ORDER_DEEP( idZam INT, newOwner INT)
+BEGIN
+
+    DECLARE theCustomerId INT; 
+    SET theCustomerId = (select customer_id from orders where id=idZam);   
+    
+    -- Aktualizujemy karty...
+    update cards
+    set user_id=newOwner, owner_id=newOwner
+    where order_id=idZam;
+
+    -- Oraz zmówienie
+    update orders
+    set user_id=newOwner
+    where id=idZam;
+
+    -- Oraz klienta
+    update customers
+    set user_id=newOwner, owner_id=newOwner, opiekun_id=newOwner
+    where id=theCustomerId;
+    
+END
+$$
+
 DELIMITER ;
