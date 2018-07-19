@@ -12,6 +12,10 @@ $problem: #ffefb5; //podświetlenie wierszy w kartach z problematycznym statusem
 	background-color: $problem;
 }
 
+#karty tr.problem:hover {
+	background-color: lightgreen;
+}
+
 #karta_klient input { width: 97%; }
 
 #karta_klient > div:last-child { width: 40%; }

@@ -45,6 +45,9 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #karty tr.problem {
   background-color: #ffefb5; }
 
+#karty tr.problem:hover {
+  background-color: lightgreen; }
+
 #karta_klient input {
   width: 97%; }
 

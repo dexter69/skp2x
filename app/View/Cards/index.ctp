@@ -1,5 +1,5 @@
 <?php 
-    echo $this->Html->css('card.css?v=201807191456', null, array('inline' => false));
+    echo $this->Html->css('card.css?v=201807191503', null, array('inline' => false));
     echo $this->Ma->walnijJqueryUI();
     echo $this->Ma->jqueryUItoolTip('.process, #karty td');
     echo $this->Html->script(array('card-perso'), array('block' => 'scriptBottom'));
