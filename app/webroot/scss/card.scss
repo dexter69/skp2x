@@ -3,7 +3,14 @@ $data_perso: green;
 
 $perso: MidnightBlue;
 
+$problem: #ffefb5; //podświetlenie wierszy w kartach z problematycznym statusem
+
 @import 'card-multi'; // definicje dla obsługi tworzenia/edycji wielu kart
+
+// karty dla perso z problematycznym statusem
+#karty tr.problem {
+	background-color: $problem;
+}
 
 #karta_klient input { width: 97%; }
 

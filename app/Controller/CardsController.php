@@ -75,7 +75,7 @@ class CardsController extends AppController {
         }
 
 
-
+        $ptodo = false; // mark, potrzebne przy wyróźnianiu dla perso
         switch($par) {
                 case 'all-but-priv':
                     $opcje = array('OR' => array(
@@ -126,12 +126,18 @@ class CardsController extends AppController {
                 break; 
                 case 'ptodo':
                     $opcje = array( 
-                        //'Card.status !=' => array(PRIV, JOBED, KONEC),
-                        // chcemy jednak tylko te co w produkcji
-                        'Card.status' => W_PROD,
+                        /*
+                        'Card.status !=' => array(PRIV, JOBED, KONEC),
+                        chcemy jednak tylko te co w produkcji
+                        - 19.07.2018
+                        Zmieniamy - chcemy lepszą widoczność kart do zrobienie dla perso
+                        Więcej statusów. Tylko jak statusy coś nie teges to im się będzie odpowiednio wyświetlać
+                         */
+                        'Card.status' => [W_PROD, W4DPNO, W4DPOK, DOKPNO, DOKPOK, DNOPNO, DNOPOK, R2BJ, JOBED],
                         'Card.isperso' => 1,
                         'Card.pover' => 0
                     );
+                    $ptodo = true; // stąd wiemy, ze jesteśmy w todo
                 break; 
                 case 'active':
                         $opcje = array('OR' => array(
@@ -162,7 +168,7 @@ class CardsController extends AppController {
                 $cards
         );
         $paramki = $this->request->params;
-        $this->set( compact('cards', /*'karty', 'links'*/ 'par', 'paramki' ) );
+        $this->set( compact('cards', /*'karty', 'links'*/ 'par', 'paramki', 'ptodo' ) );
 
     }
 

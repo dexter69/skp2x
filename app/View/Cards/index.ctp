@@ -1,5 +1,5 @@
 <?php 
-    echo $this->Html->css('card.css?v=3289976734', null, array('inline' => false));
+    echo $this->Html->css('card.css?v=201807191456', null, array('inline' => false));
     echo $this->Ma->walnijJqueryUI();
     echo $this->Ma->jqueryUItoolTip('.process, #karty td');
     echo $this->Html->script(array('card-perso'), array('block' => 'scriptBottom'));
@@ -56,8 +56,15 @@ if( array_key_exists($par, $klasa) )
             <th class="actions"><?php echo __('Actions'); ?></th>-->
 	</tr>
 	<?php $i=0; $pvis = $cards['pvis']; unset($cards['pvis']);
-            foreach ($cards as $card): ?>
-	<tr>
+    foreach ($cards as $card):
+        // klasa dla wierszy, coby wyróżnić karty z problematycznym statusem
+        if(  !($card['Card']['status'] == W_PROD && $card['Order']['status'] == O_ACC) && $ptodo ) {
+            $klaska = "problem";
+        } else {
+            $klaska = "normal"; 
+        }
+    ?>
+	<tr class="<?php echo $klaska?>">
 		<td class="id"><?php echo $card['Card']['id']; ?>&nbsp;</td>
                 <?php
                     $klasa = null;
@@ -174,40 +181,9 @@ if( array_key_exists($par, $klasa) )
 
 <div id="datepicker"></div><div id="komunikat"></div>
 
-<?php $this->Ma->displayActions('cards'); ?>
+<?php $this->Ma->displayActions('cards');
 
-<!--
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Dodaj Kartę'), array('action' => 'add')); ?></li>
-		<li class="prw"></li>
-		<li><?php echo $this->Html->link(__('Dodaj Zamówienie'), array('controller' => 'orders', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('Lista Zamówień'), array('controller' => 'orders', 'action' => 'index')); ?> </li>
-		<li class="prw"></li>
-		<li><?php echo $this->Html->link(__('Dodaj Klienta'), array('controller' => 'customers', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('Lista Klientów'), array('controller' => 'customers', 'action' => 'index')); ?> </li>
-		<li class="prw"></li>
-		<li><?php echo $this->Html->link(__('Dodaj Zlecenie'), array('controller' => 'jobs', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('Lista Zleceń'), array('controller' => 'jobs', 'action' => 'index')); ?> </li>
-		<li class="prw"></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-		
-		<li><?php echo $this->Html->link(__('List Projects'), array('controller' => 'projects', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Project'), array('controller' => 'projects', 'action' => 'add')); ?> </li>
-		
-		
-		
-		<li><?php echo $this->Html->link(__('List Events'), array('controller' => 'events', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Event'), array('controller' => 'events', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+//echo '<pre>'; print_r($cards); echo '</pre>';
+?>
 
--->
 
-<!--  <script>
-    $(function() {
-      $( '.process' ).tooltip();
-    });
-  </script>-->
