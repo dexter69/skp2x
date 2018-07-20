@@ -135,7 +135,9 @@ class CardsController extends AppController {
                          */
                         'Card.status' => [W_PROD, W4DPNO, W4DPOK, DOKPNO, DOKPOK, DNOPNO, DNOPOK, R2BJ, JOBED],
                         'Card.isperso' => 1,
-                        'Card.pover' => 0
+                        'Card.pover' => 0,
+                        'Card.job_id >' => 0,
+                        'Job.status >' => 0                    
                     );
                     $ptodo = true; // stąd wiemy, ze jesteśmy w todo
                 break; 
