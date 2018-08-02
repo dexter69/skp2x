@@ -156,6 +156,7 @@ class CustomersController extends AppController {
 
             $links = $this->links; 
             $this->set( compact('vju', 'links' ) );
+            $this->render('add-old');
 	}
 
 /**
