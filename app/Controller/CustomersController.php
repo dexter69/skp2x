@@ -14,7 +14,7 @@ class CustomersController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-	public $helpers = array('BootHtml', 'Math');
+	public $helpers = array('BootHtml', 'BootForm', 'Math');
 	
 	
 	public function beforeFilter() {
@@ -102,6 +102,20 @@ class CustomersController extends AppController {
             //$this->render('view-old'); 
 	}        
         
+/**
+ * dodaj method --------> dodawanie klienta po nowemu 
+ */
+        public function dodaj() {
+
+                if ($this->request->is('post')) {
+                        // zrób coś z przesłanymi danymi
+                }
+                if( $this->Auth->user('dzial') == KON ) {
+                        //kontrola jakości - przekieruj skąd przyszli 
+                        return $this->redirect($this->referer());
+                }
+
+        }
 
 /**
  * add method
