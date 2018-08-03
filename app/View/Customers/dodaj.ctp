@@ -3,7 +3,10 @@ $this->set('title_for_layout', 'Nowy Klient');
 $this->layout='bootstrap';
 ?>
 
-<form>  
+<form>
+    <div class="row">
+    <?php echo $this->element('customers/nazwaNipWaluta', []); ?>
+    </div>
     <div class="row">
         <div class="col-md-8">
             <?php echo $this->element('customers/adres', []); ?>

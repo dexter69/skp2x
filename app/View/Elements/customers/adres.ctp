@@ -1,8 +1,4 @@
-<div class="row">
-    <div class="form-group col-md-12">
-        <label for="CustomerName">Nazwa skrócona</label>
-        <input type="text" class="form-control" id="CustomerName" placeholder="Skrócona nazwa klienta">
-    </div>
+<div class="row">    
     <div class="form-group col-md-12">
         <label for="AdresSiedzibyName">Nazwa (pełna)</label>
         <input type="text" class="form-control" id="AdresSiedzibyName" placeholder="Pełna nazwa klienta">

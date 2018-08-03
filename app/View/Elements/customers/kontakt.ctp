@@ -22,6 +22,5 @@
             "id" => "CustomerEmail",
             "placeHolder" => "e-mail"
         ]
-    );     
-?>
+    );
 

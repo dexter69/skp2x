@@ -14,19 +14,62 @@ class BootFormHelper extends AppHelper {
      public function formGroup( $label = NULL, $divClass = NULL, $input = [] ) {
 
         
-        $divClass = $divClass ? "form-group " . $divClass : "form-group";
-        $upperPartOfDiv = "<div class=\"$divClass\">";
+        if( !isset($input['id'])  ) { $input['id'] = "id" . time(); }
+        $inputId = $input['id'];
 
-        $time = time();
-        $inputId = isset($input['id']) ? $input['id'] : "id" . time();
-        $inputType = isset($input['type']) ? $input['type'] : "text";
-        $inputClass = isset($input['class']) ? $input['class'] . " form-control" : "form-control";
-        $inputPlaceHolder = isset($input['placeHolder']) ? $input['placeHolder'] : NULL;
-        $poleInput = "<input id=\"$inputId\" type=\"$inputType\" class=\"$inputClass\" placeholder=\"$inputPlaceHolder\">";
+        if( !isset($input['class'])  ) {
+            $input['class'] = "form-control";
+        } else { 
+            $input['class'] .= " form-control";
+        }        
         
+        if( !isset($input['type'])  ) { $input['type'] = "text"; }
+
+        if( $this->isItSelect($input) ) {
+            $poleInput = $this->makeSelectMarkup( $input );
+        } else {                        
+            $poleInput = "<input ";
+            foreach( $input as $key => $value ) {
+                $poleInput .= "$key=\"$value\" ";
+            }                        
+            $poleInput .= ">";
+        }
+
         $poleLabel = "<label for=\"$inputId\">$label</label>";       
         
-        return "$upperPartOfDiv$poleLabel$poleInput</div>";
+        if( $divClass ) {
+            $divClass .= " form-group";
+        } else {
+            $divClass = "form-group";
+        }        
+       
+        return "<div class=\"$divClass\">$poleLabel$poleInput</div>";
+     }
+
+     private function isItSelect( $input = [] ) {
+
+        if( isset($input['type']) && $input['type'] == "select" ) { return true; }
+        return false;
+     }
+
+     private function makeSelectMarkup( $input = [] ) {
+
+        $theId = $input['id']; $theClass = $input['class'];
+        if( $this->isItSelect($input) && isset($input['selectOptions']) ) {            
+            $markup = "<select id=\"$theId\" class=\"$theClass\">";
+            foreach( $input['selectOptions'] as $print => $value ) {
+                $markup .= "<option value=\"$value\">$print</option>";
+            }
+            $markup .= "</select>";
+            return $markup;
+        } else {
+            return $this->errSelectMarkup( $theId ); // zwróć markup pokazujący, ze jest jakiś błąd
+        }
+     }
+
+     private function errSelectMarkup( $inputId ) {
+
+        return "<select id=\"$inputId\" class=\"form-control\"><option value=\"err1\">Err1</option><option value=\"err2\">Err2</option></select>";
      }
     
     //
