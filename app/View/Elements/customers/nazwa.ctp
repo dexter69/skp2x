@@ -2,7 +2,7 @@
 
 echo $this->BootForm->formGroup(
     "Nazwa skrócona",
-    "col-md-8",
+    "col-md-9",
     [
         "id" => "CustomerName",
         "placeHolder" => "krótka nazwa klienta"
