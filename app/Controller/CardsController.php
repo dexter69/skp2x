@@ -134,7 +134,8 @@ class CardsController extends AppController {
                         Więcej statusów. Tylko jak statusy coś nie teges to im się będzie odpowiednio wyświetlać
                          */
                         'Card.status' => [W_PROD, W4DPNO, W4DPOK, DOKPNO, DOKPOK, DNOPNO, DNOPOK, R2BJ, JOBED],
-                        'Card.isperso' => 1,
+                        //'Card.isperso' => 1,
+                        'OR' => ['Card.isperso' => 1, 'Card.ishotstamp' => 1],
                         'Card.pover' => 0,
                         'Card.job_id >' => 0,
                         'Job.status >' => 0                    
