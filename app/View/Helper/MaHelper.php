@@ -1597,7 +1597,7 @@ class MaHelper extends AppHelper {
                         $retcode =
                         '<p class="filtry">'.
                             $this->Html->link( 'DTP?', array( 'controller' => 'cards', 'action' => 'index', 'dtpcheck'), array('class' => $klasa['dtpcheck'])) .
-							$this->Html->link( 'HOT', array( 'controller' => 'cards', 'action' => 'index', 'hot'), array('class' => $klasa['hot'])) .
+							//$this->Html->link( 'HOT', array( 'controller' => 'cards', 'action' => 'index', 'hot'), array('class' => $klasa['hot'])) .
                             $this->Html->link( 'PERSO?', array( 'controller' => 'cards', 'action' => 'index', 'persocheck'), array('class' => $klasa['persocheck'])) .
 
                             $this->Html->link( 'P-ONLY', array( 'controller' => 'cards', 'action' => 'index', 'ponly'), array('class' => $klasa['ponly'])) .
