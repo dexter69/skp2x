@@ -1,8 +1,9 @@
+
 <?php
 
 echo $this->BootForm->formGroup(
     "Czas realizacji",
-    NULL,
+    "col-md-7 col-md-offset-5",
     [
         "id" => "CustomerCr",
         "type" => "number",
@@ -13,7 +14,7 @@ echo $this->BootForm->formGroup(
 
 echo $this->BootForm->formGroup(
     "Waluta",
-    NULL,
+    "col-md-7 col-md-offset-5",
     [
         "id" => "CustomerWaluta",
         "type" => "select",
@@ -23,10 +24,11 @@ echo $this->BootForm->formGroup(
 
 echo $this->BootForm->formGroup(
     "Język etykiety",
-    NULL,
+    "col-md-7 col-md-offset-5",
     [
         "id" => "CustomerEtylang",
         "type" => "select",
         "selectOptions" => ["Polski"=>"pl", "Angielski"=>"en", "Niemiecki"=>"de"] 
     ]
 );
+

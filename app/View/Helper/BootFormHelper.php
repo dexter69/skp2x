@@ -55,10 +55,15 @@ class BootFormHelper extends AppHelper {
      private function makeSelectMarkup( $input = [] ) {
 
         $theId = $input['id']; $theClass = $input['class'];
+        /* $input['default'] powinno zawierać nr kolejnej (nic wspólnego z kluczem -> wartością) opcji,
+          licząc 0, 1, 2 ... */
+        $def = isset($input['default']) ? $input['default'] : NULL; 
         if( $this->isItSelect($input) && isset($input['selectOptions']) ) {            
             $markup = "<select id=\"$theId\" class=\"$theClass\">";
+            $i=0;
             foreach( $input['selectOptions'] as $print => $value ) {
-                $markup .= "<option value=\"$value\">$print</option>";
+                $defMarkup = ( $def === $i++) ? ' selected' : NULL;
+                $markup .= "<option value=\"$value\"$defMarkup>$print</option>";
             }
             $markup .= "</select>";
             return $markup;
