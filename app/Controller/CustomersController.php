@@ -114,7 +114,7 @@ class CustomersController extends AppController {
                         //kontrola jakości - przekieruj skąd przyszli 
                         return $this->redirect($this->referer());
                 }
-                $this->render('dodaj2');                
+                $this->render('dodaj3');                
         }
 
 /**

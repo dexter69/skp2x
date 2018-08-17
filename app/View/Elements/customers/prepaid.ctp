@@ -1,8 +1,10 @@
+<!--
 <div class="row">
+-->
 <?php
 echo $this->BootForm->formGroup(
     "Forma przedpłaty",
-    "col-md-8",
+    "col-md-3",
     [
         "id" => "CustomerFormaZaliczki",
         "type" => "select",
@@ -13,7 +15,7 @@ echo $this->BootForm->formGroup(
 
 echo $this->BootForm->formGroup(
     "%",
-    "col-md-4",
+    "col-md-2",
     [
         "id" => "CustomerProcentZaliczki",
         "type" => "number",
@@ -23,4 +25,6 @@ echo $this->BootForm->formGroup(
     ]
 );
 ?>
+<!--
 </div>
+-->

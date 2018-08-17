@@ -25,16 +25,26 @@ class BootFormHelper extends AppHelper {
         
         if( !isset($input['type'])  ) { $input['type'] = "text"; }
 
-        if( $this->isItSelect($input) ) {
-            $poleInput = $this->makeSelectMarkup( $input );
-        } else {                        
-            $poleInput = "<input ";
-            foreach( $input as $key => $value ) {
-                $poleInput .= "$key=\"$value\" ";
-            }                        
-            $poleInput .= ">";
+        switch( $this->inputType($input) ) {
+            case "select":
+                $poleInput = $this->makeSelectMarkup( $input );
+                break;
+            case "textarea":                
+                unset($input['type']);
+                $poleInput = "<textarea ";
+                foreach( $input as $key => $value ) {
+                    $poleInput .= "$key=\"$value\" ";
+                }                        
+                $poleInput .= "></textarea>";
+                break;
+            default:
+                $poleInput = "<input ";
+                foreach( $input as $key => $value ) {
+                    $poleInput .= "$key=\"$value\" ";
+                }                        
+                $poleInput .= ">";
         }
-
+        
         $poleLabel = "<label for=\"$inputId\">$label</label>";       
         
         if( $divClass ) {
@@ -50,6 +60,24 @@ class BootFormHelper extends AppHelper {
 
         if( isset($input['type']) && $input['type'] == "select" ) { return true; }
         return false;
+     }     
+
+     /*
+     zwraca rodzaj inputa: "select", "textarea", "text" */
+     private function inputType( $input = [] ) {
+
+        if( isset($input['type']) ) {
+
+            switch( $input['type'] ) {
+                case "select":
+                case "textarea":
+                case "text":
+                    return $input['type'];
+                default:
+                    return "text";
+            }
+        }
+        return "text";
      }
 
      private function makeSelectMarkup( $input = [] ) {

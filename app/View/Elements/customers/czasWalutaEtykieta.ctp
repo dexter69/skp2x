@@ -1,4 +1,6 @@
+<!--
 <div class="row">
+-->
 <?php
 //col-md-offset-5
 echo $this->BootForm->formGroup(
@@ -32,4 +34,6 @@ echo $this->BootForm->formGroup(
     ]
 );
 ?>
+<!--
 </div>
+-->
