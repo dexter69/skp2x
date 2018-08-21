@@ -123,11 +123,11 @@ class BootFormHelper extends AppHelper {
         } else {
             $label = isset($opcje['label']) ? $opcje['label'] : null;
             $div = isset($opcje['div']) ? $opcje['div'] : false;
+            $class = isset($opcje['class']) ? $opcje['class'] : 'btn btn-default';
         }
         $options = array(
-            'label' => $label,
-            //'div' => $div,
-            'class' => 'btn btn-default'
+            'label' => $label,            
+            'class' => $class
         );
         if( $div ) {
             $options['div'] = $div;

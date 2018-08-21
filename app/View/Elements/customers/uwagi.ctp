@@ -18,6 +18,6 @@ echo $this->BootForm->formGroup(
         "id" => "CustomerImportant",
         "type" => "textarea",
         "rows" => 6,
-        "placeHolder" => "informacje o których trzeba pamiętać przy zamówieniu - to co tutaj wpiszesz, będzie się pojawiać jako „przypominajka” przy składniu/edycji zamówienia"
+        "placeHolder" => "Informacje o których trzeba pamiętać przy zamówieniu - to co tutaj wpiszesz, będzie się pojawiać jako „przypominajka” przy składniu/edycji zamówienia dla tego klienta."
     ]
 );
