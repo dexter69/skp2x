@@ -1,11 +1,22 @@
 <?php
-
+/*
 echo $this->BootForm->formGroup(
     "Nazwa skrócona",
     "col-md-9",
     [
         "id" => "CustomerName",
         "placeHolder" => "krótka nazwa klienta"
+    ]
+);
+
+Poniższe (metod input) daje dokładnie taki sam rezultat, jak zakomentowane powyższe plus dodatkowo Cake generuje:
+name="data[Customer][Name]
+*/
+echo $this->BootForm->input('Name',
+    [
+        'label' => 'Nazwa skrócona',
+        "placeHolder" => "krótka nazwa klienta",
+        'div' => ['class' => 'col-md-9']
     ]
 );
 
