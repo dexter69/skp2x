@@ -114,6 +114,9 @@ class CustomersController extends AppController {
                         //kontrola jakości - przekieruj skąd przyszli 
                         return $this->redirect($this->referer());
                 }
+                // opcje wyświetlania pól zdefiniowane w modelu
+                $vju = $this->Customer->boot_view_options;
+                $this->set( compact('vju') );
                 $this->render('dodaj3');                
         }
 

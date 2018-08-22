@@ -1,17 +1,7 @@
-<!--
-<div class="row">
--->
 <?php
-echo $this->BootForm->formGroup(
-    "Forma przedpłaty",
-    "col-md-3",
-    [
-        "id" => "CustomerFormaZaliczki",
-        "type" => "select",
-        "selectOptions" => ["BEZ PRZEDPŁATY"=>0, "PRZELEW"=>2, "GOTÓWKA"=>3, "INNA (UWAGI)"=>99],
-        "default" => 1 // nr opcji w tablicy "selectOptions", czyli tu druga (0, 1, 2)
-    ]
-);
+
+$vju['forma_zaliczki']['div'] = ['class' => 'col-md-3']; // wolimy w widoku formatować podział na kolumny
+echo $this->BootForm->input('forma_zaliczki', $vju['forma_zaliczki']);
 
 echo $this->BootForm->formGroup(
     "%",
@@ -24,7 +14,3 @@ echo $this->BootForm->formGroup(
         "value" => 100
     ]
 );
-?>
-<!--
-</div>
--->

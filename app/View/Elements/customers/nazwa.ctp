@@ -15,61 +15,55 @@ name="data[Customer][Name]
 echo $this->BootForm->input('Name',
     [
         'label' => 'Nazwa skrócona',
-        "placeHolder" => "krótka nazwa klienta",
+        'placeHolder' => 'krótka nazwa klienta',
         'div' => ['class' => 'col-md-9']
     ]
 );
 
-echo $this->BootForm->formGroup(
-    "Nazwa pełna",
-    "col-md-12",
+echo $this->BootForm->input('AdresSiedziby.name',
     [
-        "id" => "AdresSiedzibyName",
-        "placeHolder" => "pełna nazwa klienta"
+        'label' => 'Pełna nazwa',
+        'placeHolder' => 'pełna nazwa klienta',
+        'div' => ['class' => 'col-md-12']
     ]
 );
 
-echo $this->BootForm->formGroup(
-    "Ulica",
-    "col-md-9",
+echo $this->BootForm->input('AdresSiedziby.ulica',
     [
-        "id" => "AdresSiedzibyUlica",
-        "placeHolder" => "ulica"
+        'label' => 'Ulica',
+        'placeHolder' => 'ulica',
+        'div' => ['class' => 'col-md-9']
     ]
 );
 
-echo $this->BootForm->formGroup(
-    "Numer",
-    "col-md-3",
+echo $this->BootForm->input('AdresSiedziby.nr_budynku',
     [
-        "id" => "AdresSiedzibyNrBudynku",
-        "placeHolder" => "numer"
+        'label' => 'Numer',
+        'placeHolder' => 'numer',
+        'div' => ['class' => 'col-md-3']
     ]
 );
 
-echo $this->BootForm->formGroup(
-    "Kod",
-    "col-md-3",
+echo $this->BootForm->input('AdresSiedziby.kod',
     [
-        "id" => "AdresSiedzibyKod",
-        "placeHolder" => "kod pocztowy"
+        'label' => 'Kod',
+        'placeHolder' => 'kod pocztowy',
+        'div' => ['class' => 'col-md-3']
     ]
 );
 
-echo $this->BootForm->formGroup(
-    "Miasto",
-    "col-md-5",
+echo $this->BootForm->input('AdresSiedziby.miasto',
     [
-        "id" => "AdresSiedzibyMiasto",
-        "placeHolder" => "miasto"
+        'label' => 'Miasto',
+        'placeHolder' => 'miasto',
+        'div' => ['class' => 'col-md-5']
     ]
 );
 
-echo $this->BootForm->formGroup(
-    "Kraj",
-    "col-md-4",
+echo $this->BootForm->input('AdresSiedziby.kraj',
     [
-        "id" => "AdresSiedzibyKraj",
-        "placeHolder" => "kraj"
+        'label' => 'Kraj',
+        'placeHolder' => 'kraj',
+        'div' => ['class' => 'col-md-4']
     ]
 );

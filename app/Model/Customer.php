@@ -210,6 +210,15 @@ class Customer extends AppModel {
  *
  * @var array
  */
+
+	// formatowania do bootstrap views
+	public $boot_view_options = [
+		'forma_zaliczki'=>	[
+			'label' => 'Forma przedpłaty',			
+			'options' => array(NIE=>'BEZ PRZEDPŁATY', PRZE=>'PRZELEW', CASH=>'GOTÓWKA', PAU=>'INNA (UWAGI)'),
+			'default' => DEF_ZAL_FORM //defaultowa forma zaliczki
+		]
+	];
 	
 	// formatowania do views
 	public $view_options = 
