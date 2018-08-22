@@ -213,10 +213,28 @@ class Customer extends AppModel {
 
 	// formatowania do bootstrap views
 	public $boot_view_options = [
-		'forma_zaliczki'=>	[
+		'forma_zaliczki' =>	[
 			'label' => 'Forma przedpłaty',			
 			'options' => array(NIE=>'BEZ PRZEDPŁATY', PRZE=>'PRZELEW', CASH=>'GOTÓWKA', PAU=>'INNA (UWAGI)'),
 			'default' => DEF_ZAL_FORM //defaultowa forma zaliczki
+		],
+		'procent_zaliczki' => [
+			'label' => '%',						
+			"min"  => 1,
+			"max"  => 100,
+			"value" => 100
+		],
+		'forma_platnosci' => [ 
+			'label' => 'Płatność po',			
+			'options' => array(NIE=>'BRAK', PRZE=>'PRZELEW', CASH=>'GOTÓWKA', POB=>'POBRANIE', PAU=>'INNA (UWAGI)'),
+			'default' => DEF_PAY_FORM //defaultowa forma platnosci
+		],
+		'termin_platnosci' => [
+			'label' => 'Termin',			
+			'default' => DEF_PAY_TIME, //defaultowo ile dni
+			'min' => 1,			
+			'disabled' => false,
+			'required' => true
 		]
 	];
 	

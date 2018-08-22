@@ -11,8 +11,7 @@ echo $this->Form->create();
             <div class="row"> 
                 <?php
                     echo $this->element('customers/nazwa', []); 
-                    echo $this->element('customers/prepaid', []);
-                    echo $this->element('customers/afterpay', []); ?>
+                    echo $this->element('customers/pay', []); ?>
             </div>
         </div>        
         <div class="col-md-4">
