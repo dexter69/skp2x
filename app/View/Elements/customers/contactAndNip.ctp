@@ -1,36 +1,33 @@
-<div class="col-md-12"></div>
 <?php
-echo $this->BootForm->formGroup(
-    "NIP",
-    "col-md-10 col-md-offset-2",
-    [
-        "id" => "CustomerVatnoTxt",
-        "placeHolder" => "nip"
-    ]
-);
-echo $this->BootForm->formGroup(
-    "Osoba kotaktowa",
-    "col-md-12",
-    [
-        "id" => "CustomerOsobaKontaktowa",
-        "placeHolder" => "osoba kotaktowa"
-    ]
+
+echo $this->BootForm->input('vatno_txt',
+[
+    'label' => 'NIP',
+    'placeHolder' => 'nip',
+    'div' => ['class' => 'col-md-10 col-md-offset-2']
+]
 );
 
-echo $this->BootForm->formGroup(
-    "Telefon",
-    "col-md-12",
-    [
-        "id" => "CustomerTel",
-        "placeHolder" => "telefon"
-    ]
-);   
-echo $this->BootForm->formGroup(
-    "E-mail",
-    "col-md-12",
-    [
-        "id" => "CustomerEmail",
-        "placeHolder" => "e-mail"
-    ]
+echo $this->BootForm->input('osoba_kontaktowa',
+[
+    'label' => 'Osoba kontaktowa',
+    'placeHolder' => 'osoba kontaktowa',
+    'div' => ['class' => 'col-md-12']
+]
 );
 
+echo $this->BootForm->input('tel',
+[
+    'label' => 'Telefon',
+    'placeHolder' => 'telefon',
+    'div' => ['class' => 'col-md-12']
+]
+);
+
+echo $this->BootForm->input('email',
+[
+    'label' => 'E-mail',
+    'placeHolder' => 'e-mail',
+    'div' => ['class' => 'col-md-12']
+]
+);
