@@ -235,9 +235,25 @@ class Customer extends AppModel {
 			'min' => 1,			
 			'disabled' => false,
 			'required' => true
+		],
+		'cr' => [
+			'label' => 'Czas realizacji',			
+			'default' => ORD_TIME, //defaultowo ile dni
+			'min' => 1,						
+			'required' => true
+		],
+		'waluta' =>	[					
+			'options' => ['PLN'=>'PLN', 'EUR'=>'EUR', 'USD'=>'USD'],
+			'default' => 'PLN' //defaultowo PLN
+		],
+		'etylang' =>	[	
+			'label' => 'Język etykiety',
+			'options' => ["pl"=>"Polski", "en"=>"Angielski", "de"=>"Niemiecki"] 			
 		]
 	];
 	
+	
+
 	// formatowania do views
 	public $view_options = 
 		array (
