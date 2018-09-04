@@ -1,23 +1,29 @@
+<h1 class="text-primary">NOWY KLIENT</h1>
 <?php
 $this->set('title_for_layout', 'Nowy Klient');
 $this->layout='bootstrap';
+
+echo $this->Form->create();
 ?>
 
-<form>
-    <div class="row">
-    <?php echo $this->element('customers/nazwaNipWaluta', []); ?>
-    </div>
     <div class="row">
         <div class="col-md-8">
-            <?php echo $this->element('customers/adres', []); ?>
-        </div>
+            <div class="row"> 
+                <?php
+                    echo $this->element('customers/nazwa', []); 
+                    echo $this->element('customers/pay', []); ?>
+            </div>
+        </div>        
         <div class="col-md-4">
-            <?php echo $this->element('customers/NIPitd', []);   ?>
+            <div class="row">
+                <?php
+                    echo $this->element('customers/contactAndNip', []);
+                    echo $this->element('customers/czasWalutaEtykieta', []); ?>
+            </div>           
         </div>
     </div>
-    <div class="row">        
-        <?php echo $this->element('customers/kontakt', []);   ?>                     
+    <div class="row">
+        <?php echo $this->element('customers/uwagi', []); ?>
     </div>
-</form>
 
-
+<?php echo $this->BootForm->end(['label' => 'Zapisz', 'class' => 'btn btn-primary']);

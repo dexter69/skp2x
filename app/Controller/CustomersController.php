@@ -117,7 +117,7 @@ class CustomersController extends AppController {
                 // opcje wyświetlania pól zdefiniowane w modelu
                 $vju = $this->Customer->boot_view_options;
                 $this->set( compact('vju') );
-                $this->render('dodaj3');                
+                $this->render('dodaj');                
         }
 
 /**
