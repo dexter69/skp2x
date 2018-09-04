@@ -107,8 +107,10 @@ class CustomersController extends AppController {
  */
         public function dodaj() {
 
+                $request = [];
                 if ($this->request->is('post')) {
-                        // zrób coś z przesłanymi danymi
+                        $request = $this->request->data;
+                        // zrób coś z przesłanymi danymi                        
                 }
                 if( $this->Auth->user('dzial') == KON ) {
                         //kontrola jakości - przekieruj skąd przyszli 
@@ -116,8 +118,8 @@ class CustomersController extends AppController {
                 }
                 // opcje wyświetlania pól zdefiniowane w modelu
                 $vju = $this->Customer->boot_view_options;
-                $this->set( compact('vju') );
-                $this->render('dodaj');                
+                $this->set( compact('vju', 'request') );
+                //$this->render('dodaj');                
         }
 
 /**

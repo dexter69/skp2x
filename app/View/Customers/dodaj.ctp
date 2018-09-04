@@ -27,3 +27,7 @@ echo $this->Form->create();
     </div>
 
 <?php echo $this->BootForm->end(['label' => 'Zapisz', 'class' => 'btn btn-primary']);
+
+if( !empty($request) ) { 
+    $this->App->print_r2($request);
+}

@@ -63,7 +63,7 @@ class Address extends AppModel {
  *
  * @var array
  */
-	public $validate = array(
+	public $validate_ = array(
 	
 		'name' => array(
 			'notEmpty' => array(
