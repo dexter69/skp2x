@@ -110,7 +110,10 @@ class CustomersController extends AppController {
                 $request = [];
                 if ($this->request->is('post')) {
                         $request = $this->request->data;
-                        // zrób coś z przesłanymi danymi                        
+                        // zrób coś z przesłanymi danymi
+                        
+                        // test błędu
+                        $this->Session->setFlash('Bla, bla - jakiś błąd.');                        
                 }
                 if( $this->Auth->user('dzial') == KON ) {
                         //kontrola jakości - przekieruj skąd przyszli 

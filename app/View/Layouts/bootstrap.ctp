@@ -49,12 +49,21 @@
     </head>
     <body>
         <?php 
-            echo $this->Session->flash(); 
-            echo $this->element('navbar');
+        /*
+        echo $this->Session->setFlash('Bla, bla - jakiś błąd.'
+                        //);
+                        , array('element' => '/bootstrap/failure'));
+        */            
+            echo $this->element('navbar');            
         ?>
         
         <div class="container">
-            <?php echo $this->fetch('content'); ?>
+            <?php
+            echo $this->Session->flash(
+                'flash'
+                ,['element' => '/bootstrap/failure']
+            ); 
+            echo $this->fetch('content'); ?>
         </div>
         
         
