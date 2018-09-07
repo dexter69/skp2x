@@ -109,11 +109,21 @@ class CustomersController extends AppController {
 
                 $request = [];
                 if ($this->request->is('post')) {
-                        $request = $this->request->data;
+                        //$request = $this->request->data;
                         // zrób coś z przesłanymi danymi
                         
                         // test błędu
-                        $this->Session->setFlash('Bla, bla - jakiś błąd.');                        
+                        //$this->Session->setFlash('Bla, bla - jakiś błąd.');                        
+
+                        //Testujemy walidację w kontrolerze
+                        $this->Customer->set($this->request->data);
+                        if ($this->Customer->validates()) {
+                                // it validated logic
+                                $request = $this->request->data;
+                            } else {
+                                // didn't validate logic
+                                $request = $this->Customer->validationErrors;                                
+                            }
                 }
                 if( $this->Auth->user('dzial') == KON ) {
                         //kontrola jakości - przekieruj skąd przyszli 

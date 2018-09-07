@@ -412,9 +412,16 @@ class Customer extends AppModel {
 /**
  * Validation rules
  *
- * @var array
+ * @var array * 
  */
-	public $validate = array(
+
+	public $validate = [
+		'vatno_txt' => [
+			'rule' => NIP_PATTERN,
+        	'message' => 'NIP jest nie teges'
+		]
+	];
+	public $validate_ = array(
 		'user_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
