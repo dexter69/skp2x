@@ -145,7 +145,30 @@ class Customer extends AppModel {
                 }
 		return null;
 	}
+
+	/* 2018.09.11 
+		Walidacja po Nowemu
+		- używamy custom validation method, która waliduje, czy NiP ma poprawny format oraz czy jest unikalny
+			(nie ma takiego w bazie )
+		- zwraca true, jeżeli NiP ma poprawy format i jest unikalny lub false, jeżeli któryś z powyższych war.
+			nie jest spełniony
+		- w zmiennej $nipValidationResult przechowywane są wyniki walidacji:
+			0 - nie była dokonywana walidacja
+			1 - OK, NIP ma poprawny format i jest unikalny
+			2 - NIP ma nieprawidłowy format
+			3 - NIP nie jest unikalny
+			9 - inny błąd
+	*/
+
+	public $nipValidationResult = 0; // startowa wartość
+
+	// Sprawdzamy czy NIP ma prawidłowy format oraz czy jest unikalny
+	public function isNipValid( $check ) {
+
+		return false;
+	}
 	
+
 	/*
 		Zwraca:
 		0 - NIP jest OK i nie ma takiego w bazie,
@@ -417,7 +440,7 @@ class Customer extends AppModel {
 
 	public $validate = [
 		'vatno_txt' => [
-			'rule' => NIP_PATTERN,
+			'rule' => 'isNipValid',
         	'message' => 'NIP jest nie teges'
 		]
 	];
