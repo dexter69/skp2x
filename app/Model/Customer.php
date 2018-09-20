@@ -175,8 +175,30 @@ class Customer extends AppModel {
 
 	public $nipValidationResult = 9; // startowa wartość
 
+	/*
+	$nip = $request_data['Customer']['vatno_txt']; // Wpisany przez handlowca
+		
+		preg_match( NIP_PATTERN, $nip, $matches );		
+		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
+			return 1;
+		}
+
+		$value = array_values($check);
+        $value = $value[0];
+
+        return preg_match('|^[0-9a-zA-Z_-]*$|', $value);
+	*/
+
 	// Sprawdzamy czy NIP ma prawidłowy format
 	public function isNipValid( $check ) {
+
+		$value = array_values($check);
+		$nip = $value[0];
+		
+		preg_match( NIP_PATTERN, $nip, $matches );		
+		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
+			return false;
+		}
 
 		return true;
 	}
