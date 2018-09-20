@@ -153,21 +153,39 @@ class Customer extends AppModel {
 		- zwraca true, jeżeli NiP ma poprawy format i jest unikalny lub false, jeżeli któryś z powyższych war.
 			nie jest spełniony
 		- w zmiennej $nipValidationResult przechowywane są wyniki walidacji:
-			0 - nie była dokonywana walidacja
-			1 - OK, NIP ma poprawny format i jest unikalny
-			2 - NIP ma nieprawidłowy format
-			3 - NIP nie jest unikalny
-			9 - inny błąd
+			9 - nie była dokonywana walidacja
+			0 - OK, NIP ma poprawny format i jest unikalny
+			1 - NIP ma nieprawidłowy format
+			2 - NIP nie jest unikalny
+			8 - inny błąd
 	*/
 
-	public $nipValidationResult = 0; // startowa wartość
+	public $validate = [
+		'vatno_txt' => [
+			'format' => [
+				'rule' => 'isNipValid',
+        		'message' => 'NIP ma nieprawidlowy format!'
+			],
+			'unikalny' => [
+				'rule' => 'isNipUnique',
+        		'message' => 'Ten NIP już istnieje!'
+			]			
+		]
+	];
 
-	// Sprawdzamy czy NIP ma prawidłowy format oraz czy jest unikalny
+	public $nipValidationResult = 9; // startowa wartość
+
+	// Sprawdzamy czy NIP ma prawidłowy format
 	public function isNipValid( $check ) {
 
-		return false;
+		return true;
 	}
 	
+	// Sprawdzamy czy NIP jest unikalny
+	public function isNipUnique( $check ) {
+
+		return false;
+	}	
 
 	/*
 		Zwraca:
@@ -438,13 +456,7 @@ class Customer extends AppModel {
  * @var array * 
  */
 
-	public $validate_ = [
-		'vatno_txt' => [
-			'rule' => 'isNipValid',
-        	'message' => 'NIP jest nie teges'
-		]
-	];
-	public $validate = array(
+	public $validate_ = array(
 		'user_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
