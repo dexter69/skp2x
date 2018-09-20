@@ -1,3 +1,9 @@
+form#CustomerDodajForm .error div.error-message {
+  color: red; }
+
+form#CustomerDodajForm .error input, textarea {
+  background-color: #ffcccc; }
+
 body {
   padding-top: 60px; }
 
@@ -27,7 +33,7 @@ nav.navbar li > .glyph {
   font-size: 16px;
   margin-top: 8px;
   margin-bottom: 8px;
-  margin-right: 3.33333px; }
+  margin-right: 3.3333333333px; }
 
 #mojnavbar .logout > a {
   margin-left: 10px;
@@ -73,3 +79,5 @@ nav.navbar li > .glyph {
 
 .my-fixed {
   table-layout: fixed; }
+
+/*# sourceMappingURL=core.css.map */

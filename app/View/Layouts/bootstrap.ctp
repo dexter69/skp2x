@@ -30,17 +30,9 @@
             echo $this->Html->meta('icon');
             
             //echo $this->Html->css( array('bootswatch/custom/bootstrap.min', 'boot/core') );
-            echo $this->BootHtml->css( array('bootswatch/custom/bootstrap.min', 'boot/core.css?v=201706301029'), false );
+            echo $this->BootHtml->css( array('bootswatch/custom/bootstrap.min', 'boot/core.css?v=201809201324'), false );
             ?>
-            <!--
-                wersja local 
-                <link rel="stylesheet" type="text/css" href="/SKP/2x/css/boot/core.css?v=29042200" />
-            -->
-            <!--
-                 wersja na apacz'a
             
-            <link rel="stylesheet" type="text/css" href="/skp/css/boot/core.css?v=29042200" />
-            -->
         <?php
             echo $this->fetch('meta');
             echo $this->fetch('css');
