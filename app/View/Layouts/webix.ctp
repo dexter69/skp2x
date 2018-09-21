@@ -13,8 +13,12 @@
         echo $this->Html->meta('icon');
 
         // Webix CSS & JavaScript =====================
+        /*
         echo $this->Html->css(['/webix/v5.2.1/codebase/webix', '/webix/core.css?v=' . time()]);
         echo $this->Html->script(['/webix/v5.2.1/codebase/webix_debug']);
+        Nowsza wersja poniżej*/
+        echo $this->Html->css(['/webix/v5.4.0/codebase/webix', '/webix/core.css?v=' . time()]);
+        echo $this->Html->script(['/webix/v5.4.0/codebase/webix_debug']);
         
         ?>
     </head>
