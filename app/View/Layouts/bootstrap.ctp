@@ -65,7 +65,8 @@
         <?php
             echo $this->Html->script(array(
                 'jquery-1.11.2.min'
-                , 'bootstrap.min.js'
+                , 'bootstrap/bootstrap.min.js'
+                , 'bootstrap/core'
                 //, 'bootstrap_3.37.min.js'
             ));
             echo $this->fetch('scriptBottom');
