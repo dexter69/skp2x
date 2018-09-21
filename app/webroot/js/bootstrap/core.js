@@ -1,8 +1,8 @@
 /*
 js dla layoutu bootstrap. Używane wszedzie lub często skrypty */
 
-console.log("Hau a nawet Miau!");
 
+// Inicjalizacja wszystkich tooltip'ów na stronie
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });

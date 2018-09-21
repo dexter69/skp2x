@@ -113,8 +113,11 @@ class CustomersController extends AppController {
                         // zrób coś z przesłanymi danymi
                         
                         // test błędu
-                        //$this->Session->setFlash('Bla, bla - jakiś błąd.');                        
+                        //$this->Session->setFlash('Bla, bla - jakiś błąd.');
 
+                        //Polerujemy wpisywane dane
+                        $this->Customer->trimSpaces($this->request->data);
+                        
                         //Testujemy walidację w kontrolerze
                         $this->Customer->set($this->request->data);
                         if ($this->Customer->validates()) {

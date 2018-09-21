@@ -206,8 +206,45 @@ class Customer extends AppModel {
 	// Sprawdzamy czy NIP jest unikalny
 	public function isNipUnique( $check ) {
 
-		return false;
+		$value = array_values($check);
+		$nip = $value[0];
+
+		if( $nip ==  NO_NIP ) { // Klient z brakiem NIP'u
+			return true; 
+		}
+		// vatno chcemy bez kresek
+		$this->vatno = str_replace('-', '', $nip);
+
+		/*
+		$customerId = 0;
+		if( array_key_exists('id' , $request_data['Customer']) ) {
+			$cid = $request_data['Customer']['id'];
+		}
+		*/
+
+		// poszukajmy czy taki NIP już jest
+		$result = $this->find('first', [
+			'conditions' => [
+				'Customer.vatno' => $this->vatno
+				//,'Customer.id !=' => $customerId
+			]
+		]);
+
+		if( !empty($result) ) { // jest już taki NIP
+			return false;
+		}
+		
+		return true;
 	}	
+
+
+	/*
+	Obcinamy spacje na początku i na końcu określonych pól modelu*/
+	public function trimSpaces( &$requestData ) { // oczekuje $this->request->data
+
+		$requestData['Customer']['vatno_txt'] = trim($requestData['Customer']['vatno_txt']);
+		
+	}
 
 	/*
 		Zwraca:
