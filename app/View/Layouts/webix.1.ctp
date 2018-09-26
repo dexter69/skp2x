@@ -28,8 +28,8 @@
             echo $this->fetch('content');         
             echo $this->Html->script(
                 [
-                    'webix/vars.js?v=' . time(),
-                    'webix/app.js?v=' . time()
+                    'request/vars.1.js?v=' . time(),
+                    'request/app.1.js?v=' . time()
                 ],
                 ['charset' => 'utf-8']
             );
