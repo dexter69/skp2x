@@ -1,12 +1,9 @@
-/*
-* Poniżej wykorzystujemy różne obiekty, które są zdefiniowane w components.js
-  Ten plik jest załączany w layoucie webix.ctp powyżej app.js
-*/
+<script type="text/javascript" charset="uyf-8">
 
 webix.ready(function(){ //to ensure that your code is executed after the page is fully loaded
   
   webix.ui({
-    container: "myApp",   
+    //container: "myApp",   
       rows:[
         mainToolbar,
         { 
@@ -20,3 +17,5 @@ webix.ready(function(){ //to ensure that your code is executed after the page is
   });
 
 });
+
+</script>
