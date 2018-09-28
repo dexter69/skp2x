@@ -1,2 +1,16 @@
-.webix_sidebar,.webix_sidebar_popup_title{background-color:#e0f2f2}
+@charset "UTF-8";
+/* Kolor sidebar'a */
+.webix_sidebar, .webix_sidebar_popup_title {
+  background-color: #e0f2f2; }
+
+/* to były definicje dla aplikacji w kontenerze
+#myApp {
+    //max-width: 1170px;
+    height: 800px;
+    // min-height: 600px; max-height: 800px; background-color: #08e6cf;
+    margin-left: auto;
+    margin-right: auto;    
+}
+*/
+
 /*# sourceMappingURL=core.css.map */
