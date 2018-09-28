@@ -6,7 +6,8 @@ function logoutHandler(){
 let userInfo = { 
     view:"button", type:"icon", icon:"user",
     label: globalAppData.loggedInUser.name, // Tu leci Imię zalogowanego użytkownika
-    width:95, id:'xyz', css:'kwa-mia-hau',    
+    width: 110, id:'userInfoToolbar',
+    css:'kwa-mia-hau',    // w celach testowych
     click: logoutHandler   
 };
 // takie testowe było { view: "button", type: "icon", value: "Zosia", width: 65, css: "app_button", icon: "user-o",  badge:"Darek"};
