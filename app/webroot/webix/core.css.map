@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,yCAA2C,CACvC,gBAAgB,CAAE,OAAO",
+"sources": ["core.scss"],
+"names": [],
+"file": "core.css"
+}

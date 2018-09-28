@@ -1,17 +1,2 @@
-#myApp{
-    /*max-width: 1170px;*/
-    height: 800px;
-    /*
-    min-height: 600px;
-    max-height: 800px;
-    background-color: #08e6cf;
-    */
-    margin-left: auto;
-    margin-right: auto;    
-}
-
-/* Kolor sidebar'a */
-
-.webix_sidebar, .webix_sidebar_popup_title {
-    background-color: #e0f2f2;
-}
+.webix_sidebar,.webix_sidebar_popup_title{background-color:#e0f2f2}
+/*# sourceMappingURL=core.css.map */
