@@ -1,0 +1,1 @@
+let allTheRest = { template: ""};
