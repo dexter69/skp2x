@@ -1,9 +1,13 @@
 //Top toolbar
+function logoutHandler(){
+    window.open(globalAppData.config.logoutUrl, "_self");
+}
 
 let userInfo = { 
     view:"button", type:"icon", icon:"user",
     label: globalAppData.loggedInUser.name, // Tu leci Imię zalogowanego użytkownika
-    width:95, id:'xyz', css:'kwa-mia-hau'
+    width:95, id:'xyz', css:'kwa-mia-hau',    
+    click: logoutHandler   
 };
 // takie testowe było { view: "button", type: "icon", value: "Zosia", width: 65, css: "app_button", icon: "user-o",  badge:"Darek"};
 
@@ -25,6 +29,8 @@ let mainToolbar = {
         //{ view: "button", type: "icon", width: 45, css: "app_button", icon: "bell-o",  badge:10}
     ]
 };
+
+
 
 
 

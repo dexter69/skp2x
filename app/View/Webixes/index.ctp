@@ -3,7 +3,10 @@
 /*
 Globalny obiekt, przechowywyjący różne użyteczne dane */
 var globalAppData = {
-    loggedInUser: <?php echo json_encode($loggedInUser); ?> // Info o zalogowanym użytkowniku
+    loggedInUser: <?php echo json_encode($loggedInUser); ?>, // Info o zalogowanym użytkowniku
+    config: { // różnorakie przydatne dane
+        logoutUrl: "/users/logout"
+    }
 };
 
 
