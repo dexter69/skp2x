@@ -1,10 +1,11 @@
 //Top toolbar
 
-let userInfo = 
-//{ view: "button", type: "icon", value: "Zosia", width: 65, css: "app_button", icon: "user-o",  badge:"Darek"};
-{ view:"button", type:"icon", icon:"user", label: "Gibon"//globalAppData.loggedInUser.name
-, width:95, id:'xyz', css:'kwa-mia-hau'
+let userInfo = { 
+    view:"button", type:"icon", icon:"user",
+    label: globalAppData.loggedInUser.name, // Tu leci Imię zalogowanego użytkownika
+    width:95, id:'xyz', css:'kwa-mia-hau'
 };
+// takie testowe było { view: "button", type: "icon", value: "Zosia", width: 65, css: "app_button", icon: "user-o",  badge:"Darek"};
 
 let mainToolbar = {
     responsive: true,
