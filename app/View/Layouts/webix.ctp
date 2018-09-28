@@ -22,17 +22,21 @@
         ]);
         echo $this->Html->script([
             '/webix/v5.4.0/codebase/webix_debug',
-            '/webix/v5.4.0/skin/504a75b5/skin', // potrzebne do skórki -> patrz readme.txt
-            //Rzeczy potrzebne aplikacji
-            '/webix/app/js/layout/mainToolbar.js?v=' . time(),
-            '/webix/app/js/layout/leftSidebar.js?v=' . time(),
-            '/webix/app/js/content/allTheRest.js?v=' . time()
+            '/webix/v5.4.0/skin/504a75b5/skin', // potrzebne do skórki -> patrz readme.txt            
         ]);
         
         ?>
     </head>
     <body>        
-        <?php echo $this->fetch('content'); ?>
-        <!--<div id="myApp"></div>  kontener dla naszej aplikacji powinien - był po body-->
+        <?php
+            echo $this->fetch('content'); 
+        
+            echo $this->Html->script([
+                //Rzeczy potrzebne aplikacji
+                '/webix/app/js/layout/mainToolbar.js?v=' . time(),
+                '/webix/app/js/layout/leftSidebar.js?v=' . time(),
+                '/webix/app/js/content/allTheRest.js?v=' . time()
+            ]);
+        ?>
     </body>
 </html>
