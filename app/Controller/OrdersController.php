@@ -227,7 +227,7 @@ class OrdersController extends AppController {
 			break;
 			case 'today': //zmieniamy DZIŚ+, czyli na dziś i przeterminowane
 				$opcje = [
-					'Order.stop_day >' => date('Y-m-d', strtotime('-60 days')), // starsze niż x days
+					'Order.stop_day >' => date('Y-m-d', strtotime('-30 days')), // starsze niż x days
 					'Order.stop_day <=' => date('Y-m-d'),
 					'Order.status !=' => [KONEC, PRIV] // prywatnych też nie chcemy
 				];			
