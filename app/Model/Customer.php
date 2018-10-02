@@ -160,7 +160,7 @@ class Customer extends AppModel {
 			8 - inny błąd
 	*/
 
-	public $validate = [
+	public $validate_new = [
 		'vatno_txt' => [
 			'format' => [
 				'rule' => 'isNipValid',
@@ -515,7 +515,7 @@ class Customer extends AppModel {
  * @var array * 
  */
 
-	public $validate_ = array(
+	public $validate = array(
 		'user_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
