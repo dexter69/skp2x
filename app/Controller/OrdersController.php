@@ -226,7 +226,11 @@ class OrdersController extends AppController {
 				$opcje = array('Order.status' => KONEC);
 			break;
 			case 'today': //zmieniamy DZIŚ+, czyli na dziś i przeterminowane
-				$opcje = array('Order.stop_day <=' => date('Y-m-d'), 'Order.status !=' => KONEC);			
+				$opcje = [
+					'Order.stop_day >' => date('Y-m-d', strtotime('-180 days')), // starsze niż x days
+					'Order.stop_day <=' => date('Y-m-d'),
+					'Order.status !=' => [KONEC, PRIV] // prywatnych też nie chcemy
+				];			
 				$this->Paginator->settings = array(
         			'order' => array(
             		'Order.stop_day' => 'desc'
