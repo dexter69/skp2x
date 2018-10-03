@@ -196,11 +196,7 @@ class OrdersController extends AppController {
     					'Order.status !=' => PRIV
 					));
 				break;
-			case 'my':/*
-				$orders = $this->Paginator->paginate(
-					'Order',
-					array('Order.user_id' => $this->Auth->user('id'))
-				);*/
+			case 'my':
 				$opcje = array('Order.user_id' => $this->Auth->user('id'));
 			break;
 			case 'accepted':
@@ -227,7 +223,9 @@ class OrdersController extends AppController {
 			break;
 			case 'today': //zmieniamy DZIŚ+, czyli na dziś i przeterminowane
 				$opcje = [
-					'Order.stop_day >' => date('Y-m-d', strtotime('-30 days')), // starsze niż x days
+					//'Order.stop_day >' => date('Y-m-d', strtotime('-68 days')), // starsze niż x days
+					//NA_DZIS_PLUS
+					'Order.stop_day >' => date('Y-m-d', strtotime('-' . NA_DZIS_PLUS . 'days')), // starsze niż x days
 					'Order.stop_day <=' => date('Y-m-d'),
 					'Order.status !=' => [KONEC, PRIV] // prywatnych też nie chcemy
 				];			

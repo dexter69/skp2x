@@ -129,6 +129,9 @@ Configure::write('CakePdf', array(
 	//'filename' => 'example.pdf'	
 ));
 
+define('NA_DZIS_PLUS', '7'); /* decyduje o ile dni opóźnione zamówienia,
+wyświetlają się na liście „na dziś +” */
+
 //UŻYJEMY zamiast DEVEL
 define('LIN', "/");
 define('WIN', "\\");
