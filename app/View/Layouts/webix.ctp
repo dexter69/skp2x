@@ -33,7 +33,9 @@
         
             echo $this->Html->script([
                 //Rzeczy potrzebne aplikacji
+                '/webix/app/js/content/orders/privateOrders.js?v=' . time(),
                 '/webix/app/js/content/orders/addNewQuickOrder.js?v=' . time(),
+                
                 '/webix/app/js/layout/mainToolbar.js?v=' . time(),
                 '/webix/app/js/layout/leftSidebar.js?v=' . time(),                
                 '/webix/app/js/layout/allTheRest.js?v=' . time()

@@ -1,11 +1,10 @@
-
-
 let allTheRest = {
     padding:50,
     type:"space",
     rows: [ 
-        {type: 'header', template: 'Tu będzie sterujacy toolbar probably ...'},
-        addNewQuickOrder
+        {type: 'header', template: 'Tu będzie sterujący toolbar probably ...'},
+        //addNewQuickOrder
+        privateOrders
     ]
 };
 
