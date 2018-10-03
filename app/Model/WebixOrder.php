@@ -9,7 +9,7 @@ class WebixOrder extends AppModel {
     public function getAllPrivateOrders( $idHandlowca = 0 ) {
 
         $searchParams = [
-            'fields' => ['id', 'user_id', 'nr', 'status'],
+            //'fields' => ['id', 'user_id', 'nr', 'status'],
             'conditions' => ['WebixOrder.status' => 0]
         ];
 
