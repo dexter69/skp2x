@@ -14,7 +14,16 @@ let test = {
             { template:"Col 2", gravity: 0.8 }
           ]
         }
-        /*
+    ]
+};
+
+let allTheRest = {
+    
+    
+    rows: [ test ]
+};
+
+/*  Some toolbar
         { view:"toolbar", id:"mybar", elements:[
             //{}, {}
             
@@ -26,12 +35,3 @@ let test = {
             ]
         },
         */
-        
-    ]
-};
-
-let allTheRest = {
-    
-    
-    rows: [ test ]
-};
