@@ -1,7 +1,7 @@
 let quickHandlowe = {
     template:"Quick Handlowe"
 };
-let test = {
+let addNew = {
     type:"space",
     padding:50,
     //margin:60,
