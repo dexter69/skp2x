@@ -34,7 +34,7 @@ let prywatneZamowienia = [
     { id:4, orderId:3994, costomerName:"Pulp fiction",              termin: '23 X 2018', status: 'PRYWATNE'}
 ];
 
-function gibon( argument ) { return argument; }
+function gibon( argument ) { return argument;}
 
 // Tabela ze zleceniami
 
