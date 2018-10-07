@@ -16,7 +16,7 @@ class WebixOrdersController extends AppController {
 
         $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
         $theOrdersFormated = $this->formatForWebix($theOrders);
-        //$theOrders[] = ['paramaetr' => $idHandlowca ];
+        
         $this->set(compact(['theOrders', 'theOrdersFormated']));
         $this->set('_serialize', 'theOrdersFormated');
     }
@@ -26,7 +26,17 @@ class WebixOrdersController extends AppController {
 
         $out = [];
         foreach( $in as $row ) {
-            $out[] = $row['WebixOrder'];
+            
+            $outRow = $row['WebixOrder'];
+            if( $outRow['nr'] ) { // Mimo, ze to prywatne, niektóre mają numery
+                $outRow['nrTxt'] = $this->WebixOrder->bnr2nrh2($outRow['nr'], $row['WebixOrderCreator']['inic'], false);
+            } else {
+                $outRow['nrTxt'] = null;
+            }
+            $outRow['customerName'] = $row['WebixCustomer']['name'];
+            $outRow['customerEmail'] = $row['WebixCustomer']['email'];
+            $outRow['creatorName'] = $row['WebixOrderCreator']['name'];            
+            $out[] = $outRow;
         }
         return $out;
     }
