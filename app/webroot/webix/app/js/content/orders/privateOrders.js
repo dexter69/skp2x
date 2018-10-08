@@ -2,13 +2,13 @@
 
 // Tabela ze zleceniami
 
-let privateOrders = {
+let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
 	view:"datatable",	
     columns:[
         { id:"index", header:"", sort:"int", adjust:true },
         { id:"id", header:"id", adjust:true },
-        { id: "customerName", header:"Klient",  fillspace:true },
-        { id: "creatorName", header:"Opiekun", adjust:true },
+        { id: "customerName", header: "Klient",  fillspace:true },                
+        { id: "creatorName", header: [{content:'selectFilter'} ] , width:105 },
         { id: 'stop_day', header:"Termin", adjust: true }        
     ],
     scheme:{
