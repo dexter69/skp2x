@@ -35,7 +35,8 @@ class WebixOrder extends AppModel {
                 'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email',
                 'WebixOrderCreator.id', 'WebixOrderCreator.name', 'WebixOrderCreator.inic'
             ],
-            'conditions' => ['WebixOrder.status' => 0, 'WebixOrder.user_id <' => 10]            
+            'conditions' => ['WebixOrder.status' => 0]//, 'WebixOrder.user_id <' => 10] 
+            ,'order' => 'WebixOrder.id DESC'           
         ];
 
         if( $idHandlowca ) {
