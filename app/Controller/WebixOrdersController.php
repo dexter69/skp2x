@@ -44,10 +44,10 @@ class WebixOrdersController extends AppController {
     public function testData() {
 
         $prywatneZamowienia = [
-            [ 'id'=>1, 'orderId'=> 9946, 'costomerName'=>"Klient 1",  'termin'=> '29 XI 2018', 'status'=> 'PRYWATNE'],
-            [ 'id'=>2, 'orderId'=> 2569, 'costomerName'=>"The Godfather jest słaby",             'termin'=> '19 XI 2018', 'status'=> 'PRYWATNE'],
-            [ 'id'=>3, 'orderId'=> 6974, 'costomerName'=>"Multiklient",    'termin'=> '15 XI 2018', 'status'=> 'PRYWATNE'],
-            [ 'id'=>4, 'orderId'=> 3994, 'costomerName'=>"Pulp friction klient",              'termin'=> '23 XI 2018', 'status'=> 'PRYWATNE']
+            [ 'id'=>1, 'opiekun'=>'Beta', 'orderId'=> 9946, 'customerName' => "Klient 1",  'termin'=> '29 XI 2018', 'status'=> 'PRYWATNE'],
+            [ 'id'=>2, 'opiekun'=>'Renata', 'orderId'=> 2569, 'customerName' => "The Godfather jest słaby",             'termin'=> '19 XI 2018', 'status'=> 'PRYWATNE'],
+            [ 'id'=>3, 'opiekun'=>'Agnieszka', 'orderId'=> 6974, 'customerName' => "Multiklient",    'termin'=> '15 XI 2018', 'status'=> 'PRYWATNE'],
+            [ 'id'=>4, 'opiekun'=>'Marzena', 'orderId'=> 3994, 'customerName' => "Pulp friction klient",              'termin'=> '23 XI 2018', 'status'=> 'PRYWATNE']
         ];
 
         $this->set(compact('prywatneZamowienia'));
