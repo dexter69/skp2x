@@ -29,14 +29,7 @@ Thumbs.db
 # Skrypty #
 ######################
 /app/Skrypty/xyz/
-/app/Skrypty/raporty/2018-03-07/*.csv
-/app/Skrypty/raporty/2018-04-03
-/app/Skrypty/raporty/2018-05-17
-/app/Skrypty/raporty/2018-06-14
-/app/Skrypty/raporty/2018-07-12
-/app/Skrypty/raporty/2018-07-16
-/app/Skrypty/raporty/2018-08-09
-/app/Skrypty/raporty/2018-09-11
+/app/Skrypty/raporty/DANE
 /app/Skrypty/kody/Agnieszka/bazy/*
 
 # Webix #

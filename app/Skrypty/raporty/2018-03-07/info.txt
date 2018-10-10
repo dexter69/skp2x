@@ -1,1 +1,0 @@
-tu znajdują sę wyniki, ale dałem do gitignore, więc niem na Githyb'ie
