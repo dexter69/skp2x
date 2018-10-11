@@ -7,15 +7,48 @@ App::uses('AppController', 'Controller');
 
 class WebixOrdersController extends AppController {
 
+    /*
+    testuje webix wrap dla privateOrders */
+    public function privOrders() {
+
+        $this->privateOrders();
+    }
     
     /*
     Czyje prywatne chcemy? Jezeli $idHandlowca == 0, to wszystkie */
-    public function privateOrders( $idHandlowca = 0 ) { 
+    public function privateOrders() {  
 
         //$this->request->onlyAllow('ajax');
+        $idHandlowca = 0;
+        $webixData = $this->request->data; // co nam webix przesłał
 
-        $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
-        $theOrdersFormated = $this->formatForWebix($theOrders);
+        // sprawdzamy, czy mamy od Webix'a to co potrzebujemy
+        if( array_key_exists("filter" , $webixData) ) { // dlaczego "creatorName" ?
+            // tak -> to szukamy w bazie po imieniu Handlowca - tak na ten moment działa filtr Webix
+            //$theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca, $webixData["creatorName"] );
+            $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
+            $theOrdersFormated = $this->formatForWebix($theOrders);
+            $theOrdersFormated[] = $webixData; 
+            $decoded = json_decode($webixData["filter"], true);
+            $theOrdersFormated[] = [
+                //'name' => $webixData["creatorName"]
+                'xyz' => $decoded["creatorName"]
+            ];
+        } else {
+            // Nie - po prostu znajdź wszystkie prywatne dla wszystkich handlowców
+            $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
+            $theOrdersFormated = $this->formatForWebix($theOrders);
+            $theOrdersFormated[] = $webixData; 
+        }
+
+        
+        
+
+        
+
+        
+
+        //$theOrdersFormated[] = ['kwa' => 'muu'];
         
         $this->set(compact(['theOrders', 'theOrdersFormated']));
         $this->set('_serialize', 'theOrdersFormated');

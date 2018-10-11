@@ -18,7 +18,10 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     //data: prywatneZamowienia
     //data: gibon(prywatneZamowienia)   
     //url: "webixOrders/testData.json"
-    url: "rest->webixOrders/privateOrders/0.json"    
+    //url: "rest->webixOrders/privateOrders/0.json"    
+    //url: "post->webixOrders/privateOrders.json"    //
+    url: "post->webixOrders/privOrders.json"
+    //url: "webixOrders/privOrders.json"
 };
 
 function gibon( argument ) { return argument;}
