@@ -8,50 +8,35 @@ App::uses('AppController', 'Controller');
 class WebixOrdersController extends AppController {
 
     /*
-    testuje webix wrap dla privateOrders */
-    public function privOrders() {
+    Czyje prywatne chcemy?  */    
 
-        $this->privateOrders();
-    }
-    
-    /*
-    Czyje prywatne chcemy? Jezeli $idHandlowca == 0, to wszystkie */
-    public function privateOrders() {  
-
-        //$this->request->onlyAllow('ajax');
-        $idHandlowca = 0;
-        $webixData = $this->request->data; // co nam webix przesłał
-
+    public function getPrivateOrders() {
         // sprawdzamy, czy mamy od Webix'a to co potrzebujemy
-        if( array_key_exists("filter" , $webixData) ) { // dlaczego "creatorName" ?
-            // tak -> to szukamy w bazie po imieniu Handlowca - tak na ten moment działa filtr Webix
-            //$theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca, $webixData["creatorName"] );
+        if( array_key_exists("filter" , $this->request->data) ) { // taki format daje nam Webixowy serverSelectFilter
+            //$name = $this->extractTheName($this->request->data["filter"]);
+            $idHandlowca = $this->extractTheId($this->request->data["filter"]);
+            //$theOrders = $this->WebixOrder->getAllPrivateOrdersByUserName( $name );
             $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
-            $theOrdersFormated = $this->formatForWebix($theOrders);
-            $theOrdersFormated[] = $webixData; 
-            $decoded = json_decode($webixData["filter"], true);
-            $theOrdersFormated[] = [
-                //'name' => $webixData["creatorName"]
-                'xyz' => $decoded["creatorName"]
-            ];
         } else {
-            // Nie - po prostu znajdź wszystkie prywatne dla wszystkich handlowców
-            $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
-            $theOrdersFormated = $this->formatForWebix($theOrders);
-            $theOrdersFormated[] = $webixData; 
+            // Nie - po prostu znajdź wszystkie prywatne dla wszystkich handlowców            
+            $theOrders = $this->WebixOrder->getAllPrivateOrders();
         }
+        $theOrdersFormated = $this->formatForWebix($theOrders);        
 
-        
-        
-
-        
-
-        
-
-        //$theOrdersFormated[] = ['kwa' => 'muu'];
-        
         $this->set(compact(['theOrders', 'theOrdersFormated']));
         $this->set('_serialize', 'theOrdersFormated');
+    }
+
+    private function extractTheId( $filterData = "" ) {
+
+        $decoded = json_decode($filterData, true); // spodziewamy się json string
+        return (int)$decoded["creatorName"]; // dlaczego "creatorName" ?
+    }
+
+    private function extractTheName( $filterData = "" ) {
+
+        $decoded = json_decode($filterData, true); // spodziewamy się json string
+        return $decoded["creatorName"]; // dlaczego "creatorName" ?
     }
 
     // Formatujemy dane dla Webix'a
