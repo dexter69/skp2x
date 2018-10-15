@@ -17,11 +17,14 @@ class WebixOrdersController extends AppController {
             $idHandlowca = $this->extractTheId($this->request->data["filter"]);
             //$theOrders = $this->WebixOrder->getAllPrivateOrdersByUserName( $name );
             $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
+            //$theOrders = [];
         } else {
             // Nie - po prostu znajdź wszystkie prywatne dla wszystkich handlowców            
+            //$theOrders = $this->WebixOrder->getAllPrivateOrders($this->request->data['opiekunId']);
             $theOrders = $this->WebixOrder->getAllPrivateOrders();
         }
-        $theOrdersFormated = $this->formatForWebix($theOrders);        
+        $theOrdersFormated/*['records']*/ = $this->formatForWebix($theOrders);   
+        //$theOrdersFormated['rq'] = $this->request->data['opiekunId'];     
 
         $this->set(compact(['theOrders', 'theOrdersFormated']));
         $this->set('_serialize', 'theOrdersFormated');
