@@ -40,6 +40,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
                 {id: 8, value: "Orangutan"}
             ];
             $$("privo").refreshFilter();
+            this.getFilter("creatorName").value = 7;            
         }
     } 
 };
