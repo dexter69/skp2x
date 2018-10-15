@@ -25,9 +25,10 @@ class WebixOrdersController extends AppController {
         }
         $theOrdersFormated/*['records']*/ = $this->formatForWebix($theOrders);   
         //$theOrdersFormated['rq'] = $this->request->data['opiekunId'];     
-
+        sleep(2);
         $this->set(compact(['theOrders', 'theOrdersFormated']));
         $this->set('_serialize', 'theOrdersFormated');
+        
     }
 
     private function extractTheId( $filterData = "" ) {
