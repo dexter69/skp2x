@@ -11,6 +11,23 @@ class WebixOrdersController extends AppController {
     Czyje prywatne chcemy?  */    
 
     public function getPrivateOrders() {
+        
+        // sprawdzamy, czy mamy od Webix'a to co potrzebujemy
+        if( array_key_exists("filter" , $this->request->data) ) { // taki format daje nam Webixowy serverSelectFilter
+            $idHandlowca = $this->extractTheId($this->request->data["filter"]);
+            $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
+        } else {
+            $theOrders = $this->WebixOrder->getAllPrivateOrders();
+        }
+        $theOrdersFormated/*['records']*/ = $this->formatForWebix($theOrders);   
+        $theOrdersFormated[] = ['hau'=>'miau', 'kwa'=>'muu'];
+        //$theOrdersFormated['rq'] = $this->request->data['opiekunId'];     
+        //sleep(1);
+        $this->set(compact(['theOrders', 'theOrdersFormated']));
+        $this->set('_serialize', 'theOrdersFormated');
+    }
+
+    public function getPrivateOrders_() {
         // sprawdzamy, czy mamy od Webix'a to co potrzebujemy
         if( array_key_exists("filter" , $this->request->data) ) { // taki format daje nam Webixowy serverSelectFilter
             //$name = $this->extractTheName($this->request->data["filter"]);
@@ -25,7 +42,7 @@ class WebixOrdersController extends AppController {
         }
         $theOrdersFormated/*['records']*/ = $this->formatForWebix($theOrders);   
         //$theOrdersFormated['rq'] = $this->request->data['opiekunId'];     
-        sleep(2);
+        sleep(1);
         $this->set(compact(['theOrders', 'theOrdersFormated']));
         $this->set('_serialize', 'theOrdersFormated');
         

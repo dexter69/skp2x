@@ -2,6 +2,26 @@
 
 // Tabela ze zleceniami
 
+webix.ui({
+    view:"datatable",
+    autoConfig:true,
+    url:function(details){
+        return webix.ajax("data.php?filterByUser="+userId).then(function(data){
+            var js = data.json();
+            var new_js = [];
+ 
+            for (key in js){
+                new_js.push({
+                    id:key, 
+                    name:js[key].name
+                });
+            };
+ 
+            return new_js;
+        })
+    }
+});
+
 let opcje = globalAppData.privHandlowcy;
 
 let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
@@ -18,7 +38,23 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     scheme:{
         $init:function(obj){ obj.index = this.count(); }
     },    
-    url: "post->webixOrders/getPrivateOrders.json",
+    urlx: "post->webixOrders/getPrivateOrders.json",
+    //https://docs.webix.com/desktop__server_customload.html
+    url:function(details){
+        return webix.ajax("data.php?filterByUser="+userId).then(function(data){
+            var js = data.json();
+            var new_js = [];
+ 
+            for (key in js){
+                new_js.push({
+                    id:key, 
+                    name:js[key].name
+                });
+            };
+ 
+            return new_js;
+        })
+    },
     //data: testABC(),
     //data: getTheRecords(0),//testABC(),
     //on:{'onItemClick': function(){alert("you have clicked an item");}} 
@@ -33,7 +69,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
             getTheRecords(theCreatorId);
         },
         //alert("onBeforeFilter");
-        'onAfterFilter': function(){
+        'onAfterFilterX': function(){
             webix.message("onAfterFilter");   
             privateOrders.columns[3].header[0].options = [
                 {id: 7, value: "Gibon"},
