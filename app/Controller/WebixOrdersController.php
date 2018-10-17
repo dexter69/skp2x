@@ -10,54 +10,24 @@ class WebixOrdersController extends AppController {
     /*
     Czyje prywatne chcemy?  */    
 
-    public function getPrivateOrders() {
-        
-        // sprawdzamy, czy mamy od Webix'a to co potrzebujemy
-        if( array_key_exists("filter" , $this->request->data) ) { // taki format daje nam Webixowy serverSelectFilter
-            $idHandlowca = $this->extractTheId($this->request->data["filter"]);
-            $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
-        } else {
-            $theOrders = $this->WebixOrder->getAllPrivateOrders();
-        }
-        $theOrdersFormated/*['records']*/ = $this->formatForWebix($theOrders);   
-        $theOrdersFormated[] = ['hau'=>'miau', 'kwa'=>'muu'];
-        //$theOrdersFormated['rq'] = $this->request->data['opiekunId'];     
-        //sleep(1);
-        $this->set(compact(['theOrders', 'theOrdersFormated']));
+    public function getPrivateOrders( $idOpiekuna = 0) {
+
+        //$theOrders = $this->WebixOrder->getAllPrivateOrders( $idOpiekuna );
+        $theOrdersFormated['records'] = $this->formatForWebix(
+            $this->WebixOrder->getAllPrivateOrders( $idOpiekuna )
+        );
+        $theOrdersFormated['peopleHavingPrivs'] = [
+            ['id'=>0, 'value'=>"Wszyscy"],
+            ['id'=>1, 'value'=>"Darek"],
+            ['id'=>2, 'value'=>"Beata"],
+            ['id'=>3, 'value'=>"Agnieszka"],
+            ['id'=>10, 'value'=>"Renata"],
+            ['id'=>11, 'value'=>"Marzena"]
+            ,            ['id'=>31, 'value'=>"Piotr"]
+        ];
+        //$theOrdersFormated = [ 'idOpiekuna' => $idOpiekuna ];
+        $this->set(compact(['theOrdersFormated']));
         $this->set('_serialize', 'theOrdersFormated');
-    }
-
-    public function getPrivateOrders_() {
-        // sprawdzamy, czy mamy od Webix'a to co potrzebujemy
-        if( array_key_exists("filter" , $this->request->data) ) { // taki format daje nam Webixowy serverSelectFilter
-            //$name = $this->extractTheName($this->request->data["filter"]);
-            $idHandlowca = $this->extractTheId($this->request->data["filter"]);
-            //$theOrders = $this->WebixOrder->getAllPrivateOrdersByUserName( $name );
-            $theOrders = $this->WebixOrder->getAllPrivateOrders( $idHandlowca );
-            //$theOrders = [];
-        } else {
-            // Nie - po prostu znajdź wszystkie prywatne dla wszystkich handlowców            
-            //$theOrders = $this->WebixOrder->getAllPrivateOrders($this->request->data['opiekunId']);
-            $theOrders = $this->WebixOrder->getAllPrivateOrders();
-        }
-        $theOrdersFormated/*['records']*/ = $this->formatForWebix($theOrders);   
-        //$theOrdersFormated['rq'] = $this->request->data['opiekunId'];     
-        sleep(1);
-        $this->set(compact(['theOrders', 'theOrdersFormated']));
-        $this->set('_serialize', 'theOrdersFormated');
-        
-    }
-
-    private function extractTheId( $filterData = "" ) {
-
-        $decoded = json_decode($filterData, true); // spodziewamy się json string
-        return (int)$decoded["creatorName"]; // dlaczego "creatorName" ?
-    }
-
-    private function extractTheName( $filterData = "" ) {
-
-        $decoded = json_decode($filterData, true); // spodziewamy się json string
-        return $decoded["creatorName"]; // dlaczego "creatorName" ?
     }
 
     // Formatujemy dane dla Webix'a
@@ -79,21 +49,5 @@ class WebixOrdersController extends AppController {
         }
         return $out;
     }
-
-    public function testData() {
-
-        $prywatneZamowienia = [
-            [ //'id'=>1, 
-            'opiekun'=>'Beta', 'id'=> 9946, 'customerName' => "Klient 1",  'termin'=> '29 XI 2018', 'status'=> 'PRYWATNE'],
-            [ //'id'=>2, 
-            'opiekun'=>'Renata', 'id'=> 2569, 'customerName' => "The Godfather jest słaby",             'termin'=> '19 XI 2018', 'status'=> 'PRYWATNE'],
-            [ //'id'=>3, 
-            'opiekun'=>'Agnieszka', 'id'=> 6974, 'customerName' => "Multiklient",    'termin'=> '15 XI 2018', 'status'=> 'PRYWATNE'],
-            [ //'id'=>4, 
-            'opiekun'=>'Marzena', 'id'=> 3994, 'customerName' => "Pulp friction klient",              'termin'=> '23 XI 2018', 'status'=> 'PRYWATNE']
-        ];
-
-        $this->set(compact('prywatneZamowienia'));
-        $this->set('_serialize', 'prywatneZamowienia');
-    }
+    
 }

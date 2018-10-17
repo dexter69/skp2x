@@ -1,37 +1,19 @@
 // Jak sama nazwa wskazuje, obsługa (listing) prywatnych handlowych
 
+// Obiekt opisujący filter ludzików
+let ludziki = globalAppData.privHandlowcy
+let thePeopleFilterHeader = {content:'serverSelectFilter', options: ludziki};
+
 // Tabela ze zleceniami
-
-webix.ui({
-    view:"datatable",
-    autoConfig:true,
-    url:function(details){
-        return webix.ajax("data.php?filterByUser="+userId).then(function(data){
-            var js = data.json();
-            var new_js = [];
- 
-            for (key in js){
-                new_js.push({
-                    id:key, 
-                    name:js[key].name
-                });
-            };
- 
-            return new_js;
-        })
-    }
-});
-
-let opcje = globalAppData.privHandlowcy;
-
 let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     id: "privo",
-	view:"datatable",	
+    view:"datatable",
+    theUserId: 0, //	id użytkownika, którego zamówienia chcemy wyświetlić    
     columns:[
         { id:"index", header:"", sort:"int", adjust:true },
         { id:"id", header:"id", adjust:true },
         { id: "customerName", header: "Klient",  fillspace:true },                
-        { id: "creatorName", header: [{content:'serverSelectFilter', options: opcje} ] , width:105 },
+        { id: "creatorName", header: [ thePeopleFilterHeader ] , width:105 },
         //{ id: "creatorName", header: [{content:'selectFilter'} ] , width:105 },
         { id: 'stop_day', header:"Termin", adjust: true }        
     ],
@@ -40,33 +22,25 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     },    
     urlx: "post->webixOrders/getPrivateOrders.json",
     //https://docs.webix.com/desktop__server_customload.html
-    url:function(details){
-        return webix.ajax("data.php?filterByUser="+userId).then(function(data){
-            var js = data.json();
-            var new_js = [];
- 
-            for (key in js){
-                new_js.push({
-                    id:key, 
-                    name:js[key].name
-                });
-            };
- 
-            return new_js;
-        })
+    url: function( /*details*/){ // details było zadeklarowane w przykładzie (po co?), ale nie jest potrzebne
+            let url = "webixOrders/getPrivateOrders/" + privateOrders.theUserId + ".json";
+            return webix.ajax(url).then(function(data){
+                let dane = data.json();                
+                // Lidziki aktualnie mający prywatne zamówienia
+                thePeopleFilterHeader.options = dane.peopleHavingPrivs;
+                return dane.records;  // w records mamy faktyczne dane                            
+            })
     },
     //data: testABC(),
     //data: getTheRecords(0),//testABC(),
     //on:{'onItemClick': function(){alert("you have clicked an item");}} 
     on:{
-        'onBeforeFilter': function(){ webix.message("onBeforeFilter"); },
-        'onBeforeFilterX': function() {
-            let theCreatorId = 0;
-
-            //webix.message("onBeforeFilter");
-            theCreatorId = this.getFilter("creatorName").value;
+        'onBeforeFilterA': function(){ webix.message("onBeforeFilter"); },
+        'onBeforeFilter': function() {            
+            privateOrders.theUserId = this.getFilter("creatorName").value;
+            webix.message("onBeforeFilterTen theId = " + privateOrders.theUserId);
             //console.log(theCreatorId);
-            getTheRecords(theCreatorId);
+            //getTheRecords(theCreatorId);
         },
         //alert("onBeforeFilter");
         'onAfterFilterX': function(){
