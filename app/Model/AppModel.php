@@ -30,6 +30,21 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+
+        // ^^^^^^^ 17.10.2018, na podstawie: https://medium.com/cake-php/default-conditions-fields-for-finds-on-models-in-cakephp-2ca010b345c
+        public $defaultConditions;
+
+        public function beforeFind($queryData) {
+                if( isset($this->defaultConditions) && !empty($this->defaultConditions) ) {
+                  $queryData['conditions'] = array_merge( 
+                    (array)$this->defaultConditions,
+                    (array)$queryData['conditions']
+                   );
+                }
+                return $queryData;
+        }
+
+        //################
 	
     public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
     

@@ -25,7 +25,7 @@ class WebixOrdersController extends AppController {
             ['id'=>11, 'value'=>"Marzena"]
             ,            ['id'=>31, 'value'=>"Piotr"]
         ];
-        //$theOrdersFormated = [ 'idOpiekuna' => $idOpiekuna ];
+        
         $this->set(compact(['theOrdersFormated']));
         $this->set('_serialize', 'theOrdersFormated');
     }

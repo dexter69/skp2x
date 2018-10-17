@@ -33,15 +33,14 @@ class WebixOrder extends AppModel {
             'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email',
             'WebixOrderCreator.id', 'WebixOrderCreator.name', 'WebixOrderCreator.inic'
         ],
-        'conditions' => ['WebixOrder.status' => 0]//, 'WebixOrder.user_id <' => 10] 
+        'conditions' => ['WebixOrder.status' => 0]
         ,'order' => 'WebixOrder.id DESC'           
     ];
 
     public function getAllPrivateOrders( $idHandlowca = 0 ) {
 
         if( $idHandlowca ) {
-            // Mamy $id Handlowca - szukamy tylko dla tego Handlowca => trzeba dorzucić warunek
-            //$searchParams['conditions']['WebixOrder.user_id'] = $idHandlowca;
+            // Mamy $id Handlowca - szukamy tylko dla tego Handlowca => trzeba dorzucić warunek            
             $this->searchConditions['conditions']['WebixOrder.user_id'] = $idHandlowca;
         }
 
