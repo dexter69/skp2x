@@ -31,7 +31,9 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model {
 
-        // ^^^^^^^ 17.10.2018, na podstawie: https://medium.com/cake-php/default-conditions-fields-for-finds-on-models-in-cakephp-2ca010b345c
+        /* ^^^^^^^ 17.10.2018, na podstawie:
+        https://medium.com/cake-php/default-conditions-fields-for-finds-on-models-in-cakephp-2ca010b345c
+        */
         public $defaultConditions;
 
         public function beforeFind($queryData) {

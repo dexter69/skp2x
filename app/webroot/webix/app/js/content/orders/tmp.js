@@ -1,5 +1,6 @@
+/*
 {
-    
+
 url:function(details){
     return webix.ajax("data.php?filterByUser="+userId).then(function(data){
         var js = data.json();
@@ -17,3 +18,4 @@ url:function(details){
 }
 
 }
+*/
