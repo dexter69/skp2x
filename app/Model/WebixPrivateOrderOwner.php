@@ -9,5 +9,13 @@ class WebixPrivateOrderOwner extends AppModel {
 
     public $useTable = 'users'; // No bo to tylko wrap dla Webix'a
 
-    public $hasMany = ['WebixPrivateOrder'];
+    /* To nie działa, dobrze, zostawiam w celach edukacyjnych
+        public $defaultConditions = [ 'status' => 0 ]; // myk w AppModel z beforeFind */
+
+    public $hasMany = [
+        'WebixPrivateOrder' => [
+            'foreignKey' => 'user_id',
+            'conditions' => ['WebixPrivateOrder.status' => 0]        
+        ]
+    ];
 }

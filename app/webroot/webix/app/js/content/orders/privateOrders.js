@@ -8,14 +8,14 @@ let thePeopleFilterHeader = {content:'serverSelectFilter', options: ludziki};
 let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     id: "privo",
     view:"datatable",
-    theUserId: 0, //	id użytkownika, którego zamówienia chcemy wyświetlić    
+    theUserId: globalAppData.loggedInUser.id, //0, //	id użytkownika, którego zamówienia chcemy wyświetlić    
     columns:[
         { id:"index", header:"", sort:"int", adjust:true },
-        { id:"id", header:"id", adjust:true },
-        { id: "customerName", header: "Klient",  fillspace:true },                
-        { id: "creatorName", header: [ thePeopleFilterHeader ] , width:105 },
+        { id:"WebixPrivateOrder.id", header:"id", adjust:true },
+        { id: "WebixCustomer.name", header: "Klient",  fillspace:true },                
+        { id: "WebixPrivateOrderOwner.name", header: [ thePeopleFilterHeader ] , width:108 },
         //{ id: "creatorName", header: [{content:'selectFilter'} ] , width:105 },
-        { id: 'stop_day', header:"Termin", adjust: true }        
+        { id: "WebixPrivateOrder.stop_day", header:"Termin", adjust: true }        
     ],
     scheme:{
         $init:function(obj){ obj.index = this.count(); }
@@ -23,7 +23,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     urlx: "post->webixOrders/getPrivateOrders.json",
     //https://docs.webix.com/desktop__server_customload.html
     url: function( /*details*/){ // details było zadeklarowane w przykładzie (po co?), ale nie jest potrzebne
-            let url = "webixOrders/getPrivateOrders/" + privateOrders.theUserId + ".json";
+            let url = "webixPrivateOrders/getTheOrders/" + privateOrders.theUserId + ".json";
             return webix.ajax(url).then(function(data){
                 let dane = data.json();                
                 // Lidziki aktualnie mający prywatne zamówienia
@@ -37,7 +37,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     on:{
         'onBeforeFilterA': function(){ webix.message("onBeforeFilter"); },
         'onBeforeFilter': function() {            
-            privateOrders.theUserId = this.getFilter("creatorName").value;
+            privateOrders.theUserId = this.getFilter("WebixPrivateOrderOwner.name").value;
             webix.message("onBeforeFilterTen theId = " + privateOrders.theUserId);
             //console.log(theCreatorId);
             //getTheRecords(theCreatorId);
@@ -50,7 +50,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
                 {id: 8, value: "Orangutan"}
             ];
             $$("privo").refreshFilter();
-            this.getFilter("creatorName").value = 7;            
+            this.getFilter("WebixPrivateOrderOwner.name").value = 7;            
         }
     } 
 };

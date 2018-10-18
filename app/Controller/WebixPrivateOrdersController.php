@@ -6,11 +6,12 @@ App::uses('AppController', 'Controller');
 
 class WebixPrivateOrdersController extends AppController {
 
-    public function test() {
+     public function getTheOrders( $idOpiekuna = 0 ) {
 
-        $ret = $this->WebixPrivateOrder->find('all');
+        $ret = $this->WebixPrivateOrder->getAllOrders( $idOpiekuna );
 
         $this->set(compact(['ret']));
         $this->set('_serialize', 'ret');
     }
+
 }
