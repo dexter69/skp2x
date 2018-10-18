@@ -12,6 +12,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     columns:[
         { id:"index", header:"", sort:"int", adjust:true },
         { id:"WebixPrivateOrder.id", header:"id", adjust:true },
+        //{ id:"WebixPrivateOrder.nrTxt", header:"Nr", adjust:true },
         { id: "WebixCustomer.name", header: "Klient",  fillspace:true },                
         { id: "WebixPrivateOrderOwner.name", header: [ thePeopleFilterHeader ] , width:108 },
         //{ id: "creatorName", header: [{content:'selectFilter'} ] , width:105 },
