@@ -7,8 +7,7 @@ var globalAppData = {
     loggedInUser: <?php echo json_encode($loggedInUser); ?>, // Info o zalogowanym użytkowniku
     config: { // różnorakie przydatne dane
         logoutUrl: "/users/logout"
-    },
-    privHandlowcy: <?php echo json_encode($privHandlowcy); ?>
+    }   
 };
 
 

@@ -1,8 +1,7 @@
 // Jak sama nazwa wskazuje, obsługa (listing) prywatnych handlowych
 
 // Obiekt opisujący filter ludzików
-let ludziki = globalAppData.privHandlowcy
-let thePeopleFilterHeader = {content:'serverSelectFilter', options: ludziki};
+let thePeopleFilterHeader = {content:'serverSelectFilter', options: []};
 
 // Tabela ze zleceniami
 let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
@@ -49,39 +48,3 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
         }
     } 
 };
-
-
-
-function getTheRecords( theId ) { // id Handlowca, którego zamówienia chcemy
-
-    webix.ajax().post("webixOrders/getPrivateOrders.json", { opiekunId: theId }, function(text, data){
-        data = data.json(); 
-        console.log(data);
-        //$$("privo").parse( data.records );
-        $$("privo").refresh();
-    });
-}
-
-function gibon( argument ) { return argument;}
-
-function testXYZ() {
-
-    var promise = webix.ajax().post("webixOrders/getPrivateOrders.json", {id: 1});
-
-    promise.then(function(abc){
-        //console.log(abc);
-        $$("privo").parse( promise );
-    }).fail(function(err){
-        console.log(err);
-    });
-}
-
-function testABC() {
-
-    webix.ajax().post("webixOrders/getPrivateOrders.json", {opiekunId: 0}, function(text, data){
-        //webix.message(text);
-        data = data.json(); 
-        console.log(data);
-        $$("privo").parse( data.records );
-    });
-}
