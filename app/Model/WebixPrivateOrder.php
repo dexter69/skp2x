@@ -28,7 +28,7 @@ class WebixPrivateOrder extends AppModel {
 
     private $OwnerOfTheOrderFieldNameInDb = "WebixPrivateOrder.user_id"; // Gdybyśmy w przyszłosci przeszli na inne pole
 
-    public function getAllOrders( $idHandlowca = 0 ) {
+    public function getTheOrders( $idHandlowca = 0 ) {
 
         $cakeResults = $this->find('all');
         $out = $this->transformResultsForWebix( $idHandlowca, $cakeResults );
