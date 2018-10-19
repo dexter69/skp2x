@@ -30,63 +30,38 @@ class WebixPrivateOrder extends AppModel {
 
     public function getAllOrders( $idHandlowca = 0 ) {
 
-        if( 0 && $idHandlowca ) { // to szukamy tylko dla niego
-            $this->defaultConditions[ $this->OwnerOfTheOrderFieldNameInDb ] = $idHandlowca;
+        $cakeResults = $this->find('all');
+        return $this->transformResultsForWebix( $idHandlowca, $cakeResults );    
+    }
+
+    private function transformResultsForWebix( $idLudzika = 0, $in = [] ) {
+
+        $out = [];
+        $ludziki[0] = "Wszyscy"; // ludziki do filtra
+        foreach( $in as $row ) { 
+            $id = $row['WebixPrivateOrderOwner']['id'];            
+            $ludziki[ $id ] = $row['WebixPrivateOrderOwner']['name'];
+            if( !$idLudzika || $id == $idLudzika )   {
+                $nr = $this->makeItSafe( $row['WebixPrivateOrder'], 'nr', false);
+                $inic = $this->makeItSafe( $row['WebixPrivateOrderOwner'], 'inic', null);
+                $row['WebixPrivateOrder']['nrTxt'] = $this->bnr2nrh2($nr, $inic, false);            
+                $out[] = $this->mergeCakeData($row);            
+            }
         }
-        return $this->transformResultsForWebix( $idHandlowca, $this->find('all') );    //, false);
-    }
-
-    private function transformResultsForWebix( $opiekunId = 0, $in = [], $transform = true ) {
-        // $opiekunId - opiekun zamówienia, gdy = 0, to interesują nas wszyscy
-        // $in - wejściowa tablica z wynikami w formacie Cake'a
-        // $transform domyśllnie transformujemy, ale możemy w celach diagnostycznych chcieć zobaczyć nietransformowaną
-
-        if( $transform && !empty($in) ) {
-
-            $records = [];            
-            $ludziki[0] = "Wszyscy"; // ludziki do filtra
-            foreach( $in as $row ) {   
-                $outRow = $this->transformOneResult( $opiekunId, $row );
-                if( !empty($outRow) ) {                  
-                    $records[] = $outRow;
-                }
-                $ludziki[ $row['WebixPrivateOrderOwner']['id'] ] = $row['WebixPrivateOrderOwner']['name'];                
-            }
-            ksort($ludziki); // sortujemy, żeby mieć wg id ludzika
-
-            $peopleHavingPrivs = []; // ludziska, którzy mają jakieś prywatne zamówienia                        
-            foreach( $ludziki as $id => $value ) {
-                $peopleHavingPrivs[] = ['id' => $id, 'value' => $value ];
-            }
-            ksort($ludziki);
-            return [                
-                'records' => $records,
-                'peopleHavingPrivs' => $peopleHavingPrivs
-            ];
+        ksort($ludziki); // sortujemy, żeby mieć wg id ludzika
+        $peopleHavingPrivs = []; // ludziska, którzy mają jakieś prywatne zamówienia                        
+        foreach( $ludziki as $id => $value ) {
+            $peopleHavingPrivs[] = ['id' => $id, 'value' => $value ];
         }
-        return $in;
+        return [                
+            'records' => $out,
+            'peopleHavingPrivs' => $peopleHavingPrivs
+        ];        
     }
 
-    // Transformuje jeden rekord, $ludzikId - id opiekuna zamówienia - transformujemy tylko gdy id użytkownika jest właśnie takie
-    private function transformOneResult( $ludzikId = 0, $row = [] ) {
+    private function makeItSafe( $table, $indeks, $thatIfNot ) {
 
-        $retRow = [];
-        if( $ludzikId == $row['WebixPrivateOrderOwner']['id'] || !$ludzikId ) {            
-            $retRow['WebixPrivateOrder.id'] = $row['WebixPrivateOrder']['id'];                
-            $retRow['WebixPrivateOrder.nr'] = $row['WebixPrivateOrder']['nr'];
-            if( $retRow['WebixPrivateOrder.nr'] ) { // Mimo, ze to prywatne, niektóre mają numery
-                $retRow['WebixPrivateOrder.nrTxt'] = 
-                $this->bnr2nrh2($retRow['WebixPrivateOrder.nr'], $row['WebixPrivateOrderOwner']['inic'], false);
-            } else {
-                $retRow['WebixPrivateOrder.nrTxt'] = null;
-            }
-            $retRow['WebixPrivateOrder.stop_day'] = $row['WebixPrivateOrder']['stop_day'];
-
-            $retRow['WebixCustomer.name'] = $row['WebixCustomer']['name'];
-            $retRow['WebixCustomer.email'] = $row['WebixCustomer']['email'];
-            $retRow['WebixPrivateOrderOwner.name'] = $row['WebixPrivateOrderOwner']['name'];     
-        }       
-        return $retRow;
-    }
+        return isset( $table[$indeks] ) ? $table[$indeks] : $thatIfNot;
+    }    
 
 }

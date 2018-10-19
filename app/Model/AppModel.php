@@ -56,6 +56,22 @@ class AppModel extends Model {
         }
 
         //################
+
+        /**
+         * Chcemy, by ta metda transformowała nam format zwracany przez find methods Cake'a
+         * Do formatu, gdzie jeden wiersz jest połączeniem wszystkich modeli i nazwy pól otrzymują
+         * format Model.pole
+         */
+        public function mergeCakeData( $in = [] ) {
+
+                $out = [];                
+                foreach( $in as $modelName => $arr ) {
+                        foreach( $arr as $key => $val ) {
+                                $out[ "$modelName.$key" ] = $val;
+                        }
+                }                
+                return $out;
+        }
 	
     public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
     
