@@ -20,8 +20,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     ],
     scheme:{
         $init:function(obj){ obj.index = this.count(); }
-    },    
-    urlx: "post->webixOrders/getPrivateOrders.json",
+    },        
     //https://docs.webix.com/desktop__server_customload.html
     url: function( /*details*/){ // details było zadeklarowane w przykładzie (po co?), ale nie jest potrzebne
             let url = "webixPrivateOrders/getTheOrders/" + privateOrders.theUserId + ".json";
@@ -32,26 +31,21 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
                 return dane.records;  // w records mamy faktyczne dane                            
             })
     },
-    //data: testABC(),
-    //data: getTheRecords(0),//testABC(),
-    //on:{'onItemClick': function(){alert("you have clicked an item");}} 
     on:{
-        'onBeforeFilterA': function(){ webix.message("onBeforeFilter"); },
         'onBeforeFilter': function() {            
             privateOrders.theUserId = this.getFilter("WebixPrivateOrderOwner.name").value;
-            webix.message("onBeforeFilterTen theId = " + privateOrders.theUserId);
-            //console.log(theCreatorId);
-            //getTheRecords(theCreatorId);
+            //webix.message("onBeforeFilterTen theId = " + privateOrders.theUserId);
         },
-        //alert("onBeforeFilter");
-        'onAfterFilterX': function(){
-            webix.message("onAfterFilter");   
-            privateOrders.columns[3].header[0].options = [
-                {id: 7, value: "Gibon"},
-                {id: 8, value: "Orangutan"}
-            ];
-            $$("privo").refreshFilter();
-            this.getFilter("WebixPrivateOrderOwner.name").value = 7;            
+        /**
+         * Problem: przy załadowaniu strony mamy filter na "Wszyscy" ustawiony, a ładują się dane
+         * dla zalogowanego użytkownika (tak jak zresztą chcemy). Wykorzystujemy zdarzenie 'onAfterLoad',
+         * by to skorygować. Warunek jest po to by ta korekcja zachodziła tylko przy pierwszej inicjalizacji
+         * (tylko wtedy warunek jest spełniony). Być może istnieje lepszy sposób ustawienia filtra czy coś.
+         */  
+        'onAfterLoad': function(){           
+            if( this.getFilter("WebixPrivateOrderOwner.name").value != privateOrders.theUserId ) {                
+                this.getFilter("WebixPrivateOrderOwner.name").value = privateOrders.theUserId;
+            }
         }
     } 
 };
