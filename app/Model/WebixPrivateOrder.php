@@ -31,7 +31,9 @@ class WebixPrivateOrder extends AppModel {
     public function getAllOrders( $idHandlowca = 0 ) {
 
         $cakeResults = $this->find('all');
-        return $this->transformResultsForWebix( $idHandlowca, $cakeResults );    
+        $out = $this->transformResultsForWebix( $idHandlowca, $cakeResults );
+        $out['cake'] = $cakeResults; // w celach diagnostycznych
+        return $out;
     }
 
     private function transformResultsForWebix( $idLudzika = 0, $in = [] ) {
