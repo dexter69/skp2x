@@ -11,18 +11,44 @@ class WebixPrivateOrder extends AppModel {
 
     public $defaultConditions = [ 'WebixPrivateOrder.status' => 0 ]; // myk w AppModel z beforeFind
 
+    /*
     public $defaultFields = [ 
         'WebixPrivateOrder.id', 'WebixPrivateOrder.nr', 'WebixPrivateOrder.stop_day',
         'WebixPrivateOrderOwner.id', 'WebixPrivateOrderOwner.name', 'WebixPrivateOrderOwner.inic',
         'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email'
     ];
+    */
+
+    private $defaultFieldsX = [ 
+        'WebixPrivateOrder.id', 'WebixPrivateOrder.nr', 'WebixPrivateOrder.stop_day',
+        'WebixPrivateOrderOwner.id', 'WebixPrivateOrderOwner.name', 'WebixPrivateOrderOwner.inic',
+        'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email'
+    ];
+
+    
+
+    public $hasMany = [
+        'WebixCard' => [            
+            'foreignKey' => 'order_id',
+            'fields'  => [
+                'WebixCard.id', 'WebixCard.name'
+            ]
+        ]
+    ];
 
     public $belongsTo = [
         'WebixPrivateOrderOwner' => [ // Właściciel zamówienia, użytkownik, który opiekuje się nim
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
+            'fields' => [                
+                'WebixPrivateOrderOwner.id', 'WebixPrivateOrderOwner.name',
+                'WebixPrivateOrderOwner.inic'        
+            ]
         ],
         'WebixCustomer' => [ // Klient, który zlecił to zamówienie
-            'foreignKey' => 'customer_id'            
+            'foreignKey' => 'customer_id',
+            'fields' => [
+                'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email'
+            ]
         ]
     ];
 
@@ -30,7 +56,7 @@ class WebixPrivateOrder extends AppModel {
 
     public function getTheOrders( $idHandlowca = 0 ) {
 
-        $cakeResults = $this->find('all');
+        $cakeResults = $this->find('all', ['fields' => $this->defaultFieldsX]);
         $out = $this->transformResultsForWebix( $idHandlowca, $cakeResults );
         $out['cake'] = $cakeResults; // w celach diagnostycznych
         return $out;
