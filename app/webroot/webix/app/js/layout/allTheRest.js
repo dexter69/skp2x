@@ -4,7 +4,13 @@ let allTheRest = {
     rows: [ 
         {type: 'header', template: 'Tu będzie sterujący toolbar probably ...'},
         //addNewQuickOrder
-        privateOrders
+        {
+            cols: [
+                privateOrders,
+                { }
+            ]
+        }
+        
     ]
 };
 

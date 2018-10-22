@@ -15,6 +15,7 @@ webix.ready(function(){ //to ensure that your code is executed after the page is
   
     webix.ui({
         //container: "myApp",   
+        id: "theLayout", // jao, że rekomendowane w dokumentacji
         rows:[
             mainToolbar,
             { 

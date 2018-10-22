@@ -7,6 +7,7 @@ let thePeopleFilterHeader = {content:'serverSelectFilter', options: []};
 let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     id: "privo",
     view:"datatable",
+    gravity: 1.5, // 1.4x większe niż ta druga kolumna ( jeżeli są 2-ie)
     theUserId: globalAppData.loggedInUser.id, //0, //	id użytkownika, którego zamówienia chcemy wyświetlić    
     columns:[
         { id:"index", header:"", sort:"int", adjust:true },
