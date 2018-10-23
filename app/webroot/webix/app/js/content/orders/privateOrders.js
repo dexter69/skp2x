@@ -49,7 +49,8 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
             }
         },
         'onAfterSelect': function(id){                         
-            console.log( $$("privo").getItem(id).WebixPrivateOrderOwner_inic );
+            //console.log( $$("privo").getItem(id).WebixPrivateOrderOwner_inic );
+            console.log( $$("privo").getItem(id));
         }
     } 
 };
