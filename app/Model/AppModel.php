@@ -67,7 +67,11 @@ class AppModel extends Model {
                 $out = [];                
                 foreach( $in as $modelName => $arr ) {
                         foreach( $arr as $key => $val ) {
-                                $out[ "$modelName.$key" ] = $val;
+                                if( is_array($val) ) { // dla $hasMany nieprzetwarzamy
+                                        $out[ "$modelName" ]["$key"] = $val;
+                                } else {
+                                        $out[ "$modelName.$key" ] = $val;
+                                }
                         }
                 }                
                 return $out;

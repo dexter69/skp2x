@@ -11,7 +11,6 @@ class WebixPrivateOrder extends AppModel {
 
     public $defaultConditions = [ 'WebixPrivateOrder.status' => 0 ]; // myk w AppModel z beforeFind
     
-
     /**
      * Olewamy tu $defaultFields - nie działa do końca dobrze. Wygląda na to, że aby otrzymać tylko te pola,
      * które chcemy, to (jak tu poniżej) dla $hasMany musi być zdefiniowane w relacji
@@ -22,9 +21,7 @@ class WebixPrivateOrder extends AppModel {
         'WebixPrivateOrder.id', 'WebixPrivateOrder.nr', 'WebixPrivateOrder.stop_day',
         'WebixPrivateOrderOwner.id', 'WebixPrivateOrderOwner.name', 'WebixPrivateOrderOwner.inic',
         'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email'
-    ];
-
-    
+    ];    
 
     public $hasMany = [
         'WebixCard' => [            
