@@ -64,13 +64,14 @@ class AppModel extends Model {
          */
         public function mergeCakeData( $in = [] ) {
 
+                $theChar = '_'; // znak używany do rozdzielenia nazwy modelu i pola
                 $out = [];                
                 foreach( $in as $modelName => $arr ) {
                         foreach( $arr as $key => $val ) {
                                 if( is_array($val) ) { // dla $hasMany nieprzetwarzamy
                                         $out[ "$modelName" ]["$key"] = $val;
                                 } else {
-                                        $out[ "$modelName.$key" ] = $val;
+                                        $out[ "$modelName$theChar$key" ] = $val;
                                 }
                         }
                 }                

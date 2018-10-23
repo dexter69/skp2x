@@ -7,16 +7,17 @@ let thePeopleFilterHeader = {content:'serverSelectFilter', options: []};
 let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     id: "privo",
     view:"datatable",
+    select: "row", // umożliwia selekcję
     gravity: 1.5, // 1.4x większe niż ta druga kolumna ( jeżeli są 2-ie)
     theUserId: globalAppData.loggedInUser.id, //0, //	id użytkownika, którego zamówienia chcemy wyświetlić    
     columns:[
         { id:"index", header:"", sort:"int", adjust:true },
-        { id:"WebixPrivateOrder.id", header:"id", adjust:true },
+        { id:"WebixPrivateOrder_id", header:"id", adjust:true },
         //{ id:"WebixPrivateOrder.nrTxt", header:"Nr", adjust:true },
-        { id: "WebixCustomer.name", header: "Klient",  fillspace:true },                
-        { id: "WebixPrivateOrder.ileKart", header: "<span class='webix_icon fa-credit-card'></span>",  adjust: true  }, 
-        { id: "WebixPrivateOrderOwner.name", header: [ thePeopleFilterHeader ] , width:108 },        
-        { id: "WebixPrivateOrder.stop_day", header:"Termin", adjust: true }        
+        { id: "WebixCustomer_name", header: "Klient",  fillspace:true },                
+        { id: "WebixPrivateOrder_ileKart", header: "<span class='webix_icon fa-credit-card'></span>",  adjust: true  }, 
+        { id: "WebixPrivateOrderOwner_name", header: [ thePeopleFilterHeader ] , width:108 },        
+        { id: "WebixPrivateOrder_stop_day", header:"Termin", adjust: true }        
     ],
     scheme:{
         $init:function(obj){ obj.index = this.count(); }
@@ -33,7 +34,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     },
     on:{
         'onBeforeFilter': function() {            
-            privateOrders.theUserId = this.getFilter("WebixPrivateOrderOwner.name").value;
+            privateOrders.theUserId = this.getFilter("WebixPrivateOrderOwner_name").value;
             //webix.message("onBeforeFilterTen theId = " + privateOrders.theUserId);
         },
         /**
@@ -43,9 +44,12 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
          * (tylko wtedy warunek jest spełniony). Być może istnieje lepszy sposób ustawienia filtra czy coś.
          */  
         'onAfterLoad': function(){           
-            if( this.getFilter("WebixPrivateOrderOwner.name").value != privateOrders.theUserId ) {                
-                this.getFilter("WebixPrivateOrderOwner.name").value = privateOrders.theUserId;
+            if( this.getFilter("WebixPrivateOrderOwner_name").value != privateOrders.theUserId ) {                
+                this.getFilter("WebixPrivateOrderOwner_name").value = privateOrders.theUserId;
             }
+        },
+        'onAfterSelect': function(id){                         
+            console.log( $$("privo").getItem(id).WebixPrivateOrderOwner_inic );
         }
     } 
 };
