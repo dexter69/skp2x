@@ -10,16 +10,15 @@ class WebixPrivateOrder extends AppModel {
     public $useTable = 'orders'; // No bo to tylko wrap dla Webix'a
 
     public $defaultConditions = [ 'WebixPrivateOrder.status' => 0 ]; // myk w AppModel z beforeFind
+    
 
-    /*
-    public $defaultFields = [ 
-        'WebixPrivateOrder.id', 'WebixPrivateOrder.nr', 'WebixPrivateOrder.stop_day',
-        'WebixPrivateOrderOwner.id', 'WebixPrivateOrderOwner.name', 'WebixPrivateOrderOwner.inic',
-        'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email'
-    ];
-    */
+    /**
+     * Olewamy tu $defaultFields - nie działa do końca dobrze. Wygląda na to, że aby otrzymać tylko te pola,
+     * które chcemy, to (jak tu poniżej) dla $hasMany musi być zdefiniowane w relacji
+     * a pozostałe jako parametry wyszukiwania
+     */
 
-    private $defaultFieldsX = [ 
+    private $fieldsWeWant = [ // za wyjątkiem $hasMany => to mamy w relacji
         'WebixPrivateOrder.id', 'WebixPrivateOrder.nr', 'WebixPrivateOrder.stop_day',
         'WebixPrivateOrderOwner.id', 'WebixPrivateOrderOwner.name', 'WebixPrivateOrderOwner.inic',
         'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email'
@@ -29,34 +28,25 @@ class WebixPrivateOrder extends AppModel {
 
     public $hasMany = [
         'WebixCard' => [            
-            'foreignKey' => 'order_id',
+            'foreignKey' => 'order_id',            
             'fields'  => [
                 'WebixCard.id', 'WebixCard.name'
-            ]
+            ]            
         ]
     ];
 
     public $belongsTo = [
         'WebixPrivateOrderOwner' => [ // Właściciel zamówienia, użytkownik, który opiekuje się nim
-            'foreignKey' => 'user_id',
-            'fields' => [                
-                'WebixPrivateOrderOwner.id', 'WebixPrivateOrderOwner.name',
-                'WebixPrivateOrderOwner.inic'        
-            ]
+            'foreignKey' => 'user_id',            
         ],
         'WebixCustomer' => [ // Klient, który zlecił to zamówienie
-            'foreignKey' => 'customer_id',
-            'fields' => [
-                'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.email'
-            ]
+            'foreignKey' => 'customer_id',            
         ]
-    ];
-
-    private $OwnerOfTheOrderFieldNameInDb = "WebixPrivateOrder.user_id"; // Gdybyśmy w przyszłosci przeszli na inne pole
+    ];    
 
     public function getTheOrders( $idHandlowca = 0 ) {
 
-        $cakeResults = $this->find('all', ['fields' => $this->defaultFieldsX]);
+        $cakeResults = $this->find('all', ['fields' => $this->fieldsWeWant] );
         $out = $this->transformResultsForWebix( $idHandlowca, $cakeResults );
         $out['cake'] = $cakeResults; // w celach diagnostycznych
         return $out;

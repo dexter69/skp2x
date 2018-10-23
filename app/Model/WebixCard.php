@@ -12,6 +12,7 @@ class WebixCard extends AppModel {
         'WebixCard.id', 'WebixCard.name'
     ];
     
+
     public $belongsTo = [
         'WebixPrivateOrder' => [ 
             //'className' => 'WebixPrivateOrder',
@@ -19,4 +20,5 @@ class WebixCard extends AppModel {
         ]
     ];
     */
+    
 }
