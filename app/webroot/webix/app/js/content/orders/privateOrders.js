@@ -14,8 +14,8 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
         { id:"WebixPrivateOrder.id", header:"id", adjust:true },
         //{ id:"WebixPrivateOrder.nrTxt", header:"Nr", adjust:true },
         { id: "WebixCustomer.name", header: "Klient",  fillspace:true },                
-        { id: "WebixPrivateOrderOwner.name", header: [ thePeopleFilterHeader ] , width:108 },
-        //{ id: "creatorName", header: [{content:'selectFilter'} ] , width:105 },
+        { id: "WebixPrivateOrder.ileKart", header: "<span class='webix_icon fa-credit-card'></span>",  adjust: true  }, 
+        { id: "WebixPrivateOrderOwner.name", header: [ thePeopleFilterHeader ] , width:108 },        
         { id: "WebixPrivateOrder.stop_day", header:"Termin", adjust: true }        
     ],
     scheme:{

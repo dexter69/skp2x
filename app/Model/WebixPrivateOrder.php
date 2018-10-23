@@ -59,7 +59,9 @@ class WebixPrivateOrder extends AppModel {
             if( !$idLudzika || $id == $idLudzika )   {
                 $nr = $this->makeItSafe( $row['WebixPrivateOrder'], 'nr', false);
                 $inic = $this->makeItSafe( $row['WebixPrivateOrderOwner'], 'inic', null);
-                $row['WebixPrivateOrder']['nrTxt'] = $this->bnr2nrh2($nr, $inic, false);            
+                // Wirtualne pola
+                $row['WebixPrivateOrder']['nrTxt'] = $this->bnr2nrh2($nr, $inic, false); // ludzki nr handlowy       
+                $row['WebixPrivateOrder']['ileKart'] = count($row['WebixCard']); // liczymy ile jest kart
                 $out[] = $this->mergeCakeData($row);            
             }
         }
