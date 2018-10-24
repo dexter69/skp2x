@@ -7,8 +7,18 @@ App::uses('AppController', 'Controller');
 
 class WebixOrdersController extends AppController {
 
-    /*
-    Czyje prywatne chcemy?  */    
-    
-    
+    /**
+     * Zwróć dane zamówienia z powiązanymi kartami. Wersja light, czyli nie dużo danych.
+     */    
+    public function getOneOrderLight( $id = 0 ) { 
+
+        if( 0 ) { // Jezeli takie zamówienie nie istnieje
+
+            return 0;
+        }        
+        $theOrder = $this->WebixOrder->getTheOrderLight($id);
+        $this->set(compact(['theOrder']));
+        $this->set('_serialize', 'theOrder');
+
+    }
 }
