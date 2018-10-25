@@ -48,10 +48,10 @@ let privateOrders = {
                 this.getFilter("WebixPrivateOrderOwner_name").value = privateOrders.theUserId;
             }
             // po zmianie filtra (wybrany inny handlowiec), czyścimy listę kart
-            $$(orderDetails_listOfCards.id).clearAll(true);
+            $$(theOrderDetail_listOfCards.id).clearAll(true);
         },
         'onAfterSelect': function(id){                         
-            $$(orderDetails_listOfCards.id).clearAll(true); // czyscimy listę kart, bo mogła być stara
+            $$(theOrderDetail_listOfCards.id).clearAll(true); // czyscimy listę kart, bo mogła być stara
 
             // id tego zamówienia w bazie SKP
             let theOrderId = $$(privateOrders.id).getItem(id).WebixPrivateOrder_id; 
@@ -63,7 +63,7 @@ let privateOrders = {
             webix.ajax(url).then(function(data){                  
                 let karty = data.json().WebixCard; // karty tego zamówienia
                 if( karty.length ) { // zamówienie ma jakieś karty
-                    $$(orderDetails_listOfCards.id).parse(karty); // uaktualnij listę
+                    $$(theOrderDetail_listOfCards.id).parse(karty); // uaktualnij listę
                 }                                
             });                               
         }
