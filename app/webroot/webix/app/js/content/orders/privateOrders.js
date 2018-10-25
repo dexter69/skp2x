@@ -8,7 +8,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
     id: "privo",
     view:"datatable",
     select: "row", // umożliwia selekcję
-    gravity: 1.5, // 1.4x większe niż ta druga kolumna ( jeżeli są 2-ie)
+    //gravity: 1.5, // 1.4x większe niż ta druga kolumna ( jeżeli są 2-ie)
     theUserId: globalAppData.loggedInUser.id, //0, //	id użytkownika, którego zamówienia chcemy wyświetlić    
     columns:[
         { id:"index", header:"", sort:"int", adjust:true },
@@ -30,7 +30,7 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
                 // Lidziki aktualnie mający prywatne zamówienia
                 thePeopleFilterHeader.options = dane.peopleHavingPrivs;
                 return dane.records;  // w records mamy faktyczne dane                            
-            })
+            });
     },
     on:{
         'onBeforeFilter': function() {            
@@ -52,8 +52,20 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
         },
         'onAfterSelect': function(id){                         
             $$(orderDetails_listOfCards.id).clearAll(true); // czyscimy listę kart, bo mogła być stara
-            let karty = $$(privateOrders.id).getItem(id).WebixCard;            
-            $$(orderDetails_listOfCards.id).parse(karty);
+
+            // id tego zamówienia w bazie SKP
+            let theOrderId = $$(privateOrders.id).getItem(id).WebixPrivateOrder_id; 
+
+            // spreparuj prawidłowy url
+            let url = "webixOrders/getOneOrderLight/" + theOrderId + ".json";
+
+            // pobierz świerze dane dot. tego zamówienia
+            webix.ajax(url).then(function(data){                  
+                let karty = data.json().WebixCard; // karty tego zamówienia
+                if( karty.length ) { // zamówienie ma jakieś karty
+                    $$(orderDetails_listOfCards.id).parse(karty); // uaktualnij listę
+                }                                
+            });                               
         }
     } 
 };

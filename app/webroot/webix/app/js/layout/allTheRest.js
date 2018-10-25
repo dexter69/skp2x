@@ -7,6 +7,7 @@ let allTheRest = {
         {
             cols: [
                 privateOrders,
+                {gravity: 0.02},// taki spacer
                 //orderDetail
                 orderDetails_listOfCards
             ]
