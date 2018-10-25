@@ -10,6 +10,16 @@ let allTheRest = {
                 {gravity: 0.02},// taki spacer
                 //orderDetail
                 orderDetails_listOfCards
+                /*
+                {
+                    rows: [
+                        {
+                        gravity: 0.3
+                        },
+                        orderDetails_listOfCards
+                    ]                    
+                }     
+                */           
             ]
         }
         

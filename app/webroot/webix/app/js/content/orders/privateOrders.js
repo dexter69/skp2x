@@ -8,8 +8,8 @@ let privateOrders = {
     id: "privo",
     view:"datatable",
     select: true, // umożliwia selekcję
-    //gravity: 1.5, // 1.4x większe niż ta druga kolumna ( jeżeli są 2-ie)
-    theUserId: globalAppData.loggedInUser.id, //0, //	id użytkownika, którego zamówienia chcemy wyświetlić    
+    gravity: 1.7,    
+    theUserId: globalAppData.loggedInUser.id, // id użytkownika, którego zamówienia chcemy wyświetlić    
     columns:[
         { id:"index", header:"", sort:"int", adjust:true },
         { id:"WebixPrivateOrder_id", header:"id", adjust:true },
