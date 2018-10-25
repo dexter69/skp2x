@@ -47,10 +47,13 @@ let privateOrders = {//,header:["Category",  {content:'selectFilter'}]
             if( this.getFilter("WebixPrivateOrderOwner_name").value != privateOrders.theUserId ) {                
                 this.getFilter("WebixPrivateOrderOwner_name").value = privateOrders.theUserId;
             }
+            // po zmianie filtra (wybrany inny handlowiec), czyścimy listę kart
+            $$(orderDetails_listOfCards.id).clearAll(true);
         },
         'onAfterSelect': function(id){                         
-            //console.log( $$("privo").getItem(id).WebixPrivateOrderOwner_inic );
-            console.log( $$("privo").getItem(id));
+            $$(orderDetails_listOfCards.id).clearAll(true); // czyscimy listę kart, bo mogła być stara
+            let karty = $$(privateOrders.id).getItem(id).WebixCard;            
+            $$(orderDetails_listOfCards.id).parse(karty);
         }
     } 
 };

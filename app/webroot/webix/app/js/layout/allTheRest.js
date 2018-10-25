@@ -7,7 +7,8 @@ let allTheRest = {
         {
             cols: [
                 privateOrders,
-                orderDetail
+                //orderDetail
+                orderDetails_listOfCards
             ]
         }
         
