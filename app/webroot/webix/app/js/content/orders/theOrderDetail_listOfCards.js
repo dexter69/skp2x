@@ -2,8 +2,7 @@ let theOrderDetail_listOfCards = {
 
     id: "theOrderDetail_listOfCards",
     view: "datatable",    
-    //gravity: 0.6,
-    //hidden:true,
+    //gravity: 0.5,    
     columns: [
         { id:"index", header:"", sort:"int", width:35 },
         { id:"id", header:"id", width:60 },

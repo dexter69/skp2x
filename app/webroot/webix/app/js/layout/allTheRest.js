@@ -1,6 +1,9 @@
 let theOrderDetail = {
     id: "theOrderDetail",
-    gravity: 0.5
+    view: "template",
+    // Zaczynamy bez zdefiniowanej template, bedzie uaktualniona, po kliknieciu w rekord
+    //template: "<label>id:</label><p>#idx#</p><label>klient:</label><p>#klient#</p>",    
+    gravity: 1
 }
 
 let allTheRest = {

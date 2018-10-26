@@ -16,9 +16,10 @@ class WebixOrdersController extends AppController {
 
             return 0;
         }        
-        $theOrder = $this->WebixOrder->getTheOrderLight($id);
+        $theOrder = $this->WebixOrder->getTheOrderLight($id);        
+        $theOrder['WebixOrder']['ileKart'] = count($theOrder['WebixCard']);
+        $theOrder = $this->WebixOrder->mergeCakeData($theOrder);        
         $this->set(compact(['theOrder']));
         $this->set('_serialize', 'theOrder');
-
     }
 }
