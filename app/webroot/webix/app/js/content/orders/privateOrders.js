@@ -49,11 +49,13 @@ let privateOrders = {
             }
             // po zmianie filtra (wybrany inny handlowiec), czyścimy listę kart
             $$(theOrderDetail_listOfCards.id).clearAll(true);
+            $$(theOrderDetail_listOfCards.id).hide();
             // czyscimy component ze szczegółami zamówienia
             $$(theOrderDetail.id).define("template", "");
             $$(theOrderDetail.id).refresh();            
         },
-        'onAfterSelect': function(id){                         
+        'onAfterSelect': function(id){ 
+            $$(theOrderDetail_listOfCards.id).show();
             $$(theOrderDetail_listOfCards.id).clearAll(true); // czyscimy listę kart, bo mogła być stara
             
             // id tego zamówienia w bazie SKP
@@ -70,15 +72,10 @@ let privateOrders = {
                     let karty = dane.WebixCard;
                     $$(theOrderDetail_listOfCards.id).parse(karty); 
                 }
-                // Tworzymy template (bo nie hcemy by nam się cokolwiek wyświetlało, jak nie ma danych)                
-                //let template = "<p><label>id: </label>#idx#</p><p><label>termin: </label>#termin#</p>";
-                //let template = "<dl><dt>id:</dt><dd>#idx#</dd><dt>termin</dt><dd>#termin#</dd></dl>";
-                let pt1 = "<div><label>id:</label><p>#idx#</p></div>";
-                let pt2 = "<div><label>termin:</label><p>#termin#</p></div>";
-                let template = pt1 + pt2;
-                $$(theOrderDetail.id).define("template", template);
+                // Tworzymy template (bo nie hcemy by nam się cokolwiek wyświetlało, jak nie ma danych)                                
+                $$(theOrderDetail.id).define("template", globalAppData.template.theOrderDetail);
                 $$(theOrderDetail.id).parse({
-                    idx: dane.WebixOrder_id,
+                    id: dane.WebixOrder_id,
                     termin: dane.WebixOrder_stop_day
                 });
             });                               

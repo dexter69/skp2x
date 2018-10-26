@@ -29,6 +29,12 @@ App::uses('Helper', 'View');
  * @package       app.View.Helper
  */
 class AppHelper extends Helper {
+
+    // Remove all " ", "\t", "\n", "\r", "\0" and "\x0B" characters
+    public function trimAll( $strIn = null ) {
+
+        return preg_replace('/\s/', '', $strIn);    
+    }
     
     public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
     

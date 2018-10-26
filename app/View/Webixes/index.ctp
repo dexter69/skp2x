@@ -1,4 +1,8 @@
-<?php $this->set('title_for_layout', 'Handlowy'); ?>
+<?php
+    $this->set('title_for_layout', 'Handlowy');    
+    $theOrderDetail  = $this->App->trimAll($this->element('webixes/theOrderDetail'));
+?>
+
 <script type="text/javascript" charset="utf-8">
 
 /*
@@ -7,7 +11,10 @@ var globalAppData = {
     loggedInUser: <?php echo json_encode($loggedInUser); ?>, // Info o zalogowanym użytkowniku
     config: { // różnorakie przydatne dane
         logoutUrl: "/users/logout"
-    }   
+    },
+    template: { // tu bardziej złożone tamplates        
+        theOrderDetail: "<?php echo $theOrderDetail; ?>"      
+    } 
 };
 
 
