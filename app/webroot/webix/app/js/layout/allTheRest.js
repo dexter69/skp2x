@@ -1,8 +1,8 @@
 let theOrderDetail = {
     id: "theOrderDetail",
     view: "template",
-    // Zaczynamy bez zdefiniowanej template, bedzie uaktualniona, po kliknieciu w rekord
-    //template: "<label>id:</label><p>#idx#</p><label>klient:</label><p>#klient#</p>",    
+    css: "theOrderDetail", // na razie nie używam - tak testowo
+    // Zaczynamy bez zdefiniowanej template, bedzie uaktualniona, po kliknieciu w rekord        
     gravity: 1
 }
 
@@ -15,9 +15,8 @@ let allTheRest = {
         {
             cols: [
                 privateOrders,
-                {gravity: 0.02},// taki spacer                
-                //orderDetails_listOfCards
-                /**/ 
+                {gravity: 0.02},// taki spacer              
+                 
                 {
                     rows: [
                         theOrderDetail,

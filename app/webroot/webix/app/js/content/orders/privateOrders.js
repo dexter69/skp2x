@@ -71,7 +71,11 @@ let privateOrders = {
                     $$(theOrderDetail_listOfCards.id).parse(karty); 
                 }
                 // Tworzymy template (bo nie hcemy by nam się cokolwiek wyświetlało, jak nie ma danych)                
-                let template = "<p><label>id: </label>#idx#</p><p><label>termin: </label>#termin#</p>";
+                //let template = "<p><label>id: </label>#idx#</p><p><label>termin: </label>#termin#</p>";
+                //let template = "<dl><dt>id:</dt><dd>#idx#</dd><dt>termin</dt><dd>#termin#</dd></dl>";
+                let pt1 = "<div><label>id:</label><p>#idx#</p></div>";
+                let pt2 = "<div><label>termin:</label><p>#termin#</p></div>";
+                let template = pt1 + pt2;
                 $$(theOrderDetail.id).define("template", template);
                 $$(theOrderDetail.id).parse({
                     idx: dane.WebixOrder_id,
