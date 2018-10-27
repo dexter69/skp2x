@@ -17,12 +17,10 @@ var globalAppData = {
     } 
 };
 
-
 webix.ready(function(){ //to ensure that your code is executed after the page is fully loaded
   
-    webix.ui({
-        //container: "myApp",   
-        id: "theLayout", // jao, że rekomendowane w dokumentacji
+    let layout1 = {
+        id: "theLayout", 
         rows:[
             mainToolbar,
             { 
@@ -32,7 +30,11 @@ webix.ready(function(){ //to ensure that your code is executed after the page is
                 ]
             }             
         ]   
-    });
+    }    
+
+    webix.ui(
+        layout1 // 1 - pierwsza wersja, 2 - druga wersja
+    );
 
 });
 
