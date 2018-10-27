@@ -1,4 +1,4 @@
-let allTheRest = {
+let allThePrivateOrdersFullV1 = {
     padding:50,
     type:"space",
     rows: [ 
@@ -20,4 +20,23 @@ let allTheRest = {
         }
         
     ]
-};
+}
+
+let allThePrivateOrdersFullV2 = { // Bez Header'a
+    padding:35,
+    type:"space",    
+    cols: [
+        privateOrders,
+        {gravity: 0.02},// taki spacer              
+            
+        {
+            rows: [
+                theOrderDetail,
+                theOrderDetail_listOfCards
+            ]                    
+        }     
+                    
+    ]        
+}
+
+let allTheRest = allThePrivateOrdersFullV2;
