@@ -24,17 +24,18 @@ class WebixCustomer extends AppModel {
      *  Znajdż klientów na potrzeby dodania zamówienia handlowego
      *  $constantOwner - stały opiekun klienta - opiekun_id w tabeli customers
      *  $constantOwner = 0, znajdź wszystkich klientów, użytkownik dowolny
-     *  $constantOwner > 0, to znajdź klientów tylko tego użytkownika */
-    public function getCustomersForAddingAnOrder( $constantOwner = 0 ) {
+     *  $realOwner > 0, to znajdź klientów tylko tego użytkownika
+     *  $limit - ile max rekordów */
+    public function getCustomersForAddingAnOrder( $coSzukamy = null, $realOwner = 0, $limit = 11 ) {
 
         $out = [];
         $parameters = [
             'fields' => $this->fieldsWeWant,
-            'limit' => 10
+            'limit' => $limit
         ];
 
-        if( $constantOwner ) {
-            $parameters['conditions'] = ['WebixConstantCustomerOwner.id' => $constantOwner];
+        if( $realOwner ) {           
+            $parameters['conditions'] = ['WebixCustomerRealOwner.id' => $realOwner];
         }
 
         $cakeResults = $this->find('all', $parameters);        
