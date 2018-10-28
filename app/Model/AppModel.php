@@ -37,6 +37,7 @@ class AppModel extends Model {
         public $defaultFields;
         public $defaultConditions;
 
+        // To z defaultFields nie działa do końca dobrze
         public function beforeFind($queryData) {
 
                 if (isset($this->defaultFields) && !empty($this->defaultFields)) {
@@ -75,6 +76,16 @@ class AppModel extends Model {
                                 }
                         }
                 }                
+                return $out;
+        }
+
+        // Wrap mergeCakeData - by obsłużyć wiele wierszy danych
+        public function mergeCakeManyRows( $dane = [] ) {
+
+                $out = [];
+                foreach( $dane as $oneRow ) {
+                        $out[] = $this->mergeCakeData($oneRow);
+                }
                 return $out;
         }
 	
