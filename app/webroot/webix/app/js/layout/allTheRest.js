@@ -27,8 +27,7 @@ let allThePrivateOrdersFullV2 = { // Bez Header'a
     type:"space",    
     cols: [
         privateOrders,
-        {gravity: 0.02},// taki spacer              
-            
+        {gravity: 0.02},// taki spacer            
         {
             rows: [
                 theOrderDetail,
@@ -39,4 +38,18 @@ let allThePrivateOrdersFullV2 = { // Bez Header'a
     ]        
 }
 
-let allTheRest = allThePrivateOrdersFullV2;
+let addingNewOrderWidget = {
+    padding:35,
+    type:"space",
+    cols: [
+        { template: "Tu będzie dodawanie zamówienia"},
+        { gravity: 0.005 }, //Taki spacer
+        listOfCustomers
+    ]
+}
+
+let allTheRest = 
+
+addingNewOrderWidget;
+
+//allThePrivateOrdersFullV2;
