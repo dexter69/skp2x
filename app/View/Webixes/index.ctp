@@ -10,7 +10,7 @@ Globalny obiekt, przechowywyjący różne użyteczne dane */
 var globalAppData = {
     loggedInUser: <?php echo json_encode($loggedInUser); ?>, // Info o zalogowanym użytkowniku
     customerOwners: [
-        {id: 0, value: "Opiekun"},    
+        {id: 0, value: "Wszyscy"},    
         {id: 3, value: "Agnieszka"},
         {id: 17, value: "Ania"},
         {id: 2, value: "Beata"},
