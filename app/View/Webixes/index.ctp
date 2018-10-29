@@ -9,6 +9,16 @@
 Globalny obiekt, przechowywyjący różne użyteczne dane */
 var globalAppData = {
     loggedInUser: <?php echo json_encode($loggedInUser); ?>, // Info o zalogowanym użytkowniku
+    customerOwners: [
+        {id: 0, value: "Opiekun"},    
+        {id: 3, value: "Agnieszka"},
+        {id: 17, value: "Ania"},
+        {id: 2, value: "Beata"},
+        {id: 4, value: "Jola"},
+        {id: 11, value: "Marzena"},
+        {id: 31, value: "Piotr"},
+        {id: 10, value: "Renata"}            
+    ],
     config: { // różnorakie przydatne dane
         logoutUrl: "/users/logout",
 

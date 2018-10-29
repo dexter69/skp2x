@@ -1,14 +1,3 @@
-let optionsViaCustomerOwners = [
-    {id: 0, value: "Opiekun"},    
-    {id: 3, value: "Agnieszka"},
-    {id: 17, value: "Ania"},
-    {id: 2, value: "Beata"},
-    {id: 4, value: "Jola"},
-    {id: 11, value: "Marzena"},
-    {id: 31, value: "Piotr"},
-    {id: 10, value: "Renata"}            
-];
-
 let listOfCustomers = { 
     id: "listOfCustomers",
     view:"datatable",
@@ -22,7 +11,7 @@ let listOfCustomers = {
         { id:"index", header:"", sort:"int", width:35 },
         { id:"WebixCustomer_id", header:"id", width:50 },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true }, 
-        { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: optionsViaCustomerOwners }], width:108}
+        { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
     ],
     scheme:{
         $init:function(obj){ obj.index = this.count(); }
