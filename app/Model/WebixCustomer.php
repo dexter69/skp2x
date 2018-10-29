@@ -43,8 +43,27 @@ class WebixCustomer extends AppModel {
         }
 
         $cakeResults = $this->find('all', $parameters);        
-        $out['records'] = $this->mergeCakeManyRows( $cakeResults );
+        $out['records'] = $this->transferResults($cakeResults, $coSzukamy);// $this->mergeCakeManyRows( $cakeResults );
         $out['cake'] = $cakeResults; // w celach diagnostycznych
+        return $out;
+    }
+
+    /**
+     * Przekonvertuj do Webixa i wstaw span'y do wyników, które otoczą frazę */
+    private function transferResults( $dane = [], $fraza = "" ) {
+        
+        $out = [];
+        $start = "<span class='gruby'>";
+        $stop = "</span>";
+        foreach( $dane as $oneRow ) {
+            $newRow = $this->mergeCakeData($oneRow);            
+            if( $fraza ) {
+                $pos = stripos($newRow["WebixCustomer_name"], $fraza);
+                $frag = substr($newRow["WebixCustomer_name"], $pos, strlen($fraza));                
+                $newRow["WebixCustomer_name"] = str_ireplace($fraza, "$start$frag$stop", $newRow["WebixCustomer_name"]);
+            }            
+            $out[] = $newRow;
+        }
         return $out;
     }
 

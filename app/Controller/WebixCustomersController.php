@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 
 class WebixCustomersController extends AppController {
 
-    //public function beforeFilter() { $this->Auth->allow('getForAddingAnOrder'); }
+    public function beforeFilter() { $this->Auth->allow('getForAddingAnOrder'); }
 
     public function getForAddingAnOrder() {
 
