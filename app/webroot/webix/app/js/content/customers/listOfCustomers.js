@@ -8,8 +8,8 @@ let listOfCustomers = {
         realOwnerId: 0
     },
     columns: [
-        { id:"index", header:"", sort:"int", width:35 },
-        { id:"WebixCustomer_id", header:"id", width:50 },
+        { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
+        { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true }, 
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
     ],
