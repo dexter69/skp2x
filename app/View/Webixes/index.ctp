@@ -10,7 +10,10 @@ Globalny obiekt, przechowywyjący różne użyteczne dane */
 var globalAppData = {
     loggedInUser: <?php echo json_encode($loggedInUser); ?>, // Info o zalogowanym użytkowniku
     config: { // różnorakie przydatne dane
-        logoutUrl: "/users/logout"
+        logoutUrl: "/users/logout",
+
+        // url do zasysania klientów lda celów dodania nowego zamówienia
+        customersAddOrder: "/webixCustomers/getForAddingAnOrder.json"
     },
     template: { // tu bardziej złożone tamplates        
         theOrderDetail: "<?php echo $theOrderDetail; ?>"      

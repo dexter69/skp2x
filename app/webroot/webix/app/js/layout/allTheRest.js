@@ -50,6 +50,6 @@ let addingNewOrderWidget = {
 
 let allTheRest = 
 
-//addingNewOrderWidget;
+addingNewOrderWidget;
 
-allThePrivateOrdersFullV2;
+//allThePrivateOrdersFullV2;

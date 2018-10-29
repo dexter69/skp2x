@@ -9,10 +9,17 @@ class WebixCustomersController extends AppController {
 
     public function getForAddingAnOrder() {
 
-        $limit = 3;        
+        if ($this->request->is('post')) {  // normalnie będziemy wysyłać ajax post
+            $fraza = $this->request->data["fraza"];
+            $realOwnerId = $this->request->data["realOwnerId"];
+        } else { // dla testów z przeglądrką
+            $fraza = "ara";
+            $realOwnerId = 0; // wszyscy handlowcy
+        }
+        $limit = 50; // Limit znajdowanych rekordów
         $theCustomers = $this->WebixCustomer->getCustomersForAddingAnOrder(
-            $this->request->data["fraza"], // szukane znaki w nazwie customer'a
-            $this->request->data["realOwnerId"], // id stałego opiekuna klienta 
+            $fraza, // szukane znaki w nazwie customer'a
+            $realOwnerId, // id stałego opiekuna klienta 
             $limit // max ilość rekordów
         );         
         $theCustomers['req'] = $this->request->data;        

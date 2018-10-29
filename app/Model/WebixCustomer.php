@@ -35,11 +35,15 @@ class WebixCustomer extends AppModel {
         ];
 
         if( $realOwner ) {           
-            $parameters['conditions'] = ['WebixCustomerRealOwner.id' => $realOwner];
+            $parameters['conditions']['WebixCustomerRealOwner.id'] = $realOwner;
+        }
+
+        if( $coSzukamy != '' AND $coSzukamy != null ) { //niepusta fraza
+            $parameters['conditions']['WebixCustomer.name LIKE'] = '%'.$coSzukamy.'%';
         }
 
         $cakeResults = $this->find('all', $parameters);        
-        $out['results'] = $this->mergeCakeManyRows( $cakeResults );
+        $out['records'] = $this->mergeCakeManyRows( $cakeResults );
         $out['cake'] = $cakeResults; // w celach diagnostycznych
         return $out;
     }
