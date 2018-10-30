@@ -38,6 +38,29 @@ let listOfCustomers = {
             if( this.getFilter("WebixCustomerRealOwner_name").value != listOfCustomers.postData.realOwnerId ) {                
                 this.getFilter("WebixCustomerRealOwner_name").value = listOfCustomers.postData.realOwnerId;
             }
+        },
+        /**
+            Po kliknięciu w jakiegoś klienta na liscie, chcemy wyświetlić formularz do dodwania szybkiego
+            zamówienia */
+        'onAfterSelect': function(id){ 
+            // Przemaluj komponent/y                  
+            //webix.message("kliknięte!");            
+            $$("customerName").define(customerName);            
+            $$("addOrderAllTheRest").define(addOrderAllTheRest);
+            $$("customerName").refresh();
+            $$("addOrderAllTheRest").refresh();
+
+            // id klikniętego klienta w bazie
+            let theCustomerId = $$(listOfCustomers.id).getItem(id).WebixCustomer_id; 
+            //console.log(theCustomerId);
+            let url = globalAppData.config.justOneCustomerData + theCustomerId + ".json";
+
+            // pobierz świeże dane dot. tego klienta
+            webix.ajax(url).then(function(data){   
+                let dane = data.json();                  
+                console.log(dane);
+                $$("customerName").parse(dane);
+            });            
         }
     }
 }

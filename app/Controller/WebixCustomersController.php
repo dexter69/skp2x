@@ -25,4 +25,16 @@ class WebixCustomersController extends AppController {
         $this->set('_serialize', 'theCustomers');    
     }
 
+    /**
+     * Info dotyczące jednego klienta
+     * $id - id klienta w bazie */
+    public function getOne( $id = 0 ) {
+
+        $theCustomer = [
+            "WebixCustomer_name" => "Name + $id"
+        ];
+        $this->set(compact(['theCustomer']));
+        $this->set('_serialize', 'theCustomer');
+    }
+
 }

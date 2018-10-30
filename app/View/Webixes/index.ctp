@@ -24,7 +24,9 @@ var globalAppData = {
         logoutUrl: "/users/logout",
 
         // url do zasysania klientów lda celów dodania nowego zamówienia
-        customersAddOrder: "/webixCustomers/getForAddingAnOrder.json"
+        customersAddOrder: "/webixCustomers/getForAddingAnOrder.json",
+
+        justOneCustomerData: "/webixCustomers/getOne/"
     },
     template: { // tu bardziej złożone tamplates        
         theOrderDetail: "<?php echo $theOrderDetail; ?>"      

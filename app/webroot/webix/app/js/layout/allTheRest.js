@@ -42,7 +42,7 @@ let addingNewOrderWidget = {
     padding:35,
     type:"space",
     cols: [
-        { template: "Tu będzie dodawanie zamówienia"},
+        addNewQuickOrder,
         { gravity: 0.005 }, //Taki spacer
         listOfCustomers
     ]

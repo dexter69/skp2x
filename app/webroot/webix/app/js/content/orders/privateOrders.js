@@ -64,7 +64,7 @@ let privateOrders = {
             // spreparuj prawidłowy url
             let url = "webixOrders/getOneOrderLight/" + theOrderId + ".json";
 
-            // pobierz świerze dane dot. tego zamówienia
+            // pobierz świeże dane dot. tego zamówienia
             webix.ajax(url).then(function(data){   
                 let dane = data.json();  
                 if( dane.WebixOrder_ileKart ) { // Jeżeli są jakieś karty
