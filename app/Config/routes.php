@@ -44,6 +44,7 @@
         Router::connect('/handlowe/edytuj/*', array('controller' => 'requests', 'action' => 'edytuj'));
 
         Router::connect('/handlowy', array('controller' => 'webixes', 'action' => 'index'));
+        Router::connect('/pulpit', array('controller' => 'webixes', 'action' => 'index'));
 
 /**
  * ...and connect the rest of 'Pages' controller's URLs.

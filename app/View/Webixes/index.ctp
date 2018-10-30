@@ -1,6 +1,15 @@
 <?php
-    $this->set('title_for_layout', 'Handlowy');    
-    $theOrderDetail  = $this->App->trimAll($this->element('webixes/theOrderDetail'));
+    $this->set('title_for_layout', 'Pulpit');    
+    $theOrderDetail = $this->App->trimAll($this->element('webixes/theOrderDetail'));
+    $theCustomerDetail1 = $this->App->trimAll(
+        $this->element('webixes/labelName', [
+            'extraClass' => null,
+            'label' => 'Klient',
+            'name' => '#WebixCustomer_name#'
+        ])
+    )
+    ;
+    
 ?>
 
 <script type="text/javascript" charset="utf-8">
@@ -26,10 +35,11 @@ var globalAppData = {
         // url do zasysania klientów lda celów dodania nowego zamówienia
         customersAddOrder: "/webixCustomers/getForAddingAnOrder.json",
 
-        justOneCustomerData: "/webixCustomers/getOne/"
+        justOneCustomerData: "/webixCustomers/getOneForQuickAddOrder/"
     },
     template: { // tu bardziej złożone tamplates        
-        theOrderDetail: "<?php echo $theOrderDetail; ?>"      
+        theOrderDetail: "<?php echo $theOrderDetail; ?>",        
+        theCustomerDetail1: '<?php echo $theCustomerDetail1; ?>'
     } 
 };
 

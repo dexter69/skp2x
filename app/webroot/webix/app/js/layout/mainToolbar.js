@@ -21,7 +21,7 @@ let mainToolbar = {
             }
         },
         */
-        { view: "label", label: "Handlowe !"},
+        { view: "label", label: " "},
         {},
         userInfo
         //,{ view: "button", type: "icon", width: 45, css: "app_button", icon: "envelope-o",  badge:4},

@@ -12,3 +12,32 @@
 .list-of-customers span.gruby {
     font-weight: 600;
 }
+
+/*
+    Style do dodawania zamówienia */
+
+.add-quick-order > .add-inside {
+    padding: 15px 15px;
+}
+
+.klient-nazwa .label-name > label {
+    font-size: 82%;
+}
+
+.klient-nazwa .label-name > div {
+    color: black;
+    font-size: 115%;
+}
+
+.add-quick-order.moj-naglowek > .webix_header > div {    
+    background-color: rgb(178, 216, 216);
+    //#35c0b2;
+    // #30b9c4;
+    // lightsalmon;
+}
+
+.add-quick-order.moj-naglowek > .webix_header > div > span {
+    color: black;
+    font-weight: bold;
+    font-size: 90%;
+}

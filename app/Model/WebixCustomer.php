@@ -6,19 +6,42 @@ class WebixCustomer extends AppModel {
 
     public $useTable = 'customers'; // No bo to tylko wrap dla Webix'a
 
-    private $fieldsWeWant = [ // za wyjątkiem $hasMany
-        'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.osoba_kontaktowa',
-        'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic'
-        
-    ];
-
-    //public $defaultConditions = [ 'WebixPrivateOrder.status' => 0 ]; // myk w AppModel z beforeFind
-
     public $belongsTo = [
         'WebixCustomerRealOwner' => [ // Stały opiekun klienta
             'foreignKey' => 'opiekun_id',            
         ]
     ];
+
+    private $fieldsWeWant = [
+        'list' => [ // Do listy klientów przy dodawaniu zamówienia
+            // za wyjątkiem $hasMany
+            'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.osoba_kontaktowa',
+            'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic'            
+        ],
+        'one' => [ // just one customer
+            'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.osoba_kontaktowa',
+            'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic'
+        ]
+    ];
+
+    //public $defaultConditions = [ 'WebixPrivateOrder.status' => 0 ]; // myk w AppModel z beforeFind
+    
+
+    /*
+        Chcemy ifo o jednym kliencie dla szybkiego dodania zamówienia  */
+    public function getOne4QuickOrderAdd( $id = 0 ) {
+
+        $parameters = [
+            'fields' => $this->fieldsWeWant['one'],
+            'conditions' => [
+                "WebixCustomer.id" => $id
+            ]
+        ];
+        $cakeResults = $this->find('first', $parameters);
+        $merged = $this->mergeCakeData($cakeResults);        
+        $merged["cake"] = $cakeResults;
+        return $merged;
+    }
 
     /**
      *  Znajdż klientów na potrzeby dodania zamówienia handlowego
@@ -30,7 +53,7 @@ class WebixCustomer extends AppModel {
 
         $out = [];
         $parameters = [
-            'fields' => $this->fieldsWeWant,
+            'fields' => $this->fieldsWeWant['list'],
             'limit' => $limit
         ];
 

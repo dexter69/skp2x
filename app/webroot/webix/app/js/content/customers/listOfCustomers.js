@@ -47,8 +47,10 @@ let listOfCustomers = {
             //webix.message("kliknięte!");            
             $$("customerName").define(customerName);            
             $$("addOrderAllTheRest").define(addOrderAllTheRest);
-            $$("customerName").refresh();
+            $$("addOrderNaglowek").show();
+            //$$("customerName").refresh();
             $$("addOrderAllTheRest").refresh();
+            
 
             // id klikniętego klienta w bazie
             let theCustomerId = $$(listOfCustomers.id).getItem(id).WebixCustomer_id; 
@@ -58,7 +60,7 @@ let listOfCustomers = {
             // pobierz świeże dane dot. tego klienta
             webix.ajax(url).then(function(data){   
                 let dane = data.json();                  
-                console.log(dane);
+                //console.log(dane);
                 $$("customerName").parse(dane);
             });            
         }

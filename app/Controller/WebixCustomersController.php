@@ -3,7 +3,11 @@ App::uses('AppController', 'Controller');
 
 class WebixCustomersController extends AppController {
 
-    public function beforeFilter() { $this->Auth->allow('getForAddingAnOrder'); }
+    public function beforeFilter() { $this->Auth->allow(
+        'getForAddingAnOrder',
+        'getOneForQuickAddOrder'
+    ); 
+    }
 
     public function getForAddingAnOrder() {
 
@@ -28,11 +32,9 @@ class WebixCustomersController extends AppController {
     /**
      * Info dotyczące jednego klienta
      * $id - id klienta w bazie */
-    public function getOne( $id = 0 ) {
+    public function getOneForQuickAddOrder( $id = 0 ) {
 
-        $theCustomer = [
-            "WebixCustomer_name" => "Name + $id"
-        ];
+        $theCustomer = $this->WebixCustomer->getOne4QuickOrderAdd( $id );
         $this->set(compact(['theCustomer']));
         $this->set('_serialize', 'theCustomer');
     }
