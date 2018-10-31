@@ -16,8 +16,8 @@
 /*
     Style do dodawania zamówienia */
 
-.add-quick-order > .add-inside {
-    padding: 15px 15px;
+.add-quick-order > .add-inside > .webix_template {    
+    margin: 0 0 0 15px;
 }
 
 .klient-nazwa .label-name > label {
@@ -40,4 +40,8 @@
     color: black;
     font-weight: bold;
     font-size: 90%;
+}
+
+.add-quick-order .klient-nazwa {
+    //background-color: lightcoral;
 }

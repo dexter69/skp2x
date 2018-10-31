@@ -36,6 +36,7 @@
                 '/webix/app/js/content/orders/privateOrders.js?v=' . time(),
                 '/webix/app/js/content/orders/theOrderDetail_listOfCards.js?v=' . time(),
                 '/webix/app/js/content/orders/theOrderDetail.js?v=' . time(),
+                //'/webix/app/js/content/orders/_addNewQuickOrder.js?v=' . time(),
                 '/webix/app/js/content/orders/addNewQuickOrder.js?v=' . time(),
                 '/webix/app/js/content/customers/listOfCustomers.js?v=' . time(),
                 

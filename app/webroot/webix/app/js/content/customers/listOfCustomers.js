@@ -45,11 +45,10 @@ let listOfCustomers = {
         'onAfterSelect': function(id){ 
             // Przemaluj komponent/y                  
             //webix.message("kliknięte!");            
-            $$("customerName").define(customerName);            
-            $$("addOrderAllTheRest").define(addOrderAllTheRest);
-            $$("addOrderNaglowek").show();
-            //$$("customerName").refresh();
-            $$("addOrderAllTheRest").refresh();
+            $$("customerName").define(customerName);  // nie mósimy refresh, bo pozniej parse załatwi sprawę
+            $$("addOrderNaglowek").show();            
+            $$("addOrderAllTheRest_").hide();
+            $$("addOrderAllTheRest").show();
             
 
             // id klikniętego klienta w bazie

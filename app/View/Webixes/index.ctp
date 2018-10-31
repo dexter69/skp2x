@@ -6,10 +6,7 @@
             'extraClass' => null,
             'label' => 'Klient',
             'name' => '#WebixCustomer_name#'
-        ])
-    )
-    ;
-    
+        ]));    
 ?>
 
 <script type="text/javascript" charset="utf-8">
