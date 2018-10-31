@@ -37,12 +37,17 @@
                 '/webix/app/js/content/orders/theOrderDetail_listOfCards.js?v=' . time(),
                 '/webix/app/js/content/orders/theOrderDetail.js?v=' . time(),
                 //'/webix/app/js/content/orders/_addNewQuickOrder.js?v=' . time(),
-                '/webix/app/js/content/orders/addNewQuickOrder.js?v=' . time(),
+                //'/webix/app/js/content/orders/addNewQuickOrder.js?v=' . time(),
+
+                '/webix/app/js/content/orders/managePrivateOrders.js?v=' . time(),
+                '/webix/app/js/content/orders/manageAddingQuickOrder.js?v=' . time(),
+                
                 '/webix/app/js/content/customers/listOfCustomers.js?v=' . time(),
                 
                 '/webix/app/js/layout/mainToolbar.js?v=' . time(),
                 '/webix/app/js/layout/leftSidebar.js?v=' . time(),                
-                '/webix/app/js/layout/allTheRest.js?v=' . time()
+                '/webix/app/js/layout/content.js?v=' . time(),
+                //'/webix/app/js/layout/allTheRest.js?v=' . time()
             ]);
         ?>
     </body>

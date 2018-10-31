@@ -49,7 +49,7 @@ webix.ready(function(){ //to ensure that your code is executed after the page is
             { 
                 cols:[
                     leftSidebar,
-                    allTheRest // zawartość
+                    content//allTheRest // zawartość
                 ]
             }             
         ]   
