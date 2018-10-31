@@ -32,8 +32,13 @@
             echo $this->fetch('content'); 
         
             echo $this->Html->script([
+                //
                 //Rzeczy potrzebne aplikacji
-                '/webix/app/js/content/orders/privateOrders.js?v=' . time(),
+                //listOfPrivateOrders
+                //'/webix/app/js/content/orders/privateOrders_.js?v=' . time(),
+                '/webix/app/js/content/orders/privateOrders/conf.js?v=' . time(),
+                '/webix/app/js/content/orders/privateOrders/eventsHandlers.js?v=' . time(),
+                '/webix/app/js/content/orders/privateOrders/listOfPrivateOrders.js?v=' . time(),
                 '/webix/app/js/content/orders/theOrderDetail_listOfCards.js?v=' . time(),
                 '/webix/app/js/content/orders/theOrderDetail.js?v=' . time(),
                 //'/webix/app/js/content/orders/_addNewQuickOrder.js?v=' . time(),
