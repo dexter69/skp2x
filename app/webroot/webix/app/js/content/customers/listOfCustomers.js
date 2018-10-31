@@ -45,7 +45,7 @@ let listOfCustomers = {
         'onAfterSelect': function(id){ 
             // Przemaluj komponent/y                  
             //webix.message("kliknięte!");            
-            $$("customerName").define(customerName);  // nie mósimy refresh, bo pozniej parse załatwi sprawę
+            $$("customerName").define(customerName);  // nie musimy refresh, bo pozniej parse załatwi sprawę
             $$("addOrderNaglowek").show();            
             $$("addOrderAllTheRest_").hide();
             $$("addOrderAllTheRest").show();
@@ -61,6 +61,9 @@ let listOfCustomers = {
                 let dane = data.json();                  
                 //console.log(dane);
                 $$("customerName").parse(dane);
+                $$(formularz.id).setValues({
+                    email: dane.WebixCustomer_email
+                });
             });            
         }
     }

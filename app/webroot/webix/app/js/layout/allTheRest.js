@@ -23,8 +23,10 @@ let allThePrivateOrdersFullV1 = {
 }
 
 let allThePrivateOrdersFullV2 = { // Bez Header'a
+    id: "allThePrivateOrders",
     padding:35,
-    type:"space",    
+    type:"space",
+    //hidden: true, 
     cols: [
         privateOrders,
         {gravity: 0.02},// taki spacer            
@@ -39,8 +41,10 @@ let allThePrivateOrdersFullV2 = { // Bez Header'a
 }
 
 let addingNewOrderWidget = {
+    id: "addingNewOrderWidget",
     padding:35,
     type:"space",
+    //hidden: true,
     cols: [
         addNewQuickOrder,
         { gravity: 0.005 }, //Taki spacer
@@ -48,8 +52,16 @@ let addingNewOrderWidget = {
     ]
 }
 
-let allTheRest = 
+let allTheRest = {
+    id: "allTheRest",
+    rows: [
+        //allThePrivateOrdersFullV2,
+        addingNewOrderWidget
+    ]
+}
 
-addingNewOrderWidget;
+
+
+//addingNewOrderWidget;
 
 //allThePrivateOrdersFullV2;

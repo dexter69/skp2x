@@ -19,7 +19,8 @@ class WebixCustomer extends AppModel {
             'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic'            
         ],
         'one' => [ // just one customer
-            'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.osoba_kontaktowa',
+            'WebixCustomer.id', 'WebixCustomer.name',
+            'WebixCustomer.osoba_kontaktowa', 'WebixCustomer.email',
             'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic'
         ]
     ];

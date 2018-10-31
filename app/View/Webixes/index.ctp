@@ -29,7 +29,7 @@ var globalAppData = {
     config: { // różnorakie przydatne dane
         logoutUrl: "/users/logout",
 
-        // url do zasysania klientów lda celów dodania nowego zamówienia
+        // url do zasysania klientów dla celów dodania nowego zamówienia
         customersAddOrder: "/webixCustomers/getForAddingAnOrder.json",
 
         justOneCustomerData: "/webixCustomers/getOneForQuickAddOrder/"
