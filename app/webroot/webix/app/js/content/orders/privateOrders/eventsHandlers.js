@@ -10,7 +10,6 @@ let onBeforeFilterHandler = function() {
  * by to skorygować. Warunek jest po to by ta korekcja zachodziła tylko przy pierwszej inicjalizacji
  * (tylko wtedy warunek jest spełniony). Być może istnieje lepszy sposób ustawienia filtra czy coś.
  */
-
 let onAfterLoadHandler = function(){           
     if( this.getFilter("WebixPrivateOrderOwner_name").value != conf.theUserId ) {                
         this.getFilter("WebixPrivateOrderOwner_name").value = conf.theUserId;

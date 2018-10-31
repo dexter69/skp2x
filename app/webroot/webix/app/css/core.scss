@@ -29,14 +29,17 @@
     font-size: 125%;
 }
 
-.add-quick-order.moj-naglowek > .webix_header > div {    
+.add-quick-order.moj-naglowek > .webix_header > div,
+.moj-naglowek .webix_header > div
+ {    
     background-color: rgb(178, 216, 216);
     //#35c0b2;
     // #30b9c4;
     // lightsalmon;
 }
 
-.add-quick-order.moj-naglowek > .webix_header > div > span {
+.add-quick-order.moj-naglowek > .webix_header > div > span,
+.moj-naglowek .webix_header > div > span, {
     color: black;
     font-weight: bold;
     font-size: 90%;
