@@ -39,8 +39,8 @@
                 '/webix/app/js/content/orders/privateOrders/conf.js?v=' . time(),
                 '/webix/app/js/content/orders/privateOrders/eventsHandlers.js?v=' . time(),
                 '/webix/app/js/content/orders/privateOrders/listOfPrivateOrders.js?v=' . time(),
-                '/webix/app/js/content/orders/theOrderDetail_listOfCards.js?v=' . time(),
-                '/webix/app/js/content/orders/theOrderDetail.js?v=' . time(),
+                '/webix/app/js/content/orders/theOrderDetail/listOfCards.js?v=' . time(),
+                '/webix/app/js/content/orders/theOrderDetail/theOrderDetail.js?v=' . time(),
                 //'/webix/app/js/content/orders/_addNewQuickOrder.js?v=' . time(),
                 //'/webix/app/js/content/orders/addNewQuickOrder.js?v=' . time(),
 

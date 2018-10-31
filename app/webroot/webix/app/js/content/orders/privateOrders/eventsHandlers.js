@@ -15,45 +15,37 @@ let onAfterLoadHandler = function(){
     if( this.getFilter("WebixPrivateOrderOwner_name").value != conf.theUserId ) {                
         this.getFilter("WebixPrivateOrderOwner_name").value = conf.theUserId;
     }
-    // po zmianie filtra (wybrany inny handlowiec), czyścimy listę kart
-    /*
-    $$(theOrderDetail_listOfCards.id).clearAll(true);
-    $$(theOrderDetail_listOfCards.id).hide();
-    */
-    // czyscimy component ze szczegółami zamówienia
-    /*
+    // po zmianie filtra (wybrany inny handlowiec), czyścimy listę kart i chowamy tabelkę
+    $$(listOfCards.id).clearAll(true);
+    $$(listOfCards.id).hide();
+    
+    // czyscimy component ze szczegółami zamówienia    
     $$(theOrderDetail.id).define("template", "");
-    $$(theOrderDetail.id).refresh();            
-    */
+    $$(theOrderDetail.id).refresh();
 }
 
 let onAfterSelectHandler = function(id){ 
-    /*
-    $$(theOrderDetail_listOfCards.id).show();
-    $$(theOrderDetail_listOfCards.id).clearAll(true); // czyscimy listę kart, bo mogła być stara
-    */
-    // id tego zamówienia w bazie SKP
-    let theOrderId = $$(listOfPrivateOrders.id).getItem(id).WebixPrivateOrder_id; 
+        
+   $$(listOfCards.id).show();
+   // czyścimy listę kart, by nowe zastąpiły a nie dołączały się
+   $$(listOfCards.id).clearAll(true);
 
-    // spreparuj prawidłowy url
-    let url = "webixOrders/getOneOrderLight/" + theOrderId + ".json";
-
+    // Przygotuj prawidłowy url ( z id zamówienia w bazie)
+    let url =   "webixOrders/getOneOrderLight/" +                
+                $$(listOfPrivateOrders.id).getItem(id).WebixPrivateOrder_id + // <= id tego zamówienia w bazie SKP
+                ".json";
     // pobierz świeże dane dot. tego zamówienia
     webix.ajax(url).then(function(data){   
-        let dane = data.json();  
-        //console.log(dane);
-        if( dane.WebixOrder_ileKart ) { // Jeżeli są jakieś karty
-            // karty tego zamówienia
-            let karty = dane.WebixCard;                
-            //$$(theOrderDetail_listOfCards.id).parse(karty); 
+        let dane = data.json();  //console.log(dane);
+        if( dane.WebixOrder_ileKart ) { // Jeżeli są jakieś karty                                        
+            $$(listOfCards.id).parse(dane.WebixCard); // karty tego zamówienia
         }
-        // Tworzymy template (bo nie hcemy by nam się cokolwiek wyświetlało, jak nie ma danych)                                
-        /*
+        /* Tworzymy template ze szczegółami zamówienia (bo nie hcemy by nam się cokolwiek wyświetlało,
+            jak nie ma danych) */        
         $$(theOrderDetail.id).define("template", globalAppData.template.theOrderDetail);
         $$(theOrderDetail.id).parse({
             id: dane.WebixOrder_id,
             termin: dane.WebixOrder_stop_day
         });
-        */
     });                               
 }

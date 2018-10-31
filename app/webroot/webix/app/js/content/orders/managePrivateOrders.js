@@ -19,7 +19,12 @@ let managePrivateOrders = {
     //rows: testContent1    
     cols: [
         listOfPrivateOrders,
-        {gravity: 0.02},// taki spacer            
-        {}
+        {gravity: 0.01},// taki spacer  
+        {
+            rows: [
+                theOrderDetail,
+                listOfCards
+            ]                    
+        }
     ]
 }

@@ -1,5 +1,5 @@
-let theOrderDetail_listOfCards = {
-    id: "theOrderDetail_listOfCards",
+let listOfCards = {
+    id: "listOfCards",
     view: "datatable",    hidden: true,
     //gravity: 0.5,    
     columns: [
