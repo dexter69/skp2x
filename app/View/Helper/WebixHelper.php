@@ -8,8 +8,13 @@ class WebixHelper extends AppHelper {
 
     public function css( $in = [] ) {
 
+        if( DS == WIN) { // wersja DEV
+            $suffix = ".css?v=" . time();
+        } else { // wersja PROD
+            $suffix = ".css?v=" . appVersion;
+        }
         foreach( $in as $string ) {    
-            $arr[] = $string . ".css?v=" . appVersion;
+            $arr[] = $string . $suffix;
         }
         return $this->Html->css($arr);
     }
@@ -19,14 +24,16 @@ class WebixHelper extends AppHelper {
 
     public function script( $devArr, $proArr ) {
 
-        $in = $out = [];
+        $arr = [];        
         if( DS == WIN) { // wersja DEV
             $in = $devArr;
+            $suffix = ".js?v=" . time();
         } else { // wersja PROD
             $in = $proArr;
+            $suffix = ".js?v=" . appVersion;
         }
         foreach( $in as $string ) {    
-            $arr[] = $string . ".js?v=" . appVersion;
+            $arr[] = $string . $suffix;
         }
         return $this->Html->script($arr);
     }

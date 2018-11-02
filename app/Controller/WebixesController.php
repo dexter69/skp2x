@@ -12,17 +12,17 @@ class WebixesController extends AppController {
     // Js files składajace się na aplikację
 
     private $webixJsFiles = [
-        "/webix/app/js/content/orders/privateOrders/conf.js",
-        "/webix/app/js/content/orders/privateOrders/eventsHandlers.js",
-        "/webix/app/js/content/orders/privateOrders/listOfPrivateOrders.js",
-        "/webix/app/js/content/orders/theOrderDetail/listOfCards.js",
-        "/webix/app/js/content/orders/theOrderDetail/theOrderDetail.js",
-        "/webix/app/js/content/orders/managePrivateOrders.js",
-        "/webix/app/js/content/orders/manageAddingQuickOrder.js",    
-        "/webix/app/js/content/customers/listOfCustomers.js",    
-        "/webix/app/js/layout/mainToolbar.js",
-        "/webix/app/js/layout/leftSidebar.js",                
-        "/webix/app/js/layout/content.js"
+        "/webix/app/js/content/orders/privateOrders/conf",
+        "/webix/app/js/content/orders/privateOrders/eventsHandlers",
+        "/webix/app/js/content/orders/privateOrders/listOfPrivateOrders",
+        "/webix/app/js/content/orders/theOrderDetail/listOfCards",
+        "/webix/app/js/content/orders/theOrderDetail/theOrderDetail",
+        "/webix/app/js/content/orders/managePrivateOrders",
+        "/webix/app/js/content/orders/manageAddingQuickOrder",    
+        "/webix/app/js/content/customers/listOfCustomers",    
+        "/webix/app/js/layout/mainToolbar",
+        "/webix/app/js/layout/leftSidebar",                
+        "/webix/app/js/layout/content"
     ];
 
     public function index() {

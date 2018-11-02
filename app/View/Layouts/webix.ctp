@@ -35,14 +35,10 @@ $appVersion = "201811011415";
         <?php
             echo $this->fetch('content'); 
         
-            if( DS != WIN) { // We are on Linux - wersja prod
-                echo $this->Html->script("/webix/app/js/app.min.js?v=$appVersion");
-            } else { // We are on Windows! - wersja dev
-                echo $this->Html->script( // Poszczególne js files
-                    $webixJsFiles // Zdefiniowane w WebixesController
-                );
-            }
-            
+            echo $this->Webix->script(
+                $webixJsFiles, // Zdefiniowane w WebixesController
+                ["/webix/app/js/app.min"]
+            );
         ?>
     </body>
 </html>
