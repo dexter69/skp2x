@@ -2,6 +2,7 @@
 /**
 * Layout for webix: https://webix.com/
 */
+$appVersion = "201811011415";
 ?>
 
 <!DOCTYPE HTML>
@@ -13,47 +14,35 @@
         echo $this->Html->meta('icon');
 
         // Webix CSS & JavaScript =====================        
-        /* echo $this->Html->css(['/webix/v5.4.0/codebase/webix', '/webix/core.css?v=' . time()]);
-            Dajemy swoją skórkę */
-        echo $this->Html->css([
-            //'/webix/v5.4.0/codebase/webix', <-- Oryginalny
-            '/webix/v5.4.0/skin/504a75b5/webix', // skórka
-            '/webix/app/css/core.css?v=' . time()
+        echo $this->Webix->css([
+            "/webix/v5.4.0/skin/504a75b5/webix", // skórka 
+            "/webix/app/css/core"
         ]);
-        echo $this->Html->script([
-            '/webix/v5.4.0/codebase/webix_debug',
-            '/webix/v5.4.0/skin/504a75b5/skin', // potrzebne do skórki -> patrz readme.txt            
-        ]);
-        
+
+        echo $this->Webix->script(
+            [ // wersja DEV
+            "/webix/v5.4.0/codebase/webix_debug",
+            "/webix/v5.4.0/skin/504a75b5/skin", // potrzebne do skórki -> patrz readme.txt            
+            ],
+            [ // versja PROD
+                "/webix/v5.4.0/codebase/webix",
+                "/webix/v5.4.0/skin/504a75b5/skin", // potrzebne do skórki -> patrz readme.txt            
+            ]
+        );
         ?>
     </head>
     <body>        
         <?php
             echo $this->fetch('content'); 
         
-            echo $this->Html->script([
-                //
-                //Rzeczy potrzebne aplikacji
-                //listOfPrivateOrders
-                //'/webix/app/js/content/orders/privateOrders_.js?v=' . time(),
-                '/webix/app/js/content/orders/privateOrders/conf.js?v=' . time(),
-                '/webix/app/js/content/orders/privateOrders/eventsHandlers.js?v=' . time(),
-                '/webix/app/js/content/orders/privateOrders/listOfPrivateOrders.js?v=' . time(),
-                '/webix/app/js/content/orders/theOrderDetail/listOfCards.js?v=' . time(),
-                '/webix/app/js/content/orders/theOrderDetail/theOrderDetail.js?v=' . time(),
-                //'/webix/app/js/content/orders/_addNewQuickOrder.js?v=' . time(),
-                //'/webix/app/js/content/orders/addNewQuickOrder.js?v=' . time(),
-
-                '/webix/app/js/content/orders/managePrivateOrders.js?v=' . time(),
-                '/webix/app/js/content/orders/manageAddingQuickOrder.js?v=' . time(),
-                
-                '/webix/app/js/content/customers/listOfCustomers.js?v=' . time(),
-                
-                '/webix/app/js/layout/mainToolbar.js?v=' . time(),
-                '/webix/app/js/layout/leftSidebar.js?v=' . time(),                
-                '/webix/app/js/layout/content.js?v=' . time(),
-                //'/webix/app/js/layout/allTheRest.js?v=' . time()
-            ]);
+            if( DS != WIN) { // We are on Linux - wersja prod
+                echo $this->Html->script("/webix/app/js/app.min.js?v=$appVersion");
+            } else { // We are on Windows! - wersja dev
+                echo $this->Html->script( // Poszczególne js files
+                    $webixJsFiles // Zdefiniowane w WebixesController
+                );
+            }
+            
         ?>
     </body>
 </html>
