@@ -26,7 +26,8 @@ let guzik = {
 
 let managePrivateOrders = {
     id: "managePrivateOrders",
-    padding:35, type:"space",
+    padding: globalAppData.config.wyglad.mainPad, //35,
+    type:"space",
     //rows: testContent1    
     css: "moj-naglowek",
     cols: [

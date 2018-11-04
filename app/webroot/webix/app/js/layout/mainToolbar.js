@@ -7,8 +7,26 @@ let userInfo = {
     css:'kwa-mia-hau',    // w celach testowych
     //click: logoutHandler  <= w taki sposób, jeżeli chcemy użyć osobnej funkcji
     click: function (){ window.open(globalAppData.config.logoutUrl, "_self"); }
-};
+}
 // takie testowe było { view: "button", type: "icon", value: "Zosia", width: 65, css: "app_button", icon: "user-o",  badge:"Darek"};
+
+let toggleSwitch = { // Używamy do przełączania głównych komponentów
+    view:"toggle", type:"icon", name:"s4", 
+    width: 172,
+    offIcon:"plus",  onIcon:"bars",
+    offLabel:"DODAJ ZAMÓWIENIE", onLabel:"LISTA PRYWATNYCH",
+    css: "stearing-butt-in-toolbar",
+    //,tooltip: "Testujemy tooltip"
+    on: {
+        "onChange": function(newv, oldv){            
+            if( newv ) { // stan ON, czyli dla nas wyśw. nowe zam.                
+                $$(manageAddingQuickOrder.id).show();
+            } else {                
+                $$(managePrivateOrders.id).show();
+            }
+        }
+    }
+}
 
 let mainToolbar = {
     responsive: true,
@@ -21,7 +39,8 @@ let mainToolbar = {
             }
         },
         */
-        { view: "label", label: " "},
+        { view: "label", label: " ", width: 68},
+        toggleSwitch,
         {},
         userInfo
         //,{ view: "button", type: "icon", width: 45, css: "app_button", icon: "envelope-o",  badge:4},

@@ -28,11 +28,13 @@ var globalAppData = {
     ],    
     config: { // różnorakie przydatne dane
         logoutUrl: "/users/logout",
-
         // url do zasysania klientów dla celów dodania nowego zamówienia
         customersAddOrder: "/webixCustomers/getForAddingAnOrder.json",
-
-        justOneCustomerData: "/webixCustomers/getOneForQuickAddOrder/"
+        justOneCustomerData: "/webixCustomers/getOneForQuickAddOrder/",
+        wyglad: {
+            mainPad: 35, // definujący główny padding
+            buttonOnMainToolbarWidth: 50
+        }
     },
     template: { // tu bardziej złożone tamplates        
         theOrderDetail: "<?php echo $theOrderDetail; ?>",        

@@ -2,7 +2,6 @@
 /**
 * Layout for webix: https://webix.com/
 */
-$appVersion = "201811011415";
 ?>
 
 <!DOCTYPE HTML>
@@ -36,8 +35,8 @@ $appVersion = "201811011415";
             echo $this->fetch('content'); 
         
             echo $this->Webix->script(
-                $webixJsFiles, // Zdefiniowane w WebixesController
-                ["/webix/app/js/app.min"]
+                $webixJsFiles, // Zdefiniowane w WebixesController. Wersja dev
+                ["/webix/app/js/app.min"] // wersja prod
             );
         ?>
     </body>

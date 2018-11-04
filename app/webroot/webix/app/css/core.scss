@@ -33,9 +33,6 @@
 .moj-naglowek .webix_header > div
  {    
     background-color: rgb(178, 216, 216);
-    //#35c0b2;
-    // #30b9c4;
-    // lightsalmon;
 }
 
 .add-quick-order.moj-naglowek > .webix_header > div > span,
@@ -43,6 +40,11 @@
     color: black;
     font-weight: bold;
     font-size: 90%;
+}
+
+// Batony sterujące w toolbarz'e
+.stearing-butt-in-toolbar button {
+    text-align: center;
 }
 
 

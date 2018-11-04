@@ -15,6 +15,7 @@ let testContent2 = [
 
 let manageAddingQuickOrder = {
     id: "manageAddingQuickOrder",
-    padding:35, type:"space",
+    padding: globalAppData.config.wyglad.mainPad, //35,
+    type:"space",
     rows: testContent2  
 }
