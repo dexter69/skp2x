@@ -33,10 +33,13 @@ let listOfCustomers = {
             listOfCustomers.postData.realOwnerId = this.getFilter("WebixCustomerRealOwner_name").value;
             listOfCustomers.postData.fraza = this.getFilter("WebixCustomer_name").value;
         },
-        // na wzór privateOrders        
+        // Nie wiem czy w ogóle to ma sens. Gdy nie jest widoczny, to nie ma sensu - dosta-
+        //  jemy błąd (stąd warunek tu). Zostawiam jednak, bo może zmienimy zdanie
+        //  i ten komponent bedzie najpierw widoczny - wówczas moze się przydać
         'onAfterLoad': function(){
-            if( this.getFilter("WebixCustomerRealOwner_name").value != listOfCustomers.postData.realOwnerId ) {                
-                this.getFilter("WebixCustomerRealOwner_name").value = listOfCustomers.postData.realOwnerId;
+            if( $$(manageAddingQuickOrder.id).isVisible() && //sprawdzanie filtra na niewidocznym nie ma sensu
+                this.getFilter("WebixCustomerRealOwner_name").value != listOfCustomers.postData.realOwnerId) { // i filter nie jest OK           
+                this.getFilter("WebixCustomerRealOwner_name").value = listOfCustomers.postData.realOwnerId;            
             }
         },
         /**

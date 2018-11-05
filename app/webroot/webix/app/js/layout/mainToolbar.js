@@ -21,6 +21,14 @@ let toggleSwitch = { // Używamy do przełączania głównych komponentów
         "onChange": function(newv, /*oldv*/){            
             if( newv ) { // stan ON, czyli dla nas wyśw. nowe zam.                
                 $$(manageAddingQuickOrder.id).show();
+                /*  Poprawiamy ustawienie filtra przy pokazaniu się elementu, gdyż
+                    po pierwszej inicjalizacji może nie być prawidłowy, a gdy jest ukryty,
+                    to (prawdopodobnie) nie jest to mozliwe*/
+                if(
+                    $$(listOfCustomers.id).getFilter("WebixCustomerRealOwner_name").value !=
+                    listOfCustomers.postData.realOwnerId ) {
+                        $$(listOfCustomers.id).getFilter("WebixCustomerRealOwner_name").value = listOfCustomers.postData.realOwnerId;
+                }
             } else {                
                 $$(managePrivateOrders.id).show();
             }

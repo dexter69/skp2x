@@ -58,6 +58,7 @@ let formularz = {
 }
 
 webix.ready(function(){
+    /*
     $$(formularz.id).elements["newcustomer"].attachEvent("onChange", function(newv, oldv){
         //webix.message("Value changed from: "+oldv+" to: "+newv);
         if( newv == "0" || newv == "1" ) {
@@ -68,6 +69,9 @@ webix.ready(function(){
             $$("submitButton").hide();
         }   
     });
+    */
+   
+    /*
     $$("submitButton").attachEvent("onItemClick", function(id, e){
         let url = "/webixOrders/quickOrderSave.json";
         //let postData = {"primo": "hau", "secundo":"miau"};
@@ -90,6 +94,8 @@ webix.ready(function(){
             }
         });
     });
+*/
+
 });
 
 let addOrderAllTheRest = {

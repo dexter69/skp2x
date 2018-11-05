@@ -1,21 +1,12 @@
-let testContent2 = [
-    {            
-        view: "button",
-        label: "W TYŁ !!!",                         
-        //width: 120,
-        on: {
-            'onItemClick': function(){
-                //console.log("kliknęli 2!");
-                $$(managePrivateOrders.id).show();
-            }
-        }       
-     },
-     {template: "Zarządzanie dodawaniem nowego zamówienia"}
-];
 
 let manageAddingQuickOrder = {
     id: "manageAddingQuickOrder",
     padding: globalAppData.config.wyglad.mainPad, //35,
     type:"space",
-    rows: testContent2  
+    //rows: testContent2  
+    cols: [
+        addNewQuickOrder,
+        { gravity: 0.005 }, //Taki spacer
+        listOfCustomers
+    ]
 }
