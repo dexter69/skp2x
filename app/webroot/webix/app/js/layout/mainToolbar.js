@@ -18,7 +18,7 @@ let toggleSwitch = { // Używamy do przełączania głównych komponentów
     css: "stearing-butt-in-toolbar",
     //,tooltip: "Testujemy tooltip"
     on: {
-        "onChange": function(newv, oldv){            
+        "onChange": function(newv, /*oldv*/){            
             if( newv ) { // stan ON, czyli dla nas wyśw. nowe zam.                
                 $$(manageAddingQuickOrder.id).show();
             } else {                
