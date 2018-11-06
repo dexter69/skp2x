@@ -12,17 +12,8 @@ class WebixesController extends AppController {
     // Js files składajace się na aplikację
 
     private $webixJsFiles = [
-        /*
-        
-        
-        
-        
-        //
-
-        */
         "/webix/app/js/content/customers/listOfCustomers",
         "/webix/app/js/content/orders/addNewQuickOrder",
-
         "/webix/app/js/content/orders/privateOrders/conf",
         "/webix/app/js/content/orders/privateOrders/eventsHandlers",
         "/webix/app/js/content/orders/theOrderDetail/listOfCards",
