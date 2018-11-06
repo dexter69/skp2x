@@ -5,8 +5,8 @@ let manageAddingQuickOrder = {
     type:"space",
     //rows: testContent2  
     cols: [
-        addNewQuickOrder,
+        listOfCustomers,//addNewQuickOrder,
         { gravity: 0.005 }, //Taki spacer
-        listOfCustomers
+        addNewQuickOrder//listOfCustomers
     ]
 }
