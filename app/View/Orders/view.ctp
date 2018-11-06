@@ -1,9 +1,6 @@
 <?php
-$pokaz = false; // decyduje o wyswietlaniu w linii ~121 -> $order['Order']
-//echo '<pre>';	print_r($order['Event']); echo  '</pre>';
-//echo '<pre>';	print_r($evtext); echo  '</pre>';
-//echo '<pre>';	print_r($evcontrol); echo  '</pre>';
-//echo $this->Html->url('/css/order-pdf.css', true);
+$pokaz = true; // decyduje o wyswietlaniu w linii ~121 -> $order
+
 echo $this->Html->css(array('order', 'order/order.css?v=201804041230'), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 
 echo $this->Ma->walnijJqueryUI();
@@ -122,7 +119,7 @@ if( $order['Order']['procent_zaliczki'] ) {
 </div>
 
 <?php
-if( $pokaz ) { echo '<pre>';	print_r($order['Order']); echo  '</pre>'; }
+if( $pokaz ) { echo $this->App->print_r2($order); }
 ?>
 
 	
