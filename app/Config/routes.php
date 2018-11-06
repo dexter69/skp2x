@@ -43,7 +43,6 @@
         Router::connect('/handlowe/dodaj', array('controller' => 'requests', 'action' => 'dodaj'));
         Router::connect('/handlowe/edytuj/*', array('controller' => 'requests', 'action' => 'edytuj'));
 
-        Router::connect('/handlowy', array('controller' => 'webixes', 'action' => 'index'));
         Router::connect('/pulpit', array('controller' => 'webixes', 'action' => 'index'));
 
 /**
