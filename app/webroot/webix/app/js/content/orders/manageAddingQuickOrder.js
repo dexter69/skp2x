@@ -6,7 +6,7 @@ let manageAddingQuickOrder = {
     //rows: testContent2  
     cols: [
         listOfCustomers,//addNewQuickOrder,
-        { gravity: 0.005 }, //Taki spacer
+        //{ gravity: 0.005 }, //Taki spacer
         addNewQuickOrder//listOfCustomers
     ]
 }

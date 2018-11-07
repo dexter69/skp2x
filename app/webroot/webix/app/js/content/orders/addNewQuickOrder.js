@@ -119,6 +119,7 @@ let addOrderNaglowek = {
 let addNewQuickOrder = {     
     id: "addNewQuickOrder",
     css: "add-quick-order moj-naglowek",
+    hidden: true,
     rows: [     
             addOrderNaglowek,
             {

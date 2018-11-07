@@ -61,7 +61,8 @@ let listOfCustomers = {
 
             // pobierz świeże dane dot. tego klienta
             webix.ajax(url).then(function(data){   
-                let dane = data.json();                  
+                let dane = data.json();
+                $$(addNewQuickOrder.id).show(); // Pokaż component ze szczegółami klienta
                 //console.log(dane);
                 $$("customerName").parse(dane);
                 $$(formularz.id).setValues({
