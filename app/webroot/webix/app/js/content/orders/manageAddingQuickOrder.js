@@ -7,6 +7,7 @@ let manageAddingQuickOrder = {
     cols: [
         listOfCustomers,//addNewQuickOrder,
         //{ gravity: 0.005 }, //Taki spacer
-        addNewQuickOrder//listOfCustomers
+        //addNewQuickOrder//listOfCustomers
+        customerPanel
     ]
 }

@@ -3,7 +3,7 @@ let listOfCustomers = {
     view:"datatable",
     select: true,
     css: "list-of-customers",
-    gravity: 1.3,    
+    //gravity: 1.3,    
     columns: [
         { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
         { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
@@ -47,12 +47,14 @@ let listOfCustomers = {
             zamówienia */
         'onAfterSelect': function(id){ 
             // Przemaluj komponent/y                  
-            //webix.message("kliknięte!");            
+            //webix.message("kliknięte!");   
+            
+            /* to na razie wyłączam - działało dobrze z dodawaniem zamówienia
             $$("customerName").define(customerName);  // nie musimy refresh, bo pozniej parse załatwi sprawę
             $$("addOrderNaglowek").show();            
             $$("addOrderAllTheRest_").hide();
             $$("addOrderAllTheRest").show();
-            
+            */
 
             // id klikniętego klienta w bazie
             let theCustomerId = $$(listOfCustomers.id).getItem(id).WebixCustomer_id; 
@@ -61,8 +63,10 @@ let listOfCustomers = {
 
             // pobierz świeże dane dot. tego klienta
             webix.ajax(url).then(function(data){   
-                let dane = data.json();
-                $$(addNewQuickOrder.id).show(); // Pokaż component ze szczegółami klienta
+                let dane = data.json();   
+                if( !$$(customerPanel.id).isVisible() ) {
+                    $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                    
+                }                
                 //console.log(dane);
                 $$("customerName").parse(dane);
                 $$(formularz.id).setValues({
