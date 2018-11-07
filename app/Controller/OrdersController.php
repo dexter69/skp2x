@@ -262,7 +262,10 @@ class OrdersController extends AppController {
 		if (!$this->Order->exists($id)) {
 			throw new NotFoundException(__('Invalid order'));
 		}
-		$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
+		$options = array(
+			'conditions' => array('Order.' . $this->Order->primaryKey => $id),
+			//'recursive' => 2 // to jest porażka
+		);
 		$order = $this->Order->find('first', $options);
                 
 		if( !$this->akcjaOK($order['Order'], 'view') ) {
