@@ -12,7 +12,8 @@ let content = {
     id: "content",    
     animate: animacja.d
     ,cells: [
-        managePrivateOrders,
+        //managePrivateOrders,
         manageAddingQuickOrder
+        ,managePrivateOrders
     ]
 }

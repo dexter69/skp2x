@@ -10,17 +10,21 @@ let onBeforeFilterHandler = function() {
  * by to skorygować. Warunek jest po to by ta korekcja zachodziła tylko przy pierwszej inicjalizacji
  * (tylko wtedy warunek jest spełniony). Być może istnieje lepszy sposób ustawienia filtra czy coś.
  */
-let onAfterLoadHandler = function(){           
-    if( this.getFilter("WebixPrivateOrderOwner_name").value != conf.theUserId ) {                
-        this.getFilter("WebixPrivateOrderOwner_name").value = conf.theUserId;
+let onAfterLoadHandler = function(){   
+    /* Dajemy warunek, bo jeżeli po załadowaniu komponent jest niewidoczny,
+    to sprawdzanie filtra nie działa */
+    if ($$(managePrivateOrders.id).isVisible() ) {
+        if( this.getFilter("WebixPrivateOrderOwner_name").value != conf.theUserId ) {                
+            this.getFilter("WebixPrivateOrderOwner_name").value = conf.theUserId;
+        }
+        // po zmianie filtra (wybrany inny handlowiec), czyścimy listę kart i chowamy tabelkę
+        $$(listOfCards.id).clearAll(true);
+        $$(listOfCards.id).hide();
+
+        // czyscimy component ze szczegółami zamówienia    
+        $$(theOrderDetail.id).define("template", "");
+        $$(theOrderDetail.id).refresh();
     }
-    // po zmianie filtra (wybrany inny handlowiec), czyścimy listę kart i chowamy tabelkę
-    $$(listOfCards.id).clearAll(true);
-    $$(listOfCards.id).hide();
-    
-    // czyscimy component ze szczegółami zamówienia    
-    $$(theOrderDetail.id).define("template", "");
-    $$(theOrderDetail.id).refresh();
 }
 
 let onAfterSelectHandler = function(id){ 
