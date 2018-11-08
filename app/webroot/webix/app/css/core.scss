@@ -1,3 +1,5 @@
+$disabledMenuItemColor: orange;
+
 /* Kolor sidebar'a */
 
 .webix_sidebar, .webix_sidebar_popup_title {
@@ -42,6 +44,11 @@
     font-size: 90%;
 }
 
+.toolbar-menu .webix_disabled {
+    color: $disabledMenuItemColor;
+}
+
+// ### Chyba deprec
 // Batony sterujące w toolbarz'e
 .stearing-butt-in-toolbar button {
     text-align: center;

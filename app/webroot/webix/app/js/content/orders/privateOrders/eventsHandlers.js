@@ -12,7 +12,7 @@ let onBeforeFilterHandler = function() {
  */
 let onAfterLoadHandler = function(){   
     /* Dajemy warunek, bo jeżeli po załadowaniu komponent jest niewidoczny,
-    to sprawdzanie filtra nie działa */
+    to sprawdzanie filtra nie działa (albo nie ma sensu po prostu)  */
     if ($$(managePrivateOrders.id).isVisible() ) {
         if( this.getFilter("WebixPrivateOrderOwner_name").value != conf.theUserId ) {                
             this.getFilter("WebixPrivateOrderOwner_name").value = conf.theUserId;

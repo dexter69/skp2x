@@ -34,7 +34,11 @@ var globalAppData = {
         wyglad: {
             mainPad: 35, // definujący główny padding
             buttonOnMainToolbarWidth: 50
-        }
+        },
+        dataForManuInToolbar: [
+            { id:"listOfCustomers", value:"Klienci", icon: "address-book-o" },
+            { id:"listOfPrivateOrders", value:"Prywatne", icon: "handshake-o" }
+        ]
     },
     template: { // tu bardziej złożone tamplates        
         theOrderDetail: "<?php echo $theOrderDetail; ?>",        

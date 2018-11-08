@@ -13,12 +13,13 @@ let userInfo = {
 let toggleSwitch = { // Używamy do przełączania głównych komponentów
     view:"toggle", type:"icon", name:"s4", 
     width: 172,
-    offIcon:"plus",  onIcon:"bars",
-    offLabel:"DODAJ ZAMÓWIENIE", onLabel:"LISTA PRYWATNYCH",
+    //offIcon:"plus",  onIcon:"bars",
+    //offLabel:"DODAJ ZAMÓWIENIE", onLabel:"LISTA PRYWATNYCH",
     css: "stearing-butt-in-toolbar",
     //,tooltip: "Testujemy tooltip"
     on: {
-        "onChange": function(newv, /*oldv*/){            
+        "onChange": function(newv, /*oldv*/){  
+            console.log("Odpaliło mnie!");          
             if( newv ) { // stan ON, czyli dla nas wyśw. nowe zam.                
                 $$(manageAddingQuickOrder.id).show();
                 /*  Poprawiamy ustawienie filtra przy pokazaniu się elementu, gdyż
@@ -36,6 +37,27 @@ let toggleSwitch = { // Używamy do przełączania głównych komponentów
     }
 }
 
+let toolbarMenu = {
+    id: "toolbarMenu",
+    view:"menu",
+    aaa: "gibon",
+    data: globalAppData.config.dataForManuInToolbar,
+    css: "toolbar-menu",
+    on:{
+        onMenuItemClick:function(id){
+            webix.message("Click: "+this.getMenuItem(id).value);
+            console.log(this.getMenuItem(id));
+        }
+    },
+    // Używamy webixowego disablowania menu itemka, by wyróżnić aktywny no i nie potrzebujemy klikać w niego
+    activateMenuItem: function(id){
+        globalAppData.config.dataForManuInToolbar.forEach(function(menuItem){
+            $$(toolbarMenu.id).enableItem(menuItem.id); // "Z inabluj" kazdy element menu
+        });
+        $$(toolbarMenu.id).disableItem(id); // zaktywuj konkretny
+    }
+}
+
 let mainToolbar = {
     responsive: true,
     view: "toolbar", padding:3,
@@ -48,7 +70,9 @@ let mainToolbar = {
         },
         */
         { view: "label", label: " ", width: 68},
-        toggleSwitch,
+        toolbarMenu,        
+        
+        //toggleSwitch,
         {},
         userInfo
         //,{ view: "button", type: "icon", width: 45, css: "app_button", icon: "envelope-o",  badge:4},
