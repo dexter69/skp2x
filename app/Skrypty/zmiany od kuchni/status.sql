@@ -5,6 +5,7 @@
 -- 41 --> P.D.P
 -- 42 --> W_PROD
 -- 51 --> W4D
+-- 52 --> W4DP
 
 -- Ustawiamy zmienne
 SET 

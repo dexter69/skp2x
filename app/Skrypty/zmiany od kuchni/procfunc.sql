@@ -2,6 +2,37 @@
 
 DELIMITER $$
 
+-- chcemy procedurę, która zmienia statusy kart dodanych później do zamówienia
+-- czyli tajich, które mają status 0
+-- STATUSY
+-- 31 --> SPRAWDZONA
+-- 41 --> P.D.P
+-- 42 --> W_PROD
+-- 51 --> W4D
+-- 52 --> W4DP
+
+DROP PROCEDURE IF EXISTS UPDATE_STATUS_KART
+$$
+
+CREATE PROCEDURE UPDATE_STATUS_KART( idZam INT, newStatus INT)
+BEGIN
+
+    -- Zmieniamy status
+    UPDATE `cards`
+    SET
+    `status`=newStatus
+    , `remstatus`=0 -- zeruj remstatus
+    where `order_id`=idZam AND `status`=0;
+
+    -- I podejrzyj rezultat
+    SELECT
+    `id`, `order_id`, `job_id`, `name`, `status`, `remstatus`
+    FROM `cards`
+    WHERE `order_id`=idZam;    
+    
+END
+$$
+
 DROP FUNCTION IF EXISTS IMIE_HANDLOWCA
 $$
 
