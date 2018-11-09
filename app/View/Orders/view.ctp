@@ -1,5 +1,5 @@
 <?php
-$pokaz = true; // decyduje o wyswietlaniu w linii ~121 -> $order
+$pokaz = false; // decyduje o wyswietlaniu w linii ~121 -> $order
 //echo $this->App->print_r2($users);
 
 echo $this->Html->css(array('order', 'order/order.css?v=201804041230'), array('inline' => false));
