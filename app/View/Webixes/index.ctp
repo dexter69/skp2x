@@ -35,10 +35,16 @@ var globalAppData = {
             mainPad: 35, // definujący główny padding
             buttonOnMainToolbarWidth: 50
         },
-        dataForManuInToolbar: [
-            { id:"listOfCustomers", value:"Klienci", icon: "address-book-o" },
-            { id:"listOfPrivateOrders", value:"Prywatne", icon: "handshake-o" }
-        ]
+        dataForManuInToolbar: {
+            items: [ // elementy menu
+                { id: "klienci", value:"Klienci", icon: "address-book-o" },
+                { id: "prywatne", value:"Prywatne", icon: "handshake-o" }
+            ],
+            associations: { // powiązania menu z róznymi obiektami w aplikacj
+                listOfCustomers: "klienci", // id elementu menu powiązanego z view  "listOfCustomers"
+                listOfPrivateOrders: "prywatne"
+            }
+        }
     },
     template: { // tu bardziej złożone tamplates        
         theOrderDetail: "<?php echo $theOrderDetail; ?>",        

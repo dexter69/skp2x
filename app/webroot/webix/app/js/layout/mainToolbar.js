@@ -37,27 +37,6 @@ let toggleSwitch = { // Używamy do przełączania głównych komponentów
     }
 }
 
-let toolbarMenu = {
-    id: "toolbarMenu",
-    view:"menu",
-    aaa: "gibon",
-    data: globalAppData.config.dataForManuInToolbar,
-    css: "toolbar-menu",
-    on:{
-        onMenuItemClick:function(id){
-            webix.message("Click: "+this.getMenuItem(id).value);
-            console.log(this.getMenuItem(id));
-        }
-    },
-    // Używamy webixowego disablowania menu itemka, by wyróżnić aktywny no i nie potrzebujemy klikać w niego
-    activateMenuItem: function(id){
-        globalAppData.config.dataForManuInToolbar.forEach(function(menuItem){
-            $$(toolbarMenu.id).enableItem(menuItem.id); // "Z inabluj" kazdy element menu
-        });
-        $$(toolbarMenu.id).disableItem(id); // zaktywuj konkretny
-    }
-}
-
 let mainToolbar = {
     responsive: true,
     view: "toolbar", padding:3,
