@@ -1,5 +1,9 @@
 $disabledMenuItemColor: orange;
 
+.app-main .toolbar-menu a:focus { // f*ck the ugly dots!
+    outline-style: none;
+}
+
 /* Kolor sidebar'a */
 
 .webix_sidebar, .webix_sidebar_popup_title {

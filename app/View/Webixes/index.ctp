@@ -56,6 +56,7 @@ webix.ready(function(){ //to ensure that your code is executed after the page is
   
     let layout1 = {
         id: "theLayout", 
+        css: 'app-main',
         rows:[
             mainToolbar,
             { 

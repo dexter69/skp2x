@@ -1,2 +1,44 @@
-.webix_sidebar,.webix_sidebar_popup_title{background-color:#e0f2f2}[view_id="userInfoToolbar"] button{text-align:right;padding-right:10px}.list-of-customers span.gruby{font-weight:600}.add-quick-order>.add-inside>.webix_template{margin:0 0 0 15px}.klient-nazwa .label-name>label{font-size:82%}.klient-nazwa .label-name>div{color:black;font-size:125%}.add-quick-order.moj-naglowek>.webix_header>div,.moj-naglowek .webix_header>div{background-color:#b2d8d8}.add-quick-order.moj-naglowek>.webix_header>div>span,.moj-naglowek .webix_header>div>span{color:black;font-weight:bold;font-size:90%}.toolbar-menu .webix_disabled{color:orange}.stearing-butt-in-toolbar button{text-align:center}
+@charset "UTF-8";
+.app-main .toolbar-menu a:focus {
+  outline-style: none; }
+
+/* Kolor sidebar'a */
+.webix_sidebar, .webix_sidebar_popup_title {
+  background-color: #e0f2f2; }
+
+[view_id="userInfoToolbar"] button {
+  text-align: right;
+  padding-right: 10px; }
+
+.list-of-customers span.gruby {
+  font-weight: 600; }
+
+/*
+    Style do dodawania zamówienia */
+.add-quick-order > .add-inside > .webix_template {
+  margin: 0 0 0 15px; }
+
+.klient-nazwa .label-name > label {
+  font-size: 82%; }
+
+.klient-nazwa .label-name > div {
+  color: black;
+  font-size: 125%; }
+
+.add-quick-order.moj-naglowek > .webix_header > div,
+.moj-naglowek .webix_header > div {
+  background-color: #b2d8d8; }
+
+.add-quick-order.moj-naglowek > .webix_header > div > span,
+.moj-naglowek .webix_header > div > span {
+  color: black;
+  font-weight: bold;
+  font-size: 90%; }
+
+.toolbar-menu .webix_disabled {
+  color: orange; }
+
+.stearing-butt-in-toolbar button {
+  text-align: center; }
+
 /*# sourceMappingURL=core.css.map */
