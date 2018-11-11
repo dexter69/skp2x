@@ -34,16 +34,6 @@ var globalAppData = {
         wyglad: {
             mainPad: 35, // definujący główny padding
             buttonOnMainToolbarWidth: 50
-        },
-        dataForManuInToolbar: {
-            items: [ // elementy menu
-                { id: "klienci", value:"Klienci", icon: "address-book-o" },
-                { id: "prywatne", value:"Prywatne", icon: "handshake-o" }
-            ],
-            associations: { // powiązania menu z róznymi obiektami w aplikacj
-                listOfCustomers: "klienci", // id elementu menu powiązanego z view  "listOfCustomers"
-                listOfPrivateOrders: "prywatne"
-            }
         }
     },
     template: { // tu bardziej złożone tamplates        
@@ -62,7 +52,7 @@ webix.ready(function(){ //to ensure that your code is executed after the page is
             { 
                 cols:[
                     leftSidebar,
-                    content//allTheRest // zawartość
+                    content// zawartość
                 ]
             }             
         ]   

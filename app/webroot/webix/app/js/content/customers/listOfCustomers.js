@@ -27,8 +27,7 @@ let listOfCustomers = {
             let dane = data.json();                            
             return dane.records;  // w records mamy faktyczne dane                            
         });
-    },
-    ready: function() { $$(toolbarMenu.id).config.activateMenuItem(listOfCustomers.id); },
+    },    
     on: { // Pobieramy zawartości filtrów, dzięki czemu Webix wykona zapytanie z odpowiednimi parametrami
         'onBeforeFilter': function() {            
             listOfCustomers.postData.realOwnerId = this.getFilter("WebixCustomerRealOwner_name").value;
