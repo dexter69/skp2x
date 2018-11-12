@@ -6,6 +6,17 @@ class WebixCustomer extends AppModel {
 
     public $useTable = 'customers'; // No bo to tylko wrap dla Webix'a
 
+    public $hasMany = [
+        'WebixNonPrivateOrder' => [            
+            'foreignKey' => 'customer_id',            
+            'fields'  => [
+                'WebixNonPrivateOrder.id'
+                //, 'WebixNonPrivateOrder.nr', 'WebixNonPrivateOrder.status'
+            ],
+            'conditions' => ['WebixNonPrivateOrder.status !=' => 0],         
+        ]
+    ];
+
     public $belongsTo = [
         'WebixCustomerRealOwner' => [ // Stały opiekun klienta
             'foreignKey' => 'opiekun_id',            
@@ -38,8 +49,11 @@ class WebixCustomer extends AppModel {
                 "WebixCustomer.id" => $id
             ]
         ];
-        $cakeResults = $this->find('first', $parameters);
-        $merged = $this->mergeCakeData($cakeResults);        
+        $cakeResults 
+        = $tmp  
+        = $this->find('first', $parameters);
+        $tmp["WebixCustomer"]["howManyNonPrivateOrders"] = count($tmp["WebixNonPrivateOrder"]);
+        $merged = $this->mergeCakeData($tmp);          
         $merged["cake"] = $cakeResults;
         return $merged;
     }
