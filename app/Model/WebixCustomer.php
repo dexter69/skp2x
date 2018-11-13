@@ -6,6 +6,12 @@ class WebixCustomer extends AppModel {
 
     public $useTable = 'customers'; // No bo to tylko wrap dla Webix'a
 
+    public $hasOne = [
+        'WebixAdresSiedziby' => [            
+            'foreignKey' => 'customer_id'            
+        ]
+    ];
+
     public $hasMany = [
         'WebixNonPrivateOrder' => [            
             'foreignKey' => 'customer_id',            
@@ -27,12 +33,16 @@ class WebixCustomer extends AppModel {
         'list' => [ // Do listy klientów przy dodawaniu zamówienia
             // za wyjątkiem $hasMany
             'WebixCustomer.id', 'WebixCustomer.name', 'WebixCustomer.osoba_kontaktowa',
-            'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic'            
+            'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic',
+            'WebixAdresSiedziby.id', 'WebixAdresSiedziby.name', 'WebixAdresSiedziby.ulica',
+            'WebixAdresSiedziby.nr_budynku', 'WebixAdresSiedziby.kod', 'WebixAdresSiedziby.miasto'
         ],
         'one' => [ // just one customer
             'WebixCustomer.id', 'WebixCustomer.name',
             'WebixCustomer.osoba_kontaktowa', 'WebixCustomer.email',
-            'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic'
+            'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic',
+            'WebixAdresSiedziby.id', 'WebixAdresSiedziby.name', 'WebixAdresSiedziby.ulica',
+            'WebixAdresSiedziby.nr_budynku', 'WebixAdresSiedziby.kod', 'WebixAdresSiedziby.miasto'
         ]
     ];
 
@@ -98,7 +108,7 @@ class WebixCustomer extends AppModel {
         $out = [];
         $start = "<span class='gruby'>";
         $stop = "</span>";
-        foreach( $dane as $oneRow ) {
+        foreach( $dane as $oneRow ) {            
             $newRow = $this->mergeCakeData($oneRow);            
             if( $fraza ) {
                 $pos = stripos($newRow["WebixCustomer_name"], $fraza);

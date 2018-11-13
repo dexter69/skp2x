@@ -2,14 +2,16 @@ let listOfCustomers = {
     id: "listOfCustomers",
     view:"datatable",
     select: true,
+    ikonaKosza: "<span class='webix_icon fa-trash customers-kosz'></span>",
     css: "list-of-customers",
     //gravity: 1.3,    
     columns: [
         { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
         { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true }, 
-        //{ id:"WebixCustomer_howManyNonPrivateOrders", header:"", width:50 /*, css:{'text-align':'right'}*/ },
-        { id:"WebixCustomer_kosz", header:"", width:40, css:{'text-align':'center'} },
+        { id:"WebixAdresSiedziby_miasto", header:"Miasto", adjust:true },        
+        { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true },
+        { id:"WebixCustomer_kosz", header:"<span class='webix_icon fa-trash'></span>", width:40, css:{'text-align':'center'} },
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
     ],
     scheme:{
@@ -28,9 +30,11 @@ let listOfCustomers = {
         return webix.ajax().post(url, listOfCustomers.postData).then(function(data) {
             let dane = data.json();              
             dane.records.forEach(function(record){
+                // Kompilujemy część adresu
+                record.WebixCustomer_ulica_nr = `${record.WebixAdresSiedziby_ulica} ${record.WebixAdresSiedziby_nr_budynku}`;
                 if( record.WebixCustomer_howManyNonPrivateOrders == 0 ) { // jeżeli nie ma NIE prywatnych
                     // to dodajemy ikonkę kosza                
-                    record["WebixCustomer_kosz"] = "<span class='webix_icon fa-trash'></span>";
+                    record["WebixCustomer_kosz"] = listOfCustomers.ikonaKosza;
                 }                 
             });                      
             return dane.records;  // w records mamy faktyczne dane                            

@@ -1,3 +1,5 @@
+@import 'customers';
+
 $disabledMenuItemColor: orange;
 
 .app-main .toolbar-menu a:focus { // f*ck the ugly dots!
@@ -13,10 +15,6 @@ $disabledMenuItemColor: orange;
 [view_id="userInfoToolbar"] button {     
     text-align: right;
     padding-right: 10px;
-}
-
-.list-of-customers span.gruby {
-    font-weight: 600;
 }
 
 /*
@@ -52,10 +50,5 @@ $disabledMenuItemColor: orange;
     color: $disabledMenuItemColor;
 }
 
-// ### Chyba deprec
-// Batony sterujące w toolbarz'e
-.stearing-butt-in-toolbar button {
-    text-align: center;
-}
 
 
