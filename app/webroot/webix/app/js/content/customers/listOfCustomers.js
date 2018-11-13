@@ -9,11 +9,20 @@ let listOfCustomers = {
         { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
         { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true }, 
+        // meant2hide - moja property do oznaczana kolumn, które trzeba ukryć, gdy jest mniej miejsca na tabelę
         { id:"WebixAdresSiedziby_miasto", header:"Miasto", adjust:true },        
         { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true },
         { id:"WebixCustomer_kosz", header:"<span class='webix_icon fa-trash'></span>", width:40, css:{'text-align':'center'} },
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
-    ],
+    ],    
+    hideTheColumns: function(){ 
+        // Te chowamy, gdy chcemy mieć węższą tabelę
+        const meant2hide = ["WebixAdresSiedziby_miasto", "WebixCustomer_ulica_nr"];
+        
+        meant2hide.forEach(function(idKolumny){
+            $$(listOfCustomers.id).hideColumn(idKolumny);
+        });
+    },
     scheme:{
         $init:function(obj){ obj.index = this.count(); }
     }, 
@@ -58,6 +67,8 @@ let listOfCustomers = {
             Po kliknięciu w jakiegoś klienta na liscie, chcemy wyświetlić formularz do dodwania szybkiego
             zamówienia */
         'onAfterSelect': function(id){ 
+            //$$(listOfCustomers.id).config.hideTheColumns();
+            //console.log($$(listOfCustomers.id).getItem(id));
             // Przemaluj komponent/y                  
             //webix.message("kliknięte!");   
             
@@ -77,6 +88,8 @@ let listOfCustomers = {
             webix.ajax(url).then(function(data){   
                 let dane = data.json();   
                 if( !$$(customerPanel.id).isVisible() ) {
+                    // Chowamy niektóre kolumny, bo mamy mniej miejsca
+                    $$(listOfCustomers.id).config.hideTheColumns();                    
                     $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                    
                 }                
                 //console.log(dane);
