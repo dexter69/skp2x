@@ -8,6 +8,8 @@ let listOfCustomers = {
         { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
         { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true }, 
+        //{ id:"WebixCustomer_howManyNonPrivateOrders", header:"", width:50 /*, css:{'text-align':'right'}*/ },
+        { id:"WebixCustomer_kosz", header:"", width:40, css:{'text-align':'center'} },
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
     ],
     scheme:{
@@ -24,7 +26,13 @@ let listOfCustomers = {
             listOfCustomers.postData.realOwnerId = 0;
         }
         return webix.ajax().post(url, listOfCustomers.postData).then(function(data) {
-            let dane = data.json();                            
+            let dane = data.json();              
+            dane.records.forEach(function(record){
+                if( record.WebixCustomer_howManyNonPrivateOrders == 0 ) { // jeżeli nie ma NIE prywatnych
+                    // to dodajemy ikonkę kosza                
+                    record["WebixCustomer_kosz"] = "<span class='webix_icon fa-trash'></span>";
+                }                 
+            });                      
             return dane.records;  // w records mamy faktyczne dane                            
         });
     },    

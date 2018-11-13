@@ -104,7 +104,14 @@ class WebixCustomer extends AppModel {
                 $pos = stripos($newRow["WebixCustomer_name"], $fraza);
                 $frag = substr($newRow["WebixCustomer_name"], $pos, strlen($fraza));                
                 $newRow["WebixCustomer_name"] = str_ireplace($fraza, "$start$frag$stop", $newRow["WebixCustomer_name"]);
+            }
+            // ile klient ma NIE prywatnych zamówień            
+            if( array_key_exists("WebixNonPrivateOrder", $newRow) ) {
+                $newRow["WebixCustomer_howManyNonPrivateOrders"] = count($newRow["WebixNonPrivateOrder"]);
+            } else {
+                $newRow["WebixCustomer_howManyNonPrivateOrders"] = 0;
             }            
+            unset($newRow["WebixNonPrivateOrder"]); // Na razie nie potrzebujemy tych danych         
             $out[] = $newRow;
         }
         return $out;
