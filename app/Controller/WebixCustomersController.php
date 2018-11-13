@@ -19,7 +19,7 @@ class WebixCustomersController extends AppController {
             $realOwnerId = 0; // wszyscy handlowcy
         }
         $limit = 50; // Limit znajdowanych rekordów
-        $theCustomers = $this->WebixCustomer->getCustomersForAddingAnOrder(
+        $theCustomers = $this->WebixCustomer->getMany(
             $fraza, // szukane znaki w nazwie customer'a
             $realOwnerId, // id stałego opiekuna klienta 
             $limit // max ilość rekordów
@@ -34,7 +34,7 @@ class WebixCustomersController extends AppController {
      * $id - id klienta w bazie */
     public function getOne( $id = 0 ) {
 
-        $theCustomer = $this->WebixCustomer->getOne4QuickOrderAdd( $id );
+        $theCustomer = $this->WebixCustomer->getOne( $id );
         $this->set(compact(['theCustomer']));
         $this->set('_serialize', 'theCustomer');
     }

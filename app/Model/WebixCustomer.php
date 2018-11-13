@@ -41,7 +41,7 @@ class WebixCustomer extends AppModel {
 
     /*
         Chcemy ifo o jednym kliencie dla szybkiego dodania zamówienia  */
-    public function getOne4QuickOrderAdd( $id = 0 ) {
+    public function getOne( $id = 0 ) {
 
         $parameters = [
             'fields' => $this->fieldsWeWant['one'],
@@ -64,7 +64,7 @@ class WebixCustomer extends AppModel {
      *  $constantOwner = 0, znajdź wszystkich klientów, użytkownik dowolny
      *  $realOwner > 0, to znajdź klientów tylko tego użytkownika
      *  $limit - ile max rekordów */
-    public function getCustomersForAddingAnOrder( $coSzukamy = null, $realOwner = 0, $limit = 11 ) {
+    public function getMany( $coSzukamy = null, $realOwner = 0, $limit = 11 ) {
 
         $out = [];
         $parameters = [
