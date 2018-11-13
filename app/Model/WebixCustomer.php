@@ -49,12 +49,17 @@ class WebixCustomer extends AppModel {
                 "WebixCustomer.id" => $id
             ]
         ];
-        $cakeResults 
-        = $tmp  
-        = $this->find('first', $parameters);
+        //$cakeResults = 
+        $tmp = $this->find('first', $parameters);
         $tmp["WebixCustomer"]["howManyNonPrivateOrders"] = count($tmp["WebixNonPrivateOrder"]);
-        $merged = $this->mergeCakeData($tmp);          
-        $merged["cake"] = $cakeResults;
+        $merged = $this->mergeCakeData($tmp); 
+
+        /** >>>>>>>>
+         * Debug purposes. Uset bo (na razie) nie potrzebujemy rekordów dot. zamówień. Potrzebujemy tylko ich ilość,
+         * stą count powyżej. Nie ma więc sensu przesyłanie np. 900+ rekordów dla klienta nr 3 */
+        unset($merged["WebixNonPrivateOrder"]);
+        /*$merged["cake"] = $cakeResults;
+        * Debug <<<<<<<<<< */
         return $merged;
     }
 
