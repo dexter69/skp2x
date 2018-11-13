@@ -14,13 +14,17 @@ let listOfCustomers = {
         { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true },
         { id:"WebixCustomer_kosz", header:"<span class='webix_icon fa-trash'></span>", width:40, css:{'text-align':'center'} },
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
-    ],    
-    hideTheColumns: function(){ 
-        // Te chowamy, gdy chcemy mieć węższą tabelę
-        const meant2hide = ["WebixAdresSiedziby_miasto", "WebixCustomer_ulica_nr"];
-        
-        meant2hide.forEach(function(idKolumny){
+    ],  
+    // Te chowamy, gdy chcemy mieć węższą tabelę
+    meant2hide: ["WebixAdresSiedziby_miasto", "WebixCustomer_ulica_nr"]  ,
+    hideTheColumns: function(){                 
+        this.meant2hide.forEach(function(idKolumny){
             $$(listOfCustomers.id).hideColumn(idKolumny);
+        });
+    },
+    showTheColumns: function(){ 
+        this.meant2hide.forEach(function(idKolumny){
+            $$(listOfCustomers.id).showColumn(idKolumny);
         });
     },
     scheme:{
@@ -49,7 +53,16 @@ let listOfCustomers = {
             return dane.records;  // w records mamy faktyczne dane                            
         });
     },    
-    on: { // Pobieramy zawartości filtrów, dzięki czemu Webix wykona zapytanie z odpowiednimi parametrami
+    on: { 
+        'onAfterUnSelect': function(){            
+            if( $$(customerPanel.id).isVisible() ) {
+                // Schowaj szczegóły klienta, bo wiersz w tabeli został "odzaznaczony"
+                $$(customerPanel.id).hide();
+                // I pokazujemy z powrotem kolumny, które wcześniej schowaliśmy
+                $$(listOfCustomers.id).config.showTheColumns();
+            }
+        },
+        // Pobieramy zawartości filtrów, dzięki czemu Webix wykona zapytanie z odpowiednimi parametrami
         'onBeforeFilter': function() {            
             listOfCustomers.postData.realOwnerId = this.getFilter("WebixCustomerRealOwner_name").value;
             listOfCustomers.postData.fraza = this.getFilter("WebixCustomer_name").value;
