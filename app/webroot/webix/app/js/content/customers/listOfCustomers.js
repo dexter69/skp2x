@@ -10,8 +10,8 @@ let listOfCustomers = {
         { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true }, 
         // meant2hide - moja property do oznaczana kolumn, które trzeba ukryć, gdy jest mniej miejsca na tabelę
-        { id:"WebixAdresSiedziby_miasto", header:"Miasto", adjust:true },        
-        { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true },
+        { id:"WebixAdresSiedziby_miasto", header:"Miasto", adjust:true},        
+        { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true},
         { id:"WebixCustomer_kosz", header:"<span class='webix_icon fa-trash'></span>", width:40, css:{'text-align':'center'} },
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
     ],  
@@ -53,15 +53,19 @@ let listOfCustomers = {
             return dane.records;  // w records mamy faktyczne dane                            
         });
     },    
-    on: { 
-        'onAfterUnSelect': function(){            
+    on: {     
+        onAfterFilter:function(){
+            //webix.message("Filtr!");
             if( $$(customerPanel.id).isVisible() ) {
                 // Schowaj szczegóły klienta, bo wiersz w tabeli został "odzaznaczony"
                 $$(customerPanel.id).hide();
                 // I pokazujemy z powrotem kolumny, które wcześniej schowaliśmy
                 $$(listOfCustomers.id).config.showTheColumns();
+                //this.getFilter("WebixCustomer_name").focus();
             }
-        },
+            this.getFilter("WebixCustomer_name").focus();
+          },    
+        //onAfterUnSelect: function(){ webix.message("ODznaczone!");},
         // Pobieramy zawartości filtrów, dzięki czemu Webix wykona zapytanie z odpowiednimi parametrami
         'onBeforeFilter': function() {            
             listOfCustomers.postData.realOwnerId = this.getFilter("WebixCustomerRealOwner_name").value;
@@ -75,11 +79,15 @@ let listOfCustomers = {
                 this.getFilter("WebixCustomerRealOwner_name").value != listOfCustomers.postData.realOwnerId) { // i filter nie jest OK           
                 this.getFilter("WebixCustomerRealOwner_name").value = listOfCustomers.postData.realOwnerId;            
             }
+            //Taki workaround, bo po przerysowaniu pole traci fokus
+            this.getFilter("WebixCustomer_name").focus();
+            //webix.message("Load");
         },
         /**
             Po kliknięciu w jakiegoś klienta na liscie, chcemy wyświetlić formularz do dodwania szybkiego
             zamówienia */
         'onAfterSelect': function(id){ 
+            //webix.message("ZAZNACZONE!");
             //$$(listOfCustomers.id).config.hideTheColumns();
             //console.log($$(listOfCustomers.id).getItem(id));
             // Przemaluj komponent/y                  
