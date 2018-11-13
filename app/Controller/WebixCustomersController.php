@@ -4,12 +4,12 @@ App::uses('AppController', 'Controller');
 class WebixCustomersController extends AppController {
 
     public function beforeFilter() { $this->Auth->allow(
-        'getForAddingAnOrder',
-        'getOneForQuickAddOrder'
-    ); 
+            'getMany',
+            'getOne'
+        ); 
     }
 
-    public function getForAddingAnOrder() {
+    public function getMany() {
 
         if ($this->request->is('post')) {  // normalnie będziemy wysyłać ajax post
             $fraza = $this->request->data["fraza"];
@@ -32,7 +32,7 @@ class WebixCustomersController extends AppController {
     /**
      * Info dotyczące jednego klienta
      * $id - id klienta w bazie */
-    public function getOneForQuickAddOrder( $id = 0 ) {
+    public function getOne( $id = 0 ) {
 
         $theCustomer = $this->WebixCustomer->getOne4QuickOrderAdd( $id );
         $this->set(compact(['theCustomer']));
