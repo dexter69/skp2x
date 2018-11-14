@@ -35,8 +35,8 @@
             echo $this->fetch('content'); 
         
             echo $this->Webix->script(
-                $webixJsFiles, // Zdefiniowane w WebixesController. Wersja dev
-                ["/webix/app/js/app.min"] // wersja prod
+                $webixJsFiles // Zdefiniowane w WebixesController. Wersja dev
+                //,["/webix/app/js/app.min"] // wersja prod - na razie olewamy
             );
         ?>
     </body>
