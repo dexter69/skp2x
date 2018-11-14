@@ -1,5 +1,5 @@
 <?php 
-//echo '<pre>'; print_r($orders); echo '</pre>';
+//echo $this->App->print_r2($orders[18]['Order']);
 //echo count($orders); 
 //echo microtime(true) - $time_start;
 //$time_start2 = microtime(true);
@@ -30,7 +30,8 @@ else
         <th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
         <th class="dolar"></th>
         <th class="nr"><?php echo $this->Paginator->sort('nr', 'Numer'); ?></th>            
-        <th><?php echo $this->Paginator->sort('Customer.name', 'Klient'); ?></th>            
+        <th><?php echo $this->Paginator->sort('Customer.name', 'Klient'); ?></th> 
+        <th></th>
         <th class="termin"><?php echo $this->Paginator->sort('stop_day', 'Data zakończenia'); ?></th>
         <th class="status"><?php echo $this->Paginator->sort('status', 'STATUS'); ?></th>
         <th class="ebutt"></th>
@@ -53,7 +54,24 @@ else
             </td>
             <td>
                     <?php echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id']), array('title' => $order['Customer']['name'])); ?>
-            </td>            
+            </td> 
+            <td>
+                <?php                
+                if( $order['Order']['ileJobs'] ) { // Jezeli handlowe jest powiązane przynajmniej z 1 handlowym
+                    if( $order['Order']['ileJobs'] > 1 ) { // wiecej niż 1 job
+                        $suffix = " +";
+                    } else {
+                        $suffix = "";
+                    }
+                    //bnr2nrj($bnr = null, $inicjaly = null, $ishtml = true)
+                    //echo $this->Ma->bnr2nrj( $order['Order']['nrJoba'], null, false ) . $suffix;
+
+                    echo $this->Html->link(
+                        $this->App->bnr2nrj($order['Order']['nrJoba'], null) . $suffix,
+                        ['action' => 'view', $order['Order']['idJoba']], array('escape' => false));
+                }
+                ?>
+            </td>
             <td class="termin"><?php echo $this->Ma->md($order['Order']['stop_day']); ?>&nbsp;</td>
 
             <td class="status"><?php echo $this->Ma->status_zamow( $order['Order']['status'] ); ?>&nbsp;</td>

@@ -17,7 +17,7 @@ class OrdersController extends AppController {
  */
 	public $components = array('Paginator');
         
-    public $helpers = array('Pdf');
+    public $helpers = array('Pdf', 'Ma');
 	
 	public $paginate = array(
             'order' => array(
@@ -161,7 +161,7 @@ class OrdersController extends AppController {
 		//$time_start = microtime(true);
 		
 		
-		$this->Order->recursive = 0;
+		//$this->Order->recursive = 0;
 		$this->Paginator->settings = $this->paginate;
 		
 		if( !$this->akcjaOK(null, 'index', $par) ) {
@@ -241,12 +241,41 @@ class OrdersController extends AppController {
 				$opcje = array();
 		}
 		if( !empty($opcje) ) {
-			$orders = $this->Paginator->paginate( 'Order', $opcje );			
+			$ordersx = $this->Paginator->paginate( 'Order', $opcje );			
 		} else {
-			$orders = $this->Paginator->paginate();
+			$ordersx = $this->Paginator->paginate();
 		}
-		 
+		$orders = $this->addJobInfo($ordersx);
 		$this->set( compact('orders', 'par' ) );
+	}
+
+	/**
+	 * Chcemy mieć na liscie powiązania handlowych z produkcyjnymi */
+	private function addJobInfo( $in = [] ) {
+
+		//$out = $in;
+		$i=0;
+		foreach( $in as $row) {
+			$in[$i]['Order']['ileKart'] = count($row['Card']);
+			$in[$i]['Order']['ileJobs'] = 0;
+			$in[$i]['Order']['idJoba'] = 0;
+			foreach($in[$i]['Card'] as $karta) {
+				if( $karta['job_id']) {
+					$in[$i]['Order']['ileJobs']++;
+					if( $in[$i]['Order']['ileJobs'] == 1 ) { // chcemy nr pierwszego
+						$in[$i]['Order']['idJoba'] = $karta['job_id']; // id tego pierwszego
+						$job = $this->Order->Card->Job->find('first', [
+							'conditions' => ['Job.id' => $karta['job_id']],
+							'recursive' => 0
+						]);
+						$in[$i]['Order']['nrJoba'] = $job['Job']['nr'];
+						$in[$i]['The'] = $job;
+					}
+				}
+			}
+			$i++;
+		}		
+		return $in;
 	}
 
 
