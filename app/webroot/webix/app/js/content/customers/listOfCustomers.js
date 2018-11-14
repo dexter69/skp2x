@@ -113,10 +113,12 @@ let listOfCustomers = {
                     $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                    
                 }                
                 //console.log(dane);
+                /* Do czego to?
                 $$("customerName").parse(dane);
                 $$(formularz.id).setValues({
                     email: dane.WebixCustomer_email
                 });
+                */
             });            
         }
     }

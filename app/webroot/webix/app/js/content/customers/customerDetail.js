@@ -4,5 +4,5 @@
 let customerDetail = {
     id: "customerDetail",
     gravity: 0.5,
-    template: "Tu będą szczegóły o kliencie"
+    template: "Tu będą szczegóły o kliencie<div>#WebixCustomer_name#</div>"
 }
