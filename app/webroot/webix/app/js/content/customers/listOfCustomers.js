@@ -66,14 +66,14 @@ let listOfCustomers = {
           },    
         //onAfterUnSelect: function(){ webix.message("ODznaczone!");},
         // Pobieramy zawartości filtrów, dzięki czemu Webix wykona zapytanie z odpowiednimi parametrami
-        'onBeforeFilter': function() {            
+        onBeforeFilter: function() {            
             listOfCustomers.postData.realOwnerId = this.getFilter("WebixCustomerRealOwner_name").value;
             listOfCustomers.postData.fraza = this.getFilter("WebixCustomer_name").value;
         },
         // Nie wiem czy w ogóle to ma sens. Gdy nie jest widoczny, to nie ma sensu - dosta-
         //  jemy błąd (stąd warunek tu). Zostawiam jednak, bo może zmienimy zdanie
         //  i ten komponent bedzie najpierw widoczny - wówczas moze się przydać
-        'onAfterLoad': function(){
+        onAfterLoad: function(){
             if( $$(manageCustomers.id).isVisible() && //sprawdzanie filtra na niewidocznym nie ma sensu
                 this.getFilter("WebixCustomerRealOwner_name").value != listOfCustomers.postData.realOwnerId) { // i filter nie jest OK           
                 this.getFilter("WebixCustomerRealOwner_name").value = listOfCustomers.postData.realOwnerId;            
@@ -85,7 +85,7 @@ let listOfCustomers = {
         /**
             Po kliknięciu w jakiegoś klienta na liscie, chcemy wyświetlić formularz do dodwania szybkiego
             zamówienia */
-        'onAfterSelect': function(id){ 
+        onAfterSelect: function(id){ 
             //webix.message("ZAZNACZONE!");
             //$$(listOfCustomers.id).config.hideTheColumns();
             //console.log($$(listOfCustomers.id).getItem(id));
