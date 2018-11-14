@@ -30,6 +30,19 @@ App::uses('Helper', 'View');
  */
 class AppHelper extends Helper {
 
+    public function bnr2nrj($bnr = null, $inicjaly = null, $ishtml = true) {
+		
+		if($bnr && $bnr > BASE_NR) {
+                    if( $ishtml ) {
+                            $startspan = '<span class="ordernr">';
+                            $stopspan = '</span>';
+                    } else {
+                        $startspan = $stopspan = null; }
+                    return (int)substr((int)$bnr,2).$startspan.'/'.substr((int)$bnr,0,2).$stopspan;
+		} else {
+                    return $bnr; }
+	}
+    
     // Remove all " ", "\t", "\n", "\r", "\0" and "\x0B" characters
     // Potem zamień @ na spacje
     public function trimAll( $strIn = null ) {

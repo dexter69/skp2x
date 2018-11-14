@@ -561,25 +561,6 @@ class MaHelper extends AppHelper {
 			return $bnr;
 		
 	}	
-        
-        
-	
-	// convert base nr to nrj - numer job'a
-	public function bnr2nrj($bnr = null, $inicjaly = null, $ishtml = true) {
-		
-		if($bnr && $bnr > BASE_NR) {
-                    if( $ishtml ) {
-                            $startspan = '<span class="ordernr">';
-                            $stopspan = '</span>';
-                    } else {
-                        $startspan = $stopspan = null; }
-                    return (int)substr((int)$bnr,2).$startspan.'/'.substr((int)$bnr,0,2).$stopspan;
-		} else {
-                    return $bnr; }
-	}
-	
-	
-	
 	
 	public function status_karty($stat, $short = false) {
 		if( $stat != NULL) {
