@@ -5,7 +5,7 @@
 //$time_start2 = microtime(true);
 //echo $par;
 $this->set('title_for_layout', 'Handlowe');
-echo $this->Html->css(array('order', 'order/order-index.css?v=201804041230'), array('inline' => false));
+echo $this->Html->css(array('order', 'order/order-index.css?v=201811141223'), array('inline' => false));
 //echo $this->Html->script(array('jquery', 'common'), array('inline' => false)); 
 $this->Ma->displayActions('orders');
 $klasa = array(
@@ -31,7 +31,7 @@ else
         <th class="dolar"></th>
         <th class="nr"><?php echo $this->Paginator->sort('nr', 'Numer'); ?></th>            
         <th><?php echo $this->Paginator->sort('Customer.name', 'Klient'); ?></th> 
-        <th></th>
+        <th class="job-info">Produkc.</th>
         <th class="termin"><?php echo $this->Paginator->sort('stop_day', 'Data zakończenia'); ?></th>
         <th class="status"><?php echo $this->Paginator->sort('status', 'STATUS'); ?></th>
         <th class="ebutt"></th>
@@ -55,7 +55,7 @@ else
             <td>
                     <?php echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id']), array('title' => $order['Customer']['name'])); ?>
             </td> 
-            <td>
+            <td class="job-info">
                 <?php                
                 if( $order['Order']['ileJobs'] ) { // Jezeli handlowe jest powiązane przynajmniej z 1 handlowym
                     if( $order['Order']['ileJobs'] > 1 ) { // wiecej niż 1 job

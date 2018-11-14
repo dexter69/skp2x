@@ -1,26 +1,2 @@
-@charset "UTF-8";
-/* 
-    Created on : 2016-07-27, 10:43:20
-    Dodatki do listy handlowych w związku z prepaid info
-*/
-.lista-handlowych .dolar {
-  width: 0.8em;
-  text-align: center; }
-
-.lista-handlowych .dolar.gre {
-  color: green; }
-
-.lista-handlowych .dolar.ora {
-  color: orange; }
-
-.lista-handlowych .dolar.red {
-  color: red; }
-
-.lista-handlowych .nr {
-  width: 7em; }
-
-.lista-handlowych .termin {
-  width: 11em; }
-
-.lista-handlowych .status {
-  width: 9em; }
+.lista-handlowych .dolar{width:0.8em;text-align:center}.lista-handlowych .dolar.gre{color:green}.lista-handlowych .dolar.ora{color:orange}.lista-handlowych .dolar.red{color:red}.lista-handlowych .nr{width:7em}.lista-handlowych .termin{width:11em}.lista-handlowych .status{width:9em}.lista-handlowych .job-info{width:6em}
+/*# sourceMappingURL=order-index.css.map */
