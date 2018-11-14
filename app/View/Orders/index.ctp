@@ -63,12 +63,15 @@ else
                     } else {
                         $suffix = "";
                     }
-                    //bnr2nrj($bnr = null, $inicjaly = null, $ishtml = true)
-                    //echo $this->Ma->bnr2nrj( $order['Order']['nrJoba'], null, false ) . $suffix;
-
                     echo $this->Html->link(
                         $this->App->bnr2nrj($order['Order']['nrJoba'], null) . $suffix,
-                        ['action' => 'view', $order['Order']['idJoba']], array('escape' => false));
+                        [
+                            'controller' => 'jobs',
+                            'action' => 'view',
+                            $order['Order']['idJoba']
+                        ],
+                        ['escape' => false]
+                    );
                 }
                 ?>
             </td>

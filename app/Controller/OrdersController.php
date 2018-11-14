@@ -17,7 +17,7 @@ class OrdersController extends AppController {
  */
 	public $components = array('Paginator');
         
-    public $helpers = array('Pdf', 'Ma');
+    public $helpers = array('Pdf');
 	
 	public $paginate = array(
             'order' => array(
@@ -260,8 +260,11 @@ class OrdersController extends AppController {
 			$in[$i]['Order']['ileJobs'] = 0;
 			$in[$i]['Order']['idJoba'] = 0;
 			foreach($in[$i]['Card'] as $karta) {
-				if( $karta['job_id']) {
-					$in[$i]['Order']['ileJobs']++;
+				if( $karta['job_id']) {					
+					// Poniższy warunek, by rejestrwać tylko liczbę róznych
+					if( $in[$i]['Order']['idJoba'] != $karta['job_id'] ) { // mamy różne
+						$in[$i]['Order']['ileJobs']++; // zwiekszamy tylko gdy różne
+					}
 					if( $in[$i]['Order']['ileJobs'] == 1 ) { // chcemy nr pierwszego
 						$in[$i]['Order']['idJoba'] = $karta['job_id']; // id tego pierwszego
 						$job = $this->Order->Card->Job->find('first', [
