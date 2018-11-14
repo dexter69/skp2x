@@ -4,5 +4,7 @@
 let customerDetail = {
     id: "customerDetail",
     gravity: 0.5,
-    template: "Tu będą szczegóły o kliencie<div>#WebixCustomer_name#</div>"
+    css: 'customer-detail',
+    template: globalAppData.template.theCustomerDetail2
+    //"Tu będą szczegóły o kliencie<div>#WebixCustomer_name#</div>"
 }

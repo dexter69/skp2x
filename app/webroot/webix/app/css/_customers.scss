@@ -6,3 +6,13 @@
 .customers-kosz {
     color: green;
 }
+
+// Szczegóły o kliencie
+.customer-detail > .webix_template {
+    padding: 15px;
+}
+
+.customer-detail .customer-full-name > div {
+    font-size: 125%;
+    //color: black;
+}

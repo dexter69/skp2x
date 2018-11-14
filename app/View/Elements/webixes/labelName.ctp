@@ -1,4 +1,4 @@
 <div @class="label-name@<?php echo $extraClass; ?>">
-    <label><?php echo $label;?></label>
+    <?php echo $label ? "<label>$label</label>" : null;?>
     <div><?php echo $name;?></div>
 </div>

@@ -6,7 +6,13 @@
             'extraClass' => null,
             'label' => 'Klient',
             'name' => '#WebixCustomer_name#'
-        ]));    
+        ]));
+    $theCustomerDetail2 = $this->App->trimAll(
+        $this->element('webixes/labelName', [
+            'extraClass' => 'customer-full-name',
+            'label' => null,//'Klient',
+            'name' => '#WebixAdresSiedziby_name#'
+        ]));
 ?>
 
 <script type="text/javascript" charset="utf-8">
@@ -38,7 +44,8 @@ var globalAppData = {
     },
     template: { // tu bardziej złożone tamplates        
         theOrderDetail: "<?php echo $theOrderDetail; ?>",        
-        theCustomerDetail1: '<?php echo $theCustomerDetail1; ?>'
+        theCustomerDetail1: '<?php echo $theCustomerDetail1; ?>',
+        theCustomerDetail2: '<?php echo $theCustomerDetail2; ?>'
     } 
 };
 </script>

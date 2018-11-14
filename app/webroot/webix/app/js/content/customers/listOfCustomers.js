@@ -111,7 +111,9 @@ let listOfCustomers = {
                     // Chowamy niektóre kolumny, bo mamy mniej miejsca
                     $$(listOfCustomers.id).config.hideTheColumns();                    
                     $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                    
-                }                
+                    
+                }  
+                $$(customerDetail.id).parse(dane);              
                 //console.log(dane);
                 /* Do czego to?
                 $$("customerName").parse(dane);
