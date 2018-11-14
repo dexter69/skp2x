@@ -26,7 +26,8 @@ class WebixesController extends AppController {
         "/webix/app/js/layout/toolbarMenu",
         "/webix/app/js/layout/mainToolbar",
         "/webix/app/js/layout/leftSidebar",                
-        "/webix/app/js/layout/content"
+        "/webix/app/js/layout/content",
+        "/webix/app/js/app" // nasz entry point
     ];
 
     public function index() {

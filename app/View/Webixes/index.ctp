@@ -41,27 +41,4 @@ var globalAppData = {
         theCustomerDetail1: '<?php echo $theCustomerDetail1; ?>'
     } 
 };
-
-webix.ready(function(){ //to ensure that your code is executed after the page is fully loaded
-  
-    let layout1 = {
-        id: "theLayout", 
-        css: 'app-main',
-        rows:[
-            mainToolbar,
-            { 
-                cols:[
-                    leftSidebar,
-                    content// zawartość
-                ]
-            }             
-        ]   
-    }    
-
-    webix.ui(
-        layout1 // 1 - pierwsza wersja, 2 - druga wersja
-    );
-
-});
-
 </script>
