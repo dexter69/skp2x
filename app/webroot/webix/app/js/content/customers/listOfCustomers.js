@@ -75,7 +75,7 @@ let listOfCustomers = {
         //  jemy błąd (stąd warunek tu). Zostawiam jednak, bo może zmienimy zdanie
         //  i ten komponent bedzie najpierw widoczny - wówczas moze się przydać
         'onAfterLoad': function(){
-            if( $$(manageAddingQuickOrder.id).isVisible() && //sprawdzanie filtra na niewidocznym nie ma sensu
+            if( $$(manageCustomers.id).isVisible() && //sprawdzanie filtra na niewidocznym nie ma sensu
                 this.getFilter("WebixCustomerRealOwner_name").value != listOfCustomers.postData.realOwnerId) { // i filter nie jest OK           
                 this.getFilter("WebixCustomerRealOwner_name").value = listOfCustomers.postData.realOwnerId;            
             }

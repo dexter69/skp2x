@@ -5,7 +5,7 @@ let toolbarMenu = {
     data: [ // elementy menu
         // whereToGo posiada informację, gdzie ten item przełącza
         {   id: "klienci", value:"Klienci", icon: "address-book-o",
-            whereToGo: "manageAddingQuickOrder" },
+            whereToGo: manageCustomers.id },
         {   id: "prywatne", value:"Prywatne", icon: "handshake-o",
             whereToGo: "managePrivateOrders" }
     ],
