@@ -1,0 +1,17 @@
+/*
+Style do głównego toolbara */
+
+$disabledMenuItemColor: orange;
+
+.app-main .toolbar-menu a:focus { // f*ck the ugly dots!
+    outline-style: none;
+}
+
+.toolbar-menu .webix_disabled {
+    color: $disabledMenuItemColor;
+}
+
+[view_id="userInfoToolbar"] button {     
+    text-align: right;
+    padding-right: 10px;
+}

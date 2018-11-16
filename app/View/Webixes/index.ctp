@@ -14,9 +14,17 @@
             'name' => '#WebixAdresSiedziby_name#'
         ]));
     $tmp = $this->element("webixes/customerDetail", [
-        'class' => 'the-customer-details',
+        'class' => 'the-customer-detail',
         'vars' => [
-            'fullName' => 'WebixAdresSiedziby_name'
+            'siedziba' => [
+                'fullName' => 'WebixAdresSiedziby_name',
+                'ulica' => 'WebixAdresSiedziby_ulica',
+                'nr' => 'WebixAdresSiedziby_nr_budynku',
+                'kod' => 'WebixAdresSiedziby_kod',
+                'miasto' => 'WebixAdresSiedziby_miasto',
+                'kraj' => 'WebixAdresSiedziby_kraj',
+                'nip' => 'WebixCustomer_vatno_txt'
+            ]
         ]
     ]);
     $theCustomerDetail3 = $this->App->trimAll($tmp);

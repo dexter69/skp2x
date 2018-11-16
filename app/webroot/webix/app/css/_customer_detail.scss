@@ -1,0 +1,16 @@
+/*
+Szczegóły o kliencie, po prawej stronie listy*/
+
+// Cały template szczegółów
+.customer-detail > .webix_template {
+    padding: 15px 15px 15px 30px;
+}
+
+.the-customer-detail // cały div ogarniający wszystkie detale o kliencie
+> .siedziba // div z danymi adresowymi
+> * // restuejemy wszystkie wew. elementy
+{ margin:0; }
+
+//.the-customer-detail > .siedziba > h3 { margin: 0.4em 0;}
+
+.the-customer-detail > .siedziba > * { margin: 0.2em 0;}

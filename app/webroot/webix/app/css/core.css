@@ -1,26 +1,45 @@
 @charset "UTF-8";
+/*
+Style do głównego toolbara */
+.app-main .toolbar-menu a:focus {
+  outline-style: none; }
+
+.toolbar-menu .webix_disabled {
+  color: orange; }
+
+[view_id="userInfoToolbar"] button {
+  text-align: right;
+  padding-right: 10px; }
+
+/*
+    Style dotyczące tabelki z listą klientów */
 .list-of-customers span.gruby {
   font-weight: 600; }
 
 .customers-kosz {
   color: green; }
 
+/*
+Szczegóły o kliencie, po prawej stronie listy*/
 .customer-detail > .webix_template {
-  padding: 15px; }
+  padding: 15px 15px 15px 30px; }
 
+.the-customer-detail
+> .siedziba
+> * {
+  margin: 0; }
+
+.the-customer-detail > .siedziba > * {
+  margin: 0.2em 0; }
+
+/*
+Zdeprecjonowane lub na razie nie używane definicje */
 .customer-detail .customer-full-name > div {
   font-size: 125%; }
-
-.app-main .toolbar-menu a:focus {
-  outline-style: none; }
 
 /* Kolor sidebar'a */
 .webix_sidebar, .webix_sidebar_popup_title {
   background-color: #e0f2f2; }
-
-[view_id="userInfoToolbar"] button {
-  text-align: right;
-  padding-right: 10px; }
 
 /*
     Style do dodawania zamówienia */
@@ -43,8 +62,5 @@
   color: black;
   font-weight: bold;
   font-size: 90%; }
-
-.toolbar-menu .webix_disabled {
-  color: orange; }
 
 /*# sourceMappingURL=core.css.map */

@@ -39,10 +39,11 @@ class WebixCustomer extends AppModel {
         ],
         'one' => [ // just one customer
             'WebixCustomer.id', 'WebixCustomer.name',
-            'WebixCustomer.osoba_kontaktowa', 'WebixCustomer.email',
+            'WebixCustomer.osoba_kontaktowa', 'WebixCustomer.email', 'WebixCustomer.vatno_txt',
             'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic',
             'WebixAdresSiedziby.id', 'WebixAdresSiedziby.name', 'WebixAdresSiedziby.ulica',
-            'WebixAdresSiedziby.nr_budynku', 'WebixAdresSiedziby.kod', 'WebixAdresSiedziby.miasto'
+            'WebixAdresSiedziby.nr_budynku', 'WebixAdresSiedziby.kod',
+            'WebixAdresSiedziby.miasto', 'WebixAdresSiedziby.kraj'
         ]
     ];
 
