@@ -15,25 +15,23 @@ class Order extends AppModel {
 
 	public function afterFind($results, $primary = false) {
 
-		$out = $results;
-		$out2 = [];
 		if( $primary ) {
 			$i=0;
-			foreach ($out as $row) {				
+			foreach ($results as $row) {				
 				if( isset($row['Order']) ) {					
-					$out[$i]["Order"]["servis"] = $this->getServisInfo($row);
+					$results[$i]["Order"]["servis"] = $this->getServisInfo($row);
 					$wynik = $this->getJobInfo( $row );
 					
-					$out[$i]['Order']['par'] = $this->indexPar;
+					$results[$i]['Order']['par'] = $this->indexPar;
 
-					$out[$i]['Order']['ileKart'] = $wynik['ileKart'];
-					$out[$i]['Order']['ileJobs'] = $wynik['ileJobs'];
-					$out[$i]['Order']['idJoba'] = $wynik['idJoba'];
-					$out[$i++]['Order']['nrJoba'] = $wynik['nrJoba'];
-				}			
+					$results[$i]['Order']['ileKart'] = $wynik['ileKart'];
+					$results[$i]['Order']['ileJobs'] = $wynik['ileJobs'];
+					$results[$i]['Order']['idJoba'] = $wynik['idJoba'];
+					$results[$i++]['Order']['nrJoba'] = $wynik['nrJoba'];
+				}								
 			}
 		}		
-		return $out;//$results;
+		return $results;
 	}
 
 	private function getJobInfo( $row = []) {
