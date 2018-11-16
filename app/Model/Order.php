@@ -10,6 +10,68 @@ App::uses('AppModel', 'Model');
  */
 class Order extends AppModel {
 	
+
+	public function afterFind($results, $primary = false) {
+
+		if( $primary ) {
+			$i=0;
+			foreach ($results as $row) {				
+				if( isset($row['Order']) ) {					
+					$results[$i]["Order"]["servis"] = $this->getServisInfo($row);
+					$wynik = $this->getJobInfo( $row );
+					
+					$results[$i]['Order']['ileKartx'] = $wynik['ileKart'];
+					$results[$i]['Order']['ileJobsx'] = $wynik['ileJobs'];
+					$results[$i]['Order']['idJobax'] = $wynik['idJoba'];
+					$results[$i++]['Order']['nrJobax'] = $wynik['nrJoba'];
+				}				
+			}
+		}		
+		return $results;
+	}
+
+	private function getJobInfo( $row = []) {
+
+		$wynik = [
+			'ileKart' => 0,
+			'ileJobs' => 0,
+			'idJoba' => 0,
+			'nrJoba' => 0
+		];
+		if( isset($row['Card']) ) {
+			$wynik['ileKart'] = count($row['Card']);
+			foreach( $row['Card'] as $karta ) {
+				if( $karta['job_id']) { // Ma jakiegoś job'a	
+					// Poniższy warunek, by rejestrwać tylko liczbę róznych
+					if( $wynik['idJoba'] != $karta['job_id'] ) { // mamy różne
+						$wynik['ileJobs']++; // zwiększamy tylko gdy różne
+					}						
+					if( $wynik['ileJobs'] == 1 ) { // chcemy nr pierwszego
+						$wynik['idJoba'] = $karta['job_id']; // id tego pierwszego
+						$job = $this->Card->Job->find('first', [
+							'conditions' => ['Job.id' => $karta['job_id']],
+							'recursive' => 0
+						]);
+						$wynik['nrJoba'] = $job['Job']['nr'];						
+					}
+				}
+			}
+		}
+		return $wynik;
+	}
+
+	private function getServisInfo( $row = []) {
+
+		if( isset($row['Card']) ) {			 
+			foreach( $row['Card'] as $karta ) {
+				if( $karta["serwis"] ) {
+					return 1; // Wystarczy jedna karta serwisowa, by zam. było serwisowe
+				}
+			}
+		}
+		return 0; // standardowa wartość
+	}
+
 	// tu wpisujemy kody po jakiejś akcji
 	public $OrderError = 0;
         
