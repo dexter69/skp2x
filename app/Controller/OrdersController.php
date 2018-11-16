@@ -220,22 +220,34 @@ class OrdersController extends AppController {
 			break;
 			case 'closed':
 				$opcje = array('Order.status' => KONEC);
-			break;
+			break;	
+			case 'serwis':		
 			case 'today': //zmieniamy DZIŚ+, czyli na dziś i przeterminowane
+				if( $par == 'today') {
+					$opcje = [
+						//'Order.stop_day >' => date('Y-m-d', strtotime('-68 days')), // starsze niż x days
+						//NA_DZIS_PLUS
+						'Order.stop_day >' => date('Y-m-d', strtotime('-' . NA_DZIS_PLUS . 'days')), // starsze niż x days
+						'Order.stop_day <=' => date('Y-m-d')						
+					];
+				} else {
+					$opcje = [];
+				}
+				$opcje['Order.status !='] = [KONEC, PRIV] ;
+				/*
 				$opcje = [
 					//'Order.stop_day >' => date('Y-m-d', strtotime('-68 days')), // starsze niż x days
 					//NA_DZIS_PLUS
 					'Order.stop_day >' => date('Y-m-d', strtotime('-' . NA_DZIS_PLUS . 'days')), // starsze niż x days
 					'Order.stop_day <=' => date('Y-m-d'),
 					'Order.status !=' => [KONEC, PRIV] // prywatnych też nie chcemy
-				];			
+				];	
+				*/		
 				$this->Paginator->settings = array(
         			'order' => array(
             		'Order.stop_day' => 'desc'
         			)
-    			);
-			break;
-			case 'tomorrow':
+    			);					
 			break;
 			default:
 				$opcje = array();
@@ -245,13 +257,14 @@ class OrdersController extends AppController {
 		} else {
 			$ordersx = $this->Paginator->paginate();
 		}
-		$orders = $this->addJobInfo($ordersx);
+		$orders = $this->addJobAndSerwisInfo($ordersx, $par);
 		$this->set( compact('orders', 'par' ) );
 	}
 
 	/**
-	 * Chcemy mieć na liscie powiązania handlowych z produkcyjnymi */
-	private function addJobInfo( $in = [] ) {
+	 * Chcemy mieć na liscie powiązania handlowych z produkcyjnymi
+	 * oraz zarządzanie serwisowymi */
+	private function addJobAndSerwisInfo( $in = [], $par = null ) {
 
 		//$out = $in;
 		$i=0;
@@ -259,6 +272,7 @@ class OrdersController extends AppController {
 			$in[$i]['Order']['ileKart'] = count($row['Card']);
 			$in[$i]['Order']['ileJobs'] = 0;
 			$in[$i]['Order']['idJoba'] = 0;
+			$in[$i]['Order']['serwis'] = 0; // domyślna wartość
 			foreach($in[$i]['Card'] as $karta) {
 				if( $karta['job_id']) {					
 					// Poniższy warunek, by rejestrwać tylko liczbę róznych
@@ -275,8 +289,11 @@ class OrdersController extends AppController {
 						$in[$i]['The'] = $job;
 					}
 				}
+				if( $karta['serwis'] ) { // karta serwisowana / na magazynie
+					$in[$i]['Order']['serwis'] = 1;
+				}
 			}
-			$i++;
+			$i++;		
 		}		
 		return $in;
 	}
