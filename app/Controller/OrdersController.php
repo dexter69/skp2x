@@ -252,16 +252,17 @@ class OrdersController extends AppController {
 			default:
 				$opcje = array();
 		}
+		$this->Order->indexPar = $par;
 		if( !empty($opcje) ) {
 			$ordersx = $this->Paginator->paginate( 'Order', $opcje );			
 		} else {
 			$ordersx = $this->Paginator->paginate();
 		}
-		$orders = $this->addJobAndSerwisInfo($ordersx, $par);
+		$orders = $ordersx;//$this->addJobAndSerwisInfo($ordersx, $par);
 		$this->set( compact('orders', 'par' ) );
 	}
 
-	/**
+	/** DEPREC => mamy w modelu zrobione przez afterFind
 	 * Chcemy mieć na liscie powiązania handlowych z produkcyjnymi
 	 * oraz zarządzanie serwisowymi */
 	private function addJobAndSerwisInfo( $in = [], $par = null ) {

@@ -10,24 +10,30 @@ App::uses('AppModel', 'Model');
  */
 class Order extends AppModel {
 	
+	public $indexPar = "ALLELUJA";
+	// Tu kontroler zapisuje parametr wywołania, czyli $par, coby model wiedział :-)
 
 	public function afterFind($results, $primary = false) {
 
+		$out = $results;
+		$out2 = [];
 		if( $primary ) {
 			$i=0;
-			foreach ($results as $row) {				
+			foreach ($out as $row) {				
 				if( isset($row['Order']) ) {					
-					$results[$i]["Order"]["servis"] = $this->getServisInfo($row);
+					$out[$i]["Order"]["servis"] = $this->getServisInfo($row);
 					$wynik = $this->getJobInfo( $row );
 					
-					$results[$i]['Order']['ileKartx'] = $wynik['ileKart'];
-					$results[$i]['Order']['ileJobsx'] = $wynik['ileJobs'];
-					$results[$i]['Order']['idJobax'] = $wynik['idJoba'];
-					$results[$i++]['Order']['nrJobax'] = $wynik['nrJoba'];
-				}				
+					$out[$i]['Order']['par'] = $this->indexPar;
+
+					$out[$i]['Order']['ileKart'] = $wynik['ileKart'];
+					$out[$i]['Order']['ileJobs'] = $wynik['ileJobs'];
+					$out[$i]['Order']['idJoba'] = $wynik['idJoba'];
+					$out[$i++]['Order']['nrJoba'] = $wynik['nrJoba'];
+				}			
 			}
 		}		
-		return $results;
+		return $out;//$results;
 	}
 
 	private function getJobInfo( $row = []) {
