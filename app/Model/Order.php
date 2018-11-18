@@ -45,7 +45,7 @@ class Order extends AppModel {
 		if( isset($row['Card']) ) {
 			$wynik['ileKart'] = count($row['Card']);
 			foreach( $row['Card'] as $karta ) {
-				if( $karta['job_id']) { // Ma jakiegoś job'a	
+				if( isset($karta['job_id']) && $karta['job_id']) { // Ma jakiegoś job'a	
 					// Poniższy warunek, by rejestrwać tylko liczbę róznych
 					if( $wynik['idJoba'] != $karta['job_id'] ) { // mamy różne
 						$wynik['ileJobs']++; // zwiększamy tylko gdy różne
@@ -68,7 +68,7 @@ class Order extends AppModel {
 
 		if( isset($row['Card']) ) {			 
 			foreach( $row['Card'] as $karta ) {
-				if( $karta["serwis"] ) {
+				if( isset($karta["serwis"]) && $karta["serwis"] ) {
 					return 1; // Wystarczy jedna karta serwisowa, by zam. było serwisowe
 				}
 			}
