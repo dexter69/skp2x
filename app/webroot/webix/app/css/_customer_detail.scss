@@ -14,3 +14,24 @@ Szczegóły o kliencie, po prawej stronie listy*/
 //.the-customer-detail > .siedziba > h3 { margin: 0.4em 0;}
 
 .the-customer-detail > .siedziba > * { margin: 0.2em 0;}
+
+
+// Left-right elem.
+
+.left-right-elem {
+    padding: 20px 0;
+}
+
+.left-right-elem .lewy-prawy {
+    display: inline-block;
+    width: 50%;
+}
+
+.left-right-elem .lewy {
+    background-color: antiquewhite;
+    text-align: right;
+}
+
+.left-right-elem .prawy {
+    background-color: aquamarine;
+}

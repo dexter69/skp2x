@@ -32,6 +32,20 @@ Szczegóły o kliencie, po prawej stronie listy*/
 .the-customer-detail > .siedziba > * {
   margin: 0.2em 0; }
 
+.left-right-elem {
+  padding: 20px 0; }
+
+.left-right-elem .lewy-prawy {
+  display: inline-block;
+  width: 50%; }
+
+.left-right-elem .lewy {
+  background-color: antiquewhite;
+  text-align: right; }
+
+.left-right-elem .prawy {
+  background-color: aquamarine; }
+
 /*
 Zdeprecjonowane lub na razie nie używane definicje */
 .customer-detail .customer-full-name > div {

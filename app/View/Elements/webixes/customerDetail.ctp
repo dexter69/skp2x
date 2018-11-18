@@ -18,3 +18,5 @@
         <p @class="nip-string"><?php echo "$nipString"; ?></p>
     </div>
 </div>
+<?php
+    echo $this->element("webixes/leftRightPlusLabel");
