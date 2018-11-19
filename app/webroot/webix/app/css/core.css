@@ -35,16 +35,16 @@ Szczegóły o kliencie, po prawej stronie listy*/
 .left-right-elem {
   padding: 20px 0; }
 
-.left-right-elem .lewy-prawy {
-  display: inline-block;
-  width: 50%; }
+.left-right-elem .table {
+  display: table;
+  border-collapse: collapse; }
 
-.left-right-elem .lewy {
-  background-color: antiquewhite;
-  text-align: right; }
+.left-right-elem .table-row {
+  display: table-row; }
 
-.left-right-elem .prawy {
-  background-color: aquamarine; }
+.left-right-elem .table-cell {
+  display: table-cell;
+  padding: 0.05em 0.5em 0.05em 0; }
 
 /*
 Zdeprecjonowane lub na razie nie używane definicje */

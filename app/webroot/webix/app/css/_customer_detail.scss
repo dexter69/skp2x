@@ -22,16 +22,21 @@ Szczegóły o kliencie, po prawej stronie listy*/
     padding: 20px 0;
 }
 
-.left-right-elem .lewy-prawy {
-    display: inline-block;
-    width: 50%;
+
+.left-right-elem .table {
+    display: table;    
+    //width:100%;
+    border-collapse:collapse;
 }
 
-.left-right-elem .lewy {
-    background-color: antiquewhite;
-    text-align: right;
+.left-right-elem .table-row {
+    display: table-row;
 }
 
-.left-right-elem .prawy {
-    background-color: aquamarine;
+$gora_dol: 0.05em;
+
+.left-right-elem .table-cell {
+    display: table-cell;
+    padding: $gora_dol 0.5em $gora_dol 0;
+    //border:#f0f0f0 1px solid;
 }

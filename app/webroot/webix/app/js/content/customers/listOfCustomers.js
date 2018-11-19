@@ -110,8 +110,7 @@ let listOfCustomers = {
                 if( !$$(customerPanel.id).isVisible() ) {
                     // Chowamy niektóre kolumny, bo mamy mniej miejsca
                     $$(listOfCustomers.id).config.hideTheColumns();                    
-                    $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                    
-                    
+                    $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                                        
                 }  
                 $$(customerDetail.id).parse(dane);              
                 //console.log(dane);

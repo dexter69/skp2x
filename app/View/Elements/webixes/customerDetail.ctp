@@ -19,4 +19,6 @@
     </div>
 </div>
 <?php
-    echo $this->element("webixes/leftRightPlusLabel");
+    echo $this->element("webixes/leftRightPlusLabel", [
+        'valBold' => true // czy wartości po prawej mają być bold
+    ]);
