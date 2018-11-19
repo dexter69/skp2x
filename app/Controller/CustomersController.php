@@ -90,7 +90,7 @@ class CustomersController extends AppController {
  */
 	public function view($id = null) {
             if (!$this->Customer->exists($id)) {
-                    throw new NotFoundException( 'Invalid customer' );
+                    throw new NotFoundException( 'Taki klient nie istnieje' );
             }	            
             $customer = $this->Customer->customerRelated($id);
             if( !$this->akcjaOK($customer['Customer'], 'view') ) {

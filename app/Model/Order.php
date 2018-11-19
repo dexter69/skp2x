@@ -15,7 +15,6 @@ class Order extends AppModel {
 
 	public function afterFind($results, $primary = false) {
 
-		$oryg = $results;
 		if( $primary ) {
 			$i=0;
 			foreach ($results as $row) {				
@@ -27,9 +26,7 @@ class Order extends AppModel {
 
 					$results[$i]['Order']['ileKart'] = $wynik['ileKart'];
 					$results[$i]['Order']['ileJobs'] = $wynik['ileJobs'];
-					$results[$i]['Order']['idJoba'] = $wynik['idJoba'];
-					$results[$i]['Order']['jRecord'] = $wynik['jrecord'];
-					//$results[$i]['Order']['oryg'] = $oryg;
+					$results[$i]['Order']['idJoba'] = $wynik['idJoba'];										
 					$results[$i++]['Order']['nrJoba'] = $wynik['nrJoba'];
 				}								
 			}

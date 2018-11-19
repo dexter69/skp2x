@@ -31,8 +31,46 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model {
 
+        //opcje zaliczki jeszcze raz
+    private $opcje_zaliczki = array(
+        NIE => 'bez przedpłaty',
+        PRZE => 'przelew',
+        CASH => 'gotówka',
+        PAU => 'inna (uwagi)'
+    );
+    
+    //opcje płatności jeszcze raz
+    private $opcje_platnosci = array(
+        NIE => 'brak',
+        PRZE => 'przelew',
+        CASH => 'gotówka',
+        POB => 'pobranie',
+        PAU => 'inna (uwagi)'
+    );
+    
+    // przekształć wartość formy zaliczki w bazie na formę dla widoku
+    public function bazaFormaZal2viewFormat( $bazowaFormZal = null ) {
+        
+        if( $bazowaFormZal == null ) {
+            return null;
+        } else {
+            return $this->opcje_platnosci[$bazowaFormZal];
+        }
+        
+    }
+    
+    // przekształć wartość opcji platnosci w bazie na formę dla widoku
+    public function bazaOpcjaPlatnosci2viewFormat( $bazowaFormPla = null ) {
+        if( $bazowaFormPla  == null ) {
+            return null;
+        } else {
+            return $this->opcje_zaliczki[$bazowaFormPla];
+        }
+	}
+
         /* ^^^^^^^ 17.10.2018, na podstawie:
         https://medium.com/cake-php/default-conditions-fields-for-finds-on-models-in-cakephp-2ca010b345c
+        ale generalnie coś jest nie tak, nie działa dobrze wszystko
         */
         public $defaultFields;
         public $defaultConditions;

@@ -4,6 +4,7 @@ $this->layout='bootstrap';
 echo $this->Html->css('boot/customer', null, array('inline' => false));
 //echo count($customer['Order']) . "<br>";
 //echo count($customer['Card']) . "<br>";
+//echo $this->App->print_r2($customer['Customer']);
 ?>
 
 <div class="row">
