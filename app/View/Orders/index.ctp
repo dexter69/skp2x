@@ -30,7 +30,7 @@ else
         <th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
         <th class="dolar"></th>
         <th class="nr"><?php echo $this->Paginator->sort('nr', 'Numer'); ?></th>      
-        <!--<th style="width: 60px;"></th>-->
+        <th style="width: 60px;"></th>
         <th><?php echo $this->Paginator->sort('Customer.name', 'Klient'); ?></th> 
         <th class="job-info">Produkc.</th>
         <th class="termin"><?php echo $this->Paginator->sort('stop_day', 'Data zakończenia'); ?></th>
