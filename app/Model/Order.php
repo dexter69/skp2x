@@ -15,6 +15,7 @@ class Order extends AppModel {
 
 	public function afterFind($results, $primary = false) {
 
+		$oryg = $results;
 		if( $primary ) {
 			$i=0;
 			foreach ($results as $row) {				
@@ -27,6 +28,8 @@ class Order extends AppModel {
 					$results[$i]['Order']['ileKart'] = $wynik['ileKart'];
 					$results[$i]['Order']['ileJobs'] = $wynik['ileJobs'];
 					$results[$i]['Order']['idJoba'] = $wynik['idJoba'];
+					$results[$i]['Order']['jRecord'] = $wynik['jrecord'];
+					//$results[$i]['Order']['oryg'] = $oryg;
 					$results[$i++]['Order']['nrJoba'] = $wynik['nrJoba'];
 				}								
 			}
@@ -40,12 +43,15 @@ class Order extends AppModel {
 			'ileKart' => 0,
 			'ileJobs' => 0,
 			'idJoba' => 0,
-			'nrJoba' => 0
+			'nrJoba' => 0,
+			'jrecord' => []
 		];
 		if( isset($row['Card']) ) {
 			$wynik['ileKart'] = count($row['Card']);
 			foreach( $row['Card'] as $karta ) {
-				if( isset($karta['job_id']) && $karta['job_id']) { // Ma jakiegoś job'a	
+				if( isset($karta['job_id']) && $karta['job_id']) { /* Ma jakiegoś job'a, ale
+					jest to teoretyczne. Trafiłem na karty, które mają job_id, a tego job'a
+					nie ma - bo został skasowany */
 					// Poniższy warunek, by rejestrwać tylko liczbę róznych
 					if( $wynik['idJoba'] != $karta['job_id'] ) { // mamy różne
 						$wynik['ileJobs']++; // zwiększamy tylko gdy różne
@@ -55,8 +61,12 @@ class Order extends AppModel {
 						$job = $this->Card->Job->find('first', [
 							'conditions' => ['Job.id' => $karta['job_id']],
 							'recursive' => 0
-						]);
-						$wynik['nrJoba'] = $job['Job']['nr'];						
+						]);		
+						if( !empty($job) )	{ // Czasami mimo wszystko możemy dostać pusty wynik
+							$wynik['nrJoba'] = $job['Job']['nr'];
+						} else {
+							$wynik['nrJoba'] = null;
+						}											
 					}
 				}
 			}

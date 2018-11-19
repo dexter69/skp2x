@@ -334,8 +334,12 @@ class OrdersController extends AppController {
                             $job = $this->Order->Card->Job->find('first', array(
                                     'conditions' => array('Job.id' => $card['job_id']),
                                     'fields' => array('id', 'nr')
-                            ));
-                            $card['job_nr'] = $job['Job']['nr'];
+							));
+							if(!empty($job)) {
+								$card['job_nr'] = $job['Job']['nr'];
+							} else {
+								$card['job_nr'] = 0;
+							}
 			}
 			else    {
                             $card['job_nr'] = 0; }
