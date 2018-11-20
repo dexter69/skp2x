@@ -39,8 +39,10 @@ let listOfCustomers = {
         if( globalAppData.loggedInUser.id == listOfCustomers.postData.realOwnerId && loggedUserInHasNoAnyCustomer() ) {
             listOfCustomers.postData.realOwnerId = 0;
         }
-        return webix.ajax().post(url, listOfCustomers.postData).then(function(data) {
-            let dane = data.json();              
+        let theResponse = webix.ajax().post(url, listOfCustomers.postData);
+        return theResponse.then(function(data) {
+            webix.message("We are here!!");            
+            let dane = data.json();                          
             dane.records.forEach(function(record){
                 // Kompilujemy część adresu
                 record.WebixCustomer_ulica_nr = `${record.WebixAdresSiedziby_ulica} ${record.WebixAdresSiedziby_nr_budynku}`;
@@ -51,6 +53,12 @@ let listOfCustomers = {
             });                      
             return dane.records;  // w records mamy faktyczne dane                            
         });
+        /*
+        .fail(function(err){
+            webix.message("Fail in listOfCustomers");
+            console.log(err);
+        });
+        */        
     },    
     on: {     
         onAfterFilter:function(){
