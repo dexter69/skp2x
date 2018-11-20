@@ -3,10 +3,15 @@ App::uses('AppController', 'Controller');
 
 class WebixCustomersController extends AppController {
 
+    
+
     public function beforeFilter() { $this->Auth->allow(
-            'getMany',
+            //'getMany',
             'getOne'
         ); 
+        if( $this->request->is('ajax') ) {
+            return false;
+        }
     }
 
     public function getMany() {
