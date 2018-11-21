@@ -88,22 +88,25 @@ class UsersController extends AppController {
 	}
 
 	public function login() {
-            if ($this->request->is('post')) {
-                if ($this->Auth->login()) {
-                    switch( $this->Auth->user('dzial') ) {
-                        case KON: // kontrola jakości
-                            $red = array('controller'=>'tasks', 'action' => 'label');
-                            break;
-                        case PRO: // produkcja 
-                            $red = array('controller'=>'jobs', 'action' => 'index');
-                            break;
-                        default:
-                            $red = $this->Auth->redirect();
-                    }
-                    return $this->redirect($red);                                       
+
+        $ajax = $this->myAjax;
+        $this->set(compact(array('ajax')));
+        if ($this->request->is('post') && !$this->request->is('ajax')) {
+            if ($this->Auth->login()) {
+                switch( $this->Auth->user('dzial') ) {
+                    case KON: // kontrola jakości
+                        $red = array('controller'=>'tasks', 'action' => 'label');
+                        break;
+                    case PRO: // produkcja 
+                        $red = array('controller'=>'jobs', 'action' => 'index');
+                        break;
+                    default:
+                        $red = $this->Auth->redirect();
                 }
-                $this->Session->setFlash(__('Błędna nazwa użytkownika lub hasło, spróbuj ponownie'));
-            }    	
+                return $this->redirect($red);                                       
+            }
+            $this->Session->setFlash(__('Błędna nazwa użytkownika lub hasło, spróbuj ponownie'));
+        }
 	}
 
 	public function logout() {

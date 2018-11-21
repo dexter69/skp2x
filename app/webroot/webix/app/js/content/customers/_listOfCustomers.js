@@ -39,21 +39,7 @@ let listOfCustomers = {
         if( globalAppData.loggedInUser.id == listOfCustomers.postData.realOwnerId && loggedUserInHasNoAnyCustomer() ) {
             listOfCustomers.postData.realOwnerId = 0;
         }
-        let theResponse = webix.ajax().post(url, listOfCustomers.postData,{
-            error:function(text, data, XmlHttpRequest){
-                webix.message("error");
-            },
-            success:function(text, data, XmlHttpRequest){
-                webix.message("success");
-                console.log("TEXT");
-                console.log(text);
-                console.log("DATA");
-                console.log(data);
-                console.log("XmlHttpRequest");
-                console.log(XmlHttpRequest);
-            }
-        });
-        /*
+        let theResponse = webix.ajax().post(url, listOfCustomers.postData);
         return theResponse.then(function(data) {
             webix.message("We are here!!");            
             let dane = data.json();                          
@@ -67,7 +53,6 @@ let listOfCustomers = {
             });                      
             return dane.records;  // w records mamy faktyczne dane                            
         });
-        */
         /*
         .fail(function(err){
             webix.message("Fail in listOfCustomers");

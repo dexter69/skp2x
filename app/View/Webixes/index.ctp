@@ -50,7 +50,8 @@ var globalAppData = {
     config: { // różnorakie przydatne dane
         logoutUrl: "/users/logout",
         // url do zasysania klientów dla celów dodania nowego zamówienia
-        customersAddOrder: "/webixCustomers/getMany.json",
+        //customersAddOrder: "/webixCustomers/getMany.json",
+        customersGetMany: "/webixCustomers/getMany.json",
         justOneCustomerData: "/webixCustomers/getOne/",
         wyglad: {
             mainPad: 35, // definujący główny padding

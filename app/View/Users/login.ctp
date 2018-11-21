@@ -1,4 +1,25 @@
-<?php 	$this->layout = 'login'; ?>
+<?php 	$this->layout = 'login';
+	if( isset($ajax) ) {
+		//$stri = ``;
+		$stri = '$ajax is set, = ' . $ajax;
+		/*
+		if( $ajax === NULL ) {
+			$stri .= 'NULL, ';
+		}
+		if( $ajax == NULL ) {
+			$stri .= 'null, ';
+		}
+		if( $ajax === false ) {
+			$stri .= 'false';
+		}
+		*/		 
+	} else {
+		//$stri = "NIE ajax";
+		$stri = '$ajax is NOT set!';
+	}
+	
+	echo "<p style='background-color: lightpink;'>$stri</p>";
+?>
 <div class="users form">
 <?php //echo $this->Session->flash('auth'); 
 	$this->layout = 'login';

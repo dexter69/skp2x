@@ -10,7 +10,9 @@ class WebixCustomersController extends AppController {
             'getOne'
         ); 
         if( $this->request->is('ajax') ) {
-            return false;
+            $this->myAjax = "być prawda";
+        } else {
+            $this->myAjax = "być fałsz";
         }
     }
 
