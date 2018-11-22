@@ -39,22 +39,23 @@ let listOfCustomers = {
         if( globalAppData.loggedInUser.id == listOfCustomers.postData.realOwnerId && loggedUserInHasNoAnyCustomer() ) {
             listOfCustomers.postData.realOwnerId = 0;
         }
-        let theResponse = webix.ajax().post(url, listOfCustomers.postData,{
-                error:function(text, data, XmlHttpRequest){
-                    webix.message("error");
-                },
-                success:function(text, data, XmlHttpRequest){
-                    webix.message(XmlHttpRequest.responseURL);
-                    //console.log("TEXT"); console.log(text);
-                    console.log("DATA");
-                    console.log(data);
-                    console.log("XmlHttpRequest");
-                    console.log(XmlHttpRequest);
-                    
-                }
+        let theResponse = webix.ajax().post(url, listOfCustomers.postData/*,{
+            error:function(text, data, XmlHttpRequest){
+                webix.message("error");
+            },
+            success:function(text, data, XmlHttpRequest){
+                webix.message(XmlHttpRequest.responseURL);
+                console.log("TEXT");
+                console.log(text);
+                console.log("DATA");
+                console.log(data);
+                console.log("XmlHttpRequest");
+                console.log(XmlHttpRequest);
+                
             }
-        );
-        /*
+        }
+        */);
+        /**/
         return theResponse.then(function(data, text, XmlHttpRequest) {
             
             // Oczekujemy, że otrzymamy odpowiednio sforamtowany string z serwera
@@ -86,7 +87,7 @@ let listOfCustomers = {
                 window.open(globalAppData.config.logoutUrl, "_self");
             }                                  
         });
-        */
+        
         /*
         .fail(function(err){
             webix.message("Fail in listOfCustomers");
