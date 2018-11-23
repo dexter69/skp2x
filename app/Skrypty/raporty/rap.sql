@@ -43,7 +43,7 @@ table2.iloscKart AS "Ilość kart",
 
 --
 table3.data,
-table3.opiekun AS opiekunId,
+-- table3.opiekun AS opiekunId,
 table3.idZamowienia,
 table3.nr
 FROM table3 INNER JOIN table2 ON table3.idZamowienia = table2.idZamowienia ORDER BY opiekun, idKlienta, nr;

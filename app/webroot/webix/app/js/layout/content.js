@@ -14,6 +14,6 @@ let content = {
     ,cells: [  
         manageCustomers,      
         //manageAddingQuickOrder,
-        managePrivateOrders
+        //managePrivateOrders
     ]
 }

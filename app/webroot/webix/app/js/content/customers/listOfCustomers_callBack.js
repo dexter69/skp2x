@@ -39,31 +39,29 @@ let listOfCustomers = {
         if( globalAppData.loggedInUser.id == listOfCustomers.postData.realOwnerId && loggedUserInHasNoAnyCustomer() ) {
             listOfCustomers.postData.realOwnerId = 0;
         }
-        let theResponse = webix.ajax().post(url, listOfCustomers.postData);
-        return theResponse.then(function(data) {
-            //console.log(data.json().records);
-            /**/
-            console.log(
-                data.text().search("<!DOCTYPE html>")
-            );
-            console.log(
-                data.text().search("records")
-            );
-            webix.message("We are here!!*************");  
-            let txt = data.text();
-            if( txt.search("records") >= 0 ) { 
-                // powinno być, jeżeli dostaniemy prawidłowy json
-                webix.message("PRZETWARZAMY"); 
-                console.log("PRZETWARZAMY");
+        var xyz;
+        function abc(text, data, XmlHttpRequest){
+            if( XmlHttpRequest.responseURL.search(globalAppData.config.loginUrl) >= 0 ) {
+                /*  Jezeli w XmlHttpRequest.responseURL znajdziemy loginUrl,
+                    to znaczy, że nie jesteśmy zalogowani - przekierowanie na logowanie
+                    - logoutUrl, bo chcemy, na wszelki wypadek, wywołać funkcję logout */
+                    //window.open(globalAppData.config.logoutUrl, "_self");
+                    console.log("Here should be the redirect!");
+                    console.log(data);
             } else {
-                /* zakładamy, ze dostaliśmy html -> stronę logowania,
-                    dlatego musimy przekierować na logowanie */
-                window.open("/pulpit", "_self");
-                webix.message("TRZA PRZEKIWROAĆ"); 
-                console.log("TRZA PRZEKIWROAĆ");
-            }
+                console.log("No need for redirect!");
+                console.log(data);                        
+                xyz = data;
+            }         
+            console.log(XmlHttpRequest.responseURL.search(globalAppData.config.loginUrl));
+        }
 
-            /*          
+        let theResponse = webix.ajax().post(url, listOfCustomers.postData, abc);
+        console.log("Again DATA!");
+        console.log(xyz);
+        /*
+        return theResponse.then(function(data) {
+            webix.message("We are here!!");            
             let dane = data.json();                          
             dane.records.forEach(function(record){
                 // Kompilujemy część adresu
@@ -72,17 +70,11 @@ let listOfCustomers = {
                     // to dodajemy ikonkę kosza                
                     record["WebixCustomer_kosz"] = listOfCustomers.ikonaKosza;
                 }                 
-            });                      
-            return dane.records;  // w records mamy faktyczne dane   
-            */
-           return [{},{}];
+            });    
+            console.log("We are here!!");                  
+            return dane.records;  // w records mamy faktyczne dane                            
         });
-        /*
-        .fail(function(err){
-            webix.message("Fail in listOfCustomers");
-            console.log(err);
-        });
-        */        
+        */
     },    
     on: {     
         onAfterFilter:function(){
