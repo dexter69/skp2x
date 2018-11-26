@@ -33,8 +33,6 @@ class AppController extends Controller {
 	
     public $helpers = array('Form', 'Html', 'Ma');
 
-    public $myAjax = "Gibon";
-    
     public $components = array(
 	'RequestHandler',
         'Session',

@@ -87,11 +87,9 @@ class UsersController extends AppController {
             } 
 	}
 
-	public function login() {
+	public  function login() {
 
-        $ajax = $this->myAjax;
-        $this->set(compact(array('ajax')));
-        if ($this->request->is('post') && !$this->request->is('ajax')) {
+        if( $this->request->is('post') /* na razie nie potrzebne && !$this->request->is('ajax')*/ ) {
             if ($this->Auth->login()) {
                 switch( $this->Auth->user('dzial') ) {
                     case KON: // kontrola jakości

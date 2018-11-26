@@ -40,42 +40,27 @@ let listOfCustomers = {
             listOfCustomers.postData.realOwnerId = 0;
         }
         let theResponse = webix.ajax().post(url, listOfCustomers.postData);
-        return theResponse.then(function(data) {
-            //console.log(data.json().records);
-            /**/
-            console.log(
-                data.text().search("<!DOCTYPE html>")
-            );
-            console.log(
-                data.text().search("records")
-            );
-            webix.message("We are here!!*************");  
+        return theResponse.then(function(data) {            
+            //console.log(data.text().search("<!DOCTYPE html>")); console.log( data.text().search("records"));webix.message("We are here!!*************");  
             let txt = data.text();
             if( txt.search("records") >= 0 ) { 
-                // powinno być, jeżeli dostaniemy prawidłowy json
-                webix.message("PRZETWARZAMY"); 
-                console.log("PRZETWARZAMY");
+                // powinno być, jeżeli dostaniemy prawidłowy json - PRZETWARZAMY                
+                let dane = data.json();
+                dane.records.forEach(function(record){
+                    // Kompilujemy część adresu
+                    record.WebixCustomer_ulica_nr = `${record.WebixAdresSiedziby_ulica} ${record.WebixAdresSiedziby_nr_budynku}`;
+                    if( record.WebixCustomer_howManyNonPrivateOrders == 0 ) { // jeżeli nie ma NIE prywatnych
+                        // to dodajemy ikonkę kosza                
+                        record["WebixCustomer_kosz"] = listOfCustomers.ikonaKosza;
+                    }                 
+                });
+                return dane.records;  // w records mamy faktyczne dane 
             } else {
                 /* zakładamy, ze dostaliśmy html -> stronę logowania,
                     dlatego musimy przekierować na logowanie */
-                window.open("/pulpit", "_self");
-                webix.message("TRZA PRZEKIWROAĆ"); 
-                console.log("TRZA PRZEKIWROAĆ");
+                //webix.message("TRZA PRZEKIWROAĆ"); console.log("TRZA PRZEKIWROAĆ");
+                window.open("/pulpit", "_self");                
             }
-
-            /*          
-            let dane = data.json();                          
-            dane.records.forEach(function(record){
-                // Kompilujemy część adresu
-                record.WebixCustomer_ulica_nr = `${record.WebixAdresSiedziby_ulica} ${record.WebixAdresSiedziby_nr_budynku}`;
-                if( record.WebixCustomer_howManyNonPrivateOrders == 0 ) { // jeżeli nie ma NIE prywatnych
-                    // to dodajemy ikonkę kosza                
-                    record["WebixCustomer_kosz"] = listOfCustomers.ikonaKosza;
-                }                 
-            });                      
-            return dane.records;  // w records mamy faktyczne dane   
-            */
-           return [{},{}];
         });
         /*
         .fail(function(err){
