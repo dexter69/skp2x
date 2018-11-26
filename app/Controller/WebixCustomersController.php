@@ -9,11 +9,6 @@ class WebixCustomersController extends AppController {
             //'getMany',
             'getOne'
         ); 
-        if( $this->request->is('ajax') ) {
-            $this->myAjax = "być prawda";
-        } else {
-            $this->myAjax = "być fałsz";
-        }
     }
 
     public function getMany() {
