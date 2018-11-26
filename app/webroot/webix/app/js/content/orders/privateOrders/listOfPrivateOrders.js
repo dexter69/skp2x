@@ -6,7 +6,7 @@ let privateOrdersUrlHandler = function(){ // Dokumentacja: https://docs.webix.co
             let dane = data.json();                
             // Lidziki aktualnie mający prywatne zamówienia
             conf.thePeopleFilterHeader.options = dane.peopleHavingPrivs;
-            return dane.records;  // w records mamy faktyczne dane                            
+            return dane.records;  //w records mamy faktyczne dane                            
         }          
         return [];    
     });
