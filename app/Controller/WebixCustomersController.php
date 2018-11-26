@@ -5,11 +5,7 @@ class WebixCustomersController extends AppController {
 
     
 
-    public function beforeFilter() { $this->Auth->allow(
-            //'getMany',
-            'getOne'
-        ); 
-    }
+    //public function beforeFilter() {  $this->Auth->allow('getMany', 'getOne');  }
 
     public function getMany() {
 

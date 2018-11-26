@@ -42,8 +42,7 @@ let listOfCustomers = {
         let theResponse = webix.ajax().post(url, listOfCustomers.postData);
         return theResponse.then(function(data) {            
             //console.log(data.text().search("<!DOCTYPE html>")); console.log( data.text().search("records"));webix.message("We are here!!*************");  
-            let txt = data.text();
-            if( txt.search("records") >= 0 ) { 
+            if( data.text().search("records") >= 0 ) { 
                 // powinno być, jeżeli dostaniemy prawidłowy json - PRZETWARZAMY                
                 let dane = data.json();
                 dane.records.forEach(function(record){
