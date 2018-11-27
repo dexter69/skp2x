@@ -19,6 +19,11 @@
     </div>
 </div>
 <?php
-    echo $this->element("webixes/leftRightPlusLabel", [
-        'valBold' => true // czy wartości po prawej mają być bold
+    echo $this->element("webixes/leftRightTable", [
+        'valBold' => true, // czy wartości po prawej mają być bold
+        'dane' => [ // etykieta => wartość
+            'zaliczka' => 'brak',
+            'forma' => 'przelew',
+            'waluta' => 'EUR'
+        ]
     ]);
