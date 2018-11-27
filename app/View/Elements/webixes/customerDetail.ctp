@@ -19,13 +19,14 @@
     </div>
 </div>
 <?php
+    // Płatności
     echo $this->element("webixes/leftRightTable", [
         'extraClass' => 'elemOfCustDetail',
         'valBold' => true, // czy wartości po prawej mają być bold
         'dane' => [ // etykieta => wartość
-            'zaliczka' => 'brak',
-            'forma' => 'przelew',
-            'waluta' => 'EUR'
+            'zaliczka' => '#WebixCustomer_forma_zaliczki_txt#',
+            'forma' => '#WebixCustomer_forma_platnosci_txt#',
+            'waluta' => '#WebixCustomer_waluta#'
         ]
     ]);
     // @ robi za spację => patrz App->trimAll
@@ -33,9 +34,8 @@
         'extraClass' => 'elemOfCustDetail',
         'valBold' => true, // czy wartości po prawej mają być bold
         'dane' => [ // etykieta => wartość
-            'czas@realizacji' => '12 dni',
-            'opiekun' => 'Beata',
-            'język@etykiety' => 'polski',
-            'kwa' => 'muhau'
+            'czas@realizacji' => '#WebixCustomer_cr#',
+            'stały@opiekun' => '#WebixCustomerRealOwner_name#',
+            'język@etykiety' => '#WebixCustomer_etylang_txt#'
         ]
     ]);

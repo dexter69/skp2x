@@ -40,6 +40,9 @@ class WebixCustomer extends AppModel {
         'one' => [ // just one customer
             'WebixCustomer.id', 'WebixCustomer.name',
             'WebixCustomer.osoba_kontaktowa', 'WebixCustomer.email', 'WebixCustomer.vatno_txt',
+            'WebixCustomer.forma_zaliczki', 'WebixCustomer.procent_zaliczki',
+            'WebixCustomer.forma_platnosci', 'WebixCustomer.termin_platnosci',
+            'WebixCustomer.waluta', 'WebixCustomer.cr', 'WebixCustomer.etylang',
             'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic',
             'WebixAdresSiedziby.id', 'WebixAdresSiedziby.name', 'WebixAdresSiedziby.ulica',
             'WebixAdresSiedziby.nr_budynku', 'WebixAdresSiedziby.kod',
@@ -63,6 +66,10 @@ class WebixCustomer extends AppModel {
         //$cakeResults = 
         $tmp = $this->find('first', $parameters);
         $tmp["WebixCustomer"]["howManyNonPrivateOrders"] = count($tmp["WebixNonPrivateOrder"]);
+        $tmp["WebixCustomer"]["forma_zaliczki_txt"] = $this->bazaFormaZal2viewFormat($tmp["WebixCustomer"]["forma_zaliczki"]);
+        $tmp["WebixCustomer"]["forma_platnosci_txt"] = $this->bazaFormaZal2viewFormat($tmp["WebixCustomer"]["forma_platnosci"]);
+        $tmp["WebixCustomer"]["etylang_txt"] = $this->etyk_view["etylang"]["cview"][$tmp["WebixCustomer"]["etylang"]];
+        //$customer['Customer']['etylang-txt'] = $this->Customer->etyk_view['etylang']['cview'][$customer['Customer']['etylang']];
         $merged = $this->mergeCakeData($tmp); 
 
         /** >>>>>>>>
