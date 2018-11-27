@@ -18,6 +18,13 @@ Szczegóły o kliencie, po prawej stronie listy*/
 
 // Left-right elem.
 
+.elemOfCustDetail {
+    //background-color: aquamarine; border: 1px solid red;    
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+}
+
 .left-right-elem {
     padding: 20px 0;
 }

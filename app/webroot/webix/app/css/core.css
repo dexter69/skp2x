@@ -32,6 +32,11 @@ Szczegóły o kliencie, po prawej stronie listy*/
 .the-customer-detail > .siedziba > * {
   margin: 0.2em 0; }
 
+.elemOfCustDetail {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top; }
+
 .left-right-elem {
   padding: 20px 0; }
 

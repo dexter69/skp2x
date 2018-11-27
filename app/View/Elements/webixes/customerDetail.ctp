@@ -20,10 +20,22 @@
 </div>
 <?php
     echo $this->element("webixes/leftRightTable", [
+        'extraClass' => 'elemOfCustDetail',
         'valBold' => true, // czy wartości po prawej mają być bold
         'dane' => [ // etykieta => wartość
             'zaliczka' => 'brak',
             'forma' => 'przelew',
             'waluta' => 'EUR'
+        ]
+    ]);
+    // @ robi za spację => patrz App->trimAll
+    echo $this->element("webixes/leftRightTable", [
+        'extraClass' => 'elemOfCustDetail',
+        'valBold' => true, // czy wartości po prawej mają być bold
+        'dane' => [ // etykieta => wartość
+            'czas@realizacji' => '12 dni',
+            'opiekun' => 'Beata',
+            'język@etykiety' => 'polski',
+            'kwa' => 'muhau'
         ]
     ]);
