@@ -51,6 +51,9 @@ Szczegóły o kliencie, po prawej stronie listy*/
   display: table-cell;
   padding: 0.05em 0.5em 0.05em 0; }
 
+.cdetails-comment {
+  border-top: 1px solid grey; }
+
 /*
 Zdeprecjonowane lub na razie nie używane definicje */
 .customer-detail .customer-full-name > div {

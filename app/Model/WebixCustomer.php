@@ -43,6 +43,7 @@ class WebixCustomer extends AppModel {
             'WebixCustomer.forma_zaliczki', 'WebixCustomer.procent_zaliczki',
             'WebixCustomer.forma_platnosci', 'WebixCustomer.termin_platnosci',
             'WebixCustomer.waluta', 'WebixCustomer.cr', 'WebixCustomer.etylang',
+            'WebixCustomer.comment',
             'WebixCustomerRealOwner.id', 'WebixCustomerRealOwner.name', 'WebixCustomerRealOwner.inic',
             'WebixAdresSiedziby.id', 'WebixAdresSiedziby.name', 'WebixAdresSiedziby.ulica',
             'WebixAdresSiedziby.nr_budynku', 'WebixAdresSiedziby.kod',
@@ -69,6 +70,7 @@ class WebixCustomer extends AppModel {
         $tmp["WebixCustomer"]["forma_zaliczki_txt"] = $this->bazaFormaZal2viewFormat($tmp["WebixCustomer"]["forma_zaliczki"]);
         $tmp["WebixCustomer"]["forma_platnosci_txt"] = $this->bazaFormaZal2viewFormat($tmp["WebixCustomer"]["forma_platnosci"]);
         $tmp["WebixCustomer"]["etylang_txt"] = $this->etyk_view["etylang"]["cview"][$tmp["WebixCustomer"]["etylang"]];
+        $tmp["WebixCustomer"]["comment"] = nl2br($tmp["WebixCustomer"]["comment"]);
         //$customer['Customer']['etylang-txt'] = $this->Customer->etyk_view['etylang']['cview'][$customer['Customer']['etylang']];
         $merged = $this->mergeCakeData($tmp); 
 

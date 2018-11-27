@@ -39,3 +39,8 @@
             'język@etykiety' => '#WebixCustomer_etylang_txt#'
         ]
     ]);
+?>
+
+<div @class="cdetails-comment">
+    #WebixCustomer_comment#
+</div>
