@@ -51,6 +51,7 @@ var globalAppData = {
     config: { // różnorakie przydatne dane
         logoutUrl: "/users/logout",
         loginUrl: "/users/login",
+        customerUrl: "/customers/view/", // url do szczegółów klienta
         // url do zasysania klientów dla celów dodania nowego zamówienia
         //customersAddOrder: "/webixCustomers/getMany.json",
         customersGetMany: "/webixCustomers/getMany.json",

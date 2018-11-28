@@ -1,6 +1,16 @@
 /*
 Szczegóły o kliencie, po prawej stronie listy*/
 
+// Sterujący toolbar
+.customer-panel .customer-detail-toolbar {
+    background-color: $zielen-naglowka-tabeli;
+}
+
+.customer-panel .customer-detail-toolbar button.webixtype_base {
+    color: $kolor-czcionki-naglowka-tabeli;
+}
+
+// Szczegóły o kliencie
 .customer-detail {
     border-radius: 5px;
 }

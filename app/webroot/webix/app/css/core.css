@@ -21,6 +21,12 @@ Style do głównego toolbara */
 
 /*
 Szczegóły o kliencie, po prawej stronie listy*/
+.customer-panel .customer-detail-toolbar {
+  background-color: #b2d8d8; }
+
+.customer-panel .customer-detail-toolbar button.webixtype_base {
+  color: #4a4a4a; }
+
 .customer-detail {
   border-radius: 5px; }
 
