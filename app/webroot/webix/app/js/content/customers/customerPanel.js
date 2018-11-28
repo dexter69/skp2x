@@ -7,11 +7,13 @@
      gravity: 0.15,
      css: "customer-detail-toolbar",
      elements: [
-        { id:"btest5", view:"button", value:"Add", click: "sTCB"},
-        { view:"button", value:"Delete", click: "sTCB" },
-        { id: "more", view:"button", value:"Więcej", click: "sTCB" },
+        //{ id:"btest5", view:"button", value:"Add", click: "sTCB"},        
+        { id: "more", view:"button", type:"icon", icon:"info-circle", click: "sTCB" },
         {},
-        { id:"closeIt", view:"button", value:"Zamknij to", click: "sTCB"}
+        { id:"cd_delete", view:"button", css: "cd-kosz",
+            type:"icon", icon:"trash-o", click: "sTCB" },
+        {},
+        { id:"closeIt", view:"button", type:"icon", icon:"times", click: "sTCB"}
      ],
      obsluzKlikniecieBatona: function(idBatona) {
          
@@ -25,8 +27,7 @@
                 }
                 break;   
             case "more":                
-                let theId = $$(listOfCustomers.id).getSelectedItem().WebixCustomer_id;                
-                console.log(globalAppData.config.customerUrl + theId );
+                let theId = $$(listOfCustomers.id).getSelectedItem().WebixCustomer_id;                                
                 window.open(globalAppData.config.customerUrl + theId, "_blank");
                 break;         
             default:

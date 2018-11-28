@@ -114,7 +114,7 @@ let listOfCustomers = {
             $$("addOrderAllTheRest_").hide();
             $$("addOrderAllTheRest").show();
             */
-
+           //console.log($$(listOfCustomers.id).getItem(id).WebixCustomer_howManyNonPrivateOrders);
             // id klikniętego klienta w bazie
             let theCustomerId = $$(listOfCustomers.id).getItem(id).WebixCustomer_id; 
             //console.log(theCustomerId);
@@ -122,12 +122,21 @@ let listOfCustomers = {
 
             // pobierz świeże dane dot. tego klienta
             webix.ajax(url).then(function(data){   
-                let dane = data.json();   
+                
+                let dane = data.json();                
                 if( !$$(customerPanel.id).isVisible() ) {
                     // Chowamy niektóre kolumny, bo mamy mniej miejsca
                     $$(listOfCustomers.id).config.hideTheColumns();                    
-                    $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                                        
-                }  
+                    $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                                                            
+                                     
+                } 
+                if( dane.WebixCustomer_howManyNonPrivateOrders == 0 ) {
+                    /* Czyli jeżeli nie mamy zamówień poza prywatnymi => można usuwać
+                        uaktywnij kosz */
+                    $$("cd_delete").enable();                        
+                } else { // Są jakieś NIE prywatne zamówienia, nie można usuwać
+                    $$("cd_delete").disable(); // zdeaktywuj kosz                  
+                }                 
                 if( dane.WebixCustomer_comment.length ) { // Jeżeli coś w komentarzu mamy
                     //Wzbogać dana => trick do wyświtlania takiego jak chcemy
                     //dane.WebixCustomer_comment = '<div class="cdetails-comment">' + dane.WebixCustomer_comment + "</div>";

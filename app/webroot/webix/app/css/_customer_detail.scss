@@ -10,6 +10,15 @@ Szczegóły o kliencie, po prawej stronie listy*/
     color: $kolor-czcionki-naglowka-tabeli;
 }
 
+.customer-detail-toolbar .cd-kosz button {
+    text-align: center;
+    
+}
+
+.customer-detail-toolbar .cd-kosz button.webix_img_btn > span {//.webix_icon_btn {
+    color: red;
+}
+
 // Szczegóły o kliencie
 .customer-detail {
     border-radius: 5px;
