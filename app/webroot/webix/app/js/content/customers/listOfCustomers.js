@@ -128,6 +128,11 @@ let listOfCustomers = {
                     $$(listOfCustomers.id).config.hideTheColumns();                    
                     $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                                        
                 }  
+                if( dane.WebixCustomer_comment.length ) { // Jeżeli coś w komentarzu mamy
+                    //Wzbogać dana => trick do wyświtlania takiego jak chcemy
+                    //dane.WebixCustomer_comment = '<div class="cdetails-comment">' + dane.WebixCustomer_comment + "</div>";
+                    dane.WebixCustomer_comment = `<div class="cdetails-comment">${dane.WebixCustomer_comment}</div>"`;                    
+                } 
                 $$(customerDetail.id).parse(dane);              
                 //console.log(dane);
                 /* Do czego to?

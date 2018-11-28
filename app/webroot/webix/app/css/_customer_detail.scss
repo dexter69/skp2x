@@ -1,6 +1,10 @@
 /*
 Szczegóły o kliencie, po prawej stronie listy*/
 
+.customer-detail {
+    border-radius: 5px;
+}
+
 // Cały template szczegółów
 .customer-detail > .webix_template {
     padding: 15px 15px 15px 30px;
@@ -51,6 +55,7 @@ $gora_dol: 0.05em;
 
 //Uwagi
 .cdetails-comment {
-    border-top: 1px solid grey;
+    padding-top: 10px;
+    border-top: 5px solid #d9e1e1;
     //background-color: lightgreen;
 }

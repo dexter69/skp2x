@@ -13,21 +13,22 @@
             'label' => null,//'Klient',
             'name' => '#WebixAdresSiedziby_name#'
         ]));
-    $tmp = $this->element("webixes/customerDetail", [
-        'class' => 'the-customer-detail',
-        'vars' => [
-            'siedziba' => [
-                'fullName' => 'WebixAdresSiedziby_name',
-                'ulica' => 'WebixAdresSiedziby_ulica',
-                'nr' => 'WebixAdresSiedziby_nr_budynku',
-                'kod' => 'WebixAdresSiedziby_kod',
-                'miasto' => 'WebixAdresSiedziby_miasto',
-                'kraj' => 'WebixAdresSiedziby_kraj',
-                'nip' => 'WebixCustomer_vatno_txt'
+    $theCustomerDetail3 = $this->App->trimAll(
+        $this->element("webixes/customerDetail", [
+            'class' => 'the-customer-detail',
+            'vars' => [
+                'siedziba' => [
+                    'fullName' => 'WebixAdresSiedziby_name',
+                    'ulica' => 'WebixAdresSiedziby_ulica',
+                    'nr' => 'WebixAdresSiedziby_nr_budynku',
+                    'kod' => 'WebixAdresSiedziby_kod',
+                    'miasto' => 'WebixAdresSiedziby_miasto',
+                    'kraj' => 'WebixAdresSiedziby_kraj',
+                    'nip' => 'WebixCustomer_vatno_txt'
+                ]
             ]
-        ]
-    ]);
-    $theCustomerDetail3 = $this->App->trimAll($tmp);
+        ])
+    );   
 ?>
 
 <script type="text/javascript" charset="utf-8">

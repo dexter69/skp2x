@@ -21,6 +21,9 @@ Style do głównego toolbara */
 
 /*
 Szczegóły o kliencie, po prawej stronie listy*/
+.customer-detail {
+  border-radius: 5px; }
+
 .customer-detail > .webix_template {
   padding: 15px 15px 15px 30px; }
 
@@ -52,7 +55,8 @@ Szczegóły o kliencie, po prawej stronie listy*/
   padding: 0.05em 0.5em 0.05em 0; }
 
 .cdetails-comment {
-  border-top: 1px solid grey; }
+  padding-top: 10px;
+  border-top: 5px solid #d9e1e1; }
 
 /*
 Zdeprecjonowane lub na razie nie używane definicje */

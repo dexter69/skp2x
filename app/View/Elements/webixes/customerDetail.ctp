@@ -40,7 +40,4 @@
         ]
     ]);
 ?>
-
-<div @class="cdetails-comment">
-    #WebixCustomer_comment#
-</div>
+#WebixCustomer_comment#
