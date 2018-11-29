@@ -2,6 +2,7 @@
 $zielen-naglowka-tabeli: rgb(178, 216, 216); 
 $select-w-tabeli: rgb(53,192,178);
 $kolor-czcionki-naglowka-tabeli: rgb(74,74,74);
+$kolr-tekstu: rgb(102,102,102); // obecny kolor czcionki we View
 
 @import 'main_toolbar';
 @import 'customers_list';

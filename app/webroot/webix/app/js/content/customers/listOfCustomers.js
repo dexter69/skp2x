@@ -8,10 +8,11 @@ let listOfCustomers = {
     columns: [
         { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
         { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
+        { id:"WebixCustomer_kosz", header:"<span class='webix_icon fa-trash'></span>", width:40, css:{'text-align':'center'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true },         
         { id:"WebixAdresSiedziby_miasto", header:"Miasto", adjust:true},        
         { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true},
-        { id:"WebixCustomer_kosz", header:"<span class='webix_icon fa-trash'></span>", width:40, css:{'text-align':'center'} },
+        
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
     ],  
     // Te chowamy, gdy chcemy mieć węższą tabelę

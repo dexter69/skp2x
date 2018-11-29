@@ -8,7 +8,8 @@ class WebixCustomer extends AppModel {
 
     public $hasOne = [
         'WebixAdresSiedziby' => [            
-            'foreignKey' => 'customer_id'            
+            'foreignKey' => 'customer_id',
+            'dependent' => true           
         ]
     ];
 
@@ -27,7 +28,8 @@ class WebixCustomer extends AppModel {
                 'WebixPrivateOrder.id'
                 ,'WebixPrivateOrder.status'
             ],
-            'conditions' => ['WebixPrivateOrder.status' => 0],         
+            'conditions' => ['WebixPrivateOrder.status' => 0],   
+            'dependent' => true      
         ]
     ];    
 
@@ -61,7 +63,6 @@ class WebixCustomer extends AppModel {
 
     //public $defaultConditions = [ 'WebixPrivateOrder.status' => 0 ]; // myk w AppModel z beforeFind
     
-
     /*
         Chcemy ifo o jednym kliencie dla szybkiego dodania zamówienia  */
     public function getOne( $id = 0 ) {

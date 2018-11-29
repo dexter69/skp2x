@@ -13,7 +13,7 @@
             css: "cd-button", click: "sTCB", width:buttDl},
         {},
         { id:"cd_delete", view:"button", css: "cd-kosz cd-button",
-            type:"icon", icon:"trash-o", badge:7, click: "sTCB", width:buttDl },
+            type:"icon", icon:"trash-o", badge:0, click: "sTCB", width:buttDl },
         {},
         { id:"closeIt", view:"button",  css: "cd-button",
             type:"icon", icon:"times", click: "sTCB", width:buttDl}
