@@ -20,6 +20,8 @@
      ],
      obsluzKlikniecieBatona: function(idBatona) {
          
+        // ID klienta
+        let theId = $$(listOfCustomers.id).getSelectedItem().WebixCustomer_id;
         switch(idBatona) {
             case "closeIt":                
                 // To samo jest w listOfCustomer.onAfterFilter => trzeba to jakoś w jeden kod zamienić
@@ -29,10 +31,18 @@
                     $$(listOfCustomers.id).clearSelection();                 
                 }
                 break;   
-            case "more":                
-                let theId = $$(listOfCustomers.id).getSelectedItem().WebixCustomer_id;                                
+            case "more":                                                
                 window.open(globalAppData.config.customerUrl + theId, "_blank");
-                break;         
+                break;  
+            case "cd_delete": // usuwanie klienta
+                let delUrl = globalAppData.config.delCustomerUrl + theId + ".json";
+                console.log(delUrl);
+                //let theResponse = webix.ajax().post(url, listOfCustomers.postData);
+                webix.ajax(delUrl, function(text){
+                    //webix.message(text); //show server side response
+                    console.log(text);
+                });
+                break;
             default:
                 webix.message(idBatona); 
         }     

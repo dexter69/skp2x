@@ -52,6 +52,7 @@ var globalAppData = {
         logoutUrl: "/users/logout",
         loginUrl: "/users/login",
         customerUrl: "/customers/view/", // url do szczegółów klienta
+        delCustomerUrl: "/webixCustomers/delete/", // url do usuwania klientów
         // url do zasysania klientów dla celów dodania nowego zamówienia
         //customersAddOrder: "/webixCustomers/getMany.json",
         customersGetMany: "/webixCustomers/getMany.json",
