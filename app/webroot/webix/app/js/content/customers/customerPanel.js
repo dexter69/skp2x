@@ -1,19 +1,22 @@
 /**
  * Component zawierający szczegóły o wybranym kliencie + możliwość dodania do niego zamówienia */
 
+ let buttDl = 90;
  let customerDetailToolbar = {
      id: "customerDetailToolbar",
      view: "toolbar",
-     gravity: 0.15,
-     css: "customer-detail-toolbar",
+     gravity: 0.19,
+     css: "customer-detail-toolbar",     
      elements: [
         //{ id:"btest5", view:"button", value:"Add", click: "sTCB"},        
-        { id: "more", view:"button", type:"icon", icon:"info-circle", click: "sTCB" },
+        {   id: "more", view:"button", type:"icon", icon:"info-circle",
+            css: "cd-button", click: "sTCB", width:buttDl},
         {},
-        { id:"cd_delete", view:"button", css: "cd-kosz",
-            type:"icon", icon:"trash-o", click: "sTCB" },
+        { id:"cd_delete", view:"button", css: "cd-kosz cd-button",
+            type:"icon", icon:"trash-o", badge:7, click: "sTCB", width:buttDl },
         {},
-        { id:"closeIt", view:"button", type:"icon", icon:"times", click: "sTCB"}
+        { id:"closeIt", view:"button",  css: "cd-button",
+            type:"icon", icon:"times", click: "sTCB", width:buttDl}
      ],
      obsluzKlikniecieBatona: function(idBatona) {
          

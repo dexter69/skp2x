@@ -20,8 +20,16 @@ class WebixCustomer extends AppModel {
                 //, 'WebixNonPrivateOrder.nr', 'WebixNonPrivateOrder.status'
             ],
             'conditions' => ['WebixNonPrivateOrder.status !=' => 0],         
+        ],
+        'WebixPrivateOrder' => [            
+            'foreignKey' => 'customer_id',            
+            'fields'  => [
+                'WebixPrivateOrder.id'
+                ,'WebixPrivateOrder.status'
+            ],
+            'conditions' => ['WebixPrivateOrder.status' => 0],         
         ]
-    ];
+    ];    
 
     public $belongsTo = [
         'WebixCustomerRealOwner' => [ // Stały opiekun klienta
@@ -67,6 +75,7 @@ class WebixCustomer extends AppModel {
         //$cakeResults = 
         $tmp = $this->find('first', $parameters);
         $tmp["WebixCustomer"]["howManyNonPrivateOrders"] = count($tmp["WebixNonPrivateOrder"]);
+        $tmp["WebixCustomer"]["howManyPrivateOrders"] = count($tmp["WebixPrivateOrder"]);
         $tmp["WebixCustomer"]["forma_zaliczki_txt"] = $this->bazaFormaZal2viewFormat($tmp["WebixCustomer"]["forma_zaliczki"]);
         $tmp["WebixCustomer"]["forma_platnosci_txt"] = $this->bazaFormaZal2viewFormat($tmp["WebixCustomer"]["forma_platnosci"]);
         $tmp["WebixCustomer"]["etylang_txt"] = $this->etyk_view["etylang"]["cview"][$tmp["WebixCustomer"]["etylang"]];
@@ -78,6 +87,7 @@ class WebixCustomer extends AppModel {
          * Debug purposes. Uset bo (na razie) nie potrzebujemy rekordów dot. zamówień. Potrzebujemy tylko ich ilość,
          * stą count powyżej. Nie ma więc sensu przesyłanie np. 900+ rekordów dla klienta nr 3 */
         unset($merged["WebixNonPrivateOrder"]);
+        unset($merged["WebixPrivateOrder"]);
         /*$merged["cake"] = $cakeResults;
         * Debug <<<<<<<<<< */
         return $merged;

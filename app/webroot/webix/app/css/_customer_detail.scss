@@ -10,13 +10,28 @@ Szczegóły o kliencie, po prawej stronie listy*/
     color: $kolor-czcionki-naglowka-tabeli;
 }
 
-.customer-detail-toolbar .cd-kosz button {
-    text-align: center;
+//.customer-detail-toolbar .cd-kosz button
+.customer-detail-toolbar .cd-button button.webix_img_btn {// style dla wszystkich przycisków 
+    text-align: center;  
     
+    span {
+        color: green;
+        font-size: 20px;
+    }
+
+    span.webix_badge {
+        font-size: 95%;
+    }
+
+}
+
+.customer-detail-toolbar .cd-button button.webix_img_btn:hover,
+.customer-detail-toolbar .cd-button button.webix_img_btn:focus {
+    background-color: $select-w-tabeli;
 }
 
 .customer-detail-toolbar .cd-kosz button.webix_img_btn > span {//.webix_icon_btn {
-    color: red;
+    //color: red;
 }
 
 // Szczegóły o kliencie

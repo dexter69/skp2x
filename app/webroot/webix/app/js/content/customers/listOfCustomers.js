@@ -131,11 +131,14 @@ let listOfCustomers = {
                                      
                 } 
                 if( dane.WebixCustomer_howManyNonPrivateOrders == 0 ) {
-                    /* Czyli jeżeli nie mamy zamówień poza prywatnymi => można usuwać
-                        uaktywnij kosz */
-                    $$("cd_delete").enable();                        
+                    /* Czyli jeżeli nie mamy zamówień poza prywatnymi => można usuwać */ 
+                    
+                    // Wpisz do badge'a ilość prywtnych zamówień
+                    $$("cd_delete").config.badge = "" + dane.WebixCustomer_howManyPrivateOrders;                     
+                    $$("cd_delete").refresh(); // by uaktualnić wyświetlanie ilości prywatnych
+                    $$("cd_delete").show(); // Pokaż kosz              
                 } else { // Są jakieś NIE prywatne zamówienia, nie można usuwać
-                    $$("cd_delete").disable(); // zdeaktywuj kosz                  
+                    $$("cd_delete").hide(); // Ukryj kosz
                 }                 
                 if( dane.WebixCustomer_comment.length ) { // Jeżeli coś w komentarzu mamy
                     //Wzbogać dana => trick do wyświtlania takiego jak chcemy
