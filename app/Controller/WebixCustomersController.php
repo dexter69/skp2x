@@ -40,7 +40,7 @@ class WebixCustomersController extends AppController {
     /**
      * Usuwamy klienta + jego wszystkie prywatne zmówienia + karty + adres siedziby */
 
-    public function delete( $id = null ) {
+    public function delete( $id = null, $del = true ) {
 
         $this->WebixCustomer->id = $id;        
         $result = [
@@ -55,6 +55,7 @@ class WebixCustomersController extends AppController {
         } else { // OK istnieje
             $theCustomer = $this->WebixCustomer->getOne( $id ); // potrzebne nam dane         
             if( $theCustomer['WebixCustomer_howManyNonPrivateOrders'] == 0) { // prawda => można usuwać                
+                if($del) {
                 // ########### DANGER!
                 $result['delCOA'] = $this->WebixCustomer->delete($id);
                 if( $result['delCOA'] ) { // po co usuwać karty, gdy nie udało się klienta usunąć
@@ -64,6 +65,9 @@ class WebixCustomersController extends AppController {
                     }
                 }                
                 // <<<<<<<<<<< END OF Danger
+                } else { // symulacja
+                    $result['msg'] = "Klient id=$id bylby usuniety...";
+                    $result['delCOA'] = $result['delCards'] = true; }
             } else {
                 $result['err'] = true;
                 $result['msg'] = "Klienta NIE można usuwać, bo posiada aktywne i/lub zakończone zamówienia!";

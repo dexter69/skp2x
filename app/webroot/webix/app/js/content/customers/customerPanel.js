@@ -36,11 +36,19 @@
                 break;  
             case "cd_delete": // usuwanie klienta
                 let delUrl = globalAppData.config.delCustomerUrl + theId + ".json";
-                console.log(delUrl);
-                //let theResponse = webix.ajax().post(url, listOfCustomers.postData);
-                webix.ajax(delUrl, function(text){
-                    //webix.message(text); //show server side response
-                    console.log(text);
+                webix.ajax(delUrl, function(text, data) {  // usuwamy klienta                  
+                    $dl = text.search("err");
+                    if( $dl >= 0 ) { // prawidłowa odpowiedź (w sensie jonson)
+                        console.log(data.json());
+                        if( !data.json().err ) { // skutecznie usunięty
+                            // Filtrujemy ponownie, by nam zniknął usunięty element                            
+                            $$(listOfCustomers.id).filterByAll();
+                            //let xyz = $$(listOfCustomers.id).getSelectedId(); webix.message("we ARE HERE! + " + xyz);                           
+                        }
+                    } else {                        
+                        // zakładamay, że to oznacza brak zalogowoania
+                        window.open("/pulpit", "_self");
+                    }
                 });
                 break;
             default:
