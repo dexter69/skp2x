@@ -149,7 +149,26 @@ class OrdersController extends AppController {
 	}
 		
 
+/**
+ * serwis // tzw. zamówienia serwisowe
+ */
 
+	public function serwis($par = null) {
+
+		$par = 'serwis';
+
+		$queryStr =
+		"SELECT Order.id, Order.nr, Customer.name, Order.stop_day, Order.status " .
+		"FROM orders `Order` JOIN " .
+		"(SELECT DISTINCT cards.order_id FROM cards where serwis=1) AS Card " .
+		"ON Order.id=Card.order_id " .
+		"JOIN customers Customer ON Order.customer_id=Customer.id;";
+
+		$orders = $this->Order->query($queryStr);
+		$this->set( compact('orders', 'par' ) );
+		$this->set('_serialize', 'orders');
+		$this->render('index');
+	}
 
 /**
  * index method

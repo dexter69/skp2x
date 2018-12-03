@@ -1,5 +1,6 @@
 <?php 
 //echo $this->App->print_r2($orders[4]['Order']);
+//echo $this->App->print_r2($orders);
 //echo count($orders); 
 //echo microtime(true) - $time_start;
 //$time_start2 = microtime(true);
