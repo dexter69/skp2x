@@ -31,6 +31,7 @@ Thumbs.db
 /app/Skrypty/xyz/
 /app/Skrypty/raporty/DANE
 /app/Skrypty/kody/Agnieszka/bazy/*
+/app/Skrypty/raporty/ania/dane
 
 # Webix #
 ###################### Nie szalejmy z taką ilością plików, jeżeli chodzi o Github
