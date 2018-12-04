@@ -32,7 +32,175 @@ class OrdersController extends AppController {
             $this->set('links', $this->links );
 	}	
 
-        
+	
+/**
+ * serwis // tzw. zamówienia serwisowe
+ */
+
+	public function serwis($par = null) {
+
+		$par = 'serwis';
+
+		$sql = "SELECT
+				Order.id, Order.nr, Customer.name, Order.stop_day, Order.status
+				FROM orders `Order` JOIN
+				(SELECT DISTINCT cards.order_id FROM cards where serwis=1) AS Card 
+				ON Order.id=Card.order_id 
+				JOIN customers Customer ON Order.customer_id=Customer.id;";
+
+		$orders = $this->Order->query($sql);
+		$this->set( compact('orders', 'par' ) );
+		$this->set('_serialize', 'orders');
+		$this->render('index');
+	}
+
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index($par = null) {
+		
+		//$time_start = microtime(true);
+		
+		
+		//$this->Order->recursive = 0;
+		$this->Paginator->settings = $this->paginate;
+		
+		if( !$this->akcjaOK(null, 'index', $par) ) {
+			//jeżeli ta akcja nie jest dozwolona przekieruj na inną dozwoloną
+			switch($this->Auth->user('OX')) {
+				case IDX_ALL:
+				case IDX_SAL:
+					return $this->redirect( array('action' => 'index') );
+					break;
+				case IDX_NO_PRIV:
+					return $this->redirect( array('action' => 'index', 'all-but-priv') );
+					break;
+				case IDX_NO_KOR:
+					return $this->redirect( array('action' => 'index', 'no-priv-no-kor') );
+					break;
+				case IDX_OWN:
+					return $this->redirect( array('action' => 'index', 'my') );
+					break;
+				default:
+					$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+					return $this->redirect($this->referer());
+					break;
+			}
+		}
+		
+		$opcje = array();
+		
+		switch($par) {
+			case 'all-but-priv':
+				$opcje = array('OR' => array(
+    					'Order.user_id' => $this->Auth->user('id'),
+    					'Order.status !=' => PRIV
+					));
+				break;
+			case 'my':
+				$opcje = array('Order.user_id' => $this->Auth->user('id'));
+			break;
+			case 'accepted':
+				$opcje = array('Order.status' => O_ACC);
+			break;
+			case 'rejected':
+				$opcje = array('Order.status' => array(O_REJ, W4UZUP));
+			break;
+			case 'wait4check':
+				$opcje = array('Order.status' => array(NOWKA, FIXED, UZUPED));
+			break;
+			case 'active':
+				//$opcje = array('Order.status  !=' => array(KONEC, PRIV));
+				
+				
+				$opcje = array('OR' => array(
+						
+						array('Order.user_id' => $this->Auth->user('id'), 'Order.status !=' => KONEC ),
+						array('Order.status  !=' => array(KONEC, PRIV))
+				));
+			break;
+			case 'closed':
+				$opcje = array('Order.status' => KONEC);
+			break;	
+			//case 'serwis':		
+			case 'today': //zmieniamy DZIŚ+, czyli na dziś i przeterminowane
+				if( $par == 'today') {
+					$opcje = [
+						//'Order.stop_day >' => date('Y-m-d', strtotime('-68 days')), // starsze niż x days
+						//NA_DZIS_PLUS
+						'Order.stop_day >' => date('Y-m-d', strtotime('-' . NA_DZIS_PLUS . 'days')), // starsze niż x days
+						'Order.stop_day <=' => date('Y-m-d')						
+					];
+				} else {
+					$opcje = [];
+				}
+				$opcje['Order.status !='] = [KONEC, PRIV] ;
+				/*
+				$opcje = [
+					//'Order.stop_day >' => date('Y-m-d', strtotime('-68 days')), // starsze niż x days
+					//NA_DZIS_PLUS
+					'Order.stop_day >' => date('Y-m-d', strtotime('-' . NA_DZIS_PLUS . 'days')), // starsze niż x days
+					'Order.stop_day <=' => date('Y-m-d'),
+					'Order.status !=' => [KONEC, PRIV] // prywatnych też nie chcemy
+				];	
+				*/		
+				$this->Paginator->settings = array(
+					'order' => ['Order.stop_day' => 'desc'
+				]);					
+			break;
+			default:
+				$opcje = array();
+		}
+		$this->Order->indexPar = $par;
+		if( !empty($opcje) ) {
+			$ordersx = $this->Paginator->paginate( 'Order', $opcje );			
+		} else {
+			$ordersx = $this->Paginator->paginate();
+		}
+		$orders = $ordersx;//$this->addJobAndSerwisInfo($ordersx, $par);
+		$this->set( compact('orders', 'par' ) );
+		$this->set('_serialize', 'orders');
+	}
+
+	/** DEPREC => mamy w modelu zrobione przez afterFind
+	 * Chcemy mieć na liscie powiązania handlowych z produkcyjnymi
+	 * oraz zarządzanie serwisowymi */
+	private function addJobAndSerwisInfo( $in = [], $par = null ) {
+
+		//$out = $in;
+		$i=0;
+		foreach( $in as $row) {
+			$in[$i]['Order']['ileKart'] = count($row['Card']);
+			$in[$i]['Order']['ileJobs'] = 0;
+			$in[$i]['Order']['idJoba'] = 0;
+			$in[$i]['Order']['serwis'] = 0; // domyślna wartość
+			foreach($in[$i]['Card'] as $karta) {
+				if( $karta['job_id']) {					
+					// Poniższy warunek, by rejestrwać tylko liczbę róznych
+					if( $in[$i]['Order']['idJoba'] != $karta['job_id'] ) { // mamy różne
+						$in[$i]['Order']['ileJobs']++; // zwiekszamy tylko gdy różne
+					}
+					if( $in[$i]['Order']['ileJobs'] == 1 ) { // chcemy nr pierwszego
+						$in[$i]['Order']['idJoba'] = $karta['job_id']; // id tego pierwszego
+						$job = $this->Order->Card->Job->find('first', [
+							'conditions' => ['Job.id' => $karta['job_id']],
+							'recursive' => 0
+						]);
+						$in[$i]['Order']['nrJoba'] = $job['Job']['nr'];
+						$in[$i]['The'] = $job;
+					}
+				}
+				if( $karta['serwis'] ) { // karta serwisowana / na magazynie
+					$in[$i]['Order']['serwis'] = 1;
+				}
+			}
+			$i++;		
+		}		
+		return $in;
+	}
+    
 	private function zakoncz_zamowienie($id = null) {
 		
 		
@@ -147,179 +315,8 @@ class OrdersController extends AppController {
 		$this->render('zakoncz');
 	
 	}
-		
 
-/**
- * serwis // tzw. zamówienia serwisowe
- */
-
-	public function serwis($par = null) {
-
-		$par = 'serwis';
-
-		$queryStr =
-		"SELECT Order.id, Order.nr, Customer.name, Order.stop_day, Order.status " .
-		"FROM orders `Order` JOIN " .
-		"(SELECT DISTINCT cards.order_id FROM cards where serwis=1) AS Card " .
-		"ON Order.id=Card.order_id " .
-		"JOIN customers Customer ON Order.customer_id=Customer.id;";
-
-		$orders = $this->Order->query($queryStr);
-		$this->set( compact('orders', 'par' ) );
-		$this->set('_serialize', 'orders');
-		$this->render('index');
-	}
-
-/**
- * index method
- *
- * @return void
- */
-	public function index($par = null) {
-		
-		//$time_start = microtime(true);
-		
-		
-		//$this->Order->recursive = 0;
-		$this->Paginator->settings = $this->paginate;
-		
-		if( !$this->akcjaOK(null, 'index', $par) ) {
-			//jeżeli ta akcja nie jest dozwolona przekieruj na inną dozwoloną
-			switch($this->Auth->user('OX')) {
-				case IDX_ALL:
-				case IDX_SAL:
-					return $this->redirect( array('action' => 'index') );
-					break;
-				case IDX_NO_PRIV:
-					return $this->redirect( array('action' => 'index', 'all-but-priv') );
-					break;
-				case IDX_NO_KOR:
-					return $this->redirect( array('action' => 'index', 'no-priv-no-kor') );
-					break;
-				case IDX_OWN:
-					return $this->redirect( array('action' => 'index', 'my') );
-					break;
-				default:
-					$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-					return $this->redirect($this->referer());
-					break;
-			}
-		}
-		
-		$opcje = array();
-		
-		switch($par) {
-			case 'all-but-priv':
-				$opcje = array('OR' => array(
-    					'Order.user_id' => $this->Auth->user('id'),
-    					'Order.status !=' => PRIV
-					));
-				break;
-			case 'my':
-				$opcje = array('Order.user_id' => $this->Auth->user('id'));
-			break;
-			case 'accepted':
-				$opcje = array('Order.status' => O_ACC);
-			break;
-			case 'rejected':
-				$opcje = array('Order.status' => array(O_REJ, W4UZUP));
-			break;
-			case 'wait4check':
-				$opcje = array('Order.status' => array(NOWKA, FIXED, UZUPED));
-			break;
-			case 'active':
-				//$opcje = array('Order.status  !=' => array(KONEC, PRIV));
-				
-				
-				$opcje = array('OR' => array(
-						
-						array('Order.user_id' => $this->Auth->user('id'), 'Order.status !=' => KONEC ),
-						array('Order.status  !=' => array(KONEC, PRIV))
-				));
-			break;
-			case 'closed':
-				$opcje = array('Order.status' => KONEC);
-			break;	
-			case 'serwis':		
-			case 'today': //zmieniamy DZIŚ+, czyli na dziś i przeterminowane
-				if( $par == 'today') {
-					$opcje = [
-						//'Order.stop_day >' => date('Y-m-d', strtotime('-68 days')), // starsze niż x days
-						//NA_DZIS_PLUS
-						'Order.stop_day >' => date('Y-m-d', strtotime('-' . NA_DZIS_PLUS . 'days')), // starsze niż x days
-						'Order.stop_day <=' => date('Y-m-d')						
-					];
-				} else {
-					$opcje = [];
-				}
-				$opcje['Order.status !='] = [KONEC, PRIV] ;
-				/*
-				$opcje = [
-					//'Order.stop_day >' => date('Y-m-d', strtotime('-68 days')), // starsze niż x days
-					//NA_DZIS_PLUS
-					'Order.stop_day >' => date('Y-m-d', strtotime('-' . NA_DZIS_PLUS . 'days')), // starsze niż x days
-					'Order.stop_day <=' => date('Y-m-d'),
-					'Order.status !=' => [KONEC, PRIV] // prywatnych też nie chcemy
-				];	
-				*/		
-				$this->Paginator->settings = array(
-        			'order' => array(
-            		'Order.stop_day' => 'desc'
-        			)
-    			);					
-			break;
-			default:
-				$opcje = array();
-		}
-		$this->Order->indexPar = $par;
-		if( !empty($opcje) ) {
-			$ordersx = $this->Paginator->paginate( 'Order', $opcje );			
-		} else {
-			$ordersx = $this->Paginator->paginate();
-		}
-		$orders = $ordersx;//$this->addJobAndSerwisInfo($ordersx, $par);
-		$this->set( compact('orders', 'par' ) );
-	}
-
-	/** DEPREC => mamy w modelu zrobione przez afterFind
-	 * Chcemy mieć na liscie powiązania handlowych z produkcyjnymi
-	 * oraz zarządzanie serwisowymi */
-	private function addJobAndSerwisInfo( $in = [], $par = null ) {
-
-		//$out = $in;
-		$i=0;
-		foreach( $in as $row) {
-			$in[$i]['Order']['ileKart'] = count($row['Card']);
-			$in[$i]['Order']['ileJobs'] = 0;
-			$in[$i]['Order']['idJoba'] = 0;
-			$in[$i]['Order']['serwis'] = 0; // domyślna wartość
-			foreach($in[$i]['Card'] as $karta) {
-				if( $karta['job_id']) {					
-					// Poniższy warunek, by rejestrwać tylko liczbę róznych
-					if( $in[$i]['Order']['idJoba'] != $karta['job_id'] ) { // mamy różne
-						$in[$i]['Order']['ileJobs']++; // zwiekszamy tylko gdy różne
-					}
-					if( $in[$i]['Order']['ileJobs'] == 1 ) { // chcemy nr pierwszego
-						$in[$i]['Order']['idJoba'] = $karta['job_id']; // id tego pierwszego
-						$job = $this->Order->Card->Job->find('first', [
-							'conditions' => ['Job.id' => $karta['job_id']],
-							'recursive' => 0
-						]);
-						$in[$i]['Order']['nrJoba'] = $job['Job']['nr'];
-						$in[$i]['The'] = $job;
-					}
-				}
-				if( $karta['serwis'] ) { // karta serwisowana / na magazynie
-					$in[$i]['Order']['serwis'] = 1;
-				}
-			}
-			$i++;		
-		}		
-		return $in;
-	}
-
-
-/**
+	/**
  * view method
  *
  * @throws NotFoundException

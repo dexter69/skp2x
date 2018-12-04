@@ -5,6 +5,9 @@
 //echo microtime(true) - $time_start;
 //$time_start2 = microtime(true);
 //echo $par;
+
+//if( $par == 'serwis') { echo count($orders); echo $this->App->print_r2($orders);}
+
 $this->set('title_for_layout', 'Handlowe');
 echo $this->Html->css(array('order', 'order/order-index.css?v=201811141223'), array('inline' => false));
 //echo $this->Html->script(array('jquery', 'common'), array('inline' => false)); 

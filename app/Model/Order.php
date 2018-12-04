@@ -13,6 +13,51 @@ class Order extends AppModel {
 	public $indexPar = "ALLELUJA";
 	// Tu kontroler zapisuje parametr wywołania, czyli $par, coby model wiedział :-)
 
+	// do poniższych overriding methods, sql do szukania serwisowych
+	private $theSql = "SELECT
+		Order.id, Order.nr, Customer.name, Order.stop_day, Order.status
+		FROM orders `Order` JOIN
+		(SELECT DISTINCT cards.order_id FROM cards where serwis=1) AS Card 
+		ON Order.id=Card.order_id 
+		JOIN customers Customer ON Order.customer_id=Customer.id;";
+	/**
+	 * Overridden paginate method - group by week, away_team_id and home_team_id
+	 */
+	public function paginate($conditions, $fields, $order, $limit, $page = 1,
+		$recursive = null, $extra = array()) {
+
+		// Gdy mamy parametr 'serwis', to mamy custom szukania
+		if( $this->indexPar == 'serwis') {
+			$this->useTable = false;
+			return $this->query($this->theSql);			
+		}
+		return $this->find(
+			'all',
+			compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group')
+		);
+	}
+
+	/**
+	 * Overridden paginateCount method
+	 */
+		public function paginateCount($conditions = null, $recursive = 0,
+				$extra = array()) {
+
+			// Gdy mamy parametr 'serwis', to mamy custom szukania
+			if( $this->indexPar == 'serwis') {
+				/** Na podstawie:
+				 * https://book.cakephp.org/2.0/en/core-libraries/components/pagination.html#custom-query-pagination  */
+				
+				$this->recursive = $recursive;				
+				return count($this->query($this->theSql));		
+			}
+			return $this->find(
+				'count',
+				compact('conditions', 'recursive')
+			);
+			
+		}
+
 	public function afterFind($results, $primary = false) {
 
 		if( $primary ) {
