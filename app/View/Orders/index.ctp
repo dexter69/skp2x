@@ -34,7 +34,7 @@ else
         <th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
         <th class="dolar"></th>
         <th class="nr"><?php echo $this->Paginator->sort('nr', 'Numer'); ?></th>      
-        <th style="width: 60px;"></th>
+        <!-- <th style="width: 60px;"></th> -->
         <th><?php echo $this->Paginator->sort('Customer.name', 'Klient'); ?></th> 
         <th class="job-info">Produkc.</th>
         <th class="termin"><?php echo $this->Paginator->sort('stop_day', 'Data zakończenia'); ?></th>
@@ -44,6 +44,13 @@ else
     </tr>
     <?php
         foreach ($orders as $order) {
+            // Jeżeli nie jest ustawiona (np. przy szukaniu serwisowych przez custom query)            
+            if( !isset($order['Order']['servis']) ) {
+                $order['Order']['servis'] = 0; // ustawiamy na "NIE"
+            }
+            if( !isset($order['Order']['ileJobs']) ) { // takie prymitywne obejścia
+                $order['Order']['ileJobs'] = $order['Order']['idJoba'] = $order['Order']['nrJoba'] = 0; // ustawiamy na "NIE"
+            }
             // Walnij jeden wiersz
             echo $this->element('orders/index/put-tr', ['order' => $order]);
         }            

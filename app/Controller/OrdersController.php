@@ -123,8 +123,7 @@ class OrdersController extends AppController {
 			break;
 			case 'closed':
 				$opcje = array('Order.status' => KONEC);
-			break;	
-			//case 'serwis':		
+			break;					
 			case 'today': //zmieniamy DZIŚ+, czyli na dziś i przeterminowane
 				if( $par == 'today') {
 					$opcje = [
@@ -160,6 +159,7 @@ class OrdersController extends AppController {
 			$ordersx = $this->Paginator->paginate();
 		}
 		$orders = $ordersx;//$this->addJobAndSerwisInfo($ordersx, $par);
+		//$orders['Customer']['kwa'] = "Miau";
 		$this->set( compact('orders', 'par' ) );
 		$this->set('_serialize', 'orders');
 	}

@@ -13,10 +13,11 @@
             array('escape' => false)
         ); ?>
     </td>
-    <td style="width: 60px; color: red;"><?php echo $order['Order']['servis'] ? "TAK" : "" ?></td>
+    <!--
+    <td style="width: 60px; color: red;"><?php echo $order['Order']['servis'] ? "TAK" : "" ?></td> -->
     <td>
             <?php echo $this->Html->link($order['Customer']['name'], array('controller' => 'customers', 'action' => 'view', $order['Customer']['id']), array('title' => $order['Customer']['name'])); ?>
-    </td>     
+    </td>         
     <td class="job-info">
         <?php                
         if( $order['Order']['ileJobs'] ) { // Jezeli handlowe jest powiązane przynajmniej z 1 handlowym

@@ -15,11 +15,16 @@ class Order extends AppModel {
 
 	// do poniższych overriding methods, sql do szukania serwisowych
 	private $theSql = "SELECT
-		Order.id, Order.nr, Customer.name, Order.stop_day, Order.status
-		FROM orders `Order` JOIN
+		Customer.id, Customer.name,		
+		User.id, User.inic,
+		Order.id, Order.nr, Order.stop_day,
+		Order.status, Order.stan_zaliczki, Order.forma_zaliczki		
+		FROM orders `Order`
+		JOIN
 		(SELECT DISTINCT cards.order_id FROM cards where serwis=1) AS Card 
 		ON Order.id=Card.order_id 
-		JOIN customers Customer ON Order.customer_id=Customer.id;";
+		JOIN users `User` ON Order.user_id=User.id
+		JOIN customers Customer ON Order.customer_id=Customer.id";
 	/**
 	 * Overridden paginate method - group by week, away_team_id and home_team_id
 	 */
@@ -28,8 +33,10 @@ class Order extends AppModel {
 
 		// Gdy mamy parametr 'serwis', to mamy custom szukania
 		if( $this->indexPar == 'serwis') {
-			$this->useTable = false;
-			return $this->query($this->theSql);			
+			$this->useTable = false;			
+			$offset = ($page-1)*20;
+			$orders = $this->query($this->theSql . " LIMIT 20 OFFSET $offset;");						
+			return $orders;			
 		}
 		return $this->find(
 			'all',
