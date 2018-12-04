@@ -15,7 +15,7 @@ $this->Ma->displayActions('orders');
 $klasa = array(
 	'my'=>null, 'accepted'=>null, 'rejected'=>null,
 	'wait4check'=>null,	'active'=>null,	'closed'=>null,
-	'today'=>null, 'wszystkie'=>null 
+	'today'=>null, 'serwis'=>null, 'wszystkie'=>null 
 );
 if( $par == null || $par == 'all-but-priv')
 	$klasa['wszystkie'] = 'swieci';

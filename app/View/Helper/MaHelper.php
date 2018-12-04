@@ -1569,9 +1569,10 @@ class MaHelper extends AppHelper {
                                 $this->Html->link( 'odrzucone', array( 'controller' => 'orders', 'action' => 'index', 'rejected'), array('class' => $klasa['rejected'])) .
                                 $this->Html->link( 'do sprawdzenia', array( 'controller' => 'orders', 'action' => 'index', 'wait4check'), array('class' => $klasa['wait4check'])) .
                                 $this->Html->link( 'aktywne', array( 'controller' => 'orders', 'action' => 'index', 'active'), array('class' => $klasa['active'])) .
-                                $this->Html->link( 'zakończone', array( 'controller' => 'orders', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
-                                $this->Html->link( 'na dziś +', array( 'controller' => 'orders', 'action' => 'index', 'today'), array('class' => $klasa['today'])) .	
-                                $this->Html->link( 'wszystkie', array( 'controller' => 'orders', 'action' => 'index'), array('class' => $klasa['wszystkie'])) .
+								$this->Html->link( 'zakończone', array( 'controller' => 'orders', 'action' => 'index', 'closed'), array('class' => $klasa['closed'])) .
+								$this->Html->link( 'wszystkie', array( 'controller' => 'orders', 'action' => 'index'), array('class' => $klasa['wszystkie'])) .
+								$this->Html->link( 'na dziś +', array( 'controller' => 'orders', 'action' => 'index', 'today'), array('class' => $klasa['today'])) .	
+								$this->Html->link( 'serwis', array( 'controller' => 'orders', 'action' => 'index', 'serwis'), array('class' => $klasa['serwis'])) .	                                
                                 '</p>';
                 break;
                 case 'cards':
