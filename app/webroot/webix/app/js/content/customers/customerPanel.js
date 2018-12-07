@@ -35,21 +35,33 @@
                 window.open(globalAppData.config.customerUrl + theId, "_blank");
                 break;  
             case "cd_delete": // usuwanie klienta
-                let delUrl = globalAppData.config.delCustomerUrl + theId + ".json";
-                webix.ajax(delUrl, function(text, data) {  // usuwamy klienta                  
-                    $dl = text.search("err");
-                    if( $dl >= 0 ) { // prawidłowa odpowiedź (w sensie jonson)
-                        console.log(data.json());
-                        if( !data.json().err ) { // skutecznie usunięty
-                            // Filtrujemy ponownie, by nam zniknął usunięty element                            
-                            $$(listOfCustomers.id).filterByAll();
-                            //let xyz = $$(listOfCustomers.id).getSelectedId(); webix.message("we ARE HERE! + " + xyz);                           
-                        }
-                    } else {                        
-                        // zakładamay, że to oznacza brak zalogowoania
-                        window.open("/pulpit", "_self");
+                webix.confirm({
+                    title: "Potwierdź usunięcie",// the text of the box header
+                    text: "Klient oraz powiązane z nim dane - zmówienia, karty zostaną USUNIĘTE! Kontynuowć?",
+                    ok: "Tak",
+                    cancel: "NIE",
+                    callback: function(okUsuwamy) { // true - kliknął YES
+                        
+                        if ( okUsuwamy ) { 
+                            // użytkownik potwierdził usunięcie => więc usuwamy!
+                            let delUrl = globalAppData.config.delCustomerUrl + theId + ".json";
+                            webix.ajax(delUrl, function(text, data) {  // usuwamy klienta                  
+                                $dl = text.search("err");
+                                if( $dl >= 0 ) { // prawidłowa odpowiedź (w sensie jonson)
+                                    console.log(data.json());
+                                    if( !data.json().err ) { // skutecznie usunięty
+                                        // Filtrujemy ponownie, by nam zniknął usunięty element                            
+                                        $$(listOfCustomers.id).filterByAll();
+                                        //let xyz = $$(listOfCustomers.id).getSelectedId(); webix.message("we ARE HERE! + " + xyz);                           
+                                    }
+                                } else {                        
+                                    // zakładamay, że to oznacza brak zalogowoania
+                                    window.open("/pulpit", "_self");
+                                }
+                            });
+                        }                    
                     }
-                });
+                });                
                 break;
             default:
                 webix.message(idBatona); 

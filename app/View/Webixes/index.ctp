@@ -56,6 +56,7 @@ var globalAppData = {
         // url do zasysania klientów dla celów dodania nowego zamówienia
         //customersAddOrder: "/webixCustomers/getMany.json",
         customersGetMany: "/webixCustomers/getMany.json",
+        customersHowMany: 150, // ile rekordów?
         justOneCustomerData: "/webixCustomers/getOne/",
         wyglad: {
             mainPad: 35, // definujący główny padding

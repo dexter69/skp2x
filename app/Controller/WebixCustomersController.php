@@ -12,11 +12,12 @@ class WebixCustomersController extends AppController {
         if ($this->request->is('post')) {  // normalnie będziemy wysyłać ajax post
             $fraza = $this->request->data["fraza"];
             $realOwnerId = $this->request->data["realOwnerId"];
+            $limit = $this->request->data["limit"];
         } else { // dla testów z przeglądrką
             $fraza = "ara";
             $realOwnerId = 0; // wszyscy handlowcy
         }
-        $limit = 50; // Limit znajdowanych rekordów
+        //$limit = 100; // Limit znajdowanych rekordów
         $theCustomers = $this->WebixCustomer->getMany(
             $fraza, // szukane znaki w nazwie customer'a
             $realOwnerId, // id stałego opiekuna klienta 

@@ -33,7 +33,8 @@ let listOfCustomers = {
     //globalAppData.config.customersAddOrder
     postData: { // początkowe parametry do zapytania do serwera
         fraza: '',
-        realOwnerId: globalAppData.loggedInUser.id
+        realOwnerId: globalAppData.loggedInUser.id,
+        limit: globalAppData.config.customersHowMany
     },
     url: function(){
         let url = globalAppData.config.customersGetMany;                
