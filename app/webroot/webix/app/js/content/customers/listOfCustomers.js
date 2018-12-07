@@ -8,7 +8,7 @@ let listOfCustomers = {
     columns: [
         { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
         { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
-        { id:"WebixCustomer_kosz", header:"<span class='webix_icon fa-trash'></span>", width:40, css:{'text-align':'center'} },
+        { id:"WebixCustomer_kosz", header:"<input type='text' class='fake'><span class='webix_icon fa-trash'></span>", width:/*40*/250, css:{'text-align':'center'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true },         
         { id:"WebixAdresSiedziby_miasto", header:"Miasto", adjust:true},        
         { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true},
