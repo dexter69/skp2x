@@ -143,12 +143,16 @@ class BootHtmlHelper extends AppHelper {
             $bnr = 0,           // numer zamówienia w formacie bazy danych
             $inic = null  ) {  // inicjały użytkownika  
 
-        return $this->Html->link(
-                $this->bnrToNrh( $bnr, $inic ),
-                array(
-                    'controller' => 'orders',
-                    'action' => 'view', $id ),
-                array('escape' => false, 'target' => '_blank')); 
+        if( $bnr ) { // jak mamy jakiś nr
+            $nrTxt = $this->bnrToNrh( $bnr, $inic );
+        } else { // nie, to wyświetlamy po prostu id
+            $nrTxt = "$id (id)";
+        }
+        
+        return $this->Html->link( $nrTxt, [
+                'controller' => 'orders',
+                'action' => 'view', $id ],
+                ['escape' => false, 'target' => '_blank']); 
     }
     
     // chcemy ładny link z bazowego numeru zlecenia
