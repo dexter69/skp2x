@@ -36,8 +36,8 @@
                 break;  
             case "cd_delete": // usuwanie klienta
                 webix.confirm({
-                    title: "Potwierdź usunięcie",// the text of the box header
-                    text: "Klient oraz powiązane z nim dane - zmówienia, karty zostaną USUNIĘTE! Kontynuowć?",
+                    title: "POTWIERDŹ USUNIĘCIE",// the text of the box header
+                    text: "Klient oraz powiązane z nim dane - zamówienia, karty zostaną USUNIĘTE! Kontynuowć?",
                     ok: "Tak",
                     cancel: "NIE",
                     callback: function(okUsuwamy) { // true - kliknął YES
