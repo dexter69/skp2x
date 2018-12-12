@@ -8,13 +8,33 @@ let listOfCustomers = {
     columns: [
         { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
         { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
-        { id:"WebixCustomer_kosz", header:"<input type='text' class='fake'><span class='webix_icon fa-trash'></span>", width:/*40*/250, css:{'text-align':'center'} },
+        //{ id:"WebixCustomer_kosz", header:"<input type='text' id='fakeInput'><span class='webix_icon fa-trash'></span>", width:/*40*/250, css:{'text-align':'center'} },
+        { id:"WebixCustomer_kosz", header:{ css:"trashHeader", text:"<span id='trashHeaderSpan' class='webix_icon fa-trash'></span>" }, width:40, css:{'text-align':'center'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true },         
         { id:"WebixAdresSiedziby_miasto", header:"Miasto", adjust:true},        
         { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true},
         
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
-    ],  
+    ], 
+    onClick:{ // Obsługa kliknięcia w kosz w nagłówku kolumny => filtrujemy koszaste!
+        "trashHeader" : function() { 
+            // To takie toggle para,etru post data po kliknieciu 
+            listOfCustomers.postData.kosz = !listOfCustomers.postData.kosz; 
+            // I uaktualnienie wyglądu
+            listOfCustomers.adjustKosz();                     
+        }
+    }, 
+    // Uaktualniamy wygląd kosza w zależności od wartości listOfCustomers.postData.kosz
+    adjustKosz: function(){         
+        let theSpan = document.getElementById("trashHeaderSpan"); 
+        if( listOfCustomers.postData.kosz ) { // Włącz kosz
+            theSpan.classList.add("customers-kosz");
+            //console.log("adjustKosz ON");
+        } else { // Wyłącz kosz
+            theSpan.classList.remove("customers-kosz");
+            //console.log("adjustKosz OFF");
+        }
+    },
     // Te chowamy, gdy chcemy mieć węższą tabelę
     meant2hide: ["WebixAdresSiedziby_miasto", "WebixCustomer_ulica_nr"]  ,
     hideTheColumns: function(){                 
@@ -34,7 +54,8 @@ let listOfCustomers = {
     postData: { // początkowe parametry do zapytania do serwera
         fraza: '',
         realOwnerId: globalAppData.loggedInUser.id,
-        limit: globalAppData.config.customersHowMany
+        limit: globalAppData.config.customersHowMany,
+        kosz: false // tylko zamówienia, które można usunąć
     },
     url: function(){
         let url = globalAppData.config.customersGetMany;                
@@ -69,8 +90,8 @@ let listOfCustomers = {
             console.log(err);
         });
         */        
-    },    
-    on: {     
+    },        
+    on: {             
         onAfterFilter:function(){
             //webix.message("Filtr!");
             if( $$(customerPanel.id).isVisible() ) {
@@ -81,6 +102,7 @@ let listOfCustomers = {
                 //this.getFilter("WebixCustomer_name").focus();
             }
             this.getFilter("WebixCustomer_name").focus();
+            listOfCustomers.adjustKosz();
           },    
         //onAfterUnSelect: function(){ webix.message("ODznaczone!");},
         // Pobieramy zawartości filtrów, dzięki czemu Webix wykona zapytanie z odpowiednimi parametrami
@@ -171,4 +193,3 @@ function loggedUserInHasNoAnyCustomer() {
     }
     return true;    
 }
-
