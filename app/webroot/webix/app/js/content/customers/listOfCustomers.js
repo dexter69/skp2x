@@ -21,7 +21,8 @@ let listOfCustomers = {
             // To takie toggle para,etru post data po kliknieciu 
             listOfCustomers.postData.kosz = !listOfCustomers.postData.kosz; 
             // I uaktualnienie wyglądu
-            listOfCustomers.adjustKosz();                     
+            listOfCustomers.adjustKosz();
+            $$(listOfCustomers.id).filterByAll(); // i wyzwalamay zapytanie do serwera                 
         }
     }, 
     // Uaktualniamy wygląd kosza w zależności od wartości listOfCustomers.postData.kosz
