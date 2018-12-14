@@ -9,21 +9,41 @@ class WebixCustomersController extends AppController {
 
     public function getMany() {
 
+        $start1 = microtime(true);
         if ($this->request->is('post')) {  // normalnie będziemy wysyłać ajax post
             $fraza = $this->request->data["fraza"];
             $realOwnerId = $this->request->data["realOwnerId"];
             $limit = $this->request->data["limit"];
-        } else { // dla testów z przeglądrką
-            $fraza = "ara";
-            $realOwnerId = 0; // wszyscy handlowcy
+            //$kosz = ($this->request->data["kosz"] === 'false' ? false : true);
+            //$kosz = $this->request->data["kosz"];
+            if( $this->request->data["kosz"] == "false" ) {
+                $kosz = false;
+            } else {
+                $kosz = true;
+            }
+            $start2 = microtime(true);
+            $theCustomers = $this->WebixCustomer->getMany(
+                $fraza, // szukane znaki w nazwie customer'a
+                $realOwnerId, // id stałego opiekuna klienta 
+                $limit // max ilość rekordów
+                ,$kosz
+            );
+            $stop2 = microtime(true);
+            $theCustomers['check'] = 'gora, kosz = ' . $kosz;
+        } else { // dla testów z przeglądrką  
+            $start2 = microtime(true);          
+            $theCustomers = $this->WebixCustomer->getMany(); // szukamy z domyśłnyi parametrami
+            $stop2 = microtime(true);
+            $theCustomers['check'] = 'dol';
         }
-        //$limit = 100; // Limit znajdowanych rekordów
-        $theCustomers = $this->WebixCustomer->getMany(
-            $fraza, // szukane znaki w nazwie customer'a
-            $realOwnerId, // id stałego opiekuna klienta 
-            $limit // max ilość rekordów
-        );         
-        $theCustomers['req'] = $this->request->data;        
+        //$limit = 100; // Limit znajdowanych rekordów                 
+        $theCustomers['req'] = $this->request->data;  
+        
+        $stop1 = microtime(true);
+        $w1 = $stop1 - $start1;
+        $w2 = $stop2 - $start2;
+        $theCustomers['czas'] = "od początku = $w1, model = $w2";
+        
         $this->set(compact(['theCustomers']));
         $this->set('_serialize', 'theCustomers');    
     }
