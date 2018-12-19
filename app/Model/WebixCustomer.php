@@ -62,6 +62,19 @@ class WebixCustomer extends AppModel {
     ];
 
     //public $defaultConditions = [ 'WebixPrivateOrder.status' => 0 ]; // myk w AppModel z beforeFind
+
+    private $theSql =   "SELECT `id`, `name`, `osoba_kontaktowa`
+                        FROM `customers` AS WebixCustomer LIMIT 10;";
+
+    public function getKosz() {
+
+        $sqlResult = $this->query($this->theSql);
+        return [
+            'results' => $this->transferResults( $sqlResult ),
+            'sqlResult' => $sqlResult
+        ];
+        //[            'we are' => 'in the Model!'        ];
+    }
     
     /*
         Chcemy ifo o jednym kliencie dla szybkiego dodania zamówienia  */

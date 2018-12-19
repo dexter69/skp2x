@@ -3,7 +3,13 @@ App::uses('AppController', 'Controller');
 
 class WebixCustomersController extends AppController {
 
-    
+    // testowe get koszaste zamówiia
+    public function getKosz() {
+
+        $theCustomers = $this->WebixCustomer->getKosz();
+        $this->set(compact(['theCustomers']));
+        $this->set('_serialize', 'theCustomers');
+    }
 
     //public function beforeFilter() {  $this->Auth->allow('getMany', 'getOne');  }
 
