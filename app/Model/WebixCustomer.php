@@ -63,17 +63,31 @@ class WebixCustomer extends AppModel {
 
     //public $defaultConditions = [ 'WebixPrivateOrder.status' => 0 ]; // myk w AppModel z beforeFind
 
-    private $theSql =   "SELECT `id`, `name`, `osoba_kontaktowa`
-                        FROM `customers` AS WebixCustomer LIMIT 10;";
+    /**
+     * Karający mustafę skrypt, który wynajduje nam klientów których mozna usunąć,
+     * czyli takich, którzy nie mają żadnych zamówień lub co najwyzej prywatne */
+    private $theSql =
+        "SELECT WebixCustomer.id, WebixCustomer.name, WebixCustomer.osoba_kontaktowa,
+        WebixCustomerRealOwner.id, WebixCustomerRealOwner.name, WebixCustomerRealOwner.inic,
+        WebixAdresSiedziby.id, WebixAdresSiedziby.name, WebixAdresSiedziby.ulica, WebixAdresSiedziby.nr_budynku,
+        WebixAdresSiedziby.kod, WebixAdresSiedziby.miasto
+        FROM `customers` AS WebixCustomer
+        JOIN `users` AS WebixCustomerRealOwner ON WebixCustomerRealOwner.id=WebixCustomer.opiekun_id
+        JOIN `addresses` AS WebixAdresSiedziby ON WebixAdresSiedziby.customer_id=WebixCustomer.id
+        WHERE WebixCustomer.id NOT IN 
+        (SELECT DISTINCT orders.customer_id FROM `orders` WHERE orders.status>0);";
 
+    // Szukanie - 30ms na moim kompie
     public function getKosz() {
 
+        //$start = microtime(true);
         $sqlResult = $this->query($this->theSql);
+        //$stop = microtime(true);
         return [
+            //'czas' => $stop - $start,
             'results' => $this->transferResults( $sqlResult ),
             'sqlResult' => $sqlResult
-        ];
-        //[            'we are' => 'in the Model!'        ];
+        ];        
     }
     
     /*
