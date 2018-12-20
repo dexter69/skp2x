@@ -18,7 +18,7 @@ let listOfCustomers = {
     ], 
     onClick:{ // Obsługa kliknięcia w kosz w nagłówku kolumny => filtrujemy koszaste!
         "trashHeader" : function() { 
-            // To takie toggle para,etru post data po kliknieciu 
+            // To takie toggle parametru post data po kliknieciu 
             listOfCustomers.postData.kosz = !listOfCustomers.postData.kosz; 
             // I uaktualnienie wyglądu
             listOfCustomers.adjustKosz();

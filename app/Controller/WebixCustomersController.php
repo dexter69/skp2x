@@ -22,23 +22,34 @@ class WebixCustomersController extends AppController {
             $limit = $this->request->data["limit"];
             //$kosz = ($this->request->data["kosz"] === 'false' ? false : true);
             //$kosz = $this->request->data["kosz"];
+
+            $start2 = microtime(true);
             if( $this->request->data["kosz"] == "false" ) {
                 $kosz = false;
+                $theCustomers = $this->WebixCustomer->getMany(
+                    $fraza, // szukane znaki w nazwie customer'a
+                    $realOwnerId, // id stałego opiekuna klienta 
+                    $limit // max ilość rekordów
+                    ,$kosz
+                );
             } else {
                 $kosz = true;
-            }
-            $start2 = microtime(true);
-            $theCustomers = $this->WebixCustomer->getMany(
-                $fraza, // szukane znaki w nazwie customer'a
-                $realOwnerId, // id stałego opiekuna klienta 
-                $limit // max ilość rekordów
-                ,$kosz
-            );
+                /*
+                $theCustomers = $this->WebixCustomer->getMany(
+                    "gl", // szukane znaki w nazwie customer'a
+                    $realOwnerId, // id stałego opiekuna klienta 
+                    $limit // max ilość rekordów
+                    ,$kosz
+                );
+                */
+                $theCustomers = $this->WebixCustomer->getKosz();
+            }            
             $stop2 = microtime(true);
             $theCustomers['check'] = 'gora, kosz = ' . $kosz;
         } else { // dla testów z przeglądrką  
             $start2 = microtime(true);          
-            $theCustomers = $this->WebixCustomer->getMany(); // szukamy z domyśłnyi parametrami
+            //$theCustomers = $this->WebixCustomer->getMany(); // szukamy z domyśłnyi parametrami
+            $theCustomers = $this->WebixCustomer->getKosz(); // koszowe
             $stop2 = microtime(true);
             $theCustomers['check'] = 'dol';
         }
