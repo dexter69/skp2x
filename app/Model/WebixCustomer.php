@@ -80,18 +80,14 @@ class WebixCustomer extends AppModel {
     // Szukanie - 30ms na moim kompie
     public function getKosz( $theOwnerId = 0, $coSzukamy = null ) {
 
-        //$start = microtime(true);
         if( $theOwnerId ) { // różne od zera, znaczy chcemy wyniki dla konkretnego usera
             $this->theSql .= " AND WebixCustomerRealOwner.id=$theOwnerId";
         }
         if( $coSzukamy != '' AND $coSzukamy != null ) { //niepusta fraza (nie wiem czemu oba warunki, ale od przybytku głowa nie boli)
             $this->theSql .= " AND WebixCustomer.name LIKE '%$coSzukamy%'";
         }
-        $sqlResult = $this->query($this->theSql);
-        //$stop = microtime(true);
+        $sqlResult = $this->query($this->theSql);        
         return [
-            //'czas' => $stop - $start,
-            //'results' => $this->transferResults( $sqlResult ),
             'records' => $this->transferResults( $sqlResult, $coSzukamy ),
             'sqlResult' => $sqlResult
         ];        
@@ -115,7 +111,7 @@ class WebixCustomer extends AppModel {
         $tmp["WebixCustomer"]["forma_platnosci_txt"] = $this->bazaFormaZal2viewFormat($tmp["WebixCustomer"]["forma_platnosci"]);
         $tmp["WebixCustomer"]["etylang_txt"] = $this->etyk_view["etylang"]["cview"][$tmp["WebixCustomer"]["etylang"]];
         $tmp["WebixCustomer"]["comment"] = nl2br($tmp["WebixCustomer"]["comment"]);
-        //$customer['Customer']['etylang-txt'] = $this->Customer->etyk_view['etylang']['cview'][$customer['Customer']['etylang']];
+        
         $merged = $this->mergeCakeData($tmp); 
 
         /** >>>>>>>>
@@ -134,52 +130,28 @@ class WebixCustomer extends AppModel {
      *  $constantOwner = 0, znajdź wszystkich klientów, użytkownik dowolny
      *  $realOwner > 0, to znajdź klientów tylko tego użytkownika
      *  $limit - ile max rekordów */
-    public function getMany( $coSzukamy = null, $realOwner = 0, $limit = 17, $kosz = false ) {
+    public function getMany( $coSzukamy = null, $realOwner = 0, $limit = 17) {
 
-        $start3 = microtime(true);
-        $out = [];
         $parameters = [
-            'fields' => $this->fieldsWeWant['list']
-        ];
-        if( !$kosz ) { 
-            $parameters['limit'] = $limit;
-        } else { // Jeżeli $kosz, czyli chcemy tylko koszowe, to szukamy bez limitu (no nie całkiem na ten mom.)
-            $parameters['limit'] = 500;
-            
-            $this->unbindModel(
-                array('hasMany' => array('WebixNonPrivateOrder'))
-            );
-            /**/
-        }
+            'fields'    => $this->fieldsWeWant['list'],
+            'limit'     => $limit
+        ];        
 
-       if( $realOwner ) {           
+        if( $realOwner ) {           
             $parameters['conditions']['WebixCustomerRealOwner.id'] = $realOwner;
-       }
+        }
 
         if( $coSzukamy != '' AND $coSzukamy != null ) { //niepusta fraza
             $parameters['conditions']['WebixCustomer.name LIKE'] = '%'.$coSzukamy.'%';
         }
-        $start4 = microtime(true);
-        //$cakeResults = $this->find('all', $parameters);        
-        $cakeResults = $this->myFind($parameters);        
-        $stop4 = microtime(true) - $start4;
 
-        $start5 = microtime(true);
-        $out['records'] = $this->transferResults($cakeResults, $coSzukamy, $kosz);// $this->mergeCakeManyRows( $cakeResults );        
-        $stop5 = microtime(true) - $start5;
-
-        $out['cake'] = $cakeResults; // w celach diagnostycznych
-        $stop3 = microtime(true);
-        $w3 = $stop3 - $start3;
-        //array_unshift($queue, "apple", "raspberry");
-        $out=["inModeltime" => "caly = $w3, samo find = $stop4, transferuj = $stop5"] + $out;
-        return $out;
-    }
-
-    private function myFind( $parametry = [] ) {
-
-        return $this->find('all', $parametry);
-    }
+        $cakeResults = $this->find('all', $parameters);   
+        
+        return [
+            'records' =>  $this->transferResults($cakeResults, $coSzukamy),
+            'cake'  => $cakeResults
+        ];
+    }    
 
     /**
      * Przekonvertuj do Webixa i wstaw span'y do wyników, które otoczą frazę */
@@ -201,15 +173,8 @@ class WebixCustomer extends AppModel {
             } else {
                 $newRow["WebixCustomer_howManyNonPrivateOrders"] = 0;
             }            
-            unset($newRow["WebixNonPrivateOrder"]); // Na razie nie potrzebujemy tych danych  
-            if( $kosz ) { // gdy chcemy tylko koszowe
-                if( $newRow["WebixCustomer_howManyNonPrivateOrders"] == 0 ) { // jest koszowy
-                    // tylko wówczas przechodzi
-                    $out[] = $newRow;
-                }
-            } else { // wszystkie
-                $out[] = $newRow;
-            }             
+            unset($newRow["WebixNonPrivateOrder"]); // Na razie nie potrzebujemy tych danych              
+            $out[] = $newRow;            
         }
         return $out;
     }
