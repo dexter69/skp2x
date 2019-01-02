@@ -75,12 +75,18 @@ class WebixCustomer extends AppModel {
         JOIN `users` AS WebixCustomerRealOwner ON WebixCustomerRealOwner.id=WebixCustomer.opiekun_id
         JOIN `addresses` AS WebixAdresSiedziby ON WebixAdresSiedziby.customer_id=WebixCustomer.id
         WHERE WebixCustomer.id NOT IN 
-        (SELECT DISTINCT orders.customer_id FROM `orders` WHERE orders.status>0);";
+        (SELECT DISTINCT orders.customer_id FROM `orders` WHERE orders.status>0)";
 
     // Szukanie - 30ms na moim kompie
-    public function getKosz() {
+    public function getKosz( $theOwnerId = 0, $coSzukamy = null ) {
 
         //$start = microtime(true);
+        if( $theOwnerId ) { // różne od zera, znaczy chcemy wyniki dla konkretnego usera
+            $this->theSql .= " AND WebixCustomerRealOwner.id=$theOwnerId";
+        }
+        if( $coSzukamy != '' AND $coSzukamy != null ) { //niepusta fraza (nie wiem czemu oba warunki, ale od przybytku głowa nie boli)
+            $this->theSql .= " AND WebixCustomer.name LIKE '%$coSzukamy%'";
+        }
         $sqlResult = $this->query($this->theSql);
         //$stop = microtime(true);
         return [

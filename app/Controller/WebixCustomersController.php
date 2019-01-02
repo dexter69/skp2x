@@ -20,8 +20,6 @@ class WebixCustomersController extends AppController {
             $fraza = $this->request->data["fraza"];
             $realOwnerId = $this->request->data["realOwnerId"];
             $limit = $this->request->data["limit"];
-            //$kosz = ($this->request->data["kosz"] === 'false' ? false : true);
-            //$kosz = $this->request->data["kosz"];
 
             $start2 = microtime(true);
             if( $this->request->data["kosz"] == "false" ) {
@@ -33,16 +31,8 @@ class WebixCustomersController extends AppController {
                     ,$kosz
                 );
             } else {
-                $kosz = true;
-                /*
-                $theCustomers = $this->WebixCustomer->getMany(
-                    "gl", // szukane znaki w nazwie customer'a
-                    $realOwnerId, // id stałego opiekuna klienta 
-                    $limit // max ilość rekordów
-                    ,$kosz
-                );
-                */
-                $theCustomers = $this->WebixCustomer->getKosz();
+                $kosz = true;                
+                $theCustomers = $this->WebixCustomer->getKosz($realOwnerId, $fraza);
             }            
             $stop2 = microtime(true);
             $theCustomers['check'] = 'gora, kosz = ' . $kosz;
