@@ -92,7 +92,7 @@ class WebixCustomer extends AppModel {
         return [
             //'czas' => $stop - $start,
             //'results' => $this->transferResults( $sqlResult ),
-            'records' => $this->transferResults( $sqlResult ),
+            'records' => $this->transferResults( $sqlResult, $coSzukamy ),
             'sqlResult' => $sqlResult
         ];        
     }
@@ -134,16 +134,16 @@ class WebixCustomer extends AppModel {
      *  $constantOwner = 0, znajdź wszystkich klientów, użytkownik dowolny
      *  $realOwner > 0, to znajdź klientów tylko tego użytkownika
      *  $limit - ile max rekordów */
-    public function getMany( $coSzukamy = null, $realOwner = 0, $limit = 17, $kosz = true ) {
+    public function getMany( $coSzukamy = null, $realOwner = 0, $limit = 17, $kosz = false ) {
 
         $start3 = microtime(true);
         $out = [];
         $parameters = [
             'fields' => $this->fieldsWeWant['list']
         ];
-        if( !$kosz ) { // Jeżeli $kosz, czyli chcemy tylko koszowe, to szukamy bez limitu
+        if( !$kosz ) { 
             $parameters['limit'] = $limit;
-        } else {
+        } else { // Jeżeli $kosz, czyli chcemy tylko koszowe, to szukamy bez limitu (no nie całkiem na ten mom.)
             $parameters['limit'] = 500;
             
             $this->unbindModel(
