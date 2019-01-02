@@ -67,6 +67,7 @@ let listOfCustomers = {
         return theResponse.then(function(data) {            
             //console.log(data.text().search("<!DOCTYPE html>")); console.log( data.text().search("records"));webix.message("We are here!!*************");  
             if( data.text().search("records") >= 0 ) { 
+                console.log("Here!");
                 // powinno być, jeżeli dostaniemy prawidłowy json - PRZETWARZAMY                
                 let dane = data.json();
                 dane.records.forEach(function(record){
@@ -79,6 +80,8 @@ let listOfCustomers = {
                 });
                 return dane.records;  // w records mamy faktyczne dane 
             } else {
+                console.log("There!");
+                //console.log(data.text());
                 /* zakładamy, ze dostaliśmy html -> stronę logowania,
                     dlatego musimy przekierować na logowanie */
                 //webix.message("TRZA PRZEKIWROAĆ"); console.log("TRZA PRZEKIWROAĆ");

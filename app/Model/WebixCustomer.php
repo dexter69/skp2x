@@ -85,7 +85,8 @@ class WebixCustomer extends AppModel {
         //$stop = microtime(true);
         return [
             //'czas' => $stop - $start,
-            'results' => $this->transferResults( $sqlResult ),
+            //'results' => $this->transferResults( $sqlResult ),
+            'records' => $this->transferResults( $sqlResult ),
             'sqlResult' => $sqlResult
         ];        
     }
