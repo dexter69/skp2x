@@ -21,7 +21,7 @@ class WebixCustomersController extends AppController {
             $limit = $this->request->data["limit"];
 
             if( $this->request->data["kosz"] == "false" ) {
-                $kosz = false;
+                $kosz = false;                
                 $theCustomers = $this->WebixCustomer->getMany(
                     $fraza, // szukane znaki w nazwie customer'a
                     $realOwnerId, // id stałego opiekuna klienta 

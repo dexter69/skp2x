@@ -76,6 +76,16 @@ class WebixCustomer extends AppModel {
         JOIN `addresses` AS WebixAdresSiedziby ON WebixAdresSiedziby.customer_id=WebixCustomer.id
         WHERE WebixCustomer.id NOT IN 
         (SELECT DISTINCT orders.customer_id FROM `orders` WHERE orders.status>0)";
+    
+    private $theSqlRocks =
+        "SELECT WebixCustomer.id, WebixCustomer.name, WebixCustomer.osoba_kontaktowa,
+        WebixCustomerRealOwner.id, WebixCustomerRealOwner.name, WebixCustomerRealOwner.inic,
+        WebixAdresSiedziby.id, WebixAdresSiedziby.name, WebixAdresSiedziby.ulica, WebixAdresSiedziby.nr_budynku,
+        WebixAdresSiedziby.kod, WebixAdresSiedziby.miasto
+        FROM `customers` AS WebixCustomer
+        JOIN `users` AS WebixCustomerRealOwner ON WebixCustomerRealOwner.id=WebixCustomer.opiekun_id
+        JOIN `addresses` AS WebixAdresSiedziby ON WebixAdresSiedziby.customer_id=WebixCustomer.id
+        LIMIT 150";
 
     // Szukanie - 30ms na moim kompie
     public function getKosz( $theOwnerId = 0, $coSzukamy = null ) {
@@ -86,8 +96,11 @@ class WebixCustomer extends AppModel {
         if( $coSzukamy != '' AND $coSzukamy != null ) { //niepusta fraza (nie wiem czemu oba warunki, ale od przybytku głowa nie boli)
             $this->theSql .= " AND WebixCustomer.name LIKE '%$coSzukamy%'";
         }
-        $sqlResult = $this->query($this->theSql);        
+        $start = microtime(true);        
+        $sqlResult = $this->query($this->theSql);      
+        $findTime = microtime(true) - $start;  
         return [
+            'findTime' => $findTime,
             'records' => $this->transferResults( $sqlResult, $coSzukamy ),
             'sqlResult' => $sqlResult
         ];        
@@ -144,10 +157,16 @@ class WebixCustomer extends AppModel {
         if( $coSzukamy != '' AND $coSzukamy != null ) { //niepusta fraza
             $parameters['conditions']['WebixCustomer.name LIKE'] = '%'.$coSzukamy.'%';
         }
-
+        $start = microtime(true);
         $cakeResults = $this->find('all', $parameters);   
-        
+        $findTime = microtime(true) - $start;
+        $start = microtime(true);
+        $sqlResults = $this->query($this->theSqlRocks); 
+        $findTime2 = microtime(true) - $start;
         return [
+            'findTime' => $findTime,
+            'sqlFind' => $findTime2,
+            'sqlRecords' => $this->transferResults($sqlResults, $coSzukamy),
             'records' =>  $this->transferResults($cakeResults, $coSzukamy),
             'cake'  => $cakeResults
         ];
