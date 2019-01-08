@@ -17,7 +17,7 @@ let listOfCustomers = {
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
     ], 
     onClick:{ // Obsługa kliknięcia w kosz w nagłówku kolumny => filtrujemy koszaste!
-        "trashHeader" : function() { 
+        trashHeader : function() { 
             // To takie toggle parametru post data po kliknieciu 
             listOfCustomers.postData.kosz = !listOfCustomers.postData.kosz; 
             // I uaktualnienie wyglądu
@@ -129,20 +129,8 @@ let listOfCustomers = {
         /**
             Po kliknięciu w jakiegoś klienta na liscie, chcemy wyświetlić formularz do dodwania szybkiego
             zamówienia */
-        onAfterSelect: function(id){ 
-            //webix.message("ZAZNACZONE!");
-            //$$(listOfCustomers.id).config.hideTheColumns();
-            //console.log($$(listOfCustomers.id).getItem(id));
-            // Przemaluj komponent/y                  
-            //webix.message("kliknięte!");   
-            
-            /* to na razie wyłączam - działało dobrze z dodawaniem zamówienia
-            $$("customerName").define(customerName);  // nie musimy refresh, bo pozniej parse załatwi sprawę
-            $$("addOrderNaglowek").show();            
-            $$("addOrderAllTheRest_").hide();
-            $$("addOrderAllTheRest").show();
-            */
-           //console.log($$(listOfCustomers.id).getItem(id).WebixCustomer_howManyNonPrivateOrders);
+        onAfterSelect: function(id){             
+           
             // id klikniętego klienta w bazie
             let theCustomerId = $$(listOfCustomers.id).getItem(id).WebixCustomer_id; 
             //console.log(theCustomerId);
