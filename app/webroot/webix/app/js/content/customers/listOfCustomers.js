@@ -28,10 +28,10 @@ let listOfCustomers = {
     // Uaktualniamy wygląd kosza w zależności od wartości listOfCustomers.postData.kosz
     adjustKosz: function(){         
         let theSpan = document.getElementById("trashHeaderSpan"); 
-        if( listOfCustomers.postData.kosz ) { // Włącz kosz
+        if( listOfCustomers.postData.kosz ) { // Włączony => zkoloruj kosz
             theSpan.classList.add("customers-kosz");
             //console.log("adjustKosz ON");
-        } else { // Wyłącz kosz
+        } else { // Wyłączony => "odkoloruj" kosz
             theSpan.classList.remove("customers-kosz");
             //console.log("adjustKosz OFF");
         }
@@ -127,24 +127,23 @@ let listOfCustomers = {
             //webix.message("Load");
         },
         /**
-            Po kliknięciu w jakiegoś klienta na liscie, chcemy wyświetlić formularz do dodwania szybkiego
-            zamówienia */
+            Po kliknięciu w jakiegoś klienta na liscie, chcemy wyświetlić szczegóły dotyczące klienta */
         onAfterSelect: function(id){             
            
             // id klikniętego klienta w bazie
             let theCustomerId = $$(listOfCustomers.id).getItem(id).WebixCustomer_id; 
             //console.log(theCustomerId);
             let url = globalAppData.config.justOneCustomerData + theCustomerId + ".json";
-
+            
             // pobierz świeże dane dot. tego klienta
             webix.ajax(url).then(function(data){   
                 
                 let dane = data.json();                
-                if( !$$(customerPanel.id).isVisible() ) {
+                if( !$$(customerPanel.id).isVisible() ) {                    
                     // Chowamy niektóre kolumny, bo mamy mniej miejsca
                     $$(listOfCustomers.id).config.hideTheColumns();                    
-                    $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                                                            
-                                     
+                    $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                               
+                    listOfCustomers.adjustKosz(); //Wyłącza się kosz, przy renderingu tabeli => więc poprawiamy
                 } 
                 if( dane.WebixCustomer_howManyNonPrivateOrders == 0 ) {
                     /* Czyli jeżeli nie mamy zamówień poza prywatnymi => można usuwać */ 
