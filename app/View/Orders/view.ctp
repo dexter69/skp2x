@@ -1,6 +1,6 @@
 <?php
 $pokaz = false; // decyduje o wyswietlaniu w linii ~121 -> $order
-//echo $this->App->print_r2($users);
+//echo $this->App->print_r2($evcontrol);
 
 echo $this->Html->css(array('order', 'order/order.css?v=201804041230'), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 

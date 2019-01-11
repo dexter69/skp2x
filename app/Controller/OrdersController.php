@@ -520,7 +520,8 @@ class OrdersController extends AppController {
                             $tab = $this->plant_DEALWITHUZUPED($tab, $tworca, $no_rej_card);
                     break;
                     case UZU_CHECK:
-                            $tab = $this->plant_KOMENTUJ($tab, $tworca);
+							$tab = $this->plant_KOMENTUJ($tab, $tworca);
+					break;
                     case KONEC: // gdy zamknięte chemy miec możliwość otwarcia
                             $tab = $this->plant_OTWORZ($tab);                     
                     break;
