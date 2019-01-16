@@ -1,6 +1,6 @@
 <?php
 $pokaz = false; // decyduje o wyswietlaniu w linii ~121 -> $order
-//echo $this->App->print_r2($evcontrol);
+echo $this->App->print_r2($order['Event']);
 
 echo $this->Html->css(array('order', 'order/order.css?v=201804041230'), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 
@@ -276,7 +276,11 @@ if( $pokaz ) { echo $this->App->print_r2($order); }
                                     case d_no: 
                                     case d_ok:
 									case h_ov: 
-                                            $co = $karty[$event['card_id']]; 
+											if(	array_key_exists( $event['card_id'], $karty ) ) {
+												$co = $karty[$event['card_id']];
+											} else {
+												$co = "(USUNIĘTA)";
+											}                                             
                                     break;
                                     default:
                                             $co ='';
