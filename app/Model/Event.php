@@ -232,6 +232,13 @@ class Event extends AppModel {
 			foreach ($tableOfCards as $karta) {
 				
                                 switch( $karta['status'] ) {
+                                        case PRIV: // przypadek, gdy nowe karty zostały dodane, już po złożeniu zamówienia
+                                              if( ($tableOfCards[$i]['isperso']) ) {
+                                                $tableOfCards[$i]['status'] = W4DP;  
+                                              } else {
+                                                $tableOfCards[$i]['status'] = W4D;     
+                                              }
+                                        break;
                                         case DNO:
                                                 $tableOfCards[$i]['status'] = W4D;
                                         break;
@@ -360,12 +367,20 @@ class Event extends AppModel {
                           $rqdata['Card']['id'] = $rqdata['Event']['card_id'];
                           $rqdata['Card']['ishotstamp'] = 2;
                           unset( $rqdata['Card']['status'], $rqdata['Card']['isperso']  );
-                    break;                    
+                    break;     
+
                     case fix_o:
                             $rqdata['Order']['status'] = FIXED;
                             $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
                             smart_status( $rqdata['Card'] );
                     break;
+                    case update_o:
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];                            
+                            $rqdata['Order']['status'] = UZUPED; //na razie bezwarunkowo
+                            //unset($rqdata['Card']);
+                            smart_status( $rqdata['Card'] );
+                    break;
+
                     case unlock_o:
                             $rqdata['Order']['status'] = W4UZUP;				
                             $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
@@ -376,12 +391,7 @@ class Event extends AppModel {
                             else
                                     $rqdata['Order']['remstatus'] = ABSURD;
                             $rqdata['Event'] = array( $rqdata['Event'] );
-                    break;
-                    case update_o:
-                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];                            
-                            $rqdata['Order']['status'] = UZUPED; //na razie bezwarunkowo
-                            unset($rqdata['Card']);
-                    break;
+                    break;                    
                     case unlock_again:
                             $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
                             $rqdata['Order']['status'] = W4UZUP;								
