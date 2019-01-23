@@ -474,9 +474,11 @@ class OrdersController extends AppController {
             $karty_sprawdzone = $no_rej_card = true;
 			$persoIsFinished = true; // Karta nie ma perso lub ma i jest ono zakończone 
             foreach ($order['Card'] as $card)	{
-                    if( $card['status'] != D_OK && $card['status'] != P_OK ) $karty_sprawdzone = false;	
-                    if( in_array( $card['status'], array(W4DPNO, W4PDNO, DNO, DOKPNO, DNOPNO, DNOPOK)) ) {
-                    // jeżeli choć jedna karta jest "odrzucona"
+					if( $card['status'] != D_OK && $card['status'] != P_OK ) $karty_sprawdzone = false;	
+					$theArr = [W4DPNO, W4PDNO, DNO, DOKPNO, DNOPNO, DNOPOK, W4D, W4DP];
+                    if( in_array( $card['status'], $theArr) ) {
+					/* jeżeli choć jedna karta jest "odrzucona" lub
+						już ma status W4D lub W4DP (co oznacza, że handlowiec dodał nowe projekty) */
                             $no_rej_card = false;
 					}
 					//Jezeli karta ma perso i nie jest zakonczona

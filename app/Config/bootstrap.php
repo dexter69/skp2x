@@ -444,7 +444,8 @@ define('ABSURD', 254); // c, o, j - roboczy
 define('PRIV', 0); // c i o
 define('NOWKA', 1); // c i o
 
-
+define('CRAZY', 111); /* 
+						c - wprowadzamy na oznaczenie nadzwyczjnej sytuacji, oznaczenia karty, ze została */
 define('W4D', 51); // c
 define('W4DP', 52); // c
 define('W4DPNO', 53); // c
@@ -470,7 +471,7 @@ define('FIXED', 67); // o
 define('W4UZUP', 68); // o - czeka na uzupełnienie
 						//	- handlowiec może edytować karty i zamówienie
 define('UZUPED', 69); // o, po naciśnięciu "UZUPEŁNIONE" przez handlowca
-define('UZU_CHECK', 70); // o, po uzupełnieniu Jola skierowała do sprawdzenia DTP/P
+define('UZU_CHECK', 70); // o, po uzupełnieniu technolog skierowała d sprawdzenia DTP/P
 define('UZU_REJ', 71); // o - odrzucona jakaś karta w procesie sprawdzania uzupełnionego zamówienia
 
 define('KONEC', 77); // o, c, j
