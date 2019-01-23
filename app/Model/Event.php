@@ -278,12 +278,7 @@ class Event extends AppModel {
                                         case PRIV: // przypadek, gdy nowe karty zostały dodane, już po złożeniu zamówienia
                                                 $tableOfCards[$i]['status'] = retCorrectW4Status($karta['isperso']);
                                                 $tableOfCards[$i]['remstatus'] = CRAZY;  // wybieg, by sobie oznaczyć, ze to dodana karta
-                                        break;
-                                        case 311://R2BJ:
-                                              if($thereAreNewProjects) {
-                                                $tableOfCards[$i]['status'] = retCorrectW4Status($karta['isperso'], true);
-                                              }
-                                        break;
+                                        break;                                        
                                         case DNO:
                                                 $tableOfCards[$i]['status'] = W4D;
                                         break;
