@@ -143,41 +143,52 @@ class Event extends AppModel {
 		$orderAndCards = $this->Order->zamkart_statusy_only($eventarr['order_id']);
 		if( !empty($orderAndCards) ) {
 			$i = 0;	
-			$ret = array('konec' => true, 'noerr' => true, 'dane' => $orderAndCards);
+			$ret = array('konec' => true, 'noerr' => true, 'dane' => $orderAndCards, 'mark' => []);
 			//sprawdzamy wszystkie karty		
 			foreach( $orderAndCards['Card'] as $karta ) { 
-				if( $karta['id'] == $eventarr['card_id'] ) { //czyli było d_ok lub p_ok na TEJ karcie
+                                $ret['mark'][$karta['id']] = "0";
+                                if( $karta['id'] == $eventarr['card_id'] ) { //czyli było d_ok lub p_ok na TEJ karcie
+                                        $ret['mark'][$karta['id']] = "1";
 					if( $eventarr['co'] == d_ok && !in_array($karta['status'], array(W4D, W4DPOK)) ||
 						$eventarr['co'] == p_ok && $karta['status'] != W4PDOK ) {
 						// czyli wiadomo już, że to nie zamyka
-						 $ret['konec'] = false;
+                                                 $ret['konec'] = false;
+                                                 $ret['mark'][$karta['id']] = "2";
 						 break;
 					} 						
 				} else { // inna karta musi być już zatwierdzona, by była to akcja zamykająca
 					// 1. if( $karta['status'] != DOK && $karta['status'] != DOKPOK ) {
 					// 2. if( $karta['status'] != DOK && $karta['status'] != DOKPOK && $orderAndCards['Order']['status'] != UZU_CHECK) {
+                                        $ret['mark'][$karta['id']] = "3";                                                
 					if( in_array($karta['status'], array(W4D, W4DP, W4DPOK, W4PDOK)) ) {						
 					// czyli wiadomo już, że to nie zamyka
-						$ret['konec'] = false;
+                                                $ret['konec'] = false;
+                                                $ret['mark'][$karta['id']] = "4";
 					 	break;
 					}
 				}	
 				unset($ret['dane']['Card'][$i]['order_id']);
 				// Jakby to była zamykajaca akcja w trybie usupełniania, to przygotowujemy karty.
-				if( $orderAndCards['Order']['status'] == UZU_CHECK  ) {
+				if( $orderAndCards['Order']['status'] == UZU_CHECK  ) {   
                                         if( $ret['dane']['Card'][$i]['remstatus'] ) {//
-                                                if( $ret['dane']['Card'][$i]['remstatus'] = CRAZY ) { //Wybieg z dołączaniem karty
+                                                $ret['mark'][$karta['id']] .= "-1";
+                                                // [!@#$] BYŁO: if( $ret['dane']['Card'][$i]['remstatus'] = CRAZY ) { // CO ZA BŁĄD!!
+                                                if( $ret['dane']['Card'][$i]['remstatus'] == CRAZY ) { //Wybieg z dołączaniem karty
                                                         $ret['dane']['Card'][$i]['status'] = R2BJ;
+                                                        $ret['mark'][$karta['id']] .= "#1";
                                                 } else {
                                                         $ret['dane']['Card'][$i]['status'] = $ret['dane']['Card'][$i]['remstatus'];
+                                                        $ret['mark'][$karta['id']] .= "#2";
                                                 }                                                
                                                 $ret['dane']['Card'][$i]['remstatus'] = 0;
                                         } else {
+                                                $ret['mark'][$karta['id']] .= "-3";
                                                 unset($ret['dane']['Card'][$i]);
                                         }
                                         
 				}
 				else {
+                                        $ret['mark'][$karta['id']] .= "-2";
 					$ret['dane']['Card'][$i]['status'] = R2BJ;
 					unset($ret['dane']['Card'][$i]['remstatus']);
 				}
@@ -317,7 +328,7 @@ class Event extends AppModel {
                                 if( $tab['konec'] ) {
                                         // czyli wszystkie inne karty i zamówienie są klepnęte	
                                         $tab['dane']['Event'] = $rqdata['Event'];
-                                        //$tab['dane']['tab'] = $tab;
+                                        $tab['dane']['tab'] = $tab;
                                         $rqdata = $tab['dane'];
                                         
                                 } else  { // nie jest zamykającą akcją, zajmujemy się tylko tą kartą

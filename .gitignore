@@ -37,3 +37,6 @@ Thumbs.db
 ###################### Nie szalejmy z taką ilością plików, jeżeli chodzi o Github
 /app/webroot/webix/v5.4.0/codebase/*
 /app/webroot/webix/v5.4.0/samples/*
+
+# Rózne testowe bazy danych
+/db/ignore/*
