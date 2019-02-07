@@ -7,7 +7,13 @@ LLLLCC
 gdzie L - duża litera, C - cyfra,
 np. OEYL54
 Generowane kody muszą być unikalne globalnie, czyli rózne od jakichkolwiek do tej pory wygenerowanych.
-Czyli różne od kodów poprzednich bazach i w bazie bieżącej */
+Czyli różne od kodów poprzednich bazach i w bazie bieżącej
+
+Dobre narzędzie:
+https://www.browserling.com/tools/text-from-regex
+
+użyty regex: [A-Z]{4}\d\d
+*/
 
 require 'funkcje.php';
 
@@ -16,7 +22,9 @@ $arrOfFiles = [
     'oldest.txt', // klienta
     'kody40k.txt',
     'kody30k.txt',
-    'kody30k_cze-2018.txt' // baza wygenerowana 6.06.2018
+    'kody30k_cze-2018.txt', // baza wygenerowana 6.06.2018
+    'kody30k_lis-2018.txt', // jak sama nazwa wskazuje
+    'kody30k_lut-2019.txt'  // ostatnie robione - 7.02.2019
 ];
 
 // Plik z wygenerowanymi kodami, sprawdzamy czy się nie powtarzają z tym co już mamy
