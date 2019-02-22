@@ -55,6 +55,8 @@ if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
         
     </p>
     <p class="daty-handlowe">
+        
+        <i class="fa fa-camera-retro"></i>
         <label>termin:</label>
             <?php echo $termin; ?>
             <span>(złożone: <b><?php echo $zlozone; ?></b>)</span>

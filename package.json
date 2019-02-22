@@ -1,0 +1,26 @@
+{
+  "name": "skp.loc",
+  "version": "1.0.0",
+  "description": "bla bla bla",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dexter69/skp2x.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dexter69/skp2x/issues"
+  },
+  "homepage": "https://github.com/dexter69/skp2x#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-sass": "^4.0.2"
+  }
+}

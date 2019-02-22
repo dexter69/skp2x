@@ -5,15 +5,6 @@ Doddatki do zamówień via sass
 /*
     Dotyczy widoku handlowego.
 */
-/*
-th.clickable {
-    cursor: pointer;
-}
-
-th.clickable.on {
-    color: red;
-}
-*/
 #the-dd {
   position: relative; }
 

@@ -40,3 +40,6 @@ Thumbs.db
 
 # Rózne testowe bazy danych
 /db/ignore/*
+
+# Node modules
+/node_modules/*

@@ -230,8 +230,8 @@ ul#fileList li div:last-child {
 
 #persokeep > select {
   /*    position:relative;
-      top:-41px;
-      left: 180px;*/ }
+    top:-41px;
+    left: 180px;*/ }
 
 .perso-types {
   margin: 0;
@@ -315,8 +315,8 @@ div.cards.view dl dt {
 
 #kartview {
   /*margin-left: 100px; 
-  border: 1px solid orange;
-  width: auto;*/
+	border: 1px solid orange;
+	width: auto;*/
   min-width: 850px;
   float: none;
   margin-bottom: 30px; }
@@ -327,7 +327,7 @@ div.cards.view dl dt {
 
 #cardviewdl dt {
   /*white-space:nowrap;
-  overflow: hidden;*/
+	overflow: hidden;*/
   padding-right: 5px;
   /*width: 10em;*/ }
 
@@ -506,5 +506,3 @@ dl#cardviewdl dd.busy {
 #innedl .konec {
   border: 2px solid green;
   border-radius: 7px; }
-
-/*# sourceMappingURL=card.css.map */
