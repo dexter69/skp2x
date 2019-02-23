@@ -7,14 +7,8 @@ var source_path = 'app/webroot/scss/**/*.scss',
 
 // Z vs
 gulp.task('default', function(cb) {
-  gulp.src(
-    //'app/webroot/scss/order/*.scss'
-    source_path
-    )
+  gulp.src(source_path)
       .pipe(sass())
-      .pipe(gulp.dest(
-        //'app/webroot/css/order'
-        destin_path
-        ));
+      .pipe(gulp.dest(destin_path));
   cb();
 });
