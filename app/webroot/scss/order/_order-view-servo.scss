@@ -1,8 +1,15 @@
 // Do otwierania w trybie serwisowym
 
+.ikony-handlowe .servo {
+   font-size: 83%;
+   padding: 6px 4.31px 0 10px;
+   color: lightseagreen;
+}
+
+.ikony-handlowe .servo.ukryty {
+      display: none;
+}
+
 #servo-span {
-      font-size: 83%;
-      padding: 6px 4.31px 0 10px;
-      color: lightseagreen;
       cursor: pointer;
 }

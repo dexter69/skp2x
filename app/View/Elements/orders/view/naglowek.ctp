@@ -53,8 +53,12 @@ if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
             <?php } ?>
         </span>
 
-        <span id="servo-span" class="" title="Otwórz w trybie serwisu">
-            <i class="fa fa-undo"></i>
+        <span id="servo-span" class="servo" title="Otwórz w trybie serwisu">
+            <i class="fa fa-undo" aria-hidden="true"></i>
+        </span>
+
+        <span id="servo-spinner-span" class="servo ukryty">
+            <i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>
         </span>
         
     </p>

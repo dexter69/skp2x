@@ -422,27 +422,10 @@ class OrdersController extends AppController {
                 ($this->Auth->user('dzial') <= KOR) && // odpowiedni uzytkownik
                 $status != PRIV && $status != KONEC; // odpowiedni status zamówienia
             
-		}
-		
-		/**
-		 * Ajax - serwisowe otwieranie zamówień	 */
-
-		 public function servo() {
-
-			$test = [
-				'test' => 'slaby jest',
-				'rq' => $this->request->data
-			];
-			$this->set(array(
-                'answer' => $test,
-                '_serialize' => 'answer' //to używamy, gdy nie chcemy view
-            ));
-            //sleep(1);
-		 }
-        
+		}	
+		        
  /*
- *      Ajax - sprawdzanie kwestii płatności
- */
+ *      Ajax - sprawdzanie kwestii płatności */
         
         public function prepaid() {
             
