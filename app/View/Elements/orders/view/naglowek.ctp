@@ -52,11 +52,14 @@ if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
                 <i class="fa fa-usd trzeci" aria-hidden="true" dolar="three"></i>
             <?php } ?>
         </span>
+
+        <span id="servo-span" class="" title="Otwórz w trybie serwisu">
+            <i class="fa fa-undo"></i>
+        </span>
         
     </p>
     <p class="daty-handlowe">
         
-        <i class="fa fa-camera-retro"></i>
         <label>termin:</label>
             <?php echo $termin; ?>
             <span>(złożone: <b><?php echo $zlozone; ?></b>)</span>

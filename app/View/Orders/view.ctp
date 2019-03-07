@@ -2,8 +2,8 @@
 $pokaz = false; // decyduje o wyswietlaniu w linii ~121 -> $order
 //echo $this->App->print_r2($order['Event']);
 
-echo $this->Html->css(array('order', 'order/order.css?v=201804041230'), array('inline' => false));
-echo $this->Html->script(array('event', 'order-view', 'order/pay'), array('inline' => false)); 
+echo $this->Html->css(array('order', 'order/order.css?v=' . time()), array('inline' => false));
+echo $this->Html->script(array('event', 'order-view', 'order/pay', 'order/servo.js?v=' . time()), array('inline' => false)); 
 echo $this->Ma->walnijJqueryUI();
 $this->Ma->displayActions('orders');
 
