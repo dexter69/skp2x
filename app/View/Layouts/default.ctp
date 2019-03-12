@@ -32,8 +32,8 @@ $cakeDescription = __d('cake_dev', 'SKP');
             echo $this->Html->script(array('lib/jquery-2.1.4.min', 'funkcje')); 
             echo $this->Html->script('common.js?v=201804031259' /*. time()*/, array('block' => 'scriptBottom'));
             echo $this->Html->css(array(
-				'cake.generic.css?v=201804041002',
-				'global.css?v=201804041230',
+				'cake.generic.css?v=' . time(),
+				'global.css?v=' . time(),
 				'font-awesome-4.6.1/css/font-awesome.min.css?v=201804041230'
 			));
 			

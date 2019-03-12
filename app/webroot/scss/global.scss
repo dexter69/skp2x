@@ -22,3 +22,166 @@
 #header > .prawe-ikony a.logout-link:hover {
     color: darken( #59cef0, 10% );
 }
+
+
+/* GLOBALNIE DO FIXE TABELI 
+*/
+
+/* listing kart */
+.card_id_fix { width: 4em;}
+.card_opcje_fix { width: 7em; }
+.card_zlec_fix { width: 5em;}
+.card_ilosc_fix { width: 7em; text-align: right; padding-right: 1em;}
+/* dla kart, które są na magazynie */
+.card_ilosc_fix_mag { width: 13em; text-align: right; padding-right: 1em;}
+.card_cena_fix { width: 5em; }
+.card_status_fix { width: 9em; }
+.card_dpcheck_fix { width: 1.5em; text-align: center; }
+
+/* TABELKI
+*/
+
+.index > table tr:hover { background-color: lightgreen; }
+.index > table tr:first-child:hover { background-color: transparent; }
+
+/* Suma ilości kart przy zamówieniu */
+table tr.sumainfo { background-color: transparent; }
+table tr.sumainfo td { border-bottom-color: transparent; font-weight: bold;}
+table tr.sumainfo td.sumatd { text-align: right; }
+/* WYSZUKIWANIE
+*/
+
+div#szukanie {	float: right; width: auto;}
+
+
+#szukanie.vis {
+	width: auto;
+	height: auto;
+	float: none;
+	background-color: white;
+	border: 2px solid #59cef0;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px #888888;	
+	padding: 10px 5px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	z-index: 101;
+}
+
+#szukanie.hid > form { display: none; }
+
+#sk-form > div {
+	width: auto;
+	display: block;
+}
+
+#sk-form > div.submit {
+	display: inline-block;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+#sk-form #CardSirczname {
+	padding: 0.3em;
+	width: 600px;
+}
+
+#szukanie.vis .klose-mark {
+	background-image: url('../img/close_32.png');
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+}
+
+#szukanie.vis .submit input[type=submit] {
+	background:#59cef0;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#59cef0), to(#033976));
+	background-image: -webkit-linear-gradient(top, #59cef0, #033976);
+	background-image: -moz-linear-gradient(top, #59cef0, #033976);
+	border-color: #02244a;
+	color: #fff;
+	text-shadow: rgba(0, 0, 0, 0.5) 0px -1px 0px;
+	padding: 6px 8px;
+}
+
+/*
+*  Cechy obiektów, że perso, sito itp.
+*/
+
+.cechy-wrap, .cechy-wrap div {
+    display: inline-block;
+}
+
+.cechy-wrap.wju {
+    padding-left: 0.5em;
+}
+
+.process > div {
+    padding: 0 0.12em;
+    cursor: default;
+}
+
+.process > div > div {
+    background-color: #144689;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    
+}
+
+.indeks > .process > div > div {
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}    
+
+.wju > .process > div > div {
+    padding: 0.0em 0.25em;
+    border-radius: 3px;
+}    
+
+.process > .p-lam > div {
+    background-color: #1E90FF;
+    color: white;
+}
+
+.process > .p-emb > div {
+    background-color: #7559af;
+    color: white;
+}
+
+.process > .hot > div {
+    background-color: #ff3030;
+    color: white;
+}
+
+/* Nagłówek listingów
+*/
+
+.indexnag { font-weight: 600; }
+
+/* FILTRY */
+
+.hfiltry {
+	display: inline-block;
+}
+
+.filtry {
+	display: inline-block;
+	/*padding-left: 1em;*/
+	vertical-align: middle;
+    /*    margin-left: 1em;
+	
+	margin-bottom: 0;
+	line-height: 3em;*/
+}
+
+.filtry a {
+	padding: 0.3em 0.5em;
+	margin: 0 0.5em 0 0;
+	/*background-color: orange;*/
+	border-radius: 1em;
+	border: 1px solid #36466b;
+}
+
+.filtry a.swieci { background-color: orange; }
