@@ -5,33 +5,33 @@ App::uses('AppHelper', 'View/Helper');
 class MaHelper extends AppHelper {
 	
 	public $helpers = array('Number','Form','Html');
-        
-        public $perso3opcje = array(
-            'podlam' => array(
-                0 => null,
-                1 => 'pod laminat'
-            ),
-            'plaska' => array(
-                0 => null,
-                1 => 'płaska'
-            ),
-            'emboss' => array(
-                0 => null,
-                1 => 'embossing'
-            ),
-            'podlam-span' => array(
-                0 => null,
-                1 => '<span>pod laminat</span>'
-            ),
-            'plaska-span' => array(
-                0 => null,
-                1 => '<span>płaska</span>'
-            ),
-            'emboss-span' => array(
-                0 => null,
-                1 => '<span>embossing</span>'
-            )
-        );
+
+	public $perso3opcje = array(
+		'podlam' => array(
+			0 => null,
+			1 => 'pod laminat'
+		),
+		'plaska' => array(
+			0 => null,
+			1 => 'płaska'
+		),
+		'emboss' => array(
+			0 => null,
+			1 => 'embossing'
+		),
+		'podlam-span' => array(
+			0 => null,
+			1 => '<span>pod laminat</span>'
+		),
+		'plaska-span' => array(
+			0 => null,
+			1 => '<span>płaska</span>'
+		),
+		'emboss-span' => array(
+			0 => null,
+			1 => '<span>embossing</span>'
+		)
+	);
 	
 	// wspomaganie do event buttons
 	public $button_val = array(

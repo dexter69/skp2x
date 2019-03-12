@@ -1,6 +1,5 @@
 <?php
-$pokaz = false; // decyduje o wyswietlaniu w linii ~121 -> $order
-//echo $this->App->print_r2($order['Event']);
+//echo $this->App->print_r2($order['Order']);
 
 echo $this->Html->css(array('order', 'order/order.css?v=' . time()), array('inline' => false));
 echo $this->Html->script(array('event', 'order-view', 'order/pay', 'order/servo.js?v=' . time()), array('inline' => false)); 
@@ -41,7 +40,8 @@ if( $order['Order']['procent_zaliczki'] ) {
             'clickable' => $order['Order']['zal_clickable'],
             'visible' =>  $order['Order']['zal_visible'], // nie wszystkim wyświetlamy
             'id' => $order['Order']['id']
-        );
+	);	
+
         echo $this->element('orders/view/naglowek', array(
                 'id' => $order['Order']['id'],
                 'numer' => $nr,
@@ -119,136 +119,12 @@ if( $order['Order']['procent_zaliczki'] ) {
         </div>
 </div>
 
+
 <?php
-if( $pokaz ) { echo $this->App->print_r2($order); }
+
+// KARTY zamówienia
+echo $this->element('orders/view/cards_related/related');
 ?>
-
-	
-<div class="related">
-	<!--<h3>-->
-	<?php echo $this->Ma->viewheader('KARTY', array('class' => 'margin02') ); 
-	// Jezeli użytkownik może zmieniać status kart, to musimy nadać odpowiednią klasę
-	if( $order['Order']['statusKartyMoznaModyfikowac'] ) {
-		$ta_klasa = "card_status_fix clickable";
-	} else {
-		$ta_klasa = "card_status_fix";
-	}
-	if (!empty($order['Card'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th class="card_id_fix"><?php echo 'Id'; ?></th>
-		<th><?php echo __('Nazwa'); ?></th>
-		<th class="card_opcje_fix">Opcje</th>
-		<!--<th><?php echo __('User Id'); ?></th>
-		<th><?php echo __('Klient'); ?></th>
-		<th><?php echo __('Order Id'); ?></th>-->
-		<th class="card_zlec_fix"><?php echo 'Zlecenie(P)'; ?></th>		
-		<th class="card_ilosc_fix"><?php echo 'Ilość'; ?></th>
-		<th class="card_cena_fix"><?php echo 'Cena'; ?></th>
-		<th class="<?php echo $ta_klasa; ?>"><?php echo 'Status'; ?></th>
-		<?php
-			if( $evcontrol['bcontr'][push4checking] ) {
-				echo '<th class="card_dpcheck_fix">'.'D'.'</th>'.'<th class="card_dpcheck_fix">'.'P'.'</th>';
-			}
-		?>	
-		
-	</tr>
-	<?php $k=0; $sigma = 0;
-		foreach ($order['Card'] as $card): ?>
-		<?php $karty[ $card['id'] ]= $card['name']; ?>
-		<tr>
-			<td class="card_id_fix"><?php echo $card['id']; ?></td>
-			<td><?php echo $this->Html->link($card['name'], array(
-						'controller' => 'cards', 'action' => 'view', $card['id']
-						), array('title' => $card['name']));	?> </td>
-			<td class="card_opcje_fix"><?php if( $card['isperso'] ) echo '<span class="perso">P</span>';
-			?>
-			</td>			
-			<td class="card_zlec_fix"><?php
-				if( $card['job_nr'] ) {
-					echo $this->Html->link($this->Ma->bnr2nrj($card['job_nr'], null)/*$card['job_nr']*/, array(
-						'controller' => 'jobs', 'action' => 'view', $card['job_id']),
-						array('escape' => false)
-					);
-				}				
-				$this->Ma->bnr2nrj($card['job_nr'], null)
-			?>	
-			</td>
-			<td class="card_ilosc_fix"><?php 
-                            $sigma += $card['quantity'];
-                            echo $this->Ma->tys($card['quantity']); ?></td>			
-			<?php
-			// cena - chcemy, że gdy jest 0, to by program wypisywał "UWAGI"
-				if ( $card['price'] == 0 ) {
-					$cenka = 'UWAGI';
-				} else {
-					$cenka = $this->Ma->colon($card['price']);
-				}				
-			?>
-			<td class="card_cena_fix"><?php echo $cenka;?></td>
-			 <td class="card_status_fix"><?php 
-			 		if( $card['status'] == PRIV && $order['Order']['id'] )
-						echo 'ZAŁĄCZONA';
-					else
-						echo $this->Ma->status_karty($card['status']); ?></td>
-			<?php
-				if( $evcontrol['bcontr'][push4checking] ) {
-					$d_checked = $p_checked = false;
-					switch($card['status']) {						
-						case DNO:
-						case DNOPOK:
-						case W4D:
-						case W4DPOK:
-							$d_checked = true;
-						break;
-						case W4PDOK:
-						case DOKPNO:
-							 $p_checked = true;
-						break;
-						case W4DPNO:
-						case W4DP:
-						case W4PDNO:
-						case DNOPNO: $d_checked = $p_checked = true;
-						break;
-					}
-					// 'ard' w inpucie specjanie
-					$dtp =  $this->Form->input('ard.'.$k.'.D', array(
-					'type' => 'checkbox',
-					'checked'=> $d_checked,
-					//'checked' => true,
-					'label' => false,
-					'div' => false,
-					'class' => 'dlajoli',
-					'idlike' => 'Card'.$k.'D',
-					'disabled' => $d_checked
-					//'order_id' => $oid,
-					//'card_id' => $cid,
-					//'ilosc' => $ile
-					));
-					$per =  $this->Form->input('ard.'.$k.'.P', array(
-						'type' => 'checkbox',
-						'checked'=> $p_checked,
-						'label' => false,
-						'div' => false,
-						'class' => 'dlajoli',
-						'idlike' => 'Card'.$k++.'P',
-						'disabled' => !$card['isperso'] || $p_checked
-					));
-					echo '<td class="card_dpcheck_fix">'.$dtp.'</td>'.'<td class="card_dpcheck_fix">'.$per.'</td>';
-				}
-			?>						
-		</tr>
-	<?php endforeach; 
-            if( $sigma ) {
-                echo '<tr class="sumainfo"><td></td><td></td><td></td><td class="sumatd">Suma:</td><td class="card_ilosc_fix">' . $this->Ma->tys($sigma) .
-                        '</td><td></td><td></td></tr>';
-            }
-        ?>  
-	</table>
-<?php endif; ?>
-
-</div>
-
 
 
 
@@ -324,14 +200,18 @@ if( $pokaz ) { echo $this->App->print_r2($order); }
 	</ul>
 </div>
 
+<?php
+	//echo '<pre>';	print_r($order); echo  '</pre>';	
+	echo "<div class='test'>" . $tcards . "</div>";
+?>
+
 <template name="pre-paid">
 <?php
     echo $this->element('orders/view/pre-paid-tpl', array( 'prepaid' => $prepaidTxt )); ?>
 </template>
 <!-- Do zmieniania daty wpłaty -->
 <div id="datepicker"></div><div id="komunikat"></div>
-<?php
-    //echo '<pre>';	print_r($order); echo  '</pre>';
+
 
 
 

@@ -17,7 +17,7 @@ class OrdersController extends AppController {
  */
 	public $components = array('Paginator');
         
-    public $helpers = array('Pdf');
+    public $helpers = array('Pdf', 'Order');
 	
 	public $paginate = array(
             'order' => array(
