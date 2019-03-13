@@ -53,14 +53,8 @@ if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
             <?php } ?>
         </span>
 
-        <span id="servo-span" class="servo" title="Otwórz w trybie serwisu">
-            <i class="fa fa-undo" aria-hidden="true"></i>
-        </span>
-
-        <span id="servo-spinner-span" class="servo ukryty">
-            <i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>
-        </span>
-        
+        <?php // pokazujemy ewentualnie component do otwierania w trybie serwisowym
+        if( $showServo ) { echo $this->element('orders/view/servo'); } ?>        
     </p>
     <p class="daty-handlowe">
         

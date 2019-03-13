@@ -1,14 +1,17 @@
 <div class="related">
 <?php
-    $related = $this->Order->cardsRelated( $order, $evcontrol );
     echo $related['viewHeader'];
 
-    if (!empty($order['Card'])) {                                               
+    if ( $weHaveCards ) {                                               
 
         echo $this->element('orders/view/cards_related/karty', [
                 'extraTh' => $related['extraTh'],
                 'ta_klasa' => $related['ta_klasa'],
-                'tbody'	=> $related['tbody']
+                'isleft' => $related['isleft'],
+                'tbody'	=> [
+                    'html' => $related['html'],
+                    'sigma' => $related['sigma']                   
+                ]
         ]);
 
     }

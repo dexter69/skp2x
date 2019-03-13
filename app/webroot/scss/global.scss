@@ -32,11 +32,21 @@
 .card_opcje_fix { width: 7em; }
 .card_zlec_fix { width: 5em;}
 .card_ilosc_fix { width: 7em; text-align: right; padding-right: 1em;}
-/* dla kart, które są na magazynie */
-.card_ilosc_fix_mag { width: 13em; text-align: right; padding-right: 1em;}
 .card_cena_fix { width: 5em; }
 .card_status_fix { width: 9em; }
 .card_dpcheck_fix { width: 1.5em; text-align: center; }
+
+// Normalnie nie wyświetlamy dodatkowej kolumny
+.card_ilosc_fix_mag {
+	display: none;
+}
+
+// Ale gdy zamówienia ma karty na magazynie, wówczas tak
+table.isleft .card_ilosc_fix_mag {
+	display: table-cell;
+	width: 5em;
+	padding-right: 1em;
+}
 
 /* TABELKI
 */

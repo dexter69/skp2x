@@ -36,12 +36,6 @@
   text-align: right;
   padding-right: 1em; }
 
-/* dla kart, które są na magazynie */
-.card_ilosc_fix_mag {
-  width: 13em;
-  text-align: right;
-  padding-right: 1em; }
-
 .card_cena_fix {
   width: 5em; }
 
@@ -51,6 +45,14 @@
 .card_dpcheck_fix {
   width: 1.5em;
   text-align: center; }
+
+.card_ilosc_fix_mag {
+  display: none; }
+
+table.isleft .card_ilosc_fix_mag {
+  display: table-cell;
+  width: 4em;
+  padding-right: 1em; }
 
 /* TABELKI
 */

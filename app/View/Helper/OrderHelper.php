@@ -8,7 +8,8 @@ class OrderHelper extends AppHelper {
     public $helpers = ['Ma', 'Html', 'Form'];
 
     // All data needed foor displaying card list in thorder
-    public function cardsRelated( $order = [], $evcontrol ) {
+    // $coism mówi czy zalogowany użytkownik może otwierać zamówienia w trybie serwisowym
+    public function cardsRelated( $order = [], $evcontrol, $coism = false ) {
 
         // Jezeli użytkownik może zmieniać status kart, to musimy nadać odpowiednią klasę        
         $ta_klasa = "card_status_fix";
@@ -17,18 +18,26 @@ class OrderHelper extends AppHelper {
         if (!empty($order['Card']) && $evcontrol['bcontr'][push4checking]) {            
             $extraTh = '<th class="card_dpcheck_fix">'.'D'.'</th>'.'<th class="card_dpcheck_fix">'.'P'.'</th>';	            
         }
+        $tbody = $this->tableOfCardsInTheOrder( $order, $evcontrol);
+        $showServo =    $order['Order']['status'] == KONEC && // jest to zakończone zamówienie
+                        $tbody['isleft'] && // ma jakies karty na magazynie
+                        $coism; // zalogowany może otwierać takie zamówienia
         return [
             'viewHeader' => $this->Ma->viewheader('KARTY', array('class' => 'margin02')),
             'ta_klasa' => $ta_klasa,
             'extraTh' => $extraTh,
-            'tbody' => $this->tableOfCardsInTheOrder( $order, $evcontrol)
+            'html' => $tbody['html'], // html części tabeli
+            'sigma' => $tbody['sigma'],
+            'isleft' => $tbody['isleft'],
+            'karty' => $tbody['karty'],
+            'showServo' => $showServo // czy pokazać komponent do otwierania serwisowego
         ];
     }
 
     private function tableOfCardsInTheOrder( $order = [], $evcontrol = [])  {
 
         $cards = $order['Card'];
-        $karty = []; $k=0; $sigma = 0; $trs = [];
+        $karty = []; $k=0; $sigma = 0; $trs = []; $isleft=false;
         foreach ( $cards as $card ) {
             $cells = [];
             $karty[ $card['id'] ]= $card['name'];
@@ -52,6 +61,13 @@ class OrderHelper extends AppHelper {
             $cells[] = [ $link, ['class' => 'card_zlec_fix']];
 
             $cells[] = [ $this->Ma->tys($card['quantity']), ['class' => 'card_ilosc_fix']];
+
+            $ilosc = "";            
+            if( $card['left'] ) {
+                $isleft = true;
+                $ilosc .= "({$card['left']})";
+            }
+            $cells[] = [ $ilosc, ['class' => 'card_ilosc_fix_mag']];
             
             // cena - chcemy, że gdy jest 0, to by program wypisywał "UWAGI"
             $cenka = ( $card['price'] == 0 ? 'UWAGI' : $this->Ma->colon($card['price']));
@@ -75,7 +91,9 @@ class OrderHelper extends AppHelper {
 
         return [
             'html' => $this->Html->tableCells($trs),
-            'sigma' => $sigma
+            'sigma' => $sigma,
+            'isleft' => $isleft,
+            'karty' => $karty
         ];
 		
     }
