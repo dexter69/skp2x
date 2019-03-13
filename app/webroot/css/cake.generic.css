@@ -1116,9 +1116,6 @@ div.ul-events ul li.post div {
 }
 
 div.ul-events ul li.post div:first-child { width: 30%; margin-left: 0; border-right: 5px solid white; position: relative; left: 5px;}
-div.ul-events ul li.post div:last-child { border-left: 5px solid white;  }
-
-
 
 div.ul-events ol.olevent li {
 	
@@ -1160,16 +1157,6 @@ li.post div hr {
 
 div.event-order {
 	margin: 0 12px;
-}
-
-div.event-order fieldset div {
-	/*display: inline-block;
-	vertical-align: top;*/
-}
-
-div.event-order fieldset div.input.textarea {
-	/*width:59%;*/
-	/*width:79%;*/
 }
 
 div.subwrap {
