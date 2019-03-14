@@ -22,6 +22,17 @@ class OrderHelper extends AppHelper {
         $showServo =    $order['Order']['status'] == KONEC && // jest to zakończone zamówienie
                         $tbody['isleft'] && // ma jakies karty na magazynie
                         $coism; // zalogowany może otwierać takie zamówienia
+        
+        $showTheServo = SERVO_NIE; // Nie pokazujemy żadnego info o servo
+        // Zamówienie zawiera przynajmniej jedną kartę (projekt),         
+        if( $tbody['isleft'] ) {  // dla której (którego) jest coś na magazynie
+            // Zamówienie jest zamknięte i zalogowany może otwierać takie zamówienia
+            if( $order['Order']['status'] == KONEC && $coism ) {
+                $showTheServo = SERVO_CLI; // pokazujemy i jest klikalne
+            } else { // tylko pokazujemy
+                $showTheServo = SERVO_VIS; // pokazujemy tylko
+            }            
+        }
         return [
             'viewHeader' => $this->Ma->viewheader('KARTY', array('class' => 'margin02')),
             'ta_klasa' => $ta_klasa,
@@ -30,7 +41,7 @@ class OrderHelper extends AppHelper {
             'sigma' => $tbody['sigma'],
             'isleft' => $tbody['isleft'],
             'karty' => $tbody['karty'],
-            'showServo' => $showServo // czy pokazać komponent do otwierania serwisowego
+            'showServo' => $showTheServo // czy pokazać (i jak) komponent do otwierania serwisowego
         ];
     }
 

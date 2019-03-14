@@ -54,7 +54,7 @@ if( $ppl['jest_zaliczka'] ) { // zamówienie z zaliczką
         </span>
 
         <?php // pokazujemy ewentualnie component do otwierania w trybie serwisowym
-        if( $showServo ) { echo $this->element('orders/view/servo'); } ?>        
+        if( $showServo ) { echo $this->element('orders/view/servo', ['servoValue' => $showServo]); } ?>        
     </p>
     <p class="daty-handlowe">
         

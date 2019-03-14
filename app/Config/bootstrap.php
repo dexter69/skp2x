@@ -131,6 +131,12 @@ Configure::write('CakePdf', array(
 
 define('appVersion', '2.7.01');
 
+/**
+ * Stałe do zamówień/kart serwisowych  */
+ define('SERVO_NIE', 0); // nie jest serwisowe, nie wyświetlamy żadnych ikon, info
+ define('SERVO_VIS', 1); // serwisowe, wyświetlamy info
+ define('SERVO_CLI', 2); // serwisowe, użytkownik może wykonywać akcje - otwierać
+
 define('NA_DZIS_PLUS', '7'); /* decyduje o ile dni opóźnione zamówienia,
 wyświetlają się na liście „na dziś +” */
 
