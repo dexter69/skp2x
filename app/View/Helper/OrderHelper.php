@@ -18,10 +18,7 @@ class OrderHelper extends AppHelper {
         if (!empty($order['Card']) && $evcontrol['bcontr'][push4checking]) {            
             $extraTh = '<th class="card_dpcheck_fix">'.'D'.'</th>'.'<th class="card_dpcheck_fix">'.'P'.'</th>';	            
         }
-        $tbody = $this->tableOfCardsInTheOrder( $order, $evcontrol);
-        $showServo =    $order['Order']['status'] == KONEC && // jest to zakończone zamówienie
-                        $tbody['isleft'] && // ma jakies karty na magazynie
-                        $coism; // zalogowany może otwierać takie zamówienia
+        $tbody = $this->tableOfCardsInTheOrder( $order, $evcontrol);        
         
         $showTheServo = SERVO_NIE; // Nie pokazujemy żadnego info o servo
         // Zamówienie zawiera przynajmniej jedną kartę (projekt),         
