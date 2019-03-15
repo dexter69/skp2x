@@ -35,9 +35,10 @@ class OrdersController extends AppController {
 	
 /**
  * serwis // tzw. zamówienia serwisowe
+ * Prawdopodobnie DEPREC 15.03.2019
  */
 
-	public function serwis($par = null) {
+	public function serwis___($par = null) {
 
 		$par = 'serwis';
 

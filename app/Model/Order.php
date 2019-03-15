@@ -21,7 +21,7 @@ class Order extends AppModel {
 		Order.status, Order.stan_zaliczki, Order.forma_zaliczki		
 		FROM orders `Order`
 		JOIN
-		(SELECT DISTINCT cards.order_id FROM cards where serwis=1) AS Card 
+		(SELECT DISTINCT cards.order_id FROM cards where `left`>0) AS Card 
 		ON Order.id=Card.order_id 
 		JOIN users `User` ON Order.user_id=User.id
 		JOIN customers Customer ON Order.customer_id=Customer.id";
