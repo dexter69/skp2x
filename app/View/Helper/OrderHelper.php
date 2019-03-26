@@ -68,14 +68,15 @@ class OrderHelper extends AppHelper {
             }
             $cells[] = [ $link, ['class' => 'card_zlec_fix']];
 
-            $cells[] = [ $this->Ma->tys($card['quantity']), ['class' => 'card_ilosc_fix']];
-
-            $ilosc = "";            
+            $left = "";            
             if( $card['left'] ) {
                 $isleft = true;
-                $ilosc .= "({$card['left']})";
+                $left = "({$this->Ma->tys($card['left'])})";                
             }
-            $cells[] = [ $ilosc, ['class' => 'card_ilosc_fix_mag']];
+
+            $cells[] = [ $this->Ma->tys($card['quantity']), ['class' => 'card_ilosc_fix']];
+
+            $cells[] = [ $left, ['class' => 'card_ilosc_fix_mag']];
             
             // cena - chcemy, że gdy jest 0, to by program wypisywał "UWAGI"
             $cenka = ( $card['price'] == 0 ? 'UWAGI' : $this->Ma->colon($card['price']));

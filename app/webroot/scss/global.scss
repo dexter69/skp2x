@@ -1,3 +1,18 @@
+@import './order/orders-varibles';
+
+// Gdy zamówienie jest zakończone, to chcemy inny kolor
+$kolor_zawartosci_archived: #eaf8f2;//#d5f1e5;//#ace4cb;//green;//#eef3f8;//#e7eff6;//#eff8ee; //#cbe8c9; //#fff5e0; //#dbd7d6;
+
+.archived #content {
+	background-color: $kolor_zawartosci_archived; 
+}
+
+//poprawka stylistyczna dla zakończonego zamówienia
+.archived dl dd:nth-child(4n+2),
+.archived dl dt:nth-child(4n+1) {
+	background-color: white;
+}
+
 .layout-link {
     padding: 0 0.7em 0 0;
 }
@@ -30,7 +45,7 @@
 /* listing kart */
 .card_id_fix { width: 4em;}
 .card_opcje_fix { width: 7em; }
-.card_zlec_fix { width: 5em;}
+.card_zlec_fix { width: 5em; text-align: right;}
 .card_ilosc_fix { width: 7em; text-align: right; padding-right: 1em;}
 .card_cena_fix { width: 5em; }
 .card_status_fix { width: 9em; }
@@ -46,6 +61,12 @@ table.isleft .card_ilosc_fix_mag {
 	display: table-cell;
 	width: 5em;
 	padding-right: 1em;
+	text-align: right;
+}
+
+//kolor nagłówka w tabeli
+table.isleft th.card_ilosc_fix_mag {
+	color: $vis-color;
 }
 
 /* TABELKI

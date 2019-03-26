@@ -177,11 +177,12 @@ dl.in-order {
 
 .ikony-handlowe .servo {
   font-size: 83%;
-  padding: 6px 4.31px 0 10px;
-  color: lightseagreen; }
+  padding: 6px 4.31px 0 5px;
+  color: #666666; }
 
 .ikony-handlowe .servo.ukryty {
   display: none; }
 
 #servo-span {
-  cursor: pointer; }
+  cursor: pointer;
+  color: #20b2aa; }

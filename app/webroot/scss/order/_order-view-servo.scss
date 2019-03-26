@@ -2,14 +2,15 @@
 
 .ikony-handlowe .servo {
    font-size: 83%;
-   padding: 6px 4.31px 0 10px;
-   color: lightseagreen;
+   padding: 6px 4.31px 0 5px;
+   color: $vis-color;
 }
 
 .ikony-handlowe .servo.ukryty {
-      display: none;
-}
+      display: none;    
+}   
 
 #servo-span {
       cursor: pointer;
+      color: $click-color;
 }

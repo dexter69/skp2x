@@ -5,9 +5,9 @@
         <th class="card_id_fix">Id</th>
         <th>Nazwa</th>
         <th class="card_opcje_fix">Opcje</th>		
-        <th class="card_zlec_fix">Zlecenie(P)</th>		
+        <th class="card_zlec_fix">Zlec.(P)</th>		
         <th class="card_ilosc_fix">Ilość</th>
-        <th class="card_ilosc_fix_mag"></th>
+        <th class="card_ilosc_fix_mag"><i class="fa fa-cubes" aria-hidden="true"></i></th>
         <th class="card_cena_fix">Cena</th>
         <th class="<?php echo $ta_klasa; ?>">Status</th>
         <?php echo $extraTh ?>			

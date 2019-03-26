@@ -44,7 +44,14 @@ $cakeDescription = __d('cake_dev', 'SKP');
 
     ?>
 </head>
-<body>        
+<?php
+	if( isset($konec) && $konec ) {
+		$bstr = " class='archived'";
+	} else {
+		$bstr = "";
+	}	
+?>
+<body <?php echo $bstr;?>>        
 	<div id="container">
 		<div id="header">			
 			<?=	$this->element('forLayouts/leftIcons', ['departament' => $departament] ); ?>

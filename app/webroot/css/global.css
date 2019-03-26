@@ -1,4 +1,11 @@
 @charset "UTF-8";
+.archived #content {
+  background-color: #eaf8f2; }
+
+.archived dl dd:nth-child(4n+2),
+.archived dl dt:nth-child(4n+1) {
+  background-color: white; }
+
 .layout-link {
   padding: 0 0.7em 0 0; }
 
@@ -29,7 +36,8 @@
   width: 7em; }
 
 .card_zlec_fix {
-  width: 5em; }
+  width: 5em;
+  text-align: right; }
 
 .card_ilosc_fix {
   width: 7em;
@@ -51,8 +59,12 @@
 
 table.isleft .card_ilosc_fix_mag {
   display: table-cell;
-  width: 4em;
-  padding-right: 1em; }
+  width: 5em;
+  padding-right: 1em;
+  text-align: right; }
+
+table.isleft th.card_ilosc_fix_mag {
+  color: #666666; }
 
 /* TABELKI
 */
