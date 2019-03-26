@@ -387,11 +387,8 @@ class OrdersController extends AppController {
 		/*
 		*  Chcemy móc modyfikować status kart*/
 		$order['Order'] = $this->addStatusModCap($order['Order']);
-		if( $order['Order']['status'] == KONEC) { // zamówienie jest zakończone
-			$konec = 1;
-		} else {
-			$konec = 0;
-		}
+		// Dla wyświetlania widoku zamówienia w innym kolorze, gdy jest ZAMKNIĘTE
+		$konec = $order['Order']['status'] == KONEC;
 		$coism = $this->Auth->user('COISM');
 		$this->set( compact('order', 'evcontrol', 'users', 'ludz', 'vju', 'evtext', 'coism', 'konec') );
 		//$this -> render('druknij');

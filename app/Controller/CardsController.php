@@ -206,20 +206,11 @@ class CardsController extends AppController {
             $vju = $this->Card->get_view_options();
             //$card['Card']['upc'] = $this->userPersoChange();
             $card['Card']['pvis'] = $this->userPersoVis();
+            // Dla wyświetlania widoku karty w innym kolorze gdy jest ZAMKNIĘTA
+            $konec = $card['Card']['status'] == KONEC;
             $limited = $this->limitedView;
-            $this->set(compact('card', 'evcontrol', 'links', 'vju', 'limited'));
-
-            //test
-            /*
-             * 
-             * 
-
-            $this->layout='pdf/default';
-            $this->render('pdf/view');
-             * 
-             * 
-             */
-                 
+            $this->set(compact('card', 'evcontrol', 'links', 'vju', 'limited', 'konec'));
+                             
 	}       
         
         private function userPersoVis() {

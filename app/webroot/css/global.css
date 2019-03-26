@@ -63,7 +63,7 @@ table.isleft .card_ilosc_fix_mag {
   padding-right: 1em;
   text-align: right; }
 
-table.isleft th.card_ilosc_fix_mag {
+table.isleft th.card_ilosc_fix_mag, #cardviewdl dd i {
   color: #666666; }
 
 /* TABELKI

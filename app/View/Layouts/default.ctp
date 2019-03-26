@@ -44,7 +44,7 @@ $cakeDescription = __d('cake_dev', 'SKP');
 
     ?>
 </head>
-<?php
+<?php // dodatkowa klasa do wyświetlania tła w innym kolorze dla zakkończonych zamówień
 	if( isset($konec) && $konec ) {
 		$bstr = " class='archived'";
 	} else {

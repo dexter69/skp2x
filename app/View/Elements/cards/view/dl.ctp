@@ -52,8 +52,13 @@
     
     if( !$limited ) {
         $this->Proof->dtdd('Cena', $comm['cena']);
-    }    
-    $this->Proof->dtdd('Ilość', $comm['ilosc']);
+    }
+    if( $card['left']>0 ) { 
+        $iladd = " (<i class='fa fa-cubes' aria-hidden='true'></i> {$this->Ma->tys($card['left'])})";
+    } else {
+        $iladd = "";
+    }
+    $this->Proof->dtdd('Ilość', $comm['ilosc'] . $iladd);
     
     if( $card['status'] == PRIV && $order['id'] )
         { $dd = 'ZAŁĄCZONA'; }
