@@ -129,7 +129,11 @@ Configure::write('CakePdf', array(
 	//'filename' => 'example.pdf'	
 ));
 
+// Dla rozróżnienia wersji dev i prod
+// To uzywamy w WebixHelper
 define('appVersion', '2.7.01');
+// A to w AppHelper
+define('appNumber', '2019-04-01'); // Just date
 
 /**
  * Stałe do zamówień/kart serwisowych  */
@@ -149,9 +153,6 @@ if( DS == WIN) { // We are on Windows!
 } else { // We are on Linux!
     Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');     
 }
-
-//Configure::write('CakePdf.binary', 'C:\wkhtmltopdf\bin\wkhtmltopdf.exe');
-//Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');
 
 /*
 Lepsza wersja sprawdzania NIP'u */

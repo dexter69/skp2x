@@ -27,17 +27,14 @@ $cakeDescription = __d('cake_dev', 'SKP');
             <?php echo $title_for_layout; ?>
     </title>
     <?php
-            echo $this->Html->meta('icon');
-            //echo $this->Html->script(array('jquery', 'funkcje')); 
-            echo $this->Html->script(array('lib/jquery-2.1.4.min', 'funkcje')); 
-            echo $this->Html->script('common.js?v=201804031259' /*. time()*/, array('block' => 'scriptBottom'));
-            echo $this->Html->css(array(
-				'cake.generic.css?v=' . time(),
-				'global.css?v=' . time(),
-				'font-awesome-4.6.1/css/font-awesome.min.css?v=201804041230'
-			));
-			
+            echo $this->Html->meta('icon');            
+            		
+			echo $this->Html->css($this->App->makeCssJsTable(["cake.generic", "global", "font-awesome-4.6.1/css/font-awesome.min"], "css"));
+					
+			echo $this->Html->script($this->App->makeCssJsTable(["lib/jquery-2.1.4.min", "funkcje"], 'js'));
 
+			echo $this->Html->script($this->App->makeCssJsTable(["common"], 'js'), ['block' => 'scriptBottom']);
+			
             echo $this->fetch('meta');
             echo $this->fetch('css');
             echo $this->fetch('script');

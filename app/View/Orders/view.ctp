@@ -2,8 +2,15 @@
 //echo $this->App->print_r2($order['Order']);
 //echo $order['Order']['status'];
 
-echo $this->Html->css(array('order', 'order/order.css?v=' . time()), array('inline' => false));
-echo $this->Html->script(array('event', 'order-view', 'order/pay', 'order/servo.js?v=' . time()), array('inline' => false)); 
+echo $this->Html->css(    
+    $this->App->makeCssJsTable(["order", "order/order"], 'css'),    
+    ['inline' => false]
+);
+
+echo $this->Html->script(
+    $this->App->makeCssJsTable(['event', 'order-view', 'order/pay', 'order/servo'], 'js'),    
+    ['inline' => false]
+); 
 echo $this->Ma->walnijJqueryUI();
 $this->Ma->displayActions('orders');
 

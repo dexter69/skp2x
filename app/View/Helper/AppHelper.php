@@ -30,6 +30,20 @@ App::uses('Helper', 'View');
  */
 class AppHelper extends Helper {
 
+    //Stwórz tablcę plikow css lub js odpowiednio dla wersjis css lub js
+    public function makeCssJsTable( $inArrOfFiles = [], $what = 'css') {
+
+        // W zależności, czy jesteśmy na DEv czy na PROD, to zwracamy odpowiedni suffix do linków css i js
+        $retArr = [];
+        if( !empty($inArrOfFiles) && ($what == 'css' || $what == 'js') ) { // bo inaczej nie ma co robić
+            $suffix = (DS == WIN ? time() : appNumber); 
+            foreach( $inArrOfFiles as $str ) {
+                $retArr[] = "$str.$what?v=$suffix";
+            }
+        }
+        return $retArr;
+    }
+
     public function bnr2nrj($bnr = null, $inicjaly = null, $ishtml = true) {
 		
 		if($bnr && $bnr > BASE_NR) {
