@@ -200,12 +200,6 @@ ul#fileList li div:last-child {
 
 #persokeep { width: 45%; vertical-align: top;}
 
-#persokeep > select {
-/*    position:relative;
-    top:-41px;
-    left: 180px;*/
-}
-
 .perso-types { margin: 0; padding: 0; }
 
 .perso-types > div {
@@ -216,8 +210,7 @@ ul#fileList li div:last-child {
 }
 
 .perso-types input[type=checkbox] {
-    float: none;
-    width: auto;
+    float: none;    
     display: inline;
 }
 
