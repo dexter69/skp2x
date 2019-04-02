@@ -42,6 +42,22 @@ Definicje opisujące elemety uzywane w obłudze dodawania/edycji kart w trybie m
 #CardAddForm .multi-wrap > div.zz > input {
   margin: 3px 6px 0 0; }
 
+/*
+definicje związane z nagłówkiem kartry */
+.karta-header > * {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: top; }
+
+.karta-header > .cechy-wrap.wju {
+  padding: 0;
+  margin: 1px 0 0 5px; }
+
+.karta-header a i {
+  font-size: 130%;
+  margin: 1px 0 0 10px; }
+
 #karty tr.problem {
   background-color: #ffefb5; }
 

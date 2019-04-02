@@ -1,0 +1,20 @@
+/*
+definicje związane z nagłówkiem kartry */
+
+
+.karta-header > * {
+    display: inline-block;
+    margin: 0;
+    padding: 0;    
+    vertical-align: top;
+}
+
+.karta-header > .cechy-wrap.wju {
+    padding: 0;
+    margin: 1px 0 0 5px;
+}
+
+.karta-header a i {
+    font-size: 130%;
+    margin: 1px 0 0 10px;
+}

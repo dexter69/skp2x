@@ -951,7 +951,7 @@ class MaHelper extends AppHelper {
 				case 'card':
 					$zwrot = $this->Html->link('<div></div>', 
 								array('controller' => 'cards', 'action' => 'edit', $objid),
-								array('class' => 'edlink',  'escape' =>false)
+								array('class' => 'edlink karta',  'escape' =>false)
 					);
 				break;
 				case 'customer':

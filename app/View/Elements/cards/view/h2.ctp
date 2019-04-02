@@ -15,10 +15,12 @@ if( $card['pvis'] ) {
     echo '<h2 class="hfiltry">' . $this->Ma->indexFiltry('cards', $klasa) . '</h2>';
 }
 ?>
-<h2><?php 	
-    echo '<span>'.$card['name'].'</span>' . 
-    $this->Ma->editlink('card', $card['id']); 
-    echo $this->Ma->cechyKarty( $card, 'wju' );
-?>
+
+<h2 class="karta-header">
+    <span><?php echo $card['name']; ?></span>
+    <a href="/cards/edit/<?php echo $card['id']; ?>" title="Edycja karty">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </a>
+    <?php echo $this->Ma->cechyKarty( $card, 'wju' ); ?>
 </h2>
 <?php $this->Ma->nawiguj( $links, $card['id'] ); //nawigacyjne do dodaj, usuń, edycja itp.

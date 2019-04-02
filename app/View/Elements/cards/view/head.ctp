@@ -1,7 +1,7 @@
 <?php 
 //echo '<pre>';	print_r($juzer); echo  '</pre>'; 
 
-$options = array('card.css?v=201701241015');
+$options = $this->App->makeCssJsTable(["card"], 'css'); //array('card.css?v=201701241015');
 $js_arr = array('card-perso');
 
 echo $this->Html->css( $options, null, array('inline' => false));
