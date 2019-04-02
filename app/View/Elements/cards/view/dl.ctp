@@ -64,7 +64,7 @@
         { $dd = 'ZAŁĄCZONA'; }
     else
         { $dd =  $this->Ma->status_karty($card['status']); }
-    $this->Proof->dtdd('Status', $dd);
+    $this->Proof->dtdd('Status', $dd, "", "status");
     
     //etykieta
     $strety = $etykieta[$card['etykieta']];

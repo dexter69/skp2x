@@ -58,6 +58,10 @@ definicje związane z nagłówkiem kartry */
   font-size: 130%;
   margin: 1px 0 0 10px; }
 
+.archived .status {
+  color: crimson;
+  font-weight: bolder; }
+
 #karty tr.problem {
   background-color: #ffefb5; }
 

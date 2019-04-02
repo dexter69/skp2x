@@ -163,8 +163,11 @@ class ProofHelper extends AppHelper {
     
     
     // uproszczenie w cakowych widokach
-    public function dtdd( $dt = null, $dd = null) {
-            echo "<dt>$dt</dt><dd>$dd&nbsp;</dd>";
+    public function dtdd( $dt = null, $dd = null, $dtclass = "", $ddclass = "") {
+
+        if( $dtclass ) { $dtclass = " class='$dtclass'";}
+        if( $ddclass ) { $ddclass = " class='$ddclass'";}
+        echo "<dt$dtclass>$dt</dt><dd$ddclass>$dd&nbsp;</dd>";
     }
     
     public function dd( $dd = null, $atr = array() ) {
