@@ -17,6 +17,7 @@ if( $card['pvis'] ) {
 ?>
 
 <h2 class="karta-header">
+    <i class="fa fa-cubes" aria-hidden="true"></i>
     <span><?php echo $card['name']; ?></span>
     <a href="/cards/edit/<?php echo $card['id']; ?>" title="Edycja karty">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>

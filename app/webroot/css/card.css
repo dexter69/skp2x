@@ -58,8 +58,13 @@ definicje związane z nagłówkiem kartry */
   font-size: 130%;
   margin: 1px 0 0 10px; }
 
+.karta-header i {
+  font-size: 107%;
+  margin: 1px 0 0 10px;
+  color: #666666; }
+
 .archived .status {
-  color: crimson;
+  color: red;
   font-weight: bolder; }
 
 #karty tr.problem {
