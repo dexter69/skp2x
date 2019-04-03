@@ -14,10 +14,12 @@ if( $card['pvis'] ) {
     );
     echo '<h2 class="hfiltry">' . $this->Ma->indexFiltry('cards', $klasa) . '</h2>';
 }
+
+$extraicon = ($card['left'] ? '<i class="fa fa-cubes" aria-hidden="true"></i>' : "");
 ?>
 
-<h2 class="karta-header">
-    <i class="fa fa-cubes" aria-hidden="true"></i>
+<h2 class="karta-header">    
+    <?php echo $extraicon; ?>
     <span><?php echo $card['name']; ?></span>
     <a href="/cards/edit/<?php echo $card['id']; ?>" title="Edycja karty">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
