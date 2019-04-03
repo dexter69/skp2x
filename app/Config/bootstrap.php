@@ -413,34 +413,29 @@ define('rPUBLI_SAL', 9); //publikacja super wszystkich zamówień
 // #################################################
 //Stałe for events / submits
 
-// dla job - stare
+/**
+ * Te wygladają na nieużywane - nie ma w bazie zdrzeń o tych wartościach,
+ * ale są zdefiniowane w kodzie, więc kiedyś trzeba zrobić porządek
+ * 2019-04-03
+define('eREJ_F', 26); - to w ogóle nigdzie nie jest
 
-
-define('eJ_FILE', 23); // Marek wykonał pliki produkcyjne
-
-
-//define('eDTP_REJ', 24);  Marek odrzucił (ma nieprawidłowe lub niekompletne dane)
-
-//define('eKOR_POP', 25);  Adam/Jola poprawił
-define('eREJ_F', 26); // Koordynator odzrucił pliki DTP
+ *  */
 define('ePUSH2B', 27); // Przekazanie pani Beci do 
 define('eB_REJ', 28); // Becia odrzuca
 define('eB_REJ2KOR', 29); // Becia odrzuca do koordynatora
 define('eB_REJ2DTP', 30); // Becia odrzuca do Marka
-
 define('eK_POP4B', 32); // Adam/Jola poprawił dla Beci
 define('eK_PUSHDTP', 33); // Adam/Jola przekazał do Franka
 
 
+// dla job - stare
 
+
+define('eJ_FILE', 23); // Marek wykonał pliki produkcyjne
 define('sDAFC', 3);		// DTP ask for correct - Marek czeka na korekte
-
 define('sHAS_F', 4);	// Job z plikami od Marka
-
-
 define('sASKOR', 6); 	// Czeka na poprawe przez kor.
 define('sASKDTP', 7); 	// Czeka na poprawe przez Franka
-
 define('sB_REJ', 11); 	// Odrzucone przez Becie
 
 
