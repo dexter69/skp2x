@@ -16,14 +16,13 @@ $(function() {
         servoSpinnerON(); // Włącz kręciołe
         let  servoPosting = $.post( servoUrl, { "id": orderId4servo } );
 
-        servoPosting.done(function( answer ) { 
-            servoSpinnerON(false); // Wyłącz kręciołe
+        servoPosting.done(function( answer ) {             
             servoDone( answer );
         });
 
         servoPosting.fail( function(){
             servoSpinnerON(false); // Wyłącz kręciołe
-            servoFail( servoPosting.status, servoPosting.status );
+            servoFail( servoPosting.status, orderId4servo );
         });
     });    
 });
@@ -48,16 +47,24 @@ function servoSpinnerON( action = true ) {
  * @param { object } dataFromServer - odpowiedź serwera */
 
 function servoDone( dataFromServer ) {
-    console.log( dataFromServer);
+    //console.log( dataFromServer);
+    if( dataFromServer.success ) { // znaczy: pomyślnie udało się otworzyć zamówienie
+        //console.log("Yupii!");
+        location.reload(true); // przeładuj stronę
+    } else { // W razie błędu
+        servoSpinnerON(false); // Wyłącz kręciołe
+        console.log("Nie udało się otworzyć zamówienia!");
+    }
+    
 }
 
 /**
  * Obsługa błędu przy komunikacji  */
-function servoFail( status, theReirectUrl ) {
-    console.log(status + ", " + theReirectUrl);
+function servoFail( status, theRedirectUrl ) {
+    console.log(status + ", " + theRedirectUrl);
     if( status === 403) { // traktujemy to, że użytkownik nie jest zalogowany
         // przekierowujemy do logowania
-        location.assign(theReirectUrl);
+        location.assign(theRedirectUrl);
     } else {
         console.log("FAIL-Y");
         printErr(4124); // zdefiniowana w order/pay.js

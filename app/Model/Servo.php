@@ -11,14 +11,26 @@ class Servo extends AppModel {
     public $useTable = 'orders';
 
     public $fieldsWeWant = [ // za wyjątkiem $hasMany => to mamy w relacji
-        'Servo.id', 'Servo.nr', 'Servo.status',
+        'Servo.id', 'Servo.status',
     ]; 
    
     public $hasMany = array(
+        /*
         'Card' => array(
             //'foreignKey' => 'order_id',
-            'fields' => array('Card.id', 'Card.name', 'Card.status')
-        )       
+            'fields' => array('Card.id', 'Card.name', 'Card.status', 'Card.left')
+        ),
+        */
+        // Tylko te karty tego zamówienia, które są na magazynie
+        'ServoCard' => [
+            'fields' => ['ServoCard.id', //'ServoCard.name',
+             'ServoCard.status'//, 'ServoCard.left'
+            ],
+            'conditions' => ['ServoCard.left >' => 0],  
+        ],
+        'Event' => [
+            'foreignKey' => 'order_id'
+        ]
     );    
     
 }

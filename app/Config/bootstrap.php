@@ -528,17 +528,30 @@ define('odemknij', 25); /* odemknij zamknięte zamówienie, czyli nadaj statusy:
  42 - wszystkim kartom tego handlowego 
  66 - temu handlowemu
  28 - odpowiadającemu mu produkcyjnemu */
-
+ define('servopen', 26); // odemknij zamówienie w trybie serwisowym
 // prepaid update - zdarzenia aktualizacji przedpłaty
 define('pp_red', 120); // stan wyjściowy - ustawienie "brak wpłaty"
 define('pp_ora', 121); // - ustawienie "jest potwierdzenie"
 define('pp_gre', 122); // - ustawienie "jest wpłata"
 
-/*define('fix_k', 10); 
-define('fix_o1', 11); 
-define('fix_o2', 12); */
-
-/**/
+//zdarzenia dla zleceń
+define('eJPUBLI',21); // publikacja zlecenia
+define('eJKOM',22); // wystawiono komentarz do zlecenia
+define('eJ_FILE1', 41); // Frank wykonał pliki produkcyjne (wstępnie dla Joli)
+define('eJF_BACK', 42); // Jola zwróciła - plik/i do poprawy
+define('eJF_OK', 43); // Jola zaakceptowała pliki
+define('eJ_FILE2', 44); // Frank wykonał pliki produkcyjne (ponownie dla Joli)
+define('eJ_B2KOR', 45); // Becia odrzuca do koordynatora
+define('eJ_B2DTP', 46); // Becia odrzuca do DTP
+define('eJ_FILE3', 47); // Frank poprawia/przekazuje do Beci
+define('eJ_KOR2B', 48); // Jola poprawiła i przesłała do Beci
+define('eJ_KOR2DTP', 49); // Jola przesłała do Franka
+define('eJ_ACC', 50); // Becia akceptuje
+define('eJ_COF2KOR', 51); // Becia cofa do Joli zlecenie będące w produkcji (jkaiś problem)
+define('eJ_COF2DTP', 52); // Becia cofa do Franka zlecenie będące w produkcji (jkaiś problem)
+define('eJ_KBACK', 53); //Jola z powrotem do Beci (po poprawie)
+define('eJ_DBACK', 54); //Frank z powrotem do Beci (po poprawie)
+define('eJB_UNPAUSE', 55); //Becia OK'ła
 
 
 
@@ -561,23 +574,6 @@ define('sPAUSE4D', 30); // W produkcji, ale cofnięte do dtp
 define('sBACK2B', 31); // Spauzowane, poprawione, czeka na decyzje Beci
 
 
-//zdarzenia
-define('eJPUBLI',21); // publikacja zlecenia
-define('eJKOM',22); // wystawiono komentarz do zlecenia
-define('eJ_FILE1', 41); // Frank wykonał pliki produkcyjne (wstępnie dla Joli)
-define('eJF_BACK', 42); // Jola zwróciła - plik/i do poprawy
-define('eJF_OK', 43); // Jola zaakceptowała pliki
-define('eJ_FILE2', 44); // Frank wykonał pliki produkcyjne (ponownie dla Joli)
-define('eJ_B2KOR', 45); // Becia odrzuca do koordynatora
-define('eJ_B2DTP', 46); // Becia odrzuca do DTP
-define('eJ_FILE3', 47); // Frank poprawia/przekazuje do Beci
-define('eJ_KOR2B', 48); // Jola poprawiła i przesłała do Beci
-define('eJ_KOR2DTP', 49); // Jola przesłała do Franka
-define('eJ_ACC', 50); // Becia akceptuje
-define('eJ_COF2KOR', 51); // Becia cofa do Joli zlecenie będące w produkcji (jkaiś problem)
-define('eJ_COF2DTP', 52); // Becia cofa do Franka zlecenie będące w produkcji (jkaiś problem)
-define('eJ_KBACK', 53); //Jola z powrotem do Beci (po poprawie)
-define('eJ_DBACK', 54); //Frank z powrotem do Beci (po poprawie)
-define('eJB_UNPAUSE', 55); //Becia OK'ła
+
 
 

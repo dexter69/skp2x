@@ -161,130 +161,133 @@ class AppModel extends Model {
     
     //wyświetlanie tekstów o zdarzeniach
     public $eventText = array(
-            ZERO => array(
-                    '',
-                    '','class' => 'zadna'),
-            publi => array(
-                    'złożył zamówienie',
-                    'złożyła zamówienie','class' => 'pom'),
-            kor_ok => array(
-                    'zatwierdził zamówienie',
-                    'zatwierdziła zamówienie','class' => 'ziel'),
-            kor_no => array(
-                    'odrzucił zamówienie',
-                    'odrzuciła zamówienie','class' => 'czer'),
-            d_ok => array(
-                    'zatwierdził kartę: ',
-                    'zatwierdziła kartę: ','class' => 'ziel'),
-            d_no => array(
-                    'odrzucił kartę: ',
-                    'odrzuciła kartę: ','class' => 'czer'),
-            p_ok => array(
-                    'zatwierdził perso: ',
-                    'zatwierdziła perso: ','class' => 'ziel'),
-            p_no => array(
-                    'odrzucił perso: ',
-                    'odrzuciła perso: ','class' => 'czer'),
-            p_ov => array(
-                    'zakończył personalizację: ',
-                    'zakończyła personalizację: ','class' => 'ziel'),
+        ZERO => array(
+                '',
+                '','class' => 'zadna'),
+        publi => array(
+                'złożył zamówienie',
+                'złożyła zamówienie','class' => 'pom'),
+        kor_ok => array(
+                'zatwierdził zamówienie',
+                'zatwierdziła zamówienie','class' => 'ziel'),
+        kor_no => array(
+                'odrzucił zamówienie',
+                'odrzuciła zamówienie','class' => 'czer'),
+        d_ok => array(
+                'zatwierdził kartę: ',
+                'zatwierdziła kartę: ','class' => 'ziel'),
+        d_no => array(
+                'odrzucił kartę: ',
+                'odrzuciła kartę: ','class' => 'czer'),
+        p_ok => array(
+                'zatwierdził perso: ',
+                'zatwierdziła perso: ','class' => 'ziel'),
+        p_no => array(
+                'odrzucił perso: ',
+                'odrzuciła perso: ','class' => 'czer'),
+        p_ov => array(
+                'zakończył personalizację: ',
+                'zakończyła personalizację: ','class' => 'ziel'),
         h_ov => array(
                 'zakończył hotstamping: ',
                 'zakończyła hotstamping: ','class' => 'ziel'),
-            put_kom => array(
-                    'napisał',
-                    'napisała','class' => 'pom'),
-            fix_o => array(
-                    'poprawił zamówienie',
-                    'poprawiła zamówienie','class' => 'pom'),
-            send_o => array(
-                    'zakończył zamówienie',
-                    'zakończyła zamówienie','class' => 'ziel'),
-            unlock_o => array(
-                    'odblokował zamówienie',
-                    'odblokowała zamówienie','class' => 'pom'),
-            unlock_again => array(
-                    'zwrócił uzupełnione zamówienie',
-                    'zwróciła uzupełnione zamówienie','class' => 'czer'),
-            update_o  => array(
-                    'uzupełnił zamówienie',
-                    'uzupełniła zamówienie','class' => 'pom'),	
-            klepnij => array(
-                    'zaakceptował uzupełnione zamówienie',
-                    'zaakceptowała uzupełnione zamówienie','class' => 'ziel'),	
-            push4checking => array(
-                    'przekazał do sprawdzenia DTP/P',
-                    'przekazała do sprawdzenia DTP/P','class' => 'pom'),
-            odemknij => array(
-                    'otworzył zamówienie',
-                    'otworzyła zamówienie','class' => 'pom'),
-            eJPUBLI => array(
-                    'złożył zlecenie',
-                    'złożyła zlecenie','class' => 'pom'),
-            eJKOM => array(
-                    'napisał',
-                    'napisała','class' => 'pom'),
-            eJ_FILE1 => array(
-                    'załączył pliki',
-                    'załączyła pliki','class' => 'pom'),
-            eJ_FILE2 => array(
-                    'załączył pliki',
-                    'załączyła pliki','class' => 'pom'),
-            eJ_FILE3 => array(
-                    'poprawił',
-                    'poprawiła','class' => 'pom'),
-            eJF_BACK => array(
-                    'odrzucił pliki',
-                    'odrzuciła pliki','class' => 'czer'),
-            eJF_OK => array(
-                    'zaakceptował pliki',
-                    'zaakceptowała pliki','class' => 'ziel'),
-            eJ_KOR2B => array(
-                    'poprawił zlecenie',
-                    'poprawiła zlecenie','class' => 'pom'),
-            eJ_KOR2DTP => array(
-                    'odrzucił pliki',
-                    'odrzuciła pliki','class' => 'czer'),
-            ePUSH2B => array(
-                    'zatwierdził pliki',
-                    'zatwierdziła pliki','class' => 'ziel'),
-            eJ_B2KOR => array(
-                    'zwrócił na biurko',
-                    'zwróciła na biurko','class' => 'czer'),
-            eJ_COF2KOR => array(
-                    'zwrócił na biurko',
-                    'zwróciła na biurko','class' => 'czer'),
-            eJ_COF2DTP => array(
-                    'zwrócił do DTP',
-                    'zwróciła do DTP','class' => 'czer'),
-            eJB_UNPAUSE => array(
-                    'zaakceptował',
-                    'zaakceptowała','class' => 'ziel'),
-            eJ_KBACK =>	 array(
-                    'poprawił',
-                    'poprawiła','class' => 'pom'),
-            eJ_DBACK =>	 array(
-                    'poprawił',
-                    'poprawiła','class' => 'pom'),
-            eB_REJ => array(
-                    'zwrócił',
-                    'zwróciła','class' => 'czer'),
-            eJ_B2DTP => array(
-                    'zwrócił do DTP',
-                    'zwróciła do DTP','class' => 'czer'),
-            eJ_ACC => array(
-                    'zatwierdził',
-                    'zatwierdziła','class' => 'ziel'),
-            // zdarzenia przedpłaty
-            pp_red => array(
-                    'BRAK WPŁATY',
-                    'BRAK WPŁATY','class' => 'czer'),
-            pp_ora => array(
-                    'JEST POTWIERDZENIE',
-                    'JEST POTWIERDZENIE','class' => 'pom'),
-            pp_gre => array(
-                    'JEST WPŁATA',
-                    'JEST WPŁATA','class' => 'ziel')
+        put_kom => array(
+                'napisał',
+                'napisała','class' => 'pom'),
+        fix_o => array(
+                'poprawił zamówienie',
+                'poprawiła zamówienie','class' => 'pom'),
+        send_o => array(
+                'zakończył zamówienie',
+                'zakończyła zamówienie','class' => 'ziel'),
+        unlock_o => array(
+                'odblokował zamówienie',
+                'odblokowała zamówienie','class' => 'pom'),
+        unlock_again => array(
+                'zwrócił uzupełnione zamówienie',
+                'zwróciła uzupełnione zamówienie','class' => 'czer'),
+        update_o  => array(
+                'uzupełnił zamówienie',
+                'uzupełniła zamówienie','class' => 'pom'),	
+        klepnij => array(
+                'zaakceptował uzupełnione zamówienie',
+                'zaakceptowała uzupełnione zamówienie','class' => 'ziel'),	
+        push4checking => array(
+                'przekazał do sprawdzenia DTP/P',
+                'przekazała do sprawdzenia DTP/P','class' => 'pom'),
+        odemknij => array(
+                'otworzył zamówienie',
+                'otworzyła zamówienie','class' => 'pom'),
+        servopen => array(
+                'otworzył zamówienie w trybie serwisowym',
+                'otworzyła zamówienie w trybie serwisowym','class' => 'pom'),
+        eJPUBLI => array(
+                'złożył zlecenie',
+                'złożyła zlecenie','class' => 'pom'),
+        eJKOM => array(
+                'napisał',
+                'napisała','class' => 'pom'),
+        eJ_FILE1 => array(
+                'załączył pliki',
+                'załączyła pliki','class' => 'pom'),
+        eJ_FILE2 => array(
+                'załączył pliki',
+                'załączyła pliki','class' => 'pom'),
+        eJ_FILE3 => array(
+                'poprawił',
+                'poprawiła','class' => 'pom'),
+        eJF_BACK => array(
+                'odrzucił pliki',
+                'odrzuciła pliki','class' => 'czer'),
+        eJF_OK => array(
+                'zaakceptował pliki',
+                'zaakceptowała pliki','class' => 'ziel'),
+        eJ_KOR2B => array(
+                'poprawił zlecenie',
+                'poprawiła zlecenie','class' => 'pom'),
+        eJ_KOR2DTP => array(
+                'odrzucił pliki',
+                'odrzuciła pliki','class' => 'czer'),
+        ePUSH2B => array(
+                'zatwierdził pliki',
+                'zatwierdziła pliki','class' => 'ziel'),
+        eJ_B2KOR => array(
+                'zwrócił na biurko',
+                'zwróciła na biurko','class' => 'czer'),
+        eJ_COF2KOR => array(
+                'zwrócił na biurko',
+                'zwróciła na biurko','class' => 'czer'),
+        eJ_COF2DTP => array(
+                'zwrócił do DTP',
+                'zwróciła do DTP','class' => 'czer'),
+        eJB_UNPAUSE => array(
+                'zaakceptował',
+                'zaakceptowała','class' => 'ziel'),
+        eJ_KBACK =>	 array(
+                'poprawił',
+                'poprawiła','class' => 'pom'),
+        eJ_DBACK =>	 array(
+                'poprawił',
+                'poprawiła','class' => 'pom'),
+        eB_REJ => array(
+                'zwrócił',
+                'zwróciła','class' => 'czer'),
+        eJ_B2DTP => array(
+                'zwrócił do DTP',
+                'zwróciła do DTP','class' => 'czer'),
+        eJ_ACC => array(
+                'zatwierdził',
+                'zatwierdziła','class' => 'ziel'),
+        // zdarzenia przedpłaty
+        pp_red => array(
+                'BRAK WPŁATY',
+                'BRAK WPŁATY','class' => 'czer'),
+        pp_ora => array(
+                'JEST POTWIERDZENIE',
+                'JEST POTWIERDZENIE','class' => 'pom'),
+        pp_gre => array(
+                'JEST WPŁATA',
+                'JEST WPŁATA','class' => 'ziel')
 
     );
     

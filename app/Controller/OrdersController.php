@@ -364,21 +364,21 @@ class OrdersController extends AppController {
 		$vju = $this->Order->get_view_options();
 		foreach( $users as $value) {
 			$ludz[$value['User']['id']] = array('name'=>$value['User']['name'], 'k'=>$value['User']['k'], 'enotif'=>$value['User']['enotif']);
-                }
-		//$evtext = $this->evtext2;
-                $evtext = $this->Order->eventText;
-                
-                $this->pdfConfig = array(
-                    'margin' => array(
-                        'bottom' => 7,
-                        'left' => 25,
-                        'right' => 7,
-                        'top' => 7
-                    ),
-                    'orientation' => //'landscape', 
-                                    'portrait',
-                    'filename' => /*'Zamowienie_' . */$this->bnr2nrh2($order['Order']['nr'],$order['User']['inic'],false, '-')
-                 );
+        }
+		
+		$evtext = $this->Order->eventText;
+		
+		$this->pdfConfig = array(
+			'margin' => array(
+				'bottom' => 7,
+				'left' => 25,
+				'right' => 7,
+				'top' => 7
+			),
+			'orientation' => //'landscape', 
+							'portrait',
+			'filename' => /*'Zamowienie_' . */$this->bnr2nrh2($order['Order']['nr'],$order['User']['inic'],false, '-')
+			);
                 
 		/* kwestia czy wyświetlać danemu użytkownikowi info o przedpłacie
 		* oraz czy można klikać i (co za tym idzie) zmieniać stan zaliczki                 * 
