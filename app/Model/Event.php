@@ -128,7 +128,7 @@ class Event extends AppModel {
                     }
                 }
             } else {
-                $wynik = array('ok' => false, 'msg' => 'Nie moge zakończyć zamówienia id = '.$things2end['Order']['id']);
+                $wynik = array('ok' => false, 'msg' => 'Nie moge zakończyć zamówienia id = '. ['Order']['id']);
             }  
             return $wynik;
         }
@@ -223,7 +223,38 @@ class Event extends AppModel {
 		return array('konec' => false, 'noerr' => false);
 		
 	}
-	
+        
+        // Sprawdza, czy to nie jest publikacja zamówienia po otwarciu serwisowym
+        private function isServoPubli( $karty = [] ) {
+
+                /**
+                 * Jeżeli choć jedna karta ma wartość left>0, to jest servo publi  */
+                foreach( $karty as $karta ) {
+                        if( $karta['left'] ) { return true; }
+                }
+                return false;
+        }
+
+        // Ustaw odpowiednie statusy kart, karty niepotrzebne usuń
+        private function setUpServoCards( &$karty = [] ) {
+
+                $i = 0;
+                foreach( $karty as $karta ) {
+                        if( $karta['left'] && !$karta['pover'] ) { 
+                        // czyli karta jest serwisowa i była edytowana przez handlowca
+
+                                // sumulujemy proces przesyłania do perso do sprawdzenia
+                                $karty[$i]['status'] = W4PDOK;   
+                                $karty[$i]['remstatus'] = W_PROD;                             
+                        } else {
+                                $karty[$i]['status'] = KONEC; // zostawiamy zakończoną                                
+                        }      
+                        unset($karty[$i]['left'], $karty[$i]['pover'], $karty[$i]['isperso']);
+                        $i++;                  
+                }
+        }
+
+
 	// Przygotuj format danych, usuń zbędne itp. i ewentualnie zapisz
 	public function prepareData( $rqdata = array(), $sav=false ) {
 		
@@ -233,11 +264,11 @@ class Event extends AppModel {
 			
 			$i = 0;
 			foreach ($tableOfCards as $karta) {
-					if($newsta == W4D && $karta['isperso'])
-						$tableOfCards[$i]['status'] = W4DP;
-					else
-						$tableOfCards[$i]['status'] = $newsta;
-					unset($tableOfCards[$i++]['isperso']);
+                                if($newsta == W4D && $karta['isperso'])
+                                        $tableOfCards[$i]['status'] = W4DP;
+                                else
+                                        $tableOfCards[$i]['status'] = $newsta;
+                                unset($tableOfCards[$i++]['isperso']);
 			}
                 }
                 
@@ -422,12 +453,25 @@ class Event extends AppModel {
 
                     //handlowiec opublikował zamówienie
                     case publi: 
+                        /* sprawdzamy czy to nie jest publikacja po otwarciu serwisowym
+                        - egzaminujemy karty */
+                        if( $this->isServoPubli( $rqdata['Card']) ) { 
+                            // Zmieniamy zdarzenie, bo to publikacja w trybie serwisowym     
+                            $rqdata['Event']['co'] = servpubli;    
+                            // sumulujemy proces przesyłania do perso do sprawdzenia
+                            $rqdata['Order']['status'] = UZU_CHECK;
+                            $rqdata['Order']['remstatus'] = O_ACC;                                        
+                            $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
+                            // Ustaw odpowiednie statusy kart, karty niepotrzebne usuń
+                            $this->setUpServoCards($rqdata['Card']);
+                        } else {
                             $rqdata['Order']['status'] = NOWKA;
-                            $rqdata['Order']['data_publikacji']=date('Y-m-d H:i:s');
-                            //status_kart( $rqdata['Card'], DO_SPRAWDZENIA );
+                            $rqdata['Order']['data_publikacji']=date('Y-m-d H:i:s');                            
                             $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
                             status_kart( $rqdata['Card'], W4D );
+                        }                            
                     break;
+
                     case kor_no: 
                             $rqdata['Order']['status'] = O_REJ;
                             $rqdata['Order']['id'] = $rqdata['Event']['order_id'];				
@@ -657,10 +701,7 @@ class Event extends AppModel {
 		return $rqdata;                
 	}
         
-        private function setProperStatusIfNewCardAddedToTheOldOnes() {
-
-        }
-
+        
 	private function saveStuff( $event, $rqdata = array() ) {
             
             $this->code=1;

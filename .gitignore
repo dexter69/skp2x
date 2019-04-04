@@ -44,3 +44,5 @@ Thumbs.db
 # Node modules
 /node_modules/*
 db/adminer.sql.gz
+db/adminer.sql
+db/_adminer.sql.gz

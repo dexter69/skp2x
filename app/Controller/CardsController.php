@@ -512,16 +512,19 @@ class CardsController extends AppController {
                     throw new NotFoundException('Nie ma tekiej karty!');
             }
             if ($this->request->is(array('post', 'put'))) {
-			//$this->Card->print_r2($this->request->data); return;
-			
-                    if ($this->Card->saveitAll($this->request->data, $blad)) {
-                            $this->Session->setFlash('KARTA ZOSTAŁA ZAPISANA!', 'default', array('class' => GOOD_FLASH));
-                            return $this->redirect(array('action' => 'view', $this->Card->id));
-                            /**/
-                    } else {
-                        $this->Session->setFlash('Nie można zapisac karty. Proszę spróbuj ponownie.' . ' :'. $blad);
-                        //$this->Card->print_r2($this->Card->tempor);
-                    }
+                //$this->Card->print_r2($this->request->data); return;
+
+                /* Taki myk przydatny w serwisowych - po edycji karty, personalizacja
+                nie jest już dłużej zakończona */
+                $this->request->data['Card']['pover'] = 0;			
+                if ($this->Card->saveitAll($this->request->data, $blad)) {
+                        $this->Session->setFlash('KARTA ZOSTAŁA ZAPISANA!', 'default', array('class' => GOOD_FLASH));
+                        return $this->redirect(array('action' => 'view', $this->Card->id));
+                        /**/
+                } else {
+                    $this->Session->setFlash('Nie można zapisac karty. Proszę spróbuj ponownie.' . ' :'. $blad);
+                    //$this->Card->print_r2($this->Card->tempor);
+                }
             } else {                    
                     $this->request->data = $this->Card->znajdzTaKarta($id);
                     if( !$this->akcjaOK($this->request->data, 'edit') ) {

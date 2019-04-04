@@ -523,7 +523,8 @@ define('odemknij', 25); /* odemknij zamknięte zamówienie, czyli nadaj statusy:
  42 - wszystkim kartom tego handlowego 
  66 - temu handlowemu
  28 - odpowiadającemu mu produkcyjnemu */
- define('servopen', 26); // odemknij zamówienie w trybie serwisowym
+define('servopen', 26); // odemknij zamówienie w trybie serwisowym
+define('servpubli', 34); // opublikuj zamówienie w trybie serwisowym
 // prepaid update - zdarzenia aktualizacji przedpłaty
 define('pp_red', 120); // stan wyjściowy - ustawienie "brak wpłaty"
 define('pp_ora', 121); // - ustawienie "jest potwierdzenie"

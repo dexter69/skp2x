@@ -85,7 +85,7 @@ echo $this->element('orders/view/cards_related/related', [
         'weHaveCards' => !empty($order['Card'])
 ]);
 
-//Zdarzenia pod zamówieniem
+// Zdarzenia pod zamówieniem i formularz akcji
 echo $this->element('orders/view/ul_events/ul-events',[
         'order' => $order,
         'evcontrol' => $evcontrol,

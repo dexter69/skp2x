@@ -221,6 +221,9 @@ class AppModel extends Model {
         servopen => array(
                 'otworzył zamówienie w trybie serwisowym',
                 'otworzyła zamówienie w trybie serwisowym','class' => 'pom'),
+        servpubli => array(
+                'złożył zamówienie serwisowe',
+                'złożyła zamówienie serwisowe','class' => 'pom'),
         eJPUBLI => array(
                 'złożył zlecenie',
                 'złożyła zlecenie','class' => 'pom'),

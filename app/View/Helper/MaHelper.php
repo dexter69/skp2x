@@ -633,7 +633,12 @@ class MaHelper extends AppHelper {
                         foreach ($order['Card'] as $karta) {
                                 echo $this->Form->input('Card.'.$i.'.id',array('default' => $karta['id']));
                                 echo $this->Form->hidden('Card.'.$i.'.status',array('default' => $karta['status']));
-                                echo $this->Form->hidden('Card.'.$i.'.isperso',array('default' => $karta['isperso']));
+								echo $this->Form->hidden('Card.'.$i.'.isperso',array('default' => $karta['isperso']));
+								/* Jeżeli publikujemy, to dajemy info przydatne w przypadku kart serwisowych */
+								if( $evcontrol['bcontr'][publi] ) {
+									echo $this->Form->hidden('Card.'.$i.'.left',array('default' => $karta['left']));
+									echo $this->Form->hidden('Card.'.$i.'.pover',array('default' => $karta['pover']));
+								}
                                 if( $evcontrol['bcontr'][push4checking] ) {
                                         echo $this->Form->hidden('Card.'.$i.'.D', array('default' => 0));
                                         echo $this->Form->hidden('Card.'.$i.'.P', array('default' => 0));
