@@ -133,7 +133,7 @@ Configure::write('CakePdf', array(
 // To uzywamy w WebixHelper
 define('appVersion', '2.7.01');
 // A to w AppHelper
-define('appNumber', '2019-04-02.1'); // Just date and subversion
+define('appNumber', '2019-04-05'); // Just date and subversion
 
 /**
  * Stałe do zamówień/kart serwisowych  */
