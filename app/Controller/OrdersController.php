@@ -348,18 +348,18 @@ class OrdersController extends AppController {
 		
 		foreach( $order['Card'] as &$card) {
 			if( $card['job_id'] ) {
-                            $job = $this->Order->Card->Job->find('first', array(
-                                    'conditions' => array('Job.id' => $card['job_id']),
-                                    'fields' => array('id', 'nr')
-							));
-							if(!empty($job)) {
-								$card['job_nr'] = $job['Job']['nr'];
-							} else {
-								$card['job_nr'] = 0;
-							}
+				$job = $this->Order->Card->Job->find('first', array(
+						'conditions' => array('Job.id' => $card['job_id']),
+						'fields' => array('id', 'nr')
+				));
+				if(!empty($job)) {
+					$card['job_nr'] = $job['Job']['nr'];
+				} else {
+					$card['job_nr'] = 0;
+				}
 			}
 			else    {
-                            $card['job_nr'] = 0; }
+                        $card['job_nr'] = 0; }
 		}
 		$vju = $this->Order->get_view_options();
 		foreach( $users as $value) {
@@ -378,7 +378,7 @@ class OrdersController extends AppController {
 			'orientation' => //'landscape', 
 							'portrait',
 			'filename' => /*'Zamowienie_' . */$this->bnr2nrh2($order['Order']['nr'],$order['User']['inic'],false, '-')
-			);
+		);
                 
 		/* kwestia czy wyświetlać danemu użytkownikowi info o przedpłacie
 		* oraz czy można klikać i (co za tym idzie) zmieniać stan zaliczki                 * 
@@ -390,7 +390,11 @@ class OrdersController extends AppController {
 		// Dla wyświetlania widoku zamówienia w innym kolorze, gdy jest ZAMKNIĘTE
 		$konec = $order['Order']['status'] == KONEC;
 		$coism = $this->Auth->user('COISM');
-		$this->set( compact('order', 'evcontrol', 'users', 'ludz', 'vju', 'evtext', 'coism', 'konec') );
+		$dzial = $this->Auth->user('dzial');
+		$this->set( compact(
+			'order', 'evcontrol', 'users', 'ludz',
+			'vju', 'evtext', 'coism', 'konec', 'dzial'
+		));
 		//$this -> render('druknij');
 	}
 		/*
