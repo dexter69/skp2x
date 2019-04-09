@@ -8,7 +8,10 @@ echo $this->Html->css(
 );
 
 echo $this->Html->script(
-    $this->App->makeCssJsTable(['event', 'order-view', 'order/pay', 'order/servo'], 'js'),    
+    $this->App->makeCssJsTable(
+        ['classes/ConfirmServant', 'event', 'order-view', 'order/pay', 'order/servo', 'order/close-confirm'],
+        'js'
+    ),    
     ['inline' => false]
 ); 
 echo $this->Ma->walnijJqueryUI();
@@ -102,7 +105,6 @@ echo $this->element('orders/view/ul_events/ul-events',[
 </template>
 <!-- Do zmieniania daty wpłaty -->
 <div id="datepicker"></div><div id="komunikat"></div>
-
 
 
 

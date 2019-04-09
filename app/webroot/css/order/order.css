@@ -2,6 +2,40 @@
 /*
 Doddatki do zamówień via sass
 */
+#confirm-stuff {
+  display: none; }
+
+#confirm-stuff.up {
+  display: block; }
+
+#confirm-stuff .kover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.6;
+  width: 9999px;
+  height: 9999px;
+  z-index: 100; }
+
+#confirm-stuff .content-wrap {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 200px;
+  background-color: violet;
+  z-index: 200;
+  margin-top: -100px;
+  margin-left: -200px; }
+
+#confirm-stuff .content-wrap .sterowanie {
+  background-color: yellowgreen;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
 /*
     Dotyczy widoku handlowego.
 */

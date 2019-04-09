@@ -1,0 +1,49 @@
+// Style do okna konfirmacji zamknięcia
+
+$szerokosc: 400px;
+$wysokosc: 200px;
+$tlo_pop_upa: violet;
+
+// Normalnie nie wyświetlamy
+#confirm-stuff {
+    display: none;
+}
+
+// Jak ma klasę .up, to pojawia nam sięconfirm widget
+#confirm-stuff.up {
+    display: block;
+}
+
+// Tło, zasłaniamy nim cały dokument
+#confirm-stuff .kover {
+
+    position: fixed;
+    top: 0; left: 0;
+    background-color: black;
+    opacity: 0.6;
+    width: 9999px; height: 9999px; // coby dobrze przykryła
+    z-index: 100;
+}
+
+// Tu zawartosc widżetu 
+#confirm-stuff .content-wrap {
+    position: fixed;
+    top: 50%;
+    left: 50%;    
+    width: $szerokosc;
+    height: $wysokosc;    
+    background-color: $tlo_pop_upa;
+
+    z-index: 200;
+    margin-top: -0.5 * $wysokosc;
+    margin-left: -0.5 * $szerokosc;    
+}
+
+// Panel sterujący z przyciskami
+#confirm-stuff .content-wrap .sterowanie {
+    background-color: yellowgreen;
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+}

@@ -76,6 +76,18 @@ $cakeDescription = __d('cake_dev', 'SKP');
 			?>
 		</div>
 	</div>
+	
+	<div id="confirm-stuff">
+		<div class="kover"></div>
+		<div class="content-wrap">
+			<div class="zawartosc"></div>
+			<div class="sterowanie">
+				<button type="button" class="cancel">ANULUJ</button>
+				<button type="button" class="confirm">OK</button>
+			</div>
+		</div>
+	</div>
+
 	<?php //echo $this->element('sql_dump');
 		echo $this->fetch('scriptBottom');
 		//echo $this->Js->writeBuffer(); // Write cached scripts 
