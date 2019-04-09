@@ -36,6 +36,7 @@ class OrderHelper extends AppHelper {
             'extraTh' => $extraTh,
             'html' => $tbody['html'], // html części tabeli
             'sigma' => $tbody['sigma'],
+            'isperso' => $tbody['isperso'],
             'isleft' => $tbody['isleft'],
             'karty' => $tbody['karty'],
             'showServo' => $showTheServo // czy pokazać (i jak) komponent do otwierania serwisowego
@@ -46,6 +47,8 @@ class OrderHelper extends AppHelper {
 
         $cards = $order['Card'];
         $karty = []; $k=0; $sigma = 0; $trs = []; $isleft=false;
+        // true - oznacza, że zamówienie zawiera przynajmniej jedną kartę z perso
+        $orderIsPerso = false;
         foreach ( $cards as $card ) {
             $cells = [];
             $karty[ $card['id'] ]= $card['name'];
@@ -55,7 +58,12 @@ class OrderHelper extends AppHelper {
 
             $cells[] = $this->Html->link($card['name'], ['controller' => 'cards', 'action' => 'view', $card['id']], ['title' => $card['name']]);
 
-            $span = $card['isperso'] ? '<span class="perso">P</span>' : "";            
+            $span = "";
+            if( $card['isperso'] ) {
+                $span = '<span class="perso">P</span>';
+                $orderIsPerso = true;
+            }
+            //$span = $card['isperso'] ? '<span class="perso">P</span>' : "";            
             $cells[] = [ $span, ['class' => 'card_opcje_fix']];
 
             $link = "";
@@ -101,6 +109,7 @@ class OrderHelper extends AppHelper {
         return [
             'html' => $this->Html->tableCells($trs),
             'sigma' => $sigma,
+            'isperso' => $orderIsPerso,
             'isleft' => $isleft,
             'karty' => $karty
         ];

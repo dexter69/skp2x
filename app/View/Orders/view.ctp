@@ -1,4 +1,10 @@
 <?php
+// Przydatne zmienne i konstrukcja html dla kart zamówienia
+/* $coism Szdefiniowane we kontrolerze, mówi czy zalogowany użytkownik
+        może otwierać zamówienia w trybie serwisowym */
+$resultForCards = $this->Order->cardsRelated( $order, $evcontrol, $coism );
+$order['Order']['isperso'] = $resultForCards['isperso'];
+
 //echo $this->App->print_r2($order['Order']);
 //echo $order['Order']['status'];
 
@@ -52,13 +58,8 @@ if( $order['Order']['procent_zaliczki'] ) {
             'clickable' => $order['Order']['zal_clickable'],
             'visible' =>  $order['Order']['zal_visible'], // nie wszystkim wyświetlamy
             'id' => $order['Order']['id']
-        ];	
+        ];        
         
-        // Przydatne zmienne i konstrukcja html dla kart zamówienia
-        /* $coism Szdefiniowane we kontrolerze, mówi czy zalogowany użytkownik
-                może otwierać zamówienia w trybie serwisowym */
-        $resultForCards = $this->Order->cardsRelated( $order, $evcontrol, $coism );
-
         echo $this->element('orders/view/naglowek', array(
                 'id' => $order['Order']['id'],
                 'numer' => $nr,
