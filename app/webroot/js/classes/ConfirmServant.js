@@ -31,11 +31,11 @@ class ConfirmServant {
         $(this.theButtonSelektor).parents("form").on("submit", this, function (e) {
             event.preventDefault();
             if (e.data.theButtonClicked) { // Submit był spowodowany przez nasz button
-                e.data.theButtonClicked = false; // clear
-                alert("Zamknij! 2");
+                e.data.theButtonClicked = false; // clear                
+                console.log("Zamknij clicked");
             }
             else {
-                alert("Inny! 2");
+                console.log("Inny clicked");
             }
         });
     }

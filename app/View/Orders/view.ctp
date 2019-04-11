@@ -1,12 +1,18 @@
 <?php
+//echo $this->App->print_r2($order['Order']);
+//echo $order['Order']['status'];
+
 // Przydatne zmienne i konstrukcja html dla kart zamówienia
 /* $coism Szdefiniowane we kontrolerze, mówi czy zalogowany użytkownik
         może otwierać zamówienia w trybie serwisowym */
 $resultForCards = $this->Order->cardsRelated( $order, $evcontrol, $coism );
 $order['Order']['isperso'] = $resultForCards['isperso'];
 
-//echo $this->App->print_r2($order['Order']);
-//echo $order['Order']['status'];
+// Potrzebujemy w layoucie wiedzieć, czy zamówienie zawiera choćby 1 kartę z perso, myk:
+$this->set("isPersoInTheOrder", $order['Order']['isperso']);
+/* Powyższe przeznaczone jest do użycia w kontrolerze, ale jak widać działa również tu.
+Mozna też zrobić tak:
+$this->viewVars["isPersoInTheOrder"] = $order['Order']['isperso']; */
 
 echo $this->Html->css(    
     $this->App->makeCssJsTable(["order", "order/order"], 'css'),    

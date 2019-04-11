@@ -46,10 +46,19 @@ $cakeDescription = __d('cake_dev', 'SKP');
 		$bstr = " class='archived'";
 	} else {
 		$bstr = "";
-	}	
+	}
+	if( $this->params['controller'] == 'orders' && $this->action == 'view' && $isPersoInTheOrder ) {
+		/* Jeżeli to metoda 'view' kontrolera 'orders' to we view tej metody ('view.ctp')
+			zostaje ustawiona zmienna $isPersoInTheOrder, która mówi nam, czy zamówienie zawiera,
+			choćby jedną kartę z personalizacją. Wykorzystujemy to do nadania odpowiedniej klasy
+			elementowi #container, co ułatwa wyświetlanie różnych rzeczy */
+		$cstr = " class='persos'";
+	} else {
+		$cstr = "";
+	}
 ?>
-<body <?php echo $bstr;?>>        
-	<div id="container">
+<body <?php echo $bstr;?>>	
+	<div id="container"<?php echo $cstr;?>>
 		<div id="header">			
 			<?=	$this->element('forLayouts/leftIcons', ['departament' => $departament] ); ?>
 			<div id="szukanie" class="hid">
