@@ -20,8 +20,11 @@ echo $this->Html->css(
 );
 
 echo $this->Html->script(
-    $this->App->makeCssJsTable(
-        ['classes/ConfirmServant', 'event', 'order-view', 'order/pay', 'order/servo', 'order/close-confirm'],
+    $this->App->makeCssJsTable([
+        //'classes/ConfirmServant', // potrzebne do pop'upa (i button handling): patrz default layout na dole
+        'event', 'order-view', 'order/pay', 'order/servo'
+        //, 'order/close-confirm' // potrzebne do pop'upa (i button handling): patrz default layout na dole
+        ],
         'js'
     ),    
     ['inline' => false]

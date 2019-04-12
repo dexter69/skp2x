@@ -73,31 +73,25 @@ $cakeDescription = __d('cake_dev', 'SKP');
 
 			<?php echo $this->fetch('content'); ?>
 		</div>
-		<div id="footer">
-			<!--<hr style="color: orange; width: 1000px">-->
-			<?php 
-				/*
-				echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false)
-				);*/
-			?>
+		<div id="footer">			
 		</div>
 	</div>
 	
-	<div id="confirm-stuff">
-		<div class="kover"></div>
-		<div class="content-wrap">
-			<div class="zawartosc"></div>
-			<div class="sterowanie">
-				<button type="button" class="cancel">ANULUJ</button>
-				<button type="button" class="confirm">OK</button>
-			</div>
-		</div>
-	</div>
 
-	<?php //echo $this->element('sql_dump');
+	<?php
+		/**
+		 * Nidokończony pop-up. Patrz też:
+		 * webroot/scss/order/_close-confirm.scss
+		 * oraz
+		 * webroot/js/order/close-confirm.js
+		 * oraz
+		 * webroot/js/classes/ConfirmServant.js
+		 * echo $this->element('forLayouts/confirm-stuff');
+		 */
+		
+
+
+	 //echo $this->element('sql_dump');
 		echo $this->fetch('scriptBottom');
 		//echo $this->Js->writeBuffer(); // Write cached scripts 
 	?>
