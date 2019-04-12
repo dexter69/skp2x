@@ -215,9 +215,7 @@ class CardsController extends AppController {
         
         private function userPersoVis() {
         // sprawdź, czy zalogowany użytkownik może widzieć datę perso  
-            if( $this->Auth->user('dzial') == SUA ||
-                $this->Auth->user('dzial') == PER ||
-                $this->Auth->user('dzial') == DTP ) {                
+            if( in_array( $this->Auth->user('dzial'), [ SUA, PER, DTP, KIP ]) ) {                
                 return true;
             }
             return false;
