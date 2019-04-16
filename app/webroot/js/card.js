@@ -182,7 +182,7 @@
 	
 	$( document ).ready(function() {
             
-            console.log(klienci);
+            //console.log(klienci);
             
             // obsługa multi - doadawania/edycji wielu kart - w card-multi.js
             multi();
@@ -194,8 +194,9 @@
 
             $('#CardAPodklad, #CardRPodklad').change(function() { check_podklady(); });
 
-            //$('#CardIsperso').change(function() { persoholder = check_perso(); });
             
+            /**
+             * Jeżeli któryś z checkbox'ów od perso się zmieni             */
             $('.perso-types input[type=checkbox]').change(function() {                   
                check_perso();
             });

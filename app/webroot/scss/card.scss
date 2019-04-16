@@ -9,6 +9,7 @@ $problem: #ffefb5; //podświetlenie wierszy w kartach z problematycznym statusem
 @import 'card-multi'; // definicje dla obsługi tworzenia/edycji wielu kart
 @import 'card-h2'; // definicje związane z nagłówkiem kartry
 @import 'card-archived'; // definicje związane z wyglądem karty zarchiwizowanej
+@import 'card-add-edit';		// definicje związane ze zmianami w związku z kartami serwisowymi
 
 // karty dla perso z problematycznym statusem
 #karty tr.problem {

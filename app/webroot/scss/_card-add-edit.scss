@@ -1,0 +1,17 @@
+/** 
+16.04.2019,
+Definicje związane z dodawaniem/edycją kart, ale tylko część.
+Dokładnie związane z kartami serwisowymi personalizacją. Wcześniejsze mogą być gdzie indziej.*/
+
+.viewheader.dol_very_small {
+    position: relative;
+}
+
+.viewheader.dol_very_small > input {
+    width: 7em;
+    position: absolute;
+    right: 1em;
+    top: 3px;
+    font-size: 90%;
+    text-align: right;
+}
