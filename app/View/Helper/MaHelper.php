@@ -1427,7 +1427,7 @@ class MaHelper extends AppHelper {
 		$markup =	
 
 			$this->Html->tag('div', null, array('id' => 'persokeep')) .
-					$this->viewheader("PERSONALIZACJA$theLeftInput", array('class' => 'dol_very_small')) .
+					$this->viewheader("PERSONALIZACJA$theLeftInput", ['id' => 'nag-perso', 'class' => 'dol_very_small']) .
 					$this->Form->hidden( 'Card.isperso', array('default' => '0') ) .
 					$this->Html->tag('div', null, array('id' => 'xyz123', 'class' => 'perso-types')) .
 						$this->Form->input('Card.pl', array( 'label' => 'pod laminat' )) .

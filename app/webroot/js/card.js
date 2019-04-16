@@ -130,9 +130,13 @@
             if( $('#CardIsperso').val() === '1' ) {
                 $('#CardPerso').removeAttr('disabled');
                 $('#CardPerso').attr('required','required');
+                // dla dodatkowego pola input z ilością kart na magazyn
+                $('#nag-perso > input').removeAttr('disabled');
             } else {
                 $('#CardPerso').removeAttr('required');
                 $('#CardPerso').attr('disabled','disabled');
+                // dla dodatkowego pola input z ilością kart na magazyn
+                $('#nag-perso > input').attr('disabled','disabled');
             }
         }
         
