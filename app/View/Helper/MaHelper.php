@@ -626,7 +626,11 @@ class MaHelper extends AppHelper {
                         echo $this->Form->hidden('card_id', array('default' => 0));
                         echo $this->Form->hidden('order_id', array('default' => $order['Order']['id']));
                         echo $this->Form->hidden('job_id', array('default' => 0));
-                        echo $this->Form->hidden('co', array('default' => ZERO));
+						echo $this->Form->hidden('co', array('default' => ZERO));
+						/*	Myk: dzięki temu polu wiemy, ile jest zdarzeń pod zamówieniem.
+							Dzięki temu, przy publikacji zamówienie wiemy, czy jest to pierwsza
+							publikacja, czy kolejna - czyli serwisowa  */
+						echo $this->Form->hidden('ile_events', ['default' => count($order['Event'])] );
 
                         // idki podpiętych kart
                         $i=0;

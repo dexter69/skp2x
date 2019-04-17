@@ -669,18 +669,17 @@ class Order extends AppModel {
         				'Order.id' => 1
         			)),
         			'order' => array('Order.nr' => 'desc')
-    			));
+				));				
     			if( !empty($lastWithNr) ) {					
 					$new_nr = $this->skalkulujNr($lastWithNr, $id);
 					$dane = array( 
 						'Order' => array(
 							'id' => $id,
 							'nr' => $new_nr
-					));
-					
-					if( $this->save($dane) ) 
+					));					
+					if( $this->save($dane) ) { 
 						return true;
-					else {
+					} else {
 						$this->OrderError = 1;
 						return false;
 					}

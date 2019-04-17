@@ -223,25 +223,14 @@ class Event extends AppModel {
 		return array('konec' => false, 'noerr' => false);
 		
 	}
-        
-        // Sprawdza, czy to nie jest publikacja zamówienia po otwarciu serwisowym
-        private function isServoPubli( $karty = [] ) {
-
-                /**
-                 * Jeżeli choć jedna karta ma wartość left>0, to jest servo publi  */
-                foreach( $karty as $karta ) {
-                        if( $karta['left'] ) { return true; }
-                }
-                return false;
-        }
 
         // Ustaw odpowiednie statusy kart, karty niepotrzebne usuń
         private function setUpServoCards( &$karty = [] ) {
 
                 $i = 0;
                 foreach( $karty as $karta ) {
-                        if( $karta['left'] && !$karta['pover'] ) { 
-                        // czyli karta jest serwisowa i była edytowana przez handlowca
+                        if( !$karta['pover'] ) { 
+                        // czyli jak karta nie jest pover, to znaczy że handlowiec edytował
 
                                 // sumulujemy proces przesyłania do perso do sprawdzenia
                                 $karty[$i]['status'] = W4PDOK;   
@@ -454,10 +443,10 @@ class Event extends AppModel {
                     //handlowiec opublikował zamówienie
                     case publi: 
                         /* sprawdzamy czy to nie jest publikacja po otwarciu serwisowym
-                        - egzaminujemy karty */
-                        if( $this->isServoPubli( $rqdata['Card']) ) { 
+                        - czy zamowienie ma jakieś zdarzenia (nowe nie ma) */
+                        if( $rqdata['Event']['ile_events'] ) { 
                             // Zmieniamy zdarzenie, bo to publikacja w trybie serwisowym     
-                            $rqdata['Event']['co'] = servpubli;    
+                            $rqdata['Event']['co'] = $event = servpubli;    
                             // sumulujemy proces przesyłania do perso do sprawdzenia
                             $rqdata['Order']['status'] = UZU_CHECK;
                             $rqdata['Order']['remstatus'] = O_ACC;                                        
@@ -681,7 +670,10 @@ class Event extends AppModel {
                     break;
 			
 			
-		} // end of switch
+                } // end of switch
+                
+                /* Nie koniecznie potrzebne
+                unset($rqdata['Event']['ile_events']);*/
 		
 		if( !in_array($event, array(unlock_again)) ) { 
 		// chcemy się pozbyć tego poniżej i robić wszystko powyżej, więc tu wrunek, co bez nowych			//
