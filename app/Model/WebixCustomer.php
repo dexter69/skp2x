@@ -14,6 +14,13 @@ class WebixCustomer extends AppModel {
     ];
 
     public $hasMany = [
+        'WebixChain' => [
+            'foreignKey' => 'customer_id',
+            'fields'  => [
+                'WebixChain.id', 'WebixChain.customer_id',
+                'WebixChain.chain', 'WebixChain.active'
+            ]
+        ],
         'WebixNonPrivateOrder' => [            
             'foreignKey' => 'customer_id',            
             'fields'  => [
@@ -119,7 +126,7 @@ class WebixCustomer extends AppModel {
         $merged = $this->mergeCakeData($tmp); 
 
         /** >>>>>>>>
-         * Debug purposes. Uset bo (na razie) nie potrzebujemy rekordów dot. zamówień. Potrzebujemy tylko ich ilość,
+         * Debug purposes. Unset bo (na razie) nie potrzebujemy rekordów dot. zamówień. Potrzebujemy tylko ich ilość,
          * stą count powyżej. Nie ma więc sensu przesyłanie np. 900+ rekordów dla klienta nr 3 */
         unset($merged["WebixNonPrivateOrder"]);
         unset($merged["WebixPrivateOrder"]);

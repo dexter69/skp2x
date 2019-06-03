@@ -17,6 +17,15 @@
         <p @class="kraj-string"><?php echo "$krajString"; ?></p>
         <p @class="nip-string"><?php echo "$nipString"; ?></p>
     </div>
+    <div @id="lof-id" @class="list-of-links"><span>Linki:</span>
+        <?php
+            for( $i=0; $i<$vars['maxUpLinks']; $i++ ) {            
+                //Nie mam pojęcia, czemu nie mogę tu użyć '', tylko trzeba escape'ować
+                // Prawdopodobnie coś z trimAll
+                echo "<p @class=\"link-item\"><a @href=\"" . uplBase . "#link$i#\">#link$i#</a></p>";
+            }
+        ?>
+    </div>
 </div>
 <?php
     // Płatności

@@ -25,7 +25,8 @@
                     'miasto' => 'WebixAdresSiedziby_miasto',
                     'kraj' => 'WebixAdresSiedziby_kraj',
                     'nip' => 'WebixCustomer_vatno_txt'
-                ]
+                ],                
+                'maxUpLinks' => maxUpLinks
             ]
         ])
     );   
@@ -61,7 +62,8 @@ var globalAppData = {
         wyglad: {
             mainPad: 35, // definujący główny padding
             buttonOnMainToolbarWidth: 50
-        }
+        },
+        maxUpLinks: <?php echo maxUpLinks ?>,
     },
     template: { // tu bardziej złożone tamplates        
         theOrderDetail: "<?php echo $theOrderDetail; ?>",        

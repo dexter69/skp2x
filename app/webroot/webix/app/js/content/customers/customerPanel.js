@@ -1,5 +1,6 @@
 /**
- * Component zawierający szczegóły o wybranym kliencie + możliwość dodania do niego zamówienia */
+ * Component zawierający szczegóły o wybranym kliencie
+ * + możliwość dodania do niego zamówienia */
 
  let buttDl = 90;
  let customerDetailToolbar = {
@@ -83,7 +84,7 @@
      css: "customer-panel",
      cells: [
         //{template: "Dummy", width: 100},
-        {rows:[customerDetailToolbar, customerDetail]},
+        {rows:[customerDetailToolbar, /*theUploadUrlList,*/ customerDetail]},
         addNewQuickOrder
      ]
  }

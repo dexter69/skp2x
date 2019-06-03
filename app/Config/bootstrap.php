@@ -136,6 +136,11 @@ define('appVersion', '2.7.01');
 define('appNumber', '2019-04-17'); // Just date and subversion
 
 /**
+ * Linki do uploadu */
+define("uplBase", "https://files.plasticcards.zone/filedrop/"); // base url for drops
+define("maxUpLinks", 7); // maksymalna ilość linków uploadu dla jednego klienta
+
+/**
  * Stałe do zamówień/kart serwisowych  */
  define('SERVO_NIE', 0); // nie jest serwisowe, nie wyświetlamy żadnych ikon, info
  define('SERVO_VIS', 1); // serwisowe, wyświetlamy info

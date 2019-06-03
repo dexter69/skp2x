@@ -1,3 +1,19 @@
+let theUploadUrlList = { // Lista upload linków klienta
+    id: "theUploadUrlList",
+    view:"list",
+    autoheight:true,
+    //container: "lof-id",
+    //dynamic:true,
+    //width:320,    height:600,
+    template:"#rank#. #title#",
+    select:"multiselect",
+    data: [
+            {"id":1,"title":"The Shawshank Redemption","year":"1994","votes":"678,79","rating":"9,2","rank":"1"},
+            {"id":2,"title":"The Godfather","year":"1972","votes":"511,495","rating":"9,2","rank":"2"}
+    ]
+    //webix.ui(theUploadUrlList);
+}
+
 let listOfCustomers = { 
     id: "listOfCustomers",
     view:"datatable",
@@ -94,7 +110,23 @@ let listOfCustomers = {
             console.log(err);
         });
         */        
-    },        
+    },
+    // Obsługa linków uploadu dla klienta
+    parseChain: function(daneObj) {   
+        //console.log(globalAppData.config.maxUpLinks);
+
+        //Stwórz puste dane do linków
+        let i;
+        for( i=0; i<globalAppData.config.maxUpLinks; i++) {
+            daneObj["link" + i] = "";
+        }
+        // Nadpisz prawdziwymi linkami
+        if( "WebixChain" in daneObj && daneObj.WebixChain.length ) {                       
+            for( i=0; i<daneObj.WebixChain.length; i++ ) {
+                daneObj["link" + i] = daneObj.WebixChain[i].chain + daneObj.WebixCustomer_id;
+            }
+        }
+    },      
     on: {             
         onAfterFilter:function(){
             //webix.message("Filtr!");
@@ -125,10 +157,10 @@ let listOfCustomers = {
             //Taki workaround, bo po przerysowaniu pole traci fokus
             this.getFilter("WebixCustomer_name").focus();
             //webix.message("Load");
-        },
+        },        
         /**
             Po kliknięciu w jakiegoś klienta na liscie, chcemy wyświetlić szczegóły dotyczące klienta */
-        onAfterSelect: function(id){             
+        onAfterSelect: function(id){            
            
             // id klikniętego klienta w bazie
             let theCustomerId = $$(listOfCustomers.id).getItem(id).WebixCustomer_id; 
@@ -138,7 +170,9 @@ let listOfCustomers = {
             // pobierz świeże dane dot. tego klienta
             webix.ajax(url).then(function(data){   
                 
-                let dane = data.json();                
+                let dane = data.json();
+                // Przygotuj linki, do uploadu plików                 
+                $$(listOfCustomers.id).config.parseChain(dane);         
                 if( !$$(customerPanel.id).isVisible() ) {                    
                     // Chowamy niektóre kolumny, bo mamy mniej miejsca
                     $$(listOfCustomers.id).config.hideTheColumns();                    
@@ -160,7 +194,7 @@ let listOfCustomers = {
                     //dane.WebixCustomer_comment = '<div class="cdetails-comment">' + dane.WebixCustomer_comment + "</div>";
                     dane.WebixCustomer_comment = `<div class="cdetails-comment">${dane.WebixCustomer_comment}</div>"`;                    
                 } 
-                $$(customerDetail.id).parse(dane);              
+                $$(customerDetail.id).parse(dane);                              
                 //console.log(dane);
                 /* Do czego to?
                 $$("customerName").parse(dane);

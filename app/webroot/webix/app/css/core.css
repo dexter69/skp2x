@@ -56,6 +56,14 @@ Szczegóły o kliencie, po prawej stronie listy*/
 .the-customer-detail > .siedziba > * {
   margin: 0.2em 0; }
 
+#lof-id .link-item {
+  display: inline-block;
+  margin: 0;
+  padding: 0 5px; }
+
+#lof-id .link-item:first-child {
+  padding-left: 0; }
+
 .elemOfCustDetail {
   display: inline-block;
   width: 50%;
@@ -109,5 +117,3 @@ Zdeprecjonowane lub na razie nie używane definicje */
   color: black;
   font-weight: bold;
   font-size: 90%; }
-
-/*# sourceMappingURL=core.css.map */
