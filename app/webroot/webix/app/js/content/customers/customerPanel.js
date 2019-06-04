@@ -84,7 +84,7 @@
      css: "customer-panel",
      cells: [
         //{template: "Dummy", width: 100},
-        {rows:[customerDetailToolbar, /*theUploadUrlList,*/ customerDetail]},
+        {rows:[customerDetailToolbar, customerDetail]},
         addNewQuickOrder
      ]
  }

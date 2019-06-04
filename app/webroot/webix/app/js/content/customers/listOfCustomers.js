@@ -1,19 +1,3 @@
-let theUploadUrlList = { // Lista upload linków klienta
-    id: "theUploadUrlList",
-    view:"list",
-    autoheight:true,
-    //container: "lof-id",
-    //dynamic:true,
-    //width:320,    height:600,
-    template:"#rank#. #title#",
-    select:"multiselect",
-    data: [
-            {"id":1,"title":"The Shawshank Redemption","year":"1994","votes":"678,79","rating":"9,2","rank":"1"},
-            {"id":2,"title":"The Godfather","year":"1972","votes":"511,495","rating":"9,2","rank":"2"}
-    ]
-    //webix.ui(theUploadUrlList);
-}
-
 let listOfCustomers = { 
     id: "listOfCustomers",
     view:"datatable",
@@ -113,8 +97,7 @@ let listOfCustomers = {
     },
     // Obsługa linków uploadu dla klienta
     parseChain: function(daneObj) {   
-        //console.log(globalAppData.config.maxUpLinks);
-
+        
         //Stwórz puste dane do linków
         let i;
         for( i=0; i<globalAppData.config.maxUpLinks; i++) {
