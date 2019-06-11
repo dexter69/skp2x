@@ -37,7 +37,13 @@ class WebixesController extends AppController {
             'id' => $this->Auth->user('id'),
             'name' => $this->Auth->user('name'),
             'inic' => $this->Auth->user('inic')
-        ];        
+        ];    
+        
+        // Limitujemy możliwość wyświetlenia listy klientów
+        if( !$this->dozwolonaAkcja() ) {
+            $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+            return $this->redirect($this->referer());
+        }
         
         $this->layout='webix';
         $webixJsFiles = $this->webixJsFiles;

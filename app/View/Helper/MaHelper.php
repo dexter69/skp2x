@@ -1074,10 +1074,12 @@ class MaHelper extends AppHelper {
 	
 	public function displayActions( $kontroler = null ) {
 		
-		$cntab = array('customers' => 'klienci',
-							'cards' => 'karty',
-							'orders' => 'zamowienia',
-							 'jobs' => 'zlecenia');
+		$cntab = [
+			'customers' => 'klienci',
+			'cards' => 'karty',
+			'orders' => 'zamowienia',
+			'jobs' => 'zlecenia'
+		];
 		
 		
 		echo $this->Html->tag('div', null, array('id'=>'gener', 'class' => 'actions'));
@@ -1089,7 +1091,8 @@ class MaHelper extends AppHelper {
 				$options = array('class' => $value, 'id' => 'aktywny');
 			else
 				$options = array('class' => $value);
-				
+			
+			$klucz = $key;
 			switch( $key )	{
 				case 'cards':
 					$par = 'active';
@@ -1098,17 +1101,40 @@ class MaHelper extends AppHelper {
 					$par = 'active';
 				break;
 				case 'jobs':
-                                        if( AuthComponent::user('O_KOR') ) { $par = 'started'; }
-                                        else { $par = 'active'; }                                        
+					if( AuthComponent::user('O_KOR') ) {
+						$par = 'started';
+					} else {
+						$par = 'active';
+					}                                        
+				break;
+				case 'customers':
+					$par = null;
+					$klucz = 'webixes';
 				break;
 				default:
 					$par = null;
 			}
 				
-			$linki = 
-			$this->Html->link( '', array( 'controller' => $key, 'action' => 'add'), array('class' => 'add2'))
-			. $this->Html->link( '', array( 'controller' => $key, 'action' => 'index', $par), array('class' => 'list2'));
-			echo $this->Html->tag('li', $linki, $options);
+			if( $key == 'customers' ) {
+				$l2 = $this->Html->link(
+					'',
+					'/klienci',
+					array('class' => 'list2')
+				);
+			} else {				
+				$l2 = $this->Html->link(
+					'',
+					array( 'controller' => $klucz, 'action' => 'index', $par),
+					array('class' => 'list2')
+				);
+			}
+			$l1 = $this->Html->link(
+				'',
+				array( 'controller' => $key, 'action' => 'add'),
+				array('class' => 'add2')
+			);
+			
+			echo $this->Html->tag('li', $l1.$l2, $options);
 		}
 				
 		echo $this->Html->tag('/ul');/**/

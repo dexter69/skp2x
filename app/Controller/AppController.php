@@ -187,7 +187,20 @@ class AppController extends Controller {
         aJOB_ADD, aJOB_LIST,
         //aUSER_ADD, aUSER_LIST
     );
-	
+        
+    public function dozwolonaAkcja() {
+
+        //$uid = $this->Auth->user('id');
+        $dzial = $this->Auth->user('dzial');
+        $kontroler = $this->params['controller'];
+        //$akcja = $this->action;
+        if($kontroler == 'webixes') {
+                if( !in_array($dzial, [4,5,7,8]) ) {
+                      return true;  
+                }
+        }
+        return false;
+    }
 	
     public function actionAllowed() {
 
@@ -202,181 +215,187 @@ class AppController extends Controller {
             $this->links = array();
 
 
-            switch($kontroler) {
-                    case 'customers':
-                            switch($akcja ) {
-                                    case 'index':
-                                            switch($par) {
-                                                    case 'my':
-                                                            switch($dzial ) {
-                                                                    case MAR:
-                                                                            $this->links = array(
-                                                                                    aCUS_ADD, aCARD_ADD,
-                                                                                    aCARD_LIST, aORD_ADD, aORD_LIST,
-                                                                                    aJOB_LIST);
-                                                                            break;
-                                                                    case SUA:
-                                                                            $this->links = array(
-                                                                                    aCUS_ADD, aCARD_ADD,
-                                                                                    aCARD_LIST, aORD_ADD,
-                                                                                    aORD_LIST, aJOB_ADD,
-                                                                                    aJOB_LIST//, aUSER_ADD, aUSER_LIST
-                                                                                    );
-                                                                            break;
-                                                            }
-                                                            break;
-                                                    case null:
-                                                            switch($dzial ) {
-                                                                    case MAR:
-                                                                            $this->redirect( array('action' => 'index','my') );
-                                                                            break;
-                                                                    case SUA:
-                                                                            $this->links = array(
-                                                                                    aCUS_ADD, aCARD_ADD,
-                                                                                    aCARD_LIST, aORD_ADD,
-                                                                                    aORD_LIST, aJOB_ADD,
-                                                                                    aJOB_LIST//, aUSER_ADD, aUSER_LIST
-                                                                            );
-                                                                            break;
-                                                            }
-                                                            break;
-                                                    default:
-                                                            $this->redirect( array('action' => 'index') );
-                                            }
-                                            break;
-                                    case 'view':
-                                            $this->links = array(
-                                                    aCARD_ADD, aCARD_LIST,
-                                                    aORD_ADD, aORD_LIST,
-                                                    aJOB_ADD, aJOB_LIST,
-                                                    nCUS_LIST, nCUS_ADD, nCUS_EDIT, nCUS_DEL							
-                                            );	
-                                            switch($dzial ) {
-                                                    case MAR:
-                                                            unset($this->links[4]);
-                                                            break;
-                                                    case SUA:
-                                                            break;
-                                                    default:
-                                                            unset(	$this->links[4], $this->links[7],  $this->links[8],
-                                                                            $this->links[9]);
-                                                            break;
-                                            }
-                                            break;	
-                                    case 'add':
-                                            $this->links = array( aCUS_LIST, aCARD_ADD, aCARD_LIST, 
-                                                                                            aORD_ADD, aORD_LIST, aJOB_ADD, aJOB_LIST );
-                                            break;
-                                    case 'edit':
-                                            $this->links = array(
-                                                    aCARD_ADD, aCARD_LIST,
-                                                    aORD_ADD, aORD_LIST,
-                                                    aJOB_ADD, aJOB_LIST,
-                                                    nCUS_LIST, nCUS_ADD							
-                                            );
-                                            switch($dzial ) {
-                                                    case MAR:
-                                                            unset($this->links[4]);
-                                                            break;
-                                                    case SUA:
-                                                            break;
-                                                    default:
-                                                            unset(	$this->links[4], $this->links[7]);
-                                                            break;
-                                            }
-                                            break;
-                            }
-                            break;
-                    case 'cards':
-                            switch($akcja ) {
-                                    case 'index':
-                                            switch($par) {
-                                                    case null:
-                                                            switch($dzial ) {
-                                                                    case SUA:
-                                                                            $this->links = array(
-                                                                                    aCUS_ADD,
-                                                                                    aCARD_ADD,
-                                                                                    aCARD_LIST,
-                                                                                    aORD_ADD, aORD_LIST,
-                                                                                    aJOB_ADD,
-                                                                                    aJOB_LIST//, aUSER_ADD, aUSER_LIST
-                                                                            );
-                                                                            break;
-                                                                    case MAR:
-                                                                            $this->redirect( array('action' => 'index','my') );
-                                                                            break;
-                                                            }
-                                                            break;
-                                                    case 'my':
-                                                            switch($dzial ) {
-                                                                    case MAR:
-                                                                            $this->links = array(
-                                                                                    aCUS_ADD,
-                                                                                    aCUS_LIST,
-                                                                                    aCARD_ADD,
-                                                                                    aORD_ADD, aORD_LIST,
-                                                                                    aJOB_LIST);
-                                                                            break;
-                                                                    case SUA:
-                                                                            $this->links = array(
-                                                                                    aCUS_ADD,
-                                                                                    aCUS_LIST,
-                                                                                    aCARD_ADD,
-                                                                                    aORD_ADD, aORD_LIST,
-                                                                                    aJOB_ADD,
-                                                                                    aJOB_LIST//, aUSER_ADD, aUSER_LIST
-                                                                                    );
-                                                                            break;
-                                                            }
-                                                            break;
-                                            }
-                                    break;
-                                    case 'view':
-                                            switch($dzial ) {
-                                                    case MAR:
-                                                            $this->links = array(
-                                                                    aCUS_ADD, aCUS_LIST,
-                                                                    aCARD_ADD, aCARD_LIST,
-                                                                    aORD_ADD, aORD_LIST, aJOB_LIST,
-                                                                    nCARD_ADD, nCARD_LIST, nCARD_EDIT, nCARD_DEL);
-                                                            break;
-                                                    case SUA:
-                                                            $this->links = array(
-                                                                    aCUS_ADD, aCUS_LIST,
-                                                                    aCARD_ADD, aCARD_LIST,
-                                                                    aORD_ADD, aORD_LIST,
-                                                                    aJOB_ADD, aJOB_LIST,
-                                                                    nCARD_ADD, nCARD_LIST, nCARD_EDIT, nCARD_DEL);
-                                                                    //aUSER_ADD, aUSER_LIST
+                switch ($kontroler) {
+                        case 'customers':
+                                switch ($akcja) {
+                                        case 'index':
+                                                switch ($par) {
+                                                        case 'my':
+                                                                switch ($dzial) {
+                                                                        case MAR:
+                                                                                $this->links = array(
+                                                                                        aCUS_ADD, aCARD_ADD,
+                                                                                        aCARD_LIST, aORD_ADD, aORD_LIST,
+                                                                                        aJOB_LIST
+                                                                                );
+                                                                                break;
+                                                                        case SUA:
+                                                                                $this->links = array(
+                                                                                        aCUS_ADD, aCARD_ADD,
+                                                                                        aCARD_LIST, aORD_ADD,
+                                                                                        aORD_LIST, aJOB_ADD,
+                                                                                        aJOB_LIST //, aUSER_ADD, aUSER_LIST
+                                                                                );
+                                                                                break;
+                                                                }
+                                                                break;
+                                                        case null:
+                                                                switch ($dzial) {
+                                                                        case MAR:
+                                                                                $this->redirect(array('action' => 'index', 'my'));
+                                                                                break;
+                                                                        case SUA:
+                                                                                $this->links = array(
+                                                                                        aCUS_ADD, aCARD_ADD,
+                                                                                        aCARD_LIST, aORD_ADD,
+                                                                                        aORD_LIST, aJOB_ADD,
+                                                                                        aJOB_LIST //, aUSER_ADD, aUSER_LIST
+                                                                                );
+                                                                                break;
+                                                                }
+                                                                break;
+                                                        default:
+                                                                $this->redirect(array('action' => 'index'));
+                                                }
+                                                break;
+                                        case 'view':
+                                                $this->links = array(
+                                                        aCARD_ADD, aCARD_LIST,
+                                                        aORD_ADD, aORD_LIST,
+                                                        aJOB_ADD, aJOB_LIST,
+                                                        nCUS_LIST, nCUS_ADD, nCUS_EDIT, nCUS_DEL
+                                                );
+                                                switch ($dzial) {
+                                                        case MAR:
+                                                                unset($this->links[4]);
+                                                                break;
+                                                        case SUA:
+                                                                break;
+                                                        default:
+                                                                unset($this->links[4], $this->links[7],  $this->links[8],
+                                                                $this->links[9]);
+                                                                break;
+                                                }
+                                                break;
+                                        case 'add':
+                                                $this->links = array(
+                                                        aCUS_LIST, aCARD_ADD, aCARD_LIST,
+                                                        aORD_ADD, aORD_LIST, aJOB_ADD, aJOB_LIST
+                                                );
+                                                break;
+                                        case 'edit':
+                                                $this->links = array(
+                                                        aCARD_ADD, aCARD_LIST,
+                                                        aORD_ADD, aORD_LIST,
+                                                        aJOB_ADD, aJOB_LIST,
+                                                        nCUS_LIST, nCUS_ADD
+                                                );
+                                                switch ($dzial) {
+                                                        case MAR:
+                                                                unset($this->links[4]);
+                                                                break;
+                                                        case SUA:
+                                                                break;
+                                                        default:
+                                                                unset($this->links[4], $this->links[7]);
+                                                                break;
+                                                }
+                                                break;
+                                }
+                                break;
+                        case 'cards':
+                                switch ($akcja) {
+                                        case 'index':
+                                                switch ($par) {
+                                                        case null:
+                                                                switch ($dzial) {
+                                                                        case SUA:
+                                                                                $this->links = array(
+                                                                                        aCUS_ADD,
+                                                                                        aCARD_ADD,
+                                                                                        aCARD_LIST,
+                                                                                        aORD_ADD, aORD_LIST,
+                                                                                        aJOB_ADD,
+                                                                                        aJOB_LIST //, aUSER_ADD, aUSER_LIST
+                                                                                );
+                                                                                break;
+                                                                        case MAR:
+                                                                                $this->redirect(array('action' => 'index', 'my'));
+                                                                                break;
+                                                                }
+                                                                break;
+                                                        case 'my':
+                                                                switch ($dzial) {
+                                                                        case MAR:
+                                                                                $this->links = array(
+                                                                                        aCUS_ADD,
+                                                                                        aCUS_LIST,
+                                                                                        aCARD_ADD,
+                                                                                        aORD_ADD, aORD_LIST,
+                                                                                        aJOB_LIST
+                                                                                );
+                                                                                break;
+                                                                        case SUA:
+                                                                                $this->links = array(
+                                                                                        aCUS_ADD,
+                                                                                        aCUS_LIST,
+                                                                                        aCARD_ADD,
+                                                                                        aORD_ADD, aORD_LIST,
+                                                                                        aJOB_ADD,
+                                                                                        aJOB_LIST //, aUSER_ADD, aUSER_LIST
+                                                                                );
+                                                                                break;
+                                                                }
+                                                                break;
+                                                }
+                                                break;
+                                        case 'view':
+                                                switch ($dzial) {
+                                                        case MAR:
+                                                                $this->links = array(
+                                                                        aCUS_ADD, aCUS_LIST,
+                                                                        aCARD_ADD, aCARD_LIST,
+                                                                        aORD_ADD, aORD_LIST, aJOB_LIST,
+                                                                        nCARD_ADD, nCARD_LIST, nCARD_EDIT, nCARD_DEL
+                                                                );
+                                                                break;
+                                                        case SUA:
+                                                                $this->links = array(
+                                                                        aCUS_ADD, aCUS_LIST,
+                                                                        aCARD_ADD, aCARD_LIST,
+                                                                        aORD_ADD, aORD_LIST,
+                                                                        aJOB_ADD, aJOB_LIST,
+                                                                        nCARD_ADD, nCARD_LIST, nCARD_EDIT, nCARD_DEL
+                                                                );
+                                                                //aUSER_ADD, aUSER_LIST
 
-                                                            break;
-                                            }
-                                            break;	
-                                    break;
-                            }
-                            break;
-                    case 'orders':
-                            switch($akcja ) {
-                                    case 'add':
-                                            $this->links = array(
-                                                                    aCUS_ADD, aCUS_LIST,
-                                                                    aCARD_ADD, aCARD_LIST,
-                                                                    aJOB_ADD, aJOB_LIST,
-                                                                    nORD_LIST//nORD_DEL, nORD_ADD, nORD_EDIT,
-                                                                    );
-                                            break;
-                                    case 'view':
-                                            $this->links = array(
-                                                                    aCUS_ADD, aCUS_LIST,
-                                                                    aCARD_ADD, aCARD_LIST,
-                                                                    aJOB_ADD, aJOB_LIST,
-                                                                    nORD_LIST, nORD_ADD, nORD_EDIT, nORD_DEL//, 
-                                                                    );
-                                            break;
-                            }
-                            break;
-            }
+                                                                break;
+                                                }
+                                                break;
+                                                break;
+                                }
+                                break;
+                        case 'orders':
+                                switch ($akcja) {
+                                        case 'add':
+                                                $this->links = array(
+                                                        aCUS_ADD, aCUS_LIST,
+                                                        aCARD_ADD, aCARD_LIST,
+                                                        aJOB_ADD, aJOB_LIST,
+                                                        nORD_LIST //nORD_DEL, nORD_ADD, nORD_EDIT,
+                                                );
+                                                break;
+                                        case 'view':
+                                                $this->links = array(
+                                                        aCUS_ADD, aCUS_LIST,
+                                                        aCARD_ADD, aCARD_LIST,
+                                                        aJOB_ADD, aJOB_LIST,
+                                                        nORD_LIST, nORD_ADD, nORD_EDIT, nORD_DEL //, 
+                                                );
+                                                break;
+                                }
+                                break;
+                }
     }
 	
 }
