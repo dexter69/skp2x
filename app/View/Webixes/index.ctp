@@ -60,7 +60,7 @@ var globalAppData = {
         customersHowMany: 150, // ile rekordów?
         justOneCustomerData: "/webixCustomers/getOne/",
         wyglad: {
-            mainPad: 35, // definujący główny padding
+            mainPad: 15, // definujący główny padding
             buttonOnMainToolbarWidth: 50
         },
         maxUpLinks: <?php echo maxUpLinks ?>,

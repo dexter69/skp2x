@@ -22,7 +22,7 @@
             for( $i=0; $i<$vars['maxUpLinks']; $i++ ) {            
                 //Nie mam pojęcia, czemu nie mogę tu użyć '', tylko trzeba escape'ować
                 // Prawdopodobnie coś z trimAll
-                echo "<p @class=\"link-item\"><a @href=\"" . uplBase . "#link$i#\">#link$i#</a></p>";
+                echo "<p @class=\"link-item\"><a @target=\"_blank\" @href=\"" . uplBase . "#link$i#\">#link$i#</a></p>";
             }
         ?>
     </div>

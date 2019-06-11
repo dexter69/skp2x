@@ -5,9 +5,10 @@ let toolbarMenu = {
     data: [ // elementy menu
         // whereToGo posiada informację, gdzie ten item przełącza
         {   id: "klienci", value:"Klienci", icon: "address-book-o",
-            whereToGo: manageCustomers.id },
+            whereToGo: manageCustomers.id },/**/
         {   id: "prywatne", value:"Prywatne", icon: "handshake-o",
             whereToGo: "managePrivateOrders" }
+            
     ],
     css: "toolbar-menu",
     ready: function(){ // Zakoloruj odpowiedni element menu    

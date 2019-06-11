@@ -6,8 +6,8 @@ let listOfCustomers = {
     css: "list-of-customers",
     //gravity: 1.3,    
     columns: [
-        { id:"index", header:"", sort:"int", width:35, css:{'text-align':'right'} },
-        { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
+        { id:"index", header:"Lp.", sort:"int", width:35, css:{'text-align':'right'} },
+        //{ id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
         //{ id:"WebixCustomer_kosz", header:"<input type='text' id='fakeInput'><span class='webix_icon fa-trash'></span>", width:/*40*/250, css:{'text-align':'center'} },
         { id:"WebixCustomer_kosz", header:{ css:"trashHeader", text:"<span id='trashHeaderSpan' class='webix_icon fa-trash'></span>" }, width:40, css:{'text-align':'center'} },
         { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true },         
