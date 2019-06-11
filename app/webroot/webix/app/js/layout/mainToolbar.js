@@ -22,7 +22,7 @@ let mainToolbar = {
         },
         */
         { view: "label", label: " ", width: 68},
-        toolbarMenu,        
+        //toolbarMenu,        
         
         //toggleSwitch,
         {},
