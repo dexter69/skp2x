@@ -9,6 +9,11 @@
     }
     
 echo '<li class="dropdown">';
+if( $controller == 'customers' ) {
+    $thePar = "/klienci";
+} else {
+    $thePar = array('controller' => $controller, 'action' => 'index');
+}
 ?>
 
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?php echo $name; ?> <span class="caret"></span></a>
@@ -16,7 +21,7 @@ echo '<li class="dropdown">';
       <li><?php
             echo $this->Html->link(
                 '<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Lista',
-                array('controller' => $controller, 'action' => 'index'),
+                $thePar,
                 array('escape' => false )); ?>
       </li>
       <li><?php
