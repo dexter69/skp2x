@@ -35,6 +35,7 @@ class ServosController extends AppController {
         [
             'user_id' => $this->Auth->user('id'),
             'order_id' => $this->request->data['id'],
+            'job_id' => 0, // for some reason na skp.lan nie działa
             'co' => servopen,
             'sent' => true, // na razie nie bedziemy się bawic z tym w powiadomienia
         ]
