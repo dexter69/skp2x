@@ -36,6 +36,7 @@ class ServosController extends AppController {
             'user_id' => $this->Auth->user('id'),
             'order_id' => $this->request->data['id'],
             'job_id' => 0, // for some reason skp.lan nie może tego zapisać
+            'card_id' => 0, // to też musi być..
             'co' => servopen,
             'sent' => true, // na razie nie bedziemy się bawic z tym w powiadomienia
         ]
