@@ -106,7 +106,10 @@ let listOfCustomers = {
         // Nadpisz prawdziwymi linkami
         if( "WebixChain" in daneObj && daneObj.WebixChain.length ) {                       
             for( i=0; i<daneObj.WebixChain.length; i++ ) {
-                daneObj["link" + i] = daneObj.WebixChain[i].chain + daneObj.WebixCustomer_id;
+                daneObj["link" + i] =
+                    daneObj.WebixChain[i].chain + "-" +
+                    daneObj.WebixCustomerRealOwner_inic.toLowerCase() +
+                    daneObj.WebixCustomer_id;
             }
         }
     },      
