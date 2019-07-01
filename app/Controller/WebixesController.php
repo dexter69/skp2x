@@ -30,6 +30,8 @@ class WebixesController extends AppController {
         "/webix/app/js/app" // nasz entry point
     ];
 
+    //private $webixJsFiles = [ "/webix/app/js/app-dist" ];
+
     public function index() {
         
         // Informacje o zalogowanym uzytkowniku - tylko to, co potrzebujemy
