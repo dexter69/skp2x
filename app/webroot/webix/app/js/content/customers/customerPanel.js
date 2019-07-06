@@ -12,7 +12,7 @@
         //{ id:"btest5", view:"button", value:"Add", click: "sTCB"},        
         {   id: "more", view:"button", type:"icon", icon:"info-circle",
             css: "cd-button", click: "sTCB", width:buttDl},
-        {},
+        {},                      
         { id:"cd_delete", view:"button", css: "cd-kosz cd-button",
             type:"icon", icon:"trash-o", badge:0, click: "sTCB", width:buttDl },
         {},

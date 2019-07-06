@@ -25,7 +25,9 @@
                 echo "<p @class=\"link-item\"><a @target=\"_blank\" @href=\"" . uplBase . "#link$i#\">#link$i#</a></p>";
             }
         ?>
-    </div>
+    </div>    
+    <!-- we want add extra button and this is placeholder -->
+    <div @id="link-producer"></div>
 </div>
 <?php
     // Płatności

@@ -1,3 +1,5 @@
+// Button do generowania drop linków
+
 let listOfCustomers = { 
     id: "listOfCustomers",
     view:"datatable",
@@ -165,6 +167,7 @@ let listOfCustomers = {
                     $$(customerPanel.id).show(); // Pokaż component ze szczegółami klienta i dod. mowego zam.                               
                     listOfCustomers.adjustKosz(); //Wyłącza się kosz, przy renderingu tabeli => więc poprawiamy
                 } 
+                
                 if( dane.WebixCustomer_howManyNonPrivateOrders == 0 ) {
                     /* Czyli jeżeli nie mamy zamówień poza prywatnymi => można usuwać */ 
                     
@@ -180,17 +183,48 @@ let listOfCustomers = {
                     //dane.WebixCustomer_comment = '<div class="cdetails-comment">' + dane.WebixCustomer_comment + "</div>";
                     dane.WebixCustomer_comment = `<div class="cdetails-comment">${dane.WebixCustomer_comment}</div>"`;                    
                 } 
-                $$(customerDetail.id).parse(dane);                              
-                //console.log(dane);
-                /* Do czego to?
-                $$("customerName").parse(dane);
-                $$(formularz.id).setValues({
-                    email: dane.WebixCustomer_email
-                });
-                */
+                $$(customerDetail.id).parse(dane);     
+
+                // Button do generowania drop linków
+                // Button do generowania linków pokazujemy tylko, gdy nie ma linków...
+                if( !("WebixChain" in dane) ) { 
+                    /* Zaczerpnięte z pomocy na webix forum. W przeciwnym wypadku
+                       dostajemy  "non unique view id" dla 3-ech poniższych views */
+                    if (this.ui) { this.ui.destructor(); }
+                    this.ui = generujDropWidget();
+                }     
             });            
         }
     }
+}
+
+
+function generujDropWidget() {
+
+    return webix.ui({
+            id: "dropoza",
+            container:"link-producer",
+            width:140,
+            cols: [
+                {
+                    id: "gen-link",
+                    view:"button", value:"Generuj link",
+                    css: "gen-button",                    
+                    //inputWidth:120,                                    
+                    click: function(){                             
+                        webix.message("Generujemy linki");  
+                        $$("gen-link").hide();
+                        $$("link-spin").show();
+                        setTimeout(function(){
+                            $$("link-spin").hide();
+                            $$("gen-link").show();
+                        }, 2000);
+                    }
+                },                                
+                { id: "link-spin", view:"icon", icon:"fas fa-spinner fa-spin", hidden:true}
+            ]
+        }                        
+    );
 }
 
 /**

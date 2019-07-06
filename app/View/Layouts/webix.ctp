@@ -9,8 +9,12 @@
     <head>
         <title><?php echo $title_for_layout; ?></title>
         <meta charset="utf-8">
+        
         <?php        
         echo $this->Html->meta('icon');
+
+        // Font awesome 5.9.0
+        echo $this->Html->css("font-awesome-5.9.0/css/all.min");        
 
         // Webix CSS & JavaScript =====================        
         echo $this->Webix->css([

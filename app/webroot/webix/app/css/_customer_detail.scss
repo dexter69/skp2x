@@ -100,3 +100,13 @@ $gora_dol: 0.05em;
     border-top: 5px solid #d9e1e1;
     //background-color: lightgreen;
 }
+
+//#######################
+
+/*
+    Button do generacji linków **/
+
+// spinner
+#link-producer button > * {
+    color: green;    
+}

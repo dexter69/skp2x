@@ -88,6 +88,11 @@ Szczegóły o kliencie, po prawej stronie listy*/
   border-top: 5px solid #d9e1e1; }
 
 /*
+    Button do generacji linków **/
+#link-producer button > * {
+  color: green; }
+
+/*
 Zdeprecjonowane lub na razie nie używane definicje */
 .customer-detail .customer-full-name > div {
   font-size: 125%; }
