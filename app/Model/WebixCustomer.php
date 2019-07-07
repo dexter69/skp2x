@@ -19,7 +19,8 @@ class WebixCustomer extends AppModel {
             'fields'  => [
                 'WebixChain.id', 'WebixChain.customer_id',
                 'WebixChain.chain', 'WebixChain.active'
-            ]
+            ],
+            'conditions' => ['WebixChain.active' => 1],
         ],
         'WebixNonPrivateOrder' => [            
             'foreignKey' => 'customer_id',            
