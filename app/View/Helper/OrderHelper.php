@@ -143,7 +143,7 @@ class OrderHelper extends AppHelper {
             'div' => false,
             'class' => 'dlajoli',
             'idlike' => 'Card'.$ind.'D',
-            'disabled' => $d_checked            
+            'disabled' => $d_checked || $card['status'] == KONEC     
         ));
         $per =  $this->Form->input('ard.'.$ind.'.P', array(
             'type' => 'checkbox',
@@ -152,7 +152,7 @@ class OrderHelper extends AppHelper {
             'div' => false,
             'class' => 'dlajoli',
             'idlike' => 'Card'.$ind.'P',
-            'disabled' => !$card['isperso'] || $p_checked
+            'disabled' => $card['status'] == KONEC || !$card['isperso'] || $p_checked
         ));
         return [
             'dtp' => $dtp,

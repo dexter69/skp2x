@@ -524,11 +524,11 @@ class CardsController extends AppController {
                     //$this->Card->print_r2($this->Card->tempor);
                 }
             } else {                    
-                    $this->request->data = $this->Card->znajdzTaKarta($id);
-                    if( !$this->akcjaOK($this->request->data, 'edit') ) {
-                            $this->Session->setFlash('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');
-                            return $this->redirect($this->referer());
-                    } 
+                $this->request->data = $this->Card->znajdzTaKarta($id);
+                if( !$this->akcjaOK($this->request->data, 'edit') ) {
+                        $this->Session->setFlash('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');
+                        return $this->redirect($this->referer());
+                } 
             }
             $users = $this->Card->Owner->find('list');
 
@@ -614,8 +614,9 @@ class CardsController extends AppController {
         private function isEdycjaKartyOK( $c_user_id = null, $c_status = null, $o_status = null ) {
             
             $cae = $this->Auth->user('CAE');
-            if( $cae == EDIT_SAL || $c_status == PRIV ||							
-                in_array( $o_status, array(O_REJ, W4UZUP, UZU_REJ)) ) {                 
+            if( $cae == EDIT_SAL || $c_status == PRIV ||	
+                // Uzupełnienie do serwisowych - uniemożliwienie edycji nie serwisowych						
+                ($c_status != KONEC && in_array( $o_status, array(O_REJ, W4UZUP, UZU_REJ))) ) {                 
                 //stan karty pozawla na edycję
                 
                 if( $cae ==  EDIT_OWN && $this->Auth->user('id') == $c_user_id ) {
