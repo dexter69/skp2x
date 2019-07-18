@@ -44,6 +44,15 @@ class WebixCustomersController extends AppController {
     }
 
     /**
+     * Przygotuj link dla klienta o id = $customerId  */
+    public function generujLink( $customerId = 0 ) {
+
+        $freeChain = $this->WebixCustomer->WebixChain->reserveChain($customerId);
+        $this->set(compact(['freeChain']));
+        $this->set('_serialize', 'freeChain');                
+    }
+
+    /**
      * Info dotyczące jednego klienta
      * $id - id klienta w bazie */
     public function getOne( $id = 0 ) {

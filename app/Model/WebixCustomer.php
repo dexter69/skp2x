@@ -106,7 +106,7 @@ class WebixCustomer extends AppModel {
     }
     
     /*
-        Chcemy ifo o jednym kliencie dla szybkiego dodania zamówienia  */
+        Chcemy info o jednym kliencie dla szybkiego dodania zamówienia  */
     public function getOne( $id = 0 ) {
 
         $parameters = [
