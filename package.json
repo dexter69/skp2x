@@ -21,6 +21,8 @@
   "homepage": "https://github.com/dexter69/skp2x#readme",
   "devDependencies": {
     "gulp": "^4.0.0",
-    "gulp-sass": "^4.0.2"
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-terser": "^1.2.0"
   }
 }
