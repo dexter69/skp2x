@@ -187,7 +187,7 @@ let listOfCustomers = {
 
                 // Button do generowania drop linków
                 // Button do generowania linków pokazujemy tylko, gdy nie ma linków...
-                if( !("WebixChain" in dane) ) { 
+                if( !("WebixChain" in dane) && 0) { // tymczasowe do zablokowania nie gotowego button'a
                     /* Zaczerpnięte z pomocy na webix forum. W przeciwnym wypadku
                        dostajemy  "non unique view id" dla 3-ech poniższych views */
                     if (this.ui) { this.ui.destructor(); }
