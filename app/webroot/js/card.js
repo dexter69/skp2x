@@ -136,7 +136,7 @@
                 $('#CardPerso').removeAttr('required');
                 $('#CardPerso').attr('disabled','disabled');
                 // dla dodatkowego pola input z ilością kart na magazyn
-                $('#nag-perso > input').attr('disabled','disabled');
+                //$('#nag-perso > input').attr('disabled','disabled');
             }
         }
         
