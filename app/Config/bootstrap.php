@@ -131,9 +131,9 @@ Configure::write('CakePdf', array(
 
 // Dla rozróżnienia wersji dev i prod
 // To uzywamy w WebixHelper
-define('appVersion', '2.7.31');
+define('appVersion', '2.7.40');
 // A to w AppHelper
-define('appNumber', '2019-07-24_10-17'); // Just date and subversion
+define('appNumber', '2019-08-19_14-33'); // Just date and subversion
 
 /**
  * Linki do uploadu */

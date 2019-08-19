@@ -292,7 +292,7 @@ class CardsController extends AppController {
             
             $warunek = 
                     // d) użytkownik jest superadminem, z perso lub dtp 
-                    in_array($dzial, array(SUA, DTP, PER) ) &&
+                    in_array($dzial, array(SUA, KIP, DTP, PER) ) &&
                     $karta['isperso'] && // b) karta ma personalizację
                     !$karta['pover'] && // c) nie została już zamarkowana
                     $karta['status'] == W_PROD; // a) ma klarowny status
