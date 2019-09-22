@@ -415,7 +415,7 @@ class OrdersController extends AppController {
             
             $order_arr['zal_clickable'] = $this->is_prepaid_clickable($order_arr['status']);
             // superadmin, handlowcy, koordynator i sekretarka potrzebują przedpłaty
-            if( $this->Auth->user('dzial') <= KOR ||  $this->Auth->user('dzial') == SEK ) {
+            if( $this->Auth->user('dzial') <= KIP ||  $this->Auth->user('dzial') == SEK ) {
                 $order_arr['zal_visible'] = true;
             } else {
                 $order_arr['zal_visible'] = false;
