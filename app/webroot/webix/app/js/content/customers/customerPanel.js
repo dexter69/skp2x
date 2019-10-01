@@ -57,7 +57,7 @@
                                     }
                                 } else {                        
                                     // zakładamay, że to oznacza brak zalogowoania
-                                    window.open("/pulpit", "_self");
+                                    window.open("/klienci", "_self");
                                 }
                             });
                         }                    

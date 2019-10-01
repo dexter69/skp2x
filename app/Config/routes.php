@@ -43,7 +43,7 @@
         Router::connect('/handlowe/dodaj', array('controller' => 'requests', 'action' => 'dodaj'));
         Router::connect('/handlowe/edytuj/*', array('controller' => 'requests', 'action' => 'edytuj'));
 
-        Router::connect('/klienci', array('controller' => 'webixes', 'action' => 'index'));
+        Router::connect(webixCustomersURL, array('controller' => 'webixes', 'action' => 'index'));
 
 /**
  * ...and connect the rest of 'Pages' controller's URLs.

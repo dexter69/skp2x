@@ -5,26 +5,32 @@ let listOfCustomers = {
     view:"datatable",
     select: true,
     ikonaKosza: "<span class='webix_icon fa-trash customers-kosz'></span>",
+    ikonaLinku: "<span class='webix_icon fa-link customers-kosz'></span>",
     css: "list-of-customers",
     //gravity: 1.3,    
     columns: [
-        { id:"index", header:"Lp.", sort:"int", width:35, css:{'text-align':'right'} },
-        //{ id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
+        //{ id:"index", header:"Lp.", sort:"int", width:35, css:{'text-align':'right'} },
+        { id:"WebixCustomer_id", header:"id", width:53, css:{'text-align':'right'} },
         //{ id:"WebixCustomer_kosz", header:"<input type='text' id='fakeInput'><span class='webix_icon fa-trash'></span>", width:/*40*/250, css:{'text-align':'center'} },
         { id:"WebixCustomer_kosz", header:{ css:"trashHeader", text:"<span id='trashHeaderSpan' class='webix_icon fa-trash'></span>" }, width:40, css:{'text-align':'center'} },
-        { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true },         
+        { id:"WebixCustomer_name", header:[ {content:"serverFilter"}], fillspace:true },
+        { id:"WebixCustomer_link", header:{ css:"linkHeader", text:"<span id='linkhHeaderSpan' class='webix_icon fa-link'></span>" }, width:35, css:{'text-align':'center'}},
         { id:"WebixAdresSiedziby_miasto", header:"Miasto", adjust:true},        
         { id:"WebixCustomer_ulica_nr", header:"Ulica, numer", adjust:true},
         
         { id:"WebixCustomerRealOwner_name", header: [ {content:"serverSelectFilter", options: globalAppData.customerOwners }], width:108}
     ], 
-    onClick:{ // Obsługa kliknięcia w kosz w nagłówku kolumny => filtrujemy koszaste!
+    onClick:{ // I do not know why (check docs) but keys have same name as css in headers
+        // Obsługa kliknięcia w kosz w nagłówku kolumny => filtrujemy koszaste!
         trashHeader : function() { 
             // To takie toggle parametru post data po kliknieciu 
             listOfCustomers.postData.kosz = !listOfCustomers.postData.kosz; 
             // I uaktualnienie wyglądu
             listOfCustomers.adjustKosz();
             $$(listOfCustomers.id).filterByAll(); // i wyzwalamay zapytanie do serwera                 
+        },
+        linkHeader: function(){
+            console.log("Nagłówek kolumny linków klikniety");
         }
     }, 
     // Uaktualniamy wygląd kosza w zależności od wartości listOfCustomers.postData.kosz
@@ -50,9 +56,7 @@ let listOfCustomers = {
             $$(listOfCustomers.id).showColumn(idKolumny);
         });
     },
-    scheme:{
-        $init:function(obj){ obj.index = this.count(); }
-    }, 
+    scheme:{        $init:function(obj){ obj.index = this.count(); }    }, 
     //globalAppData.config.customersAddOrder
     postData: { // początkowe parametry do zapytania do serwera
         fraza: '',
@@ -78,7 +82,10 @@ let listOfCustomers = {
                     if( record.WebixCustomer_howManyNonPrivateOrders == 0 ) { // jeżeli nie ma NIE prywatnych
                         // to dodajemy ikonkę kosza                
                         record["WebixCustomer_kosz"] = listOfCustomers.ikonaKosza;
-                    }                 
+                    }
+                    if( "WebixChain" in record ) {
+                        record["WebixCustomer_link"] = listOfCustomers.ikonaLinku;
+                    }             
                 });
                 return dane.records;  // w records mamy faktyczne dane 
             } else {
@@ -87,7 +94,7 @@ let listOfCustomers = {
                 /* zakładamy, ze dostaliśmy html -> stronę logowania,
                     dlatego musimy przekierować na logowanie */
                 //webix.message("TRZA PRZEKIWROAĆ"); console.log("TRZA PRZEKIWROAĆ");
-                window.open("/pulpit", "_self");                
+                window.open(globalAppData.config.listOfCustomersUrl, "_self");                
             }
         });
         /*
@@ -106,11 +113,17 @@ let listOfCustomers = {
             daneObj["link" + i] = "";
         }
         // Nadpisz prawdziwymi linkami
-        if( "WebixChain" in daneObj && daneObj.WebixChain.length ) {                       
-            for( i=0; i<daneObj.WebixChain.length; i++ ) {
+        if( "WebixChain" in daneObj && daneObj.WebixChain.length ) {  
+            let inic;                                 
+            for( i=0; i<daneObj.WebixChain.length; i++ ) {                
+                if(daneObj.WebixChain[i].inic != "XX") { // gdyby trzeba wziąć incjały nie z opiekuna klienta
+                    inic = daneObj.WebixChain[i].inic;
+                } else { // bieremy z opiekuna
+                    inic = daneObj.WebixCustomerRealOwner_inic;
+                }
                 daneObj["link" + i] =
                     daneObj.WebixChain[i].chain + "-" +
-                    daneObj.WebixCustomerRealOwner_inic.toLowerCase() +
+                    inic.toLowerCase() +
                     daneObj.WebixCustomer_id;
             }
         }

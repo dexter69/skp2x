@@ -54,6 +54,7 @@ var globalAppData = {
         loginUrl: "/users/login",
         customerUrl: "/customers/view/", // url do szczegółów klienta
         delCustomerUrl: "/webixCustomers/delete/", // url do usuwania klientów
+        listOfCustomersUrl: "<?php echo webixCustomersURL?>", // lista klientów / główny pulpit
         // url do zasysania klientów dla celów dodania nowego zamówienia
         //customersAddOrder: "/webixCustomers/getMany.json",
         customersGetMany: "/webixCustomers/getMany.json",

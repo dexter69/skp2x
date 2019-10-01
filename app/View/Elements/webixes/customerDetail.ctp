@@ -26,8 +26,8 @@
             }
         ?>
     </div>    
-    <!-- we want add extra button and this is placeholder -->
-    <div @id="link-producer"></div>
+    <!-- we want add extra button and this is placeholder 
+    <div @id="link-producer"></div> -->
 </div>
 <?php
     // Płatności
