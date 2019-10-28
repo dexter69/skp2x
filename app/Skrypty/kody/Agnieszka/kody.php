@@ -24,7 +24,8 @@ $arrOfFiles = [
     'kody30k.txt',
     'kody30k_cze-2018.txt', // baza wygenerowana 6.06.2018
     'kody30k_lis-2018.txt', // jak sama nazwa wskazuje
-    'kody30k_lut-2019.txt'  // ostatnie robione - 7.02.2019
+    'kody30k_lut-2019.txt',  // robione - 7.02.2019
+    'kody30k_paz-2019.txt' // ostatnie robione 28.10.2019
 ];
 
 // Plik z wygenerowanymi kodami, sprawdzamy czy się nie powtarzają z tym co już mamy

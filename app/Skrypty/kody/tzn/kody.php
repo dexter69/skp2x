@@ -3,7 +3,7 @@
 2019-06-25
 Na bazie skryptu dla klienta Agnieszki
 
-Sprawdzamy unikalność bieżących i względem starszych koddów.
+Sprawdzamy unikalność bieżących i względem starszych kodów.
 
 */
 
