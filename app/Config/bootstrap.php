@@ -467,6 +467,8 @@ define('DOKPNO', 59); // c
 define('DOKPOK', 60); // c
 define('DNOPNO', 61); // c
 define('DNOPOK', 62); // c
+
+// chyba deprec
 define('R2BJ', 31); //c - po akceptacji zamówienia(O_ACC), gotowa do podpięcia do JOB'a
 
 define('JOBED',41); // c karta została podpięta do zlecenia (JOB)
