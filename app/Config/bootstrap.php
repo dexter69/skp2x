@@ -492,7 +492,7 @@ define('KONEC', 77); // o, c, j
 define('KREJ1', 2); // o
 define('KREJ2', 3); // o
 define('FIXED1', 4); // o
-define('FIXED2', 5); // o
+define('FIXED2', 5); // o - 5 w zdarzeniach oznacza również zakończenie perso
 define('W4CARD', 6); // o
 //define('W4D', 7); // c
 define('W4P', 8); // c

@@ -67,43 +67,43 @@ class EventsController extends AppController {
             return $this->redirect($this->referer());
 	}
         
-        // w przypadku niepomyślnego zapisania zdarzenia
-        private function serveErr() {
+    // w przypadku niepomyślnego zapisania zdarzenia
+    private function serveErr() {
+    
+        if( $this->Event->code != 777) {
+            $this->Session->setFlash('BŁĄD ('. $this->Event->code .')'); }
+        else {
+            $this->Session->setFlash( $this->Event->msg ); }
+        return $this->redirect($this->referer());
+    }
+    
+    // $rqdata - $this->request->data
+    private function serveEventMailing( $rqdata = array()) {
         
-            if( $this->Event->code != 777) {
-                $this->Session->setFlash('BŁĄD ('. $this->Event->code .')'); }
-            else {
-              $this->Session->setFlash( $this->Event->msg ); }
-            return $this->redirect($this->referer());
-        }
-        
-        // $rqdata - $this->request->data
-        private function serveEventMailing( $rqdata = array()) {
-            
-            $oid = $rqdata['Event']['order_id'];
-            $jid = $rqdata['Event']['job_id'];
-            $arr = array('controller' => 'orders', 'action' => 'index');
-            // wyłączamy wysyłanie maili tuatj (e_powidamiaj)
-            if( $oid ) {
-                //$this->e_powiadamiaj($rqdata['Event']); 
-                switch( $rqdata['Event']['co'] ) {
-                    case p_ov:
-                        // zakończenie perso -> tak chciał Adam
-                        $arr = array('controller' => 'cards', 'action' => 'index', 'ptodo' ); break;
-                    case p_no:
-                    case p_ok:
-                        $arr =  array('controller' => 'cards', 'action' => 'index', 'persocheck' ); break;
-                    default:
-                        $arr = array('controller' => 'orders', 'action' => 'view', $oid );
-                }
-            } else {
-                if( $jid ) {
-                    //$this->e_powiadamiaj($rqdata['Event']);                            
-                    $arr = array('controller' => 'jobs', 'action' => 'view', $jid);
-                } 
-            }            
-            return $this->redirect($arr);
-        }
+        $oid = $rqdata['Event']['order_id'];
+        $jid = $rqdata['Event']['job_id'];
+        $arr = array('controller' => 'orders', 'action' => 'index');
+        // wyłączamy wysyłanie maili tuatj (e_powidamiaj)
+        if( $oid ) {
+            //$this->e_powiadamiaj($rqdata['Event']); 
+            switch( $rqdata['Event']['co'] ) {
+                case p_ov:
+                    // zakończenie perso -> tak chciał Adam
+                    $arr = array('controller' => 'cards', 'action' => 'index', 'ptodo' ); break;
+                case p_no:
+                case p_ok:
+                    $arr =  array('controller' => 'cards', 'action' => 'index', 'persocheck' ); break;
+                default:
+                    $arr = array('controller' => 'orders', 'action' => 'view', $oid );
+            }
+        } else {
+            if( $jid ) {
+                //$this->e_powiadamiaj($rqdata['Event']);                            
+                $arr = array('controller' => 'jobs', 'action' => 'view', $jid);
+            } 
+        }            
+        return $this->redirect($arr);
+    }
         
         
         /* Wyświetlamy zawartość tablicy z danymi 

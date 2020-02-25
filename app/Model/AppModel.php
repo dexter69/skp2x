@@ -298,10 +298,11 @@ class AppModel extends Model {
     public $e_data = array();
     
     /* Przygotuj tablicę z odbiorcami e-maila
-     * $eventtab - tablica z danymi dla mozdelu Event (z requestdata) */
-    public function prepEmailData( $eventtab = array() ) {
+     * $eventtab - tablica z danymi dla mozdelu Event (przerobiona z requestdata przez prepareData w Event.php)
+     * $addPerso - czy dodać powiadomienie dla perso */
+    public function prepEmailData( $eventtab = array(), $addPerso = false ) {
         
-        if(array_key_exists(0, $eventtab)) { // znaczy wersja dla hasMany
+        if(array_key_exists(0, $eventtab)) { // znaczy wersja dla hasMany                            
             $eventtab = $eventtab[0]; // na lokalne potrzeby
         }
         $this->tematTrescLink($eventtab);    
@@ -320,10 +321,10 @@ class AppModel extends Model {
         $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
         $tab = array();
         foreach( $uids as $key => $wartosc) { $tab[] = $key; }
-        $this->ludzikoza( $tab, $eventtab );
+        $this->ludzikoza( $tab, $eventtab, $addPerso );
     }
-    
-    private function ludzikoza( $tab, $eventtab ) {
+        
+    private function ludzikoza( $tab, $eventtab, $addPerso = false ) {
         
         $ludziki = $this->User->find('all', array(
                 'conditions' => array('User.id' => $tab),
@@ -346,9 +347,14 @@ class AppModel extends Model {
                 unset( $odbiorcy[$klucz] );
             }
         }
+        // dorabiamy powiadomienia dla Perso
+        if( $addPerso ) {
+            $odbiorcy[] = 'person@polskiekarty.pl';
+            $odbiorcy[] = 'darek@polskiekarty.pl'; // dla testu
+        }
         $this->e_data['odbiorcy'] = implode(" ", $odbiorcy);
     }
-    
+
     /* Przygotuj temat, treść i link e-maila
      * * $eventtab - tablica z danymi dla modelu Event (z requestdata) */
     private function tematTrescLink( $eventtab = array() ) {

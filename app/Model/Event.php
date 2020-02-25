@@ -243,6 +243,31 @@ class Event extends AppModel {
                 }
         }
 
+    // Sprawdzamy czy w tablicy z kartami choć jedna ma perso
+    private function hasPerso( $karty = [] ) {
+
+        foreach( $karty as $karta ) {
+            if( array_key_exists('isperso', $karta) && $karta['isperso'] ) {
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    // Czy personalizacja powinna otrzymać powiadomienie?
+    private function notifyPerso( $co, $karty = [] ) {
+
+        $teZdarzenia = [ // interesując nas zdarzenia
+                d_no, d_ok, put_kom, fix_o, unlock_o, update_o, unlock_again, klepnij,
+                push4checking, servopen, servpubli, kor_no, kor_ok
+        ];
+
+        // Jeżeli to jest interesujące nas zdarzenie i choć jedna karta ma perso
+        if( in_array($co, $teZdarzenia) && $this->hasPerso($karty) ) {
+            return true;
+        }        
+        return false;
+    }
 
 	// Przygotuj format danych, usuń zbędne itp. i ewentualnie zapisz
 	public function prepareData( $rqdata = array(), $sav=false ) {
@@ -331,13 +356,19 @@ class Event extends AppModel {
                         }
                         return $oStatus;
 		}
-	
+    
+        if(array_key_exists(0, $rqdata['Card'])) { // znaczy wersja dla hasMany    
+            $karty = $rqdata['Card']; // Zapisujemy pierwotną tablicę z kartami 
+        } else { // hasOne, np. zdarzenie dotyczące karty i musimy poraić coby nam dobrze działało
+            $karty[0] = $rqdata['Card'];
+        }
 		
 		$rqdata['Event']['user_id'] = AuthComponent::user('id');
 		$event = $rqdata['Event']['co'];
-                /* Mała poprawka w związku ze zmianą sposobu wysyłania e-mail powiadomień */
-                if( !array_key_exists('order_id', $rqdata['Event']) ) { }
-                
+        /* Mała poprawka w związku ze zmianą sposobu wysyłania e-mail powiadomień 
+        if( !array_key_exists('order_id', $rqdata['Event']) ) { } 
+        probably no need anymore */   
+            
 		switch ($event) {
 
                         case d_ok:
@@ -688,17 +719,18 @@ class Event extends AppModel {
                     unset($rqdata['Upload']); }
                 
 		if( $sav ) {
-                    return $this->saveStuff( $event, $rqdata ); 
+            $addPerso = $this->notifyPerso( $event, $karty ); // czy dodać powiadomienie dla perso
+            return $this->saveStuff( $event, $rqdata, $addPerso ); 
 		}
 		return $rqdata;                
-	}
-        
-        
-	private function saveStuff( $event, $rqdata = array() ) {
+	} 
+
+	private function saveStuff( $event, $rqdata = array(), $addPerso = false ) {
             
-            $this->code=1;
-            /*  Chcemy uzupełnić rgdata o dane do powiadomień e-mail */
-            $this->prepEmailData($rqdata['Event']);
+            $this->code=1;     
+
+            $this->prepEmailData($rqdata['Event'], $addPerso);
+
             if(array_key_exists(0, $rqdata['Event'])) { // znaczy wersja dla hasMany
                 $rqdata['Event'][0]['odbiorcy'] = $this->e_data['odbiorcy'];
                 $rqdata['Event'][0]['temat'] = $this->e_data['temat'];
