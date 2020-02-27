@@ -350,7 +350,7 @@ class AppModel extends Model {
         // dorabiamy powiadomienia dla Perso
         if( $addPerso ) {
             $odbiorcy[] = 'person@polskiekarty.pl';
-            //$odbiorcy[] = 'darek@polskiekarty.pl'; // dla testu
+            $odbiorcy[] = 'darek@polskiekarty.pl'; // dla testu
         }
         $this->e_data['odbiorcy'] = implode(" ", $odbiorcy);
     }

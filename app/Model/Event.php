@@ -12,7 +12,12 @@ class Event extends AppModel {
 
 	public $code = 0;
 	public $msg = null;
-	
+    
+    private $zdarzeniaDlaPerso = [ // interesując nas zdarzenia
+        fix_o, servpubli
+        //    ,d_no, d_ok, put_kom,  unlock_o, update_o, unlock_again, klepnij,
+        //    push4checking, servopen, kor_no, kor_ok
+    ];
 
 	private function check_other_cards( $eventarr = array() ) {
 		
@@ -255,16 +260,10 @@ class Event extends AppModel {
     }
 
     // Czy personalizacja powinna otrzymać powiadomienie?
-    private function notifyPerso( $co, $karty = [] ) {
-
-        $teZdarzenia = [ // interesując nas zdarzenia
-            fix_o, servpubli
-            //    ,d_no, d_ok, put_kom,  unlock_o, update_o, unlock_again, klepnij,
-            //    push4checking, servopen, kor_no, kor_ok
-        ];
-
+    private function notifyPerso( $co, $karty = [] ) {        
+        
         // Jeżeli to jest interesujące nas zdarzenie i choć jedna karta ma perso
-        if( in_array($co, $teZdarzenia) && $this->hasPerso($karty) ) {
+        if( in_array($co, $this->zdarzeniaDlaPerso) && $this->hasPerso($karty) ) {
             return true;
         }        
         return false;
