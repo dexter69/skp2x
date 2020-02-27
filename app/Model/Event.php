@@ -258,8 +258,9 @@ class Event extends AppModel {
     private function notifyPerso( $co, $karty = [] ) {
 
         $teZdarzenia = [ // interesując nas zdarzenia
-                d_no, d_ok, put_kom, fix_o, unlock_o, update_o, unlock_again, klepnij,
-                push4checking, servopen, servpubli, kor_no, kor_ok
+            fix_o, servpubli
+            //    ,d_no, d_ok, put_kom,  unlock_o, update_o, unlock_again, klepnij,
+            //    push4checking, servopen, kor_no, kor_ok
         ];
 
         // Jeżeli to jest interesujące nas zdarzenie i choć jedna karta ma perso
