@@ -1,9 +1,10 @@
 <?php
 //echo $this->App->print_r2($order['Order']);
 //echo $order['Order']['status'];
+//echo $this->App->print_r2($evcontrol);
 
 // Przydatne zmienne i konstrukcja html dla kart zamówienia
-/* $coism Szdefiniowane we kontrolerze, mówi czy zalogowany użytkownik
+/* $coism zdefiniowane we kontrolerze, mówi czy zalogowany użytkownik
         może otwierać zamówienia w trybie serwisowym */
 $resultForCards = $this->Order->cardsRelated( $order, $evcontrol, $coism );
 $order['Order']['isperso'] = $resultForCards['isperso'];
