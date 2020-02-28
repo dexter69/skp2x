@@ -15,7 +15,7 @@ class ServosController extends AppController {
 
     public function servo() {
 
-    $start = microtime(true);//time();
+    //$start = microtime(true);//time();
     //round(microtime(true) * 1000);
 
     // Nie chcemy w find mieć zdarzeń tego zamówienia
