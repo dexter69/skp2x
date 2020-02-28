@@ -234,17 +234,17 @@ class Event extends AppModel {
 
                 $i = 0;
                 foreach( $karty as $karta ) {
-                        if( !$karta['pover'] ) { 
-                        // czyli jak karta nie jest pover, to znaczy że handlowiec edytował
+                    if( $karta['isperso'] && !$karta['pover'] ) { 
+                    // czyli jak karta nie jest pover, to znaczy że handlowiec edytował
 
-                                // sumulujemy proces przesyłania do perso do sprawdzenia
-                                $karty[$i]['status'] = W4PDOK;   
-                                $karty[$i]['remstatus'] = W_PROD;                             
-                        } else {
-                                $karty[$i]['status'] = KONEC; // zostawiamy zakończoną                                
-                        }      
-                        unset($karty[$i]['left'], $karty[$i]['pover'], $karty[$i]['isperso']);
-                        $i++;                  
+                        // sumulujemy proces przesyłania do perso do sprawdzenia
+                        $karty[$i]['status'] = W4PDOK;   
+                        $karty[$i]['remstatus'] = W_PROD;                             
+                    } else {
+                        $karty[$i]['status'] = KONEC; // zostawiamy zakończoną                                
+                    }      
+                    unset($karty[$i]['left'], $karty[$i]['pover'], $karty[$i]['isperso']);
+                    $i++;                  
                 }
         }
 
@@ -483,7 +483,7 @@ class Event extends AppModel {
                             $rqdata['Order']['remstatus'] = O_ACC;                                        
                             $rqdata['Order']['id'] = $rqdata['Event']['order_id'];
                             // Ustaw odpowiednie statusy kart, karty niepotrzebne usuń
-                            $this->setUpServoCards($rqdata['Card']);
+                            $this->setUpServoCards($rqdata['Card']); 
                         } else {
                             $rqdata['Order']['status'] = NOWKA;
                             $rqdata['Order']['data_publikacji']=date('Y-m-d H:i:s');                            
