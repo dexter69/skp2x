@@ -124,7 +124,7 @@ class Customer extends AppModel {
 			8 - inny błąd
 	*/
 
-	public $validate_new = [
+	public $validate = [
 		'vatno_txt' => [
 			'format' => [
 				'rule' => 'isNipValid',
@@ -134,10 +134,16 @@ class Customer extends AppModel {
 				'rule' => 'isNipUnique',
         		'message' => 'Ten NIP już istnieje!'
 			]			
-		]
-	];
+        ],
 
-	public $nipValidationResult = 9; // startowa wartość
+        /**/
+        'name' => [
+            'rule' => 'notEmpty',
+            //'required' => true,
+            'message' => 'To pole jest wymagane!'
+        ]
+        
+	];	
 
 	/*
 	$nip = $request_data['Customer']['vatno_txt']; // Wpisany przez handlowca
@@ -177,14 +183,7 @@ class Customer extends AppModel {
 			return true; 
 		}
 		// vatno chcemy bez kresek
-		$this->vatno = str_replace('-', '', $nip);
-
-		/*
-		$customerId = 0;
-		if( array_key_exists('id' , $request_data['Customer']) ) {
-			$cid = $request_data['Customer']['id'];
-		}
-		*/
+		$this->vatno = str_replace('-', '', $nip);		
 
 		// poszukajmy czy taki NIP już jest
 		$result = $this->find('first', [
@@ -208,65 +207,7 @@ class Customer extends AppModel {
 
 		$requestData['Customer']['vatno_txt'] = trim($requestData['Customer']['vatno_txt']);
 		
-	}
-
-	/*
-		Zwraca:
-		0 - NIP jest OK i nie ma takiego w bazie,
-		1 - NIP ma nieprawidłowy format,
-		2 - jest już taki NIP w bazie */
-	public function validateNIP(  &$request_data ) {
-
-		/*	Chcemy następujący wzorzec:
-			- 0-3 zaków, będących dużą literą
-			- jedna cyfra
-			- dowolna ilośc cyfr lub "-"
-			- ostatni znak, to cyfra
-			LUB zamiast NIP'u mamy słowo "BRAK" - dla klientów bez NIP'u */
-
-		$nip = $request_data['Customer']['vatno_txt']; // Wpisany przez handlowca
-		
-		preg_match( NIP_PATTERN, $nip, $matches );		
-		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
-			return 1;
-		}
-		if( $this->jestJuzTakiNIP( $request_data ) ) { // taki NIP jest już w bazie			
-			return 2;
-		}
-		return 0; // Wsio OK
-	}
-	
-	/* Sprawdza, czy podany przez handlowca NIP jest już w bazie */
-	private function jestJuzTakiNIP( &$request_data) {
-
-		if( $request_data['Customer']['vatno_txt'] ==  NO_NIP ) { // Klient z brakiem NIP'u
-			return false; // sytuacja OK
-		}
-		// Chodzi chyba o sprawdzenie, czy edycja
-		//$cid = array_key_exists('id' , $request_data['Customer']) ? request_data['Customer']['id'] : 0;
-
-		$cid = 0;
-		if( array_key_exists('id' , $request_data['Customer']) ) {
-			$cid = $request_data['Customer']['id'];
-		}
-
-
-		// vatno chcemy bez kresek
-		$request_data['Customer']['vatno'] = str_replace('-', '', $request_data['Customer']['vatno_txt']);
-
-		// poszukajmy czy taki NIP już jest
-		$result = $this->find('first', array(
-					'conditions' => array(
-						'Customer.vatno' => $request_data['Customer']['vatno'],
-						'Customer.id !=' => $cid )
-		));
-
-		if( !empty($result) ) { // jest już taki NIP
-			$request_data['result'] = $result;
-			return true;
-		}
-		return false;
-	}
+	}	
 	
 
 /**
@@ -313,10 +254,92 @@ class Customer extends AppModel {
 		'etylang' =>	[	
 			'label' => 'Język etykiety',
 			'options' => ["pl"=>"Polski", "en"=>"Angielski", "de"=>"Niemiecki"] 			
-		]
+        ],
+        'pozyskany' => [
+            'label' => 'Klient pozyskany z:',
+            'options' => [
+                "bra"=>"Brak informacji",
+                "psi"=>"Targi PSI",
+                "rem"=>"Tari RemaDays",
+                "tar"=>"Inne targi",
+                "int"=>"Internet",
+                "oso"=>"Pozyskany Osobiście"
+            ]
+        ]
 	];
 	
+
+
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+    public $hasOne = array(
+        'AdresSiedziby' => array(
+            'className' => 'Address',
+            'foreignKey' => 'customer_id'
+            
+        )
+    );
+
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
 	
+	public $belongsTo = array(
+        'Creator' => array(
+            'className' => 'User',
+            'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+        ),
+        'Owner' => array(
+            'className' => 'User',
+            'foreignKey' => 'owner_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+        )
+    );
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Card' => array(
+			'className' => 'Card',
+			'foreignKey' => 'customer_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'Order' => array(
+			'className' => 'Order',
+			'foreignKey' => 'customer_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
+/**
+ * ##### DEPREC
+ */	
 
 	// formatowania do views
 	public $view_options = 
@@ -436,212 +459,98 @@ class Customer extends AppModel {
 			
 		);
 	
-		public function get_view_options( $customer = array() ) {
-			
-                    $this->view_options['owner_id']['options'] = $this->Owner->find('list');
-                    $this->view_options['owner_id']['default'] = AuthComponent::user('id');
-                    $this->view_options['etylang'] = $this->etyk_view['etylang'];
+    public function get_view_options( $customer = array() ) {
+        
+                $this->view_options['owner_id']['options'] = $this->Owner->find('list');
+                $this->view_options['owner_id']['default'] = AuthComponent::user('id');
+                $this->view_options['etylang'] = $this->etyk_view['etylang'];
 
-                    if( !empty($customer) ) { // tzn. edycja
-                            $this->view_options['forma_zaliczki']['default'] = $customer['forma_zaliczki'];
-                            $this->view_options['forma_platnosci']['default'] = $customer['forma_platnosci'];
-                    }
+                if( !empty($customer) ) { // tzn. edycja
+                        $this->view_options['forma_zaliczki']['default'] = $customer['forma_zaliczki'];
+                        $this->view_options['forma_platnosci']['default'] = $customer['forma_platnosci'];
+                }
 
-                    if( $this->view_options['forma_zaliczki']['default'] == NIE || $this->view_options['forma_zaliczki']['default'] == PAU ) {
-                            $this->view_options['procent_zaliczki']['disabled'] = true;
-                            $this->view_options['procent_zaliczki']['required'] = false;
-                            $this->view_options['procent_zaliczki']['default'] = null;
-                    } else {
-                            $this->view_options['procent_zaliczki']['disabled'] = false;
-                            $this->view_options['procent_zaliczki']['required'] = true;
-                    }
+                if( $this->view_options['forma_zaliczki']['default'] == NIE || $this->view_options['forma_zaliczki']['default'] == PAU ) {
+                        $this->view_options['procent_zaliczki']['disabled'] = true;
+                        $this->view_options['procent_zaliczki']['required'] = false;
+                        $this->view_options['procent_zaliczki']['default'] = null;
+                } else {
+                        $this->view_options['procent_zaliczki']['disabled'] = false;
+                        $this->view_options['procent_zaliczki']['required'] = true;
+                }
 
-                    if( $this->view_options['forma_platnosci']['default'] == NIE ||
-                            $this->view_options['forma_platnosci']['default'] == POB ||
-                            $this->view_options['forma_platnosci']['default'] == PAU
-                    ) {
-                            $this->view_options['termin_platnosci']['default'] = null;	
-                            $this->view_options['termin_platnosci']['disabled'] = true;
-                            $this->view_options['termin_platnosci']['required'] = false;
-                    } else {
-                            $this->view_options['termin_platnosci']['disabled'] = false;
-                            $this->view_options['termin_platnosci']['required'] = true;
-                    }
-                    return $this->view_options;
-		}
+                if( $this->view_options['forma_platnosci']['default'] == NIE ||
+                        $this->view_options['forma_platnosci']['default'] == POB ||
+                        $this->view_options['forma_platnosci']['default'] == PAU
+                ) {
+                        $this->view_options['termin_platnosci']['default'] = null;	
+                        $this->view_options['termin_platnosci']['disabled'] = true;
+                        $this->view_options['termin_platnosci']['required'] = false;
+                } else {
+                        $this->view_options['termin_platnosci']['disabled'] = false;
+                        $this->view_options['termin_platnosci']['required'] = true;
+                }
+                return $this->view_options;
+    }	
+
+    /*
+		Zwraca:
+		0 - NIP jest OK i nie ma takiego w bazie,
+		1 - NIP ma nieprawidłowy format,
+		2 - jest już taki NIP w bazie */
+	public function validateNIP(  &$request_data ) {
+
+		/*	Chcemy następujący wzorzec:
+			- 0-3 zaków, będących dużą literą
+			- jedna cyfra
+			- dowolna ilośc cyfr lub "-"
+			- ostatni znak, to cyfra
+			LUB zamiast NIP'u mamy słowo "BRAK" - dla klientów bez NIP'u */
+
+		$nip = $request_data['Customer']['vatno_txt']; // Wpisany przez handlowca
 		
+		preg_match( NIP_PATTERN, $nip, $matches );		
+		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
+			return 1;
+		}
+		if( $this->jestJuzTakiNIP( $request_data ) ) { // taki NIP jest już w bazie			
+			return 2;
+		}
+		return 0; // Wsio OK
+	}
 	
-	
-	
-/**
- * Validation rules
- *
- * @var array * 
- */
+	/* Sprawdza, czy podany przez handlowca NIP jest już w bazie */
+	private function jestJuzTakiNIP( &$request_data) {
 
-	public $validate = array(
-		'user_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'owner_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		if( $request_data['Customer']['vatno_txt'] ==  NO_NIP ) { // Klient z brakiem NIP'u
+			return false; // sytuacja OK
+		}
+		// Chodzi chyba o sprawdzenie, czy edycja
+		//$cid = array_key_exists('id' , $request_data['Customer']) ? request_data['Customer']['id'] : 0;
 
-		'vatno' => array(
-			//'notEmpty' => array(
-				//'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			//),
-		),
-		'vatno_txt' => array(
-			//'notEmpty' => array(
-				//'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			//),
-		),
-		'forma_zaliczki' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'procent_zaliczki' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				'allowEmpty' => true,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'forma_platnosci' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'termin_platnosci' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
+		$cid = 0;
+		if( array_key_exists('id' , $request_data['Customer']) ) {
+			$cid = $request_data['Customer']['id'];
+		}
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-    public $hasOne = array(
-        'AdresSiedziby' => array(
-            'className' => 'Address',
-            'foreignKey' => 'customer_id'
-            
-        )
-    );
+		// vatno chcemy bez kresek
+		$request_data['Customer']['vatno'] = str_replace('-', '', $request_data['Customer']['vatno_txt']);
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	
-	public $belongsTo = array(
-        'Creator' => array(
-            'className' => 'User',
-            'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-        ),
-        'Owner' => array(
-            'className' => 'User',
-            'foreignKey' => 'owner_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-        )
-    );
+		// poszukajmy czy taki NIP już jest
+		$result = $this->find('first', array(
+					'conditions' => array(
+						'Customer.vatno' => $request_data['Customer']['vatno'],
+						'Customer.id !=' => $cid )
+		));
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'Card' => array(
-			'className' => 'Card',
-			'foreignKey' => 'customer_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Order' => array(
-			'className' => 'Order',
-			'foreignKey' => 'customer_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
-
-	
-	
-
+		if( !empty($result) ) { // jest już taki NIP
+			$request_data['result'] = $result;
+			return true;
+		}
+		return false;
+    }
+    
+    public $nipValidationResult = 9; // startowa wartość
 
 }

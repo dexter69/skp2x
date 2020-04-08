@@ -1,12 +1,15 @@
 <?php
 
-echo $this->BootForm->input('Name',
+echo $this->BootForm->input('name',
     [
         'label' => 'Nazwa skrócona',
         'placeHolder' => 'krótka nazwa klienta',
         'div' => ['class' => 'col-md-9']
     ]
 );
+
+$vju['pozyskany']['div'] = ['class' => 'col-md-3']; // wolimy w widoku formatować podział na kolumny
+echo $this->BootForm->input('pozyskany', $vju['pozyskany']);
 
 echo $this->BootForm->input('AdresSiedziby.name',
     [

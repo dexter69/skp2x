@@ -107,35 +107,41 @@ class CustomersController extends AppController {
  */
         public function dodaj() {
 
-                $request = [];
-                if ($this->request->is('post')) {
-                        //$request = $this->request->data;
-                        // zrób coś z przesłanymi danymi
-                        
-                        // test błędu
-                        //$this->Session->setFlash('Bla, bla - jakiś błąd.');
+            $request = [];
+            if ($this->request->is('post')) {                
 
-                        //Polerujemy wpisywane dane
-                        $this->Customer->trimSpaces($this->request->data);
-                        
-                        //Testujemy walidację w kontrolerze
-                        $this->Customer->set($this->request->data);
-                        if ($this->Customer->validates()) {
-                                // it validated logic
-                                $request = $this->request->data;
-                            } else {
-                                // didn't validate logic
-                                $request = $this->Customer->validationErrors;                                
-                            }
-                }
-                if( $this->Auth->user('dzial') == KON ) {
-                        //kontrola jakości - przekieruj skąd przyszli 
-                        return $this->redirect($this->referer());
-                }
-                // opcje wyświetlania pól zdefiniowane w modelu
-                $vju = $this->Customer->boot_view_options;
-                $this->set( compact('vju', 'request') );
-                //$this->render('dodaj');                
+                //Polerujemy wpisywane dane
+                $this->Customer->trimSpaces($this->request->data);
+
+                $this->request->data['Customer']['user_id'] =
+                $this->request->data['Customer']['owner_id'] =
+                // stały opiekun -> ten kto dodaje, staje się stałym opiekunem
+                $this->request->data['Customer']['opiekun_id'] =                
+                $this->request->data['AdresSiedziby']['user_id'] = $this->Auth->user('id');
+                
+                // vatno chcemy bez kresek
+                $this->request->data['Customer']['vatno'] = str_replace('-', '', $this->request->data['Customer']['vatno_txt']);
+                
+                $this->Customer->create();
+                if( $this->Customer->saveAssociated($this->request->data) ) {    
+                    // OK we have saved                            
+                    return $this->redirect(array('action' => 'view', $this->Customer->id));
+                } else { // we haven't save        
+                    if( empty($this->Customer->validationErrors) ) { // no validation errors
+                        $this->Session->setFlash( ('Nie udało się zapisać. Proszę, spróbuj ponownie.') );
+                    } else {
+                        $this->Session->setFlash( ('FORMULARZ ZAWIERA BŁĘDY') );
+                    }
+                }                
+            }
+            if( $this->Auth->user('dzial') == KON ) {
+                //kontrola jakości - przekieruj skąd przyszli 
+                return $this->redirect($this->referer());
+            }
+            // opcje wyświetlania pól zdefiniowane w modelu
+            $vju = $this->Customer->boot_view_options;
+            $this->set( compact('vju') );
+            //$this->render('dodaj');             
         }
 
 /**
