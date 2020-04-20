@@ -89,60 +89,101 @@ class CustomersController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-            if (!$this->Customer->exists($id)) {
-                    throw new NotFoundException( 'Taki klient nie istnieje' );
-            }	            
-            $customer = $this->Customer->customerRelated($id);
-            if( !$this->akcjaOK($customer['Customer'], 'view') ) {
-                    $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-                    return $this->redirect($this->referer());
-            }
-            $customer['Customer']['etylang-txt'] = $this->Customer->etyk_view['etylang']['cview'][$customer['Customer']['etylang']];
-            $this->set( compact( 'customer') );
-            //$this->render('view-old'); 
+        if (!$this->Customer->exists($id)) {
+                throw new NotFoundException( 'Taki klient nie istnieje' );
+        }	            
+        $customer = $this->Customer->customerRelated($id);
+        if( !$this->akcjaOK($customer['Customer'], 'view') ) {
+                $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+                return $this->redirect($this->referer());
+        }
+        $customer['Customer']['etylang-txt'] = $this->Customer->etyk_view['etylang']['cview'][$customer['Customer']['etylang']];
+        $this->set( compact( 'customer') );
+        //$this->render('view-old'); 
 	}        
         
 /**
+ * edytuj method --------> edytowanie klienta po nowemu 
+ */
+    public function edytuj( $id = null ) {
+        
+        if (!$this->Customer->exists($id)) {
+			throw new NotFoundException('Nie ma takiego klienta');
+        }
+
+        if ($this->request->is(array('post', 'put'))) { // dane formularza posted
+            
+            //Polerujemy wpisywane dane            
+            $this->Customer->polishData($this->request->data, $id); // <= true = edycja            
+
+            if( $this->Customer->saveAssociated($this->request->data) ) {    
+                // OK we have saved                            
+                return $this->redirect(array('action' => 'view', $this->Customer->id));
+            } else { // we haven't save        
+                if( empty($this->Customer->validationErrors) ) { // no validation errors
+                    $this->Session->setFlash( ('Nie udało się zapisać. Proszę, spróbuj ponownie.') );
+                } else {
+                    $this->Session->setFlash( ('FORMULARZ ZAWIERA BŁĘDY') );
+                }
+            }
+
+        } else { // przygotowanie danych do formularza edycji
+			$options = array('conditions' => array('Customer.' . $this->Customer->primaryKey => $id));
+			$this->request->data = $this->Customer->find('first', $options);
+			if( !$this->akcjaOK($this->request->data['Customer'], 'edit') )	{	
+				$this->Session->setFlash('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');
+				return $this->redirect( $this->referer() );
+			}
+        }
+        $vju = $this->Customer->boot_view_options( $this->request->data['Customer'] );
+        $code = $this->jsCode();
+        $edycja = true;        
+        $this->set( compact('vju', 'code', 'edycja') );
+        $this->render('dodaj');
+    }
+
+/**
  * dodaj method --------> dodawanie klienta po nowemu 
  */
-        public function dodaj() {
+    public function dodaj() {
 
-            $request = [];
-            if ($this->request->is('post')) {                
+        if( $this->request->is('post') ) {
+            
+            //Polerujemy wpisywane dane
+            $this->Customer->polishData($this->request->data);
 
-                //Polerujemy wpisywane dane
-                $this->Customer->trimSpaces($this->request->data);
-
-                $this->request->data['Customer']['user_id'] =
-                $this->request->data['Customer']['owner_id'] =
-                // stały opiekun -> ten kto dodaje, staje się stałym opiekunem
-                $this->request->data['Customer']['opiekun_id'] =                
-                $this->request->data['AdresSiedziby']['user_id'] = $this->Auth->user('id');
-                
-                // vatno chcemy bez kresek
-                $this->request->data['Customer']['vatno'] = str_replace('-', '', $this->request->data['Customer']['vatno_txt']);
-                
-                $this->Customer->create();
-                if( $this->Customer->saveAssociated($this->request->data) ) {    
-                    // OK we have saved                            
-                    return $this->redirect(array('action' => 'view', $this->Customer->id));
-                } else { // we haven't save        
-                    if( empty($this->Customer->validationErrors) ) { // no validation errors
-                        $this->Session->setFlash( ('Nie udało się zapisać. Proszę, spróbuj ponownie.') );
-                    } else {
-                        $this->Session->setFlash( ('FORMULARZ ZAWIERA BŁĘDY') );
-                    }
-                }                
-            }
-            if( $this->Auth->user('dzial') == KON ) {
-                //kontrola jakości - przekieruj skąd przyszli 
-                return $this->redirect($this->referer());
-            }
-            // opcje wyświetlania pól zdefiniowane w modelu
-            $vju = $this->Customer->boot_view_options;
-            $this->set( compact('vju') );
-            //$this->render('dodaj');             
+            $this->Customer->create();
+            if( $this->Customer->saveAssociated($this->request->data) ) {    
+                // OK we have saved                            
+                return $this->redirect(array('action' => 'view', $this->Customer->id));
+            } else { // we haven't save        
+                if( empty($this->Customer->validationErrors) ) { // no validation errors
+                    $this->Session->setFlash( ('Nie udało się zapisać. Proszę, spróbuj ponownie.') );
+                } else {
+                    $this->Session->setFlash( ('FORMULARZ ZAWIERA BŁĘDY') );
+                }
+            }                
         }
+        if( $this->Auth->user('dzial') == KON ) {
+            //kontrola jakości - przekieruj skąd przyszli 
+            return $this->redirect($this->referer());
+        }
+        // opcje wyświetlania pól zdefiniowane w modelu
+        $vju = $this->Customer->boot_view_options();
+        $code = $this->jsCode();        
+        $edycja = false; // bo nowy klient
+        $this->set( compact('vju', 'code', 'edycja') );      
+    }
+
+    private function jsCode() {
+        
+        $code = "var\npay = " . json_encode( array( PRZE, CASH ) ) . ",\n" .
+                "defproc = " . json_encode(DEF_ZAL_PROC) . ",\n" .
+                "postpay = " . json_encode( array( PRZE, CASH ) ) . ",\n" .
+                "defterm = " . json_encode(DEF_PAY_TIME) . ";";
+
+        return $code;
+    }
 
 /**
  * add method
@@ -153,51 +194,52 @@ class CustomersController extends AppController {
  * 
  */
 	public function add() {
-		
-            if ($this->request->is('post')) {
-                    $this->request->data['Customer']['user_id'] = $this->Auth->user('id');
-                    // stały opiekun -> ten kto dodaje, staje się stałym opiekunem
-                    $this->request->data['Customer']['opiekun_id'] = $this->Auth->user('id');
-                    $this->request->data['AdresSiedziby']['user_id'] = $this->Auth->user('id');
-                    //$this->Customer->print_r2($this->request->data);  return;
+        
+        return $this->redirect(array('action' => 'dodaj'));
+        if ($this->request->is('post')) {
+                $this->request->data['Customer']['user_id'] = $this->Auth->user('id');
+                // stały opiekun -> ten kto dodaje, staje się stałym opiekunem
+                $this->request->data['Customer']['opiekun_id'] = $this->Auth->user('id');
+                $this->request->data['AdresSiedziby']['user_id'] = $this->Auth->user('id');
+                //$this->Customer->print_r2($this->request->data);  return;
 
-                    $caseNR = $this->Customer->validateNIP( $this->request->data );                    
-                    //echo '<pre>'; print_r($caseNR); echo  '</pre>'; return;
-                    //echo $mth; return;
+                $caseNR = $this->Customer->validateNIP( $this->request->data );                    
+                //echo '<pre>'; print_r($caseNR); echo  '</pre>'; return;
+                //echo $mth; return;
 
-                    switch( $caseNR ) { // egzaminujemy rezultat sprawdzania NIP'u
-                        case 0: //wsio OK
-                                $this->Customer->create();
-                                if ($this->Customer->saveAssociated($this->request->data)) {                                
-                                        return $this->redirect(array('action' => 'view', $this->Customer->id));
-                                } else {					
-                                        $this->Session->setFlash( ('Nie udało się zapisać. Proszę, spróbuj ponownie.') );
-                                }
-                                break;
-                        case 1: // nieprawidłowy format
-                                $this->Session->setFlash( ('Wpisany NIP ma nieprawidłowy format!') );
-                                break;
-                        case 2: // taki nip już istnieje
-                                $name = $this->request->data['result']['Customer']['name'];
-                                $cuid = $this->request->data['result']['Customer']['id'];
-                                $url = Router::url(array('controller'=>'customers', 'action'=>'view', $cuid));
-                                $this->Session->setFlash('Klient z tym numerem NIP-u już istnieje <a href="' . $url . '">' . $name . '</a>');
-                                break;
-                        default:
-                                $this->Session->setFlash('Nieznany błąd. Zapytaj Darka, jeżeli tu jeszcze pracuje.');
-                    }
-            }
-            if( $this->Auth->user('dzial') == KON ) {
-                //kontrola jakości - przekieruj skąd przyszli 
-                return $this->redirect($this->referer());
-            }
-            // opcje wyświetlania pól zdefiniowane w modelu
-            $vju = $this->Customer->get_view_options();
-            //$this->set(compact('vju'));
+                switch( $caseNR ) { // egzaminujemy rezultat sprawdzania NIP'u
+                    case 0: //wsio OK
+                            $this->Customer->create();
+                            if ($this->Customer->saveAssociated($this->request->data)) {                                
+                                    return $this->redirect(array('action' => 'view', $this->Customer->id));
+                            } else {					
+                                    $this->Session->setFlash( ('Nie udało się zapisać. Proszę, spróbuj ponownie.') );
+                            }
+                            break;
+                    case 1: // nieprawidłowy format
+                            $this->Session->setFlash( ('Wpisany NIP ma nieprawidłowy format!') );
+                            break;
+                    case 2: // taki nip już istnieje
+                            $name = $this->request->data['result']['Customer']['name'];
+                            $cuid = $this->request->data['result']['Customer']['id'];
+                            $url = Router::url(array('controller'=>'customers', 'action'=>'view', $cuid));
+                            $this->Session->setFlash('Klient z tym numerem NIP-u już istnieje <a href="' . $url . '">' . $name . '</a>');
+                            break;
+                    default:
+                            $this->Session->setFlash('Nieznany błąd. Zapytaj Darka, jeżeli tu jeszcze pracuje.');
+                }
+        }
+        if( $this->Auth->user('dzial') == KON ) {
+            //kontrola jakości - przekieruj skąd przyszli 
+            return $this->redirect($this->referer());
+        }
+        // opcje wyświetlania pól zdefiniowane w modelu
+        $vju = $this->Customer->get_view_options();
+        //$this->set(compact('vju'));
 
-            $links = $this->links; 
-            $this->set( compact('vju', 'links' ) );
-            $this->render('add-old');
+        $links = $this->links; 
+        $this->set( compact('vju', 'links' ) );
+        $this->render('add-old');
 	}
 
 /**
@@ -210,11 +252,15 @@ class CustomersController extends AppController {
 	public function edit($id = null) {
 		if (!$this->Customer->exists($id)) {
 			throw new NotFoundException('Nie mogę znaleźć takiego klienta');
-		}
+        }
+
+        // Przekierowujemy na nową akcję
+        return $this->redirect(array('action' => 'edytuj', $id));
+        
 		if ($this->request->is(array('post', 'put'))) {
                     // coby ewentualnie zmienić opiekuna
                     $this->request->data['Customer']['owner_id'] = $this->request->data['Customer']['user_id'];
-                    //$this->Customer->print_r2($this->request->data); //return;
+                    //$this->Customer->print_r2($this->request->data); return;
 
                     $caseNR = $this->Customer->validateNIP( $this->request->data );                                        
                     switch( $caseNR ) { // egzaminujemy rezultat sprawdzania NIP'u

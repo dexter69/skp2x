@@ -1,23 +1,17 @@
 <?php
 
-echo $this->BootForm->formGroup(
-    "Uwagi",
-    "col-md-7",
+echo $this->BootForm->input('comment',
     [
-        "id" => "CustomerComment",
-        "type" => "textarea",
-        "rows" => 6,
-        "placeHolder" => "uwagi"
+        'label' => 'Uwagi',
+        'placeHolder' => 'uwagi',
+        'div' => ['class' => 'col-md-7']
     ]
 );
 
-echo $this->BootForm->formGroup(
-    "Ważne!",
-    "col-md-5",
+echo $this->BootForm->input('important',
     [
-        "id" => "CustomerImportant",
-        "type" => "textarea",
-        "rows" => 6,
-        "placeHolder" => "Informacje o których trzeba pamiętać przy zamówieniu - to co tutaj wpiszesz, będzie się pojawiać jako „przypominajka” przy składniu/edycji zamówienia dla tego klienta."
+        'label' => 'Ważne!',
+        'placeHolder' => "Informacje o których trzeba pamiętać przy zamówieniu - to co tutaj wpiszesz, będzie się pojawiać jako „przypominajka” przy składniu/edycji zamówienia dla tego klienta.",
+        'div' => ['class' => 'col-md-5']
     ]
 );

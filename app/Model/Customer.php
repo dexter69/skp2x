@@ -144,26 +144,13 @@ class Customer extends AppModel {
         ]
         
 	];	
-
-	/*
-	$nip = $request_data['Customer']['vatno_txt']; // Wpisany przez handlowca
-		
-		preg_match( NIP_PATTERN, $nip, $matches );		
-		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
-			return 1;
-		}
-
-		$value = array_values($check);
-        $value = $value[0];
-
-        return preg_match('|^[0-9a-zA-Z_-]*$|', $value);
-	*/
+	
 
 	// Sprawdzamy czy NIP ma prawidłowy format
 	public function isNipValid( $check ) {
 
 		$value = array_values($check);
-		$nip = $value[0];
+		$nip = $this->vatTxtToVatNo( $value[0] );
 		
 		preg_match( NIP_PATTERN, $nip, $matches );		
 		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
@@ -182,14 +169,14 @@ class Customer extends AppModel {
 		if( $nip ==  NO_NIP ) { // Klient z brakiem NIP'u
 			return true; 
 		}
-		// vatno chcemy bez kresek
-		$this->vatno = str_replace('-', '', $nip);		
+		// vatno chcemy bez kresek i spacji
+		$this->vatno = $this->vatTxtToVatNo( $nip );
 
 		// poszukajmy czy taki NIP już jest
 		$result = $this->find('first', [
 			'conditions' => [
 				'Customer.vatno' => $this->vatno
-				//,'Customer.id !=' => $customerId
+				,'Customer.id !=' => $this->id // w wypadku edycji
 			]
 		]);
 
@@ -200,74 +187,34 @@ class Customer extends AppModel {
 		return true;
 	}	
 
+    /*
+	Polerujemy dane, ktore dostaliśmy. Jeżeli $customerId > 0, tzn edycja */
+	public function polishData( &$requestData, $customerId = 0) { // oczekuje $this->request->data
 
-	/*
-	Obcinamy spacje na początku i na końcu określonych pól modelu*/
-	public function trimSpaces( &$requestData ) { // oczekuje $this->request->data
+        // Wersja tekstowa NIP'u dla czytelności, ale bez brzegowych spacji
+        $requestData['Customer']['vatno_txt'] = trim($requestData['Customer']['vatno_txt']);
+        
+        // Pozbywamy się kresek oraz spacji
+        $requestData['Customer']['vatno'] = $this->vatTxtToVatNo($requestData['Customer']['vatno_txt']);
 
-		$requestData['Customer']['vatno_txt'] = trim($requestData['Customer']['vatno_txt']);
-		
-	}	
-	
-
-/**
- * Zmienna regulująca zależności między wyświetlaniem w widokach a bazą danych
- *
- * @var array
- */
-
-	// formatowania do bootstrap views
-	public $boot_view_options = [
-		'forma_zaliczki' =>	[
-			'label' => 'Forma przedpłaty',			
-			'options' => array(NIE=>'BEZ PRZEDPŁATY', PRZE=>'PRZELEW', CASH=>'GOTÓWKA', PAU=>'INNA (UWAGI)'),
-			'default' => DEF_ZAL_FORM //defaultowa forma zaliczki
-		],
-		'procent_zaliczki' => [
-			'label' => '%',						
-			"min"  => 1,
-			"max"  => 100,
-			"value" => 100
-		],
-		'forma_platnosci' => [ 
-			'label' => 'Płatność po',			
-			'options' => array(NIE=>'BRAK', PRZE=>'PRZELEW', CASH=>'GOTÓWKA', POB=>'POBRANIE', PAU=>'INNA (UWAGI)'),
-			'default' => DEF_PAY_FORM //defaultowa forma platnosci
-		],
-		'termin_platnosci' => [
-			'label' => 'Termin',			
-			'default' => DEF_PAY_TIME, //defaultowo ile dni
-			'min' => 1,			
-			'disabled' => false,
-			'required' => true
-		],
-		'cr' => [
-			'label' => 'Czas realizacji',			
-			'default' => ORD_TIME, //defaultowo ile dni
-			'min' => 1,						
-			'required' => true
-		],
-		'waluta' =>	[					
-			'options' => ['PLN'=>'PLN', 'EUR'=>'EUR', 'USD'=>'USD'],
-			'default' => 'PLN' //defaultowo PLN
-		],
-		'etylang' =>	[	
-			'label' => 'Język etykiety',
-			'options' => ["pl"=>"Polski", "en"=>"Angielski", "de"=>"Niemiecki"] 			
-        ],
-        'pozyskany' => [
-            'label' => 'Klient pozyskany z:',
-            'options' => [
-                "bra"=>"Brak informacji",
-                "psi"=>"Targi PSI",
-                "rem"=>"Tari RemaDays",
-                "tar"=>"Inne targi",
-                "int"=>"Internet",
-                "oso"=>"Pozyskany Osobiście"
-            ]
-        ]
-	];
-	
+        if( $customerId ) { // czyli edycja
+            $requestData['Customer']['id'] = 
+            $requestData['AdresSiedziby']['customer_id'] = $customerId;
+        } else { // tylko dla nowych klientów
+            // Kwestie własności
+            $requestData['Customer']['user_id'] =
+            $requestData['Customer']['owner_id'] =
+            // stały opiekun -> ten kto dodaje, staje się stałym opiekunem
+            $requestData['Customer']['opiekun_id'] =                
+            $requestData['AdresSiedziby']['user_id'] = AuthComponent::user('id');
+        }
+    }
+    
+    private function vatTxtToVatNo( $vatTxt ) {        
+        
+        // Pozbywamy się kresek oraz spacji
+        return str_replace(' ', '', str_replace('-', '', $vatTxt));
+    }
 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -335,12 +282,111 @@ class Customer extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		)
-	);
+    );
+    
+/*
+	Obcinamy spacje na początku i na końcu określonych pól modelu*/
+	public function trimSpaces( &$requestData ) { // oczekuje $this->request->data
+
+		$requestData['Customer']['vatno_txt'] = trim($requestData['Customer']['vatno_txt']);
+		
+	}	
+
+/**
+ * Zmienna regulująca zależności między wyświetlaniem w widokach a bazą danych
+ *
+ * @var array
+ */
+
+    // formatowania do bootstrap views
+    public $boot_view_options = [
+        'forma_zaliczki' =>	[
+            'label' => 'Forma przedpłaty',			
+            'options' => array(NIE=>'BEZ PRZEDPŁATY', PRZE=>'PRZELEW', CASH=>'GOTÓWKA', PAU=>'INNA (UWAGI)'),
+            'default' => DEF_ZAL_FORM //defaultowa forma zaliczki
+        ],
+        'procent_zaliczki' => [
+            'label' => '%',						
+            "min"  => 1,
+            "max"  => 100,
+            "value" => 100,
+            'required' => true
+        ],
+        'forma_platnosci' => [ 
+            'label' => 'Płatność po',			
+            'options' => array(NIE=>'BRAK', PRZE=>'PRZELEW', CASH=>'GOTÓWKA', POB=>'POBRANIE', PAU=>'INNA (UWAGI)'),
+            'default' => DEF_PAY_FORM //defaultowa forma platnosci
+        ],
+        'termin_platnosci' => [
+            'label' => 'Termin',			
+            'default' => DEF_PAY_TIME, //defaultowo ile dni
+            'min' => 1,			
+            'disabled' => false,
+            'required' => true
+        ],
+        'cr' => [
+            'label' => 'Czas realizacji',			
+            'default' => ORD_TIME, //defaultowo ile dni
+            'min' => 1,						
+            'required' => true
+        ],
+        'waluta' =>	[					
+            'options' => ['PLN'=>'PLN', 'EUR'=>'EUR', 'USD'=>'USD'],
+            'default' => 'PLN' //defaultowo PLN
+        ],
+        'etylang' =>	[	
+            'label' => 'Język etykiety',
+            'options' => ["pl"=>"Polski", "en"=>"Angielski", "de"=>"Niemiecki"] 			
+        ],
+        'pozyskany' => [
+            'label' => 'Klient pozyskany z:',
+            'options' => [
+                "bra"=>"Brak informacji",
+                "psi"=>"Targi PSI",
+                "rem"=>"Tari RemaDays",
+                "tar"=>"Inne targi",
+                "int"=>"Internet",
+                "oso"=>"Pozyskany Osobiście"
+            ]
+        ]
+    ];
+
+    public function boot_view_options( $customer = [] ) {
+
+        if( !empty($customer) ) { // tzn. nowy klient
+            $this->boot_view_options['forma_zaliczki']['default'] = $customer['forma_zaliczki'];
+            $this->boot_view_options['forma_platnosci']['default'] = $customer['forma_platnosci'];            
+        }
+
+        /* Jeżeli klient nie płaci zaliczki lub ma nietypową formę zaliczki,
+             * to procent nie ma sensu   */
+        if( in_array($this->boot_view_options['forma_zaliczki']['default'], [NIE, PAU]) ) {        
+            $this->boot_view_options['procent_zaliczki']['disabled'] = true;
+            $this->boot_view_options['procent_zaliczki']['min'] = 
+            $this->boot_view_options['procent_zaliczki']['value'] = 0;
+        } else {
+            $this->boot_view_options['procent_zaliczki']['min'] = 1;
+            $this->boot_view_options['procent_zaliczki']['disabled'] = false;
+        }
+
+        /* Jeżeli klient nie płaci po, płaci pobraniem lub ma nietypową formę płatności,
+             * to ustalanie ilości dni nie ma sensu   */
+        if( in_array($this->boot_view_options['forma_platnosci']['default'], [NIE, POB, PAU]) ) {
+            $this->boot_view_options['termin_platnosci']['default'] = null;	
+            $this->boot_view_options['termin_platnosci']['disabled'] = true;
+        } else {
+            $this->boot_view_options['termin_platnosci']['disabled'] = false;
+        }
+
+        return $this->boot_view_options;
+    }
+
 
 /**
  * ##### DEPREC
  */	
 
+    
 	// formatowania do views
 	public $view_options = 
 		array (
@@ -461,36 +507,36 @@ class Customer extends AppModel {
 	
     public function get_view_options( $customer = array() ) {
         
-                $this->view_options['owner_id']['options'] = $this->Owner->find('list');
-                $this->view_options['owner_id']['default'] = AuthComponent::user('id');
-                $this->view_options['etylang'] = $this->etyk_view['etylang'];
+        $this->view_options['owner_id']['options'] = $this->Owner->find('list');
+        $this->view_options['owner_id']['default'] = AuthComponent::user('id');
+        $this->view_options['etylang'] = $this->etyk_view['etylang'];
 
-                if( !empty($customer) ) { // tzn. edycja
-                        $this->view_options['forma_zaliczki']['default'] = $customer['forma_zaliczki'];
-                        $this->view_options['forma_platnosci']['default'] = $customer['forma_platnosci'];
-                }
+        if( !empty($customer) ) { // tzn. edycja
+                $this->view_options['forma_zaliczki']['default'] = $customer['forma_zaliczki'];
+                $this->view_options['forma_platnosci']['default'] = $customer['forma_platnosci'];
+        }
 
-                if( $this->view_options['forma_zaliczki']['default'] == NIE || $this->view_options['forma_zaliczki']['default'] == PAU ) {
-                        $this->view_options['procent_zaliczki']['disabled'] = true;
-                        $this->view_options['procent_zaliczki']['required'] = false;
-                        $this->view_options['procent_zaliczki']['default'] = null;
-                } else {
-                        $this->view_options['procent_zaliczki']['disabled'] = false;
-                        $this->view_options['procent_zaliczki']['required'] = true;
-                }
+        if( $this->view_options['forma_zaliczki']['default'] == NIE || $this->view_options['forma_zaliczki']['default'] == PAU ) {
+                $this->view_options['procent_zaliczki']['disabled'] = true;
+                $this->view_options['procent_zaliczki']['required'] = false;
+                $this->view_options['procent_zaliczki']['default'] = null;
+        } else {
+                $this->view_options['procent_zaliczki']['disabled'] = false;
+                $this->view_options['procent_zaliczki']['required'] = true;
+        }
 
-                if( $this->view_options['forma_platnosci']['default'] == NIE ||
-                        $this->view_options['forma_platnosci']['default'] == POB ||
-                        $this->view_options['forma_platnosci']['default'] == PAU
-                ) {
-                        $this->view_options['termin_platnosci']['default'] = null;	
-                        $this->view_options['termin_platnosci']['disabled'] = true;
-                        $this->view_options['termin_platnosci']['required'] = false;
-                } else {
-                        $this->view_options['termin_platnosci']['disabled'] = false;
-                        $this->view_options['termin_platnosci']['required'] = true;
-                }
-                return $this->view_options;
+        if( $this->view_options['forma_platnosci']['default'] == NIE ||
+                $this->view_options['forma_platnosci']['default'] == POB ||
+                $this->view_options['forma_platnosci']['default'] == PAU
+        ) {
+                $this->view_options['termin_platnosci']['default'] = null;	
+                $this->view_options['termin_platnosci']['disabled'] = true;
+                $this->view_options['termin_platnosci']['required'] = false;
+        } else {
+                $this->view_options['termin_platnosci']['disabled'] = false;
+                $this->view_options['termin_platnosci']['required'] = true;
+        }
+        return $this->view_options;
     }	
 
     /*

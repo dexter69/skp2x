@@ -30,7 +30,7 @@
             echo $this->Html->meta('icon');
             
             //echo $this->Html->css( array('bootswatch/custom/bootstrap.min', 'boot/core') );
-            echo $this->BootHtml->css( array('bootswatch/custom/bootstrap.min', 'boot/core.css?v=201809201324'), false );
+            echo $this->BootHtml->css( array('bootswatch/custom/bootstrap.min', 'boot/core.css?v=202013041712'), false );
             ?>
             
         <?php

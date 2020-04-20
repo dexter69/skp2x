@@ -1,7 +1,9 @@
-form#CustomerDodajForm .error div.error-message {
+form#CustomerDodajForm .error div.error-message,
+form#CustomerEdytujForm .error div.error-message {
   color: red; }
 
-form#CustomerDodajForm .error input, textarea {
+form#CustomerDodajForm .error input, textarea,
+form#CustomerEdytujForm .error input, textarea {
   background-color: #ffcccc; }
 
 body {
