@@ -15,8 +15,6 @@ if( $edycja ) {
 }
 </style>
 
-<h1 class="text-primary"><?php echo strtoupper($tytul)?></h1>
-
 <?php
 $this->set('title_for_layout', $tytul);
 $this->layout='bootstrap';
@@ -28,26 +26,31 @@ echo $this->Html->scriptBlock( $code, array('block' => 'scriptBottom') );
 echo $this->Form->create();
 echo $hidden;
 ?>
-
+    <div class="row">
+    <?php
+        echo $this->element('customers/header', [
+            'naglowek' => strtoupper($tytul)
+        ]);
+    ?>
+    </div>
     <div class="row">
         <div class="col-md-8">
-            <div class="row"> 
-                <?php
-                    echo $this->element('customers/nazwa', []); 
-                    echo $this->element('customers/pay', []); ?>
-            </div>
-        </div>        
+            <div class="row">
+            <?php
+                echo $this->element('customers/adres', []);
+                echo $this->element('customers/uwagi', []); ?>
+            </div>           
+        </div>
         <div class="col-md-4">
             <div class="row">
-                <?php
-                    echo $this->element('customers/contactAndNip', []);
-                    echo $this->element('customers/czasWalutaEtykieta', []); ?>
+            <?php
+                echo $this->element('customers/kontakt', []);
+                echo $this->element('customers/platnosci', []);
+                echo $this->element('customers/inne', []); ?>
             </div>           
         </div>
     </div>
-    <div class="row">
-        <?php echo $this->element('customers/uwagi', []); ?>
-    </div>
+    
 
 <?php echo $this->BootForm->end(['label' => 'Zapisz', 'class' => 'btn btn-primary']);
 
