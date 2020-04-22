@@ -144,15 +144,73 @@ class Customer extends AppModel {
         ]
         
 	];	
-	
+
+    private function vatPatterns() {
+        /**
+         * Thanks to:
+         * https://www.braemoor.co.uk/software/vat.shtml         */
+
+        $wzorce = [
+            '^(AT)U(\d{8})$',                           //** Austria
+            '^(BE)(0?\d{9})$',                          //** Belgium 
+            '^(BE)([0-1]\d{9})$',                       //** Belgium - since 01/01/2020
+            '^(BG)(\d{9,10})$',                         //** Bulgaria 
+            '^(CHE)(\d{9})(MWST|TVA|IVA)?$',            //** Switzerland
+            '^(CY)([0-59]\d{7}[A-Z])$',                 //** Cyprus
+            '^(CZ)(\d{8,10})(\d{3})?$',                 //** Czech Republic
+            '^(DE)([1-9]\d{8})$',                       //** Germany 
+            '^(DK)(\d{8})$',                            //** Denmark 
+            '^(EE)(10\d{7})$',                          //** Estonia 
+            '^(EL)(\d{9})$',                            //** Greece 
+            '^(ES)([A-Z]\d{8})$',                       //** Spain (National juridical entities)
+            '^(ES)([A-HN-SW]\d{7}[A-J])$',              //** Spain (Other juridical entities)
+            '^(ES)([0-9YZ]\d{7}[A-Z])$',                //** Spain (Personal entities type 1)
+            '^(ES)([KLMX]\d{7}[A-Z])$',                 //** Spain (Personal entities type 2)
+            '^(EU)(\d{9})$',                            //** EU-type 
+            '^(FI)(\d{8})$',                            //** Finland 
+            '^(FR)(\d{11})$',                           //** France (1)
+            '^(FR)([A-HJ-NP-Z]\d{10})$',                // France (2)
+            '^(FR)(\d[A-HJ-NP-Z]\d{9})$',               // France (3)
+            '^(FR)([A-HJ-NP-Z]{2}\d{9})$',              // France (4)
+            '^(GB)?(\d{9})$',                           //** UK (Standard)
+            '^(GB)?(\d{12})$',                          //** UK (Branches)
+            '^(GB)?(GD\d{3})$',                         //** UK (Government)
+            '^(GB)?(HA\d{3})$',                         //** UK (Health authority)
+            '^(HR)(\d{11})$',                           //** Croatia 
+            '^(HU)(\d{8})$',                            //** Hungary 
+            '^(IE)(\d{7}[A-W])$',                       //** Ireland (1)
+            '^(IE)([7-9][A-Z\*\+)]\d{5}[A-W])$',        //** Ireland (2)
+            '^(IE)(\d{7}[A-W][AH])$',                   //** Ireland (3)
+            '^(IT)(\d{11})$',                           //** Italy 
+            '^(LV)(\d{11})$',                           //** Latvia 
+            '^(LT)(\d{9}|\d{12})$',                     //** Lithuania
+            '^(LU)(\d{8})$',                            //** Luxembourg 
+            '^(MT)([1-9]\d{7})$',                       //** Malta
+            '^(NL)(\d{9}B\d{2})$',                      //** Netherlands
+            '^(NL)([A-Z0-9\*\+]{10}\d{2})$',            //** Netherlands sole proprietor
+            '^(NO)(\d{9})$',                            //** Norway (not EU)
+            '^(PL)(\d{10})$',                           //** Poland
+            '^(PT)(\d{9})$',                            //** Portugal
+            '^(RO)([1-9]\d{1,9})$',                     //** Romania
+            '^(RU)(\d{10}|\d{12})$',                    //** Russia
+            '^(RS)(\d{9})$',                            //** Serbia
+            '^(SI)([1-9]\d{7})$',                       //** Slovenia
+            '^(SK)([1-9]\d[2346-9]\d{7})$',             //** Slovakia Republic
+            '^(SE)(\d{10}01)$',                         //** Sweden
+            NO_NIP                                      //## Gdy klient nie ma NIP'u
+        ];
+
+        return "/" . implode("|", $wzorce) . "/";
+
+    }
 
 	// Sprawdzamy czy NIP ma prawidłowy format
-	public function isNipValid( $check ) {
+	public function isNipValid( $check ) {        
 
 		$value = array_values($check);
 		$nip = $this->vatTxtToVatNo( $value[0] );
 		
-		preg_match( NIP_PATTERN, $nip, $matches );		
+        preg_match( $this->vatPatterns(), $nip, $matches );		
 		if( !array_key_exists(0 , $matches) || (strlen($nip) != strlen($matches[0]))  ) { // nieprawidłowy format
 			return false;
 		}
@@ -283,14 +341,6 @@ class Customer extends AppModel {
 			'counterQuery' => ''
 		)
     );
-    
-/*
-	Obcinamy spacje na początku i na końcu określonych pól modelu*/
-	public function trimSpaces( &$requestData ) { // oczekuje $this->request->data
-
-		$requestData['Customer']['vatno_txt'] = trim($requestData['Customer']['vatno_txt']);
-		
-	}	
 
 /**
  * Zmienna regulująca zależności między wyświetlaniem w widokach a bazą danych
@@ -386,6 +436,13 @@ class Customer extends AppModel {
  * ##### DEPREC
  */	
 
+    /*
+	Obcinamy spacje na początku i na końcu określonych pól modelu*/
+	public function trimSpaces( &$requestData ) { // oczekuje $this->request->data
+
+		$requestData['Customer']['vatno_txt'] = trim($requestData['Customer']['vatno_txt']);
+		
+	}
     
 	// formatowania do views
 	public $view_options = 

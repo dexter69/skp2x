@@ -162,7 +162,8 @@ if( DS == WIN) { // We are on Windows!
 }
 
 /*
-Lepsza wersja sprawdzania NIP'u */
+Lepsza wersja sprawdzania NIP'u.
+22.04.2020 - deprec, zmieniamy na walidację w Customer.php */
 // ([A-Z]{2,3})?\d{2,3}\-?\d{2,3}\-?\d{2,3}\-?\d{2,3}
 define('NIP_PATTERN', 
 	// '/([A-Z]{0,3}[\d]{2,3}\-?[\d]{2,3}\-?[\d]{2,3}\-?[\d]{0,3})|BRAK/' - v1
