@@ -196,8 +196,7 @@ class Customer extends AppModel {
             '^(RS)(\d{9})$',                            //** Serbia
             '^(SI)([1-9]\d{7})$',                       //** Slovenia
             '^(SK)([1-9]\d[2346-9]\d{7})$',             //** Slovakia Republic
-            '^(SE)(\d{10}01)$',                         //** Sweden
-            NO_NIP                                      //## Gdy klient nie ma NIP'u
+            '^(SE)(\d{10}01)$',                         //** Sweden            
         ];
 
         return "/" . implode("|", $wzorce) . "/";
@@ -207,7 +206,10 @@ class Customer extends AppModel {
 	// Sprawdzamy czy NIP ma prawidłowy format
 	public function isNipValid( $check ) {        
 
-		$value = array_values($check);
+        $value = array_values($check);
+        if( $value[0] == NO_NIP ) {
+            return true; // brak NIP'u jest poprawny
+        }
 		$nip = $this->vatTxtToVatNo( $value[0] );
 		
         preg_match( $this->vatPatterns(), $nip, $matches );		
@@ -249,10 +251,14 @@ class Customer extends AppModel {
 	Polerujemy dane, ktore dostaliśmy. Jeżeli $customerId > 0, tzn edycja */
 	public function polishData( &$requestData, $customerId = 0) { // oczekuje $this->request->data
 
-        // Wersja tekstowa NIP'u dla czytelności, ale bez brzegowych spacji
-        $requestData['Customer']['vatno_txt'] = trim($requestData['Customer']['vatno_txt']);
+        // Wersja tekstowa NIP'u dla czytelności, ale bez brzegowych spacji, małe litery na duże
+        $requestData['Customer']['vatno_txt'] = strtoupper(trim($requestData['Customer']['vatno_txt']));
+
+        if( $requestData['Customer']['vatno_txt'] == "#" ) { // skrócona wersja BRAK nipu
+            $requestData['Customer']['vatno_txt'] = NO_NIP;
+        }
         
-        // Pozbywamy się kresek oraz spacji
+        // Pozbywamy się kresek oraz spacji i inne
         $requestData['Customer']['vatno'] = $this->vatTxtToVatNo($requestData['Customer']['vatno_txt']);
 
         if( $customerId ) { // czyli edycja
@@ -270,7 +276,10 @@ class Customer extends AppModel {
     
     private function vatTxtToVatNo( $vatTxt ) {        
         
-        // Pozbywamy się kresek oraz spacji
+        if( $vatTxt == NO_NIP ) {
+            return '000000000'; // wersja dla vatno w przypadku podania BRAK
+        }
+        // Pozbywamy się kresek oraz spacji oraz małe litery zamieniamy na duże
         return str_replace(' ', '', str_replace('-', '', $vatTxt));
     }
 

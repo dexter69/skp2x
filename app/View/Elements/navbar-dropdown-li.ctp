@@ -11,8 +11,10 @@
 echo '<li class="dropdown">';
 if( $controller == 'customers' ) {
     $thePar = "/klienci";
+    $tab = "/klienci/dodaj";//array('controller' => "klienci", 'action' => 'dodaj');
 } else {
     $thePar = array('controller' => $controller, 'action' => 'index');
+    $tab = array('controller' => $controller, 'action' => 'add');
 }
 ?>
 
@@ -27,7 +29,7 @@ if( $controller == 'customers' ) {
       <li><?php
             echo $this->Html->link(
                 '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Dodaj',
-                array('controller' => $controller, 'action' => 'add'),
+                $tab,//array('controller' => $controller, 'action' => 'add'),
                 array('escape' => false )); ?>
       </li>      
     </ul>

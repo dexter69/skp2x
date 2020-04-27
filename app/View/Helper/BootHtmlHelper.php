@@ -134,7 +134,7 @@ class BootHtmlHelper extends AppHelper {
     
     // chcemy ładny link do edycji klienta z glyph - ikonką
     public function customerEditGlyph( $id = 1 ) {
-        return $this->glyphLink('glyphicon glyphicon-edit', 'customers', 'edit', $id);
+        return $this->glyphLink('glyphicon glyphicon-edit', 'klienci', 'edytuj', $id);
     }
     
     // chcemy ładny link z bazowego numeru zamówienia

@@ -1116,12 +1116,14 @@ class MaHelper extends AppHelper {
 			}
 				
 			if( $key == 'customers' ) {
+                $theTab = '/klienci/dodaj';
 				$l2 = $this->Html->link(
 					'',
 					'/klienci',
 					array('class' => 'list2')
 				);
-			} else {				
+			} else {
+                $theTab = array( 'controller' => $key, 'action' => 'add');				
 				$l2 = $this->Html->link(
 					'',
 					array( 'controller' => $klucz, 'action' => 'index', $par),
@@ -1130,7 +1132,7 @@ class MaHelper extends AppHelper {
 			}
 			$l1 = $this->Html->link(
 				'',
-				array( 'controller' => $key, 'action' => 'add'),
+				$theTab,
 				array('class' => 'add2')
 			);
 			

@@ -18,6 +18,5 @@ echo $this->BootForm->input('vatno_txt', [
     // Bootstrap tooltip
     'data-toggle' => 'tooltip',    
     'data-placement' => 'left',
-    'title' =>  'NIP opcjonalnie może zaczynać się od DUŻYCH liter (max 3), następnie cyfry,
-                które (dla dodania czytelności) możesz porozdzielać spacjami lub myślnikami.'
+    'title' =>  'NIP musi mieć poprwany format dla danego kraju. Koniecznie musi się zaczynać od literowego kodu kraju. Możesz używać spacji i/lub średników dla poprawy czytelności.'
 ]);

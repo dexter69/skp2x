@@ -40,14 +40,8 @@
         ?>
     </head>
     <body>
-        <?php 
-        /*
-        echo $this->Session->setFlash('Bla, bla - jakiś błąd.'
-                        //);
-                        , array('element' => '/bootstrap/failure'));
-        */            
-            echo $this->element('navbar');            
-        ?>
+        <?php       
+            echo $this->element('navbar'); ?>
         
         <div class="container">
             <?php
