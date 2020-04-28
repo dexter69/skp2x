@@ -14,7 +14,7 @@ class CustomersController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-	public $helpers = array('BootHtml', 'BootForm', 'Math');
+	public $helpers = array('BootHtml', 'BootForm', 'Math', 'Order');
 	
 	
 	public function beforeFilter() {

@@ -1,5 +1,17 @@
 <?php
 //echo '<pre>'; echo print_r($customer); echo '</pre>';
+$check = $this->Order->findCurly($customer['comment']);
+$uwagi = $check['rest']; // Albo wydzielone albo całe - zawsze tu są
+$wazne = $check['curly']; // Gdy nie ma przypominajki, to jest tu false
+
+// Klasy elemenu/elementów uwagi/important w zależności, czy mamy important/przypominajka
+if( $wazne ) { // Znaczy, że jest jakaś przypominajka    
+    $uwagiClass = $wazneClass = "col-sm-6";
+} else {
+    $uwagiClass =  "col-sm-12";
+    $wazneClass ="hidden";
+}
+
 ?>
 <?php  ?>
 <div class="row">
@@ -51,13 +63,19 @@
             </p>
         </div>
     </div>
-    <div class="col-sm-12">
+    <div class="<?php echo $uwagiClass ?>">
         <div class="customer-block">
             <span class="label label-default label-big">Uwagi</span>
-            <p><?php echo nl2br( $customer['comment'] ); ?></p>  
+            <p><?php echo nl2br( $uwagi ) ?></p>  
         </div>
     </div>
+    <div class="<?php echo $wazneClass ?>">
+        <div class="customer-block">
+            <span class="label label-warning label-big">Ważne!</span>
+            <p><?php echo nl2br( $wazne ); ?></p>  
+        </div>
+    </div>    
 </div>
 <?php
-//echo '<pre>'; print_r($customer); echo '</pre>';
+//echo '<pre>'; print_r($customer); echo '</pre>';$customer['comment']
 //echo '<pre>'; print_r($siedziba); echo '</pre>';

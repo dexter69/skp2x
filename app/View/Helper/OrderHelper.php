@@ -7,6 +7,36 @@ class OrderHelper extends AppHelper {
 
     public $helpers = ['Ma', 'Html', 'Form'];
 
+    /**
+     * Sprawdzamy $txt2check. Jeżeli zawiera tekst otoczony nawiasami klamrowymi,
+     * czyli np. { jakiś tekst }, to go "wyciąga". Zwraca tablicę. W kluczu 'curly'
+     * mamy mamy tekst, który był pomiędzy nawiasami. W kluczu rest mamy cały,
+     * pozostały tekst (pozbiawiony części z nawiasami klamrowymi).  */
+
+    public function findCurly( $txt2check = null ) {
+
+        $startChr = "{"; $stopChr = "}";
+        $start = strpos($txt2check, $startChr);
+        $stop = strpos($txt2check, $stopChr);
+        // Default value if there is no txt in curly brackets
+        $response = [
+            'curly' => false, 
+            'rest' => $txt2check // Jak nie ma przypominajki, to cały tekst do rest
+            ,'start' => !$start,'stop' => !$stop, 'weAreHere' => 0
+        ];
+
+        if( $start + $stop > 0 ) {
+            $response['weAreHere'] =1;
+            $response['curly'] = trim(substr($txt2check, $start+1, $stop-$start-1)); 
+            $rest = trim(substr($txt2check, 0, $start) . substr($txt2check, $stop+1));
+            // Pozbywamy się ew. powstałych podwójnych zakónczeń linii, na wypadek Windows i Linux
+            $rest = str_replace("\r\n\r\n","\n",  $rest ); // Vindovs  
+            $response['rest'] = str_replace("\n\n","\n",  $rest ); // Linux
+        }
+        
+        return $response;
+    }
+
     // All data needed foor displaying card list in thorder
     // $coism mówi czy zalogowany użytkownik może otwierać zamówienia w trybie serwisowym
     public function cardsRelated( $order = [], $evcontrol, $coism = false ) {
