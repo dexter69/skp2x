@@ -72,7 +72,7 @@ if( $wazne ) { // Znaczy, że jest jakaś przypominajka
     </div>
     <div class="<?php echo $wazneClass ?>">
         <div class="customer-block">
-            <span class="label label-warning label-big">Ważne!</span>
+            <span class="label label-warning label-big">Pamiętać przy zamówieniu !</span>
             <p><?php echo nl2br( $wazne ); ?></p>  
         </div>
     </div>    
