@@ -90,7 +90,7 @@ class CustomersController extends AppController {
  */
 	public function view($id = null) {
         if (!$this->Customer->exists($id)) {
-                throw new NotFoundException( 'Taki klient nie istnieje' );
+            throw new NotFoundException( 'Taki klient nie istnieje' );
         }	            
         $customer = $this->Customer->customerRelated($id);
         if( !$this->akcjaOK($customer['Customer'], 'view') ) {
@@ -105,7 +105,6 @@ class CustomersController extends AppController {
         $customer['Customer']['pozyskany'] = $viewValue;
 
         $this->set( compact( 'customer') );
-        //$this->render('view-old'); 
 	}        
         
 /**

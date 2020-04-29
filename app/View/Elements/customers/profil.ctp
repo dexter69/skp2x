@@ -57,10 +57,10 @@ if( $wazne ) { // Znaczy, że jest jakaś przypominajka
         <div class="customer-block">
             <span class="label label-default label-big">Inne</span>
             <p>
-                czas realizacji:&nbsp;<strong><?php echo $customer['cr']; ?> dni</strong><br>
-                opiekun:&nbsp;<strong><?php echo $opiekun; ?></strong><br>
+                czas realizacji:&nbsp;<strong><?php echo $customer['cr']; ?> dni</strong><br>                
                 język etykiety:&nbsp;<strong><?php echo $customer['etylang-txt']; ?></strong><br>
-                pozyskany:&nbsp;<strong><?php echo $customer['pozyskany']; ?></strong>
+                pozyskany:&nbsp;<strong><?php echo $customer['pozyskany']; ?></strong><br>
+                opiekun:&nbsp;<strong><?php echo $opiekun; ?></strong>
             </p>
         </div>
     </div>
