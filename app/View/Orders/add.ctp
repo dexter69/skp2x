@@ -1,7 +1,7 @@
-<?php 
+<?php
 // do sekcji head zostanie dodany customer.css
 //jquery-ui-1.10.4.custom.min
-echo $this->Html->css(array('order', 'sunny/jquery-ui-1.10.4.custom.min'), array('inline' => false));
+echo $this->Html->css($this->App->makeCssJsTable(['order', 'sunny/jquery-ui-1.10.4.custom.min']), array('inline' => false));
 echo $this->Html->script(array('jquery', 'jquery-ui', 'jquery.ui.datepicker-pl'), array('inline' => false)); 
 $code = "var platnosci = " . json_encode($tedane['platnosci']) . ";\n" .
 		"var pay = " . json_encode( array( PRZE, CASH ) ) . ";\n" .
@@ -170,12 +170,16 @@ $this->Ma->displayActions($links);
 			echo $this->Ma->viewheader('UWAGI', array('class' => 'margin03'));
 			echo $this->Form->input('comment', array('label' => false));
 		echo $this->Html->tag('/div');
-		//echo $this->Form->input('status');
+        //echo $this->Form->input('status');
+        
+        // Przypominajka
+        echo $this->element('orders/pulse', ['widoczne' => true]);
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Zapisz')); ?>
 </div>
 
-<?php //echo '<pre>'; print_r($tedane); echo '</pre>'; ?>
+<?php
+//echo '<pre>'; print_r($tedane); echo '</pre>';
 
 

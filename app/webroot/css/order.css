@@ -1,84 +1,152 @@
+/* We need it to desirably set the element przypominajka */
+#OrderAddForm {
+  position: relative; }
+
+.przypiminajka.off {
+  display: none; }
+
+.przypiminajka {
+  background: #f7347a;
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+  box-shadow: 0 0 0 0 black;
+  transform: scale(1);
+  animation: pulse 2s infinite;
+  position: absolute;
+  left: 120px;
+  bottom: -100px; }
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7); }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); } }
 
 #ekspresorder {
-	cursor: pointer;
-	width: 100px;
-	max-height: 100px;
-	min-height: 100px;
-	margin: 0;
-	padding: 0;
-	background-image:url('../img/expres_szary.png');
-	background-repeat: no-repeat;
-	position: absolute;
-	top: 62px;
-	right: 20px;
-}
+  cursor: pointer;
+  width: 100px;
+  max-height: 100px;
+  min-height: 100px;
+  margin: 0;
+  padding: 0;
+  background-image: url("../img/expres_szary.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 62px;
+  right: 20px; }
 
-#ekspresorder.ekspres {	background-image:url('../img/expres.png'); }
-
+#ekspresorder.ekspres {
+  background-image: url("../img/expres.png"); }
 
 dd span.ekspres {
-	color: red;
-	font-weight: bold;
-}
+  color: red;
+  font-weight: bold; }
 
-#kart_wrap, #timeandpay, #commentwrap, #wysylka_wrap { padding: 1em 0; }
+#kart_wrap, #timeandpay, #commentwrap, #wysylka_wrap {
+  padding: 1em 0; }
 
-#wysylka_wrap > div { padding: 0.3em 0; }
-#wysylka_wrap > div > div { padding: 0 0.5em; }
+#wysylka_wrap > div {
+  padding: 0.3em 0; }
+
+#wysylka_wrap > div > div {
+  padding: 0 0.5em; }
 
 div.datepickerwrap {
-	position: relative;	
-	min-width: 420px;
-	width: 420px;
-	padding: 0 1em 0 0;
-}
+  position: relative;
+  min-width: 420px;
+  width: 420px;
+  padding: 0 1em 0 0; }
 
-#paywrap {	min-width: 300px; padding: 0 0 0 0; }
+#paywrap {
+  min-width: 300px;
+  padding: 0 0 0 0; }
 
-#platnosci > div { padding: 0 0.5em; }
-#platnosci div > div { padding: 0.3em 0; }
-#platnosci > div:first-child { min-width: 190px; }
-#platnosci select {	width: 99%; }
+#platnosci > div {
+  padding: 0 0.5em; }
+
+#platnosci div > div {
+  padding: 0.3em 0; }
+
+#platnosci > div:first-child {
+  min-width: 190px; }
+
+#platnosci select {
+  width: 99%; }
 
 /* ####### */
-
 #nr_budynku_div, #kod_div {
-	width: 15%;
-}
+  width: 15%; }
 
 #kraj_div {
-	width: 28%;
-}
+  width: 28%; }
 
 #dostava_div {
-	width: 26%;
-}
+  width: 26%; }
 
 /*  POPRAWKI
 */
+div.the_awesome > #miasto_div input {
+  width: 97%; }
 
-div.the_awesome > #miasto_div input { width: 97%; }
-div.the_awesome > #kraj_div input { width: 97%; }
-div.the_awesome > #kod_div input { width: 90%; }
-div.the_awesome > #tel_div input { width: 97%; }
-div.the_awesome > #nr_budynku_div input { width: 94%; }
+div.the_awesome > #kraj_div input {
+  width: 97%; }
 
-#ordcards { margin: 0 }
-#ordcards select { font-size: 130% }
-#ordcards a { font-size: 110%; line-height: 1.8em }
-#ordcards td.noinput { vertical-align: middle; }
+div.the_awesome > #kod_div input {
+  width: 90%; }
 
-#ordcards td {	white-space: nowrap; overflow: hidden; padding: 0.2em;}
+div.the_awesome > #tel_div input {
+  width: 97%; }
 
-#ordcards td input { width: 90%; }
-#ordcards td.cena input { width: 85%; }
+div.the_awesome > #nr_budynku_div input {
+  width: 94%; }
 
-#ordcards th:first-child, #ordcards td:first-child { width: 1.5em; }
-#ordcards .mnoznik { width: 5em; }
-#ordcards .cena { width: 7em; }
-#ordcards .ile { width: 9em; }
-#ordcards .nazwakar { min-width: 14em; }
+#ordcards {
+  margin: 0; }
 
-div.orders.form { min-width: 755px; }
+#ordcards select {
+  font-size: 130%; }
 
-div.index th:first-child, div.index td:first-child { width: 4em; }
+#ordcards a {
+  font-size: 110%;
+  line-height: 1.8em; }
+
+#ordcards td.noinput {
+  vertical-align: middle; }
+
+#ordcards td {
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0.2em; }
+
+#ordcards td input {
+  width: 90%; }
+
+#ordcards td.cena input {
+  width: 85%; }
+
+#ordcards th:first-child, #ordcards td:first-child {
+  width: 1.5em; }
+
+#ordcards .mnoznik {
+  width: 5em; }
+
+#ordcards .cena {
+  width: 7em; }
+
+#ordcards .ile {
+  width: 9em; }
+
+#ordcards .nazwakar {
+  min-width: 14em; }
+
+div.orders.form {
+  min-width: 755px; }
+
+div.index th:first-child, div.index td:first-child {
+  width: 4em; }
