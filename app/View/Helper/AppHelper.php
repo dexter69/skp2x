@@ -65,7 +65,7 @@ class AppHelper extends Helper {
         return preg_replace('/@/', ' ', $ret);
     }
     
-    public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
+    public function print_r2($val){ return '<pre>' . print_r($val, true) . '</pre>';}
     
     //MATERIAŁ KART
     public $material_kart = array(
