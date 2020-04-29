@@ -440,6 +440,9 @@ class Customer extends AppModel {
         return $this->boot_view_options;
     }
 
+    public function bootConvertDbVal2ViewVal() {
+        
+    }
 
 /**
  * ##### DEPREC

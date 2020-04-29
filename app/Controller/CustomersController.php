@@ -98,6 +98,12 @@ class CustomersController extends AppController {
                 return $this->redirect($this->referer());
         }
         $customer['Customer']['etylang-txt'] = $this->Customer->etyk_view['etylang']['cview'][$customer['Customer']['etylang']];
+
+        // Konwersja warości z bazy:
+        $dbValue = $customer['Customer']['pozyskany'];
+        $viewValue = $this->Customer->boot_view_options['pozyskany']['options'][$dbValue];
+        $customer['Customer']['pozyskany'] = $viewValue;
+
         $this->set( compact( 'customer') );
         //$this->render('view-old'); 
 	}        

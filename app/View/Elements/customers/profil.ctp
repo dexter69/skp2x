@@ -39,7 +39,7 @@ if( $wazne ) { // Znaczy, że jest jakaś przypominajka
                <br>
                forma:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><?php echo $customer['forma_platnosci_txt']; ?></strong><br>
                waluta:&nbsp;&nbsp;&nbsp;&nbsp;<strong><?php echo $customer['waluta']; ?></strong><br>
-               NIP:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><?php echo $customer['vatno_txt']; ?></strong>
+               NIP:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><?php echo $customer['vatno_txt']; ?></strong>
            </p>
         </div>
     </div> 
@@ -60,6 +60,7 @@ if( $wazne ) { // Znaczy, że jest jakaś przypominajka
                 czas realizacji:&nbsp;<strong><?php echo $customer['cr']; ?> dni</strong><br>
                 opiekun:&nbsp;<strong><?php echo $opiekun; ?></strong><br>
                 język etykiety:&nbsp;<strong><?php echo $customer['etylang-txt']; ?></strong><br>
+                pozyskany:&nbsp;<strong><?php echo $customer['pozyskany']; ?></strong>
             </p>
         </div>
     </div>

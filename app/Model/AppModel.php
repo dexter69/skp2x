@@ -94,38 +94,38 @@ class AppModel extends Model {
                 return $queryData;
         }
 
-        //################
+    //################
 
-        /**
-         * Chcemy, by ta metda transformowała nam format zwracany przez find methods Cake'a
-         * Do formatu, gdzie jeden wiersz jest połączeniem wszystkich modeli i nazwy pól otrzymują
-         * format Model.pole
-         */
-        public function mergeCakeData( $in = [] ) {
+    /**
+     * Chcemy, by ta metda transformowała nam format zwracany przez find methods Cake'a
+     * Do formatu, gdzie jeden wiersz jest połączeniem wszystkich modeli i nazwy pól otrzymują
+     * format Model.pole
+     */
+    public function mergeCakeData( $in = [] ) {
 
-                $theChar = '_'; // znak używany do rozdzielenia nazwy modelu i pola
-                $out = [];                
-                foreach( $in as $modelName => $arr ) {
-                        foreach( $arr as $key => $val ) {
-                                if( is_array($val) ) { // dla $hasMany nieprzetwarzamy
-                                        $out[ "$modelName" ]["$key"] = $val;
-                                } else {
-                                        $out[ "$modelName$theChar$key" ] = $val;
-                                }
-                        }
-                }                
-                return $out;
-        }
+            $theChar = '_'; // znak używany do rozdzielenia nazwy modelu i pola
+            $out = [];                
+            foreach( $in as $modelName => $arr ) {
+                    foreach( $arr as $key => $val ) {
+                            if( is_array($val) ) { // dla $hasMany nieprzetwarzamy
+                                    $out[ "$modelName" ]["$key"] = $val;
+                            } else {
+                                    $out[ "$modelName$theChar$key" ] = $val;
+                            }
+                    }
+            }                
+            return $out;
+    }
 
-        // Wrap mergeCakeData - by obsłużyć wiele wierszy danych
-        public function mergeCakeManyRows( $dane = [] ) {
+    // Wrap mergeCakeData - by obsłużyć wiele wierszy danych
+    public function mergeCakeManyRows( $dane = [] ) {
 
-                $out = [];
-                foreach( $dane as $oneRow ) {
-                        $out[] = $this->mergeCakeData($oneRow);
-                }
-                return $out;
-        }
+            $out = [];
+            foreach( $dane as $oneRow ) {
+                    $out[] = $this->mergeCakeData($oneRow);
+            }
+            return $out;
+    }
 	
     public function print_r2($val){ echo '<pre>'; print_r($val); echo  '</pre>';}
     
