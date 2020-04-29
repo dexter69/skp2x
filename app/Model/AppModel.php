@@ -31,7 +31,37 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model {
 
-        //opcje zaliczki jeszcze raz
+    public function findCurly( $txt2check = null ) {
+
+        $startChr = "{"; $stopChr = "}";
+        $start = strpos($txt2check, $startChr);
+        $stop = strpos($txt2check, $stopChr);
+        // Default value if there is no txt in curly brackets
+        $response = [
+            'curly' => false, 
+            'rest' => $txt2check // Jak nie ma przypominajki, to cały tekst do rest
+            //,'start' => !$start,'stop' => !$stop, 'weAreHere' => 0
+        ];
+
+        if( $start + $stop > 0 ) {
+            $response['weAreHere'] =1;
+            $response['curly'] = trim(substr($txt2check, $start+1, $stop-$start-1)); 
+            $rest = trim(substr($txt2check, 0, $start) . substr($txt2check, $stop+1));
+            // Pozbywamy się ew. powstałych podwójnych zakónczeń linii, na wypadek Windows i Linux
+            $rest = str_replace("\r\n\r\n","\n",  $rest ); // Vindovs  
+            $response['rest'] = str_replace("\n\n","\n",  $rest ); // Linux
+        }
+        
+        return $response;
+    }
+
+    public function onlyCurly( $txt2check = null ) {
+
+        $result = $this->findCurly( $txt2check );
+        return $result['curly'];
+    }
+
+    //opcje zaliczki jeszcze raz
     private $opcje_zaliczki = array(
         NIE => 'bez przedpłaty',
         PRZE => 'przelew',
