@@ -99,15 +99,23 @@ echo $this->element('orders/view/cards_related/related', [
         'weHaveCards' => !empty($order['Card'])
 ]);
 
+// Przypominajka
+if( $order["Customer"]["przypominajka"]) { // prawda tylko, gdy ma być wyświetlona
+    $przypominajka = $this->element('orders/pulse', ['widoczne' => true, 'title' => $order["Customer"]["przypominajka"]]);
+} else {
+    $przypominajka = false;
+}
 // Zdarzenia pod zamówieniem i formularz akcji
 echo $this->element('orders/view/ul_events/ul-events',[
         'order' => $order,
         'evcontrol' => $evcontrol,
         'karty' => $resultForCards['karty'],
         'ludz' => $ludz,
-        'evtext' => $evtext
+        'evtext' => $evtext,
+        'przypominajka' => $przypominajka
 ]);
-
+//echo $this->App->print_r2($evcontrol);
+//echo $this->App->print_r2($order["Customer"]);
 ?>
 
 <template name="pre-paid">

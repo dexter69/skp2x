@@ -390,7 +390,20 @@ class OrdersController extends AppController {
 		// Dla wyświetlania widoku zamówienia w innym kolorze, gdy jest ZAMKNIĘTE
 		$konec = $order['Order']['status'] == KONEC;
 		$coism = $this->Auth->user('COISM');
-		$dzial = $this->Auth->user('dzial');
+        $dzial = $this->Auth->user('dzial');
+
+        // Kwestia przypominajki        
+        $przypominajka = $this->Order->onlyCurly($order["Customer"]["comment"]);
+        /* Mamy przypominajkę tylko wtedy, gdy dla danego klienta jest wpisana oraz
+           będzie aktwny przycisk "Publikuj", więc mamy do czynienia z publikacją
+           zamówienia - wówczas chcemy przypominać */
+        if( $evcontrol['bcontr'][publi] && $przypominajka ) {
+            $order["Customer"]["przypominajka"] = $przypominajka;
+        } else {
+            $order["Customer"]["przypominajka"] = false;
+        }        
+        unset($order["Customer"]["comment"]);
+        
 		$this->set( compact(
 			'order', 'evcontrol', 'users', 'ludz',
 			'vju', 'evtext', 'coism', 'konec', 'dzial'

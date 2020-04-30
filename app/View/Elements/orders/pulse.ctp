@@ -6,9 +6,14 @@ $klasa = "przypominajka";
 if( !$widoczne ) {
     $klasa .= " off";
 }
-?>
 
-<div class="<?php echo $klasa ?>"></div>
+if( $title ) {
+    $rest = ' title="' . $title . '"';
+} else {
+    $rest = null;
+}
+?>
+<div class="<?php echo $klasa ?>"<?php echo $rest?>></div>
 
 
 

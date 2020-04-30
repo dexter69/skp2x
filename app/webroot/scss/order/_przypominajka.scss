@@ -1,5 +1,5 @@
 /* We need it to desirably set the element przypominajka */
-#OrderAddForm {
+#OrderAddForm, .event-order > #EventViewForm {
     position: relative;
 }
 
@@ -19,9 +19,21 @@
 	transform: scale(1);
     animation: pulse 2s infinite;
     
+    
+}
+
+// Dodawanie zamówienia
+#OrderAddForm .przypominajka {
     position: absolute;
     left: 120px;
     bottom: -87px;
+}
+
+// Widok zamówienia
+.event-order > #EventViewForm .przypominajka {
+    position: absolute;
+    left: 150px;
+    bottom: -5px;
 }
 
 @keyframes pulse {

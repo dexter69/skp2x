@@ -178,7 +178,7 @@ $this->Ma->displayActions($links);
         //echo $this->Form->input('status');
         
         // Przypominajka, przy dodawaniu zamówienia domyślnie jest OFF
-        echo $this->element('orders/pulse', ['widoczne' => false]);
+        echo $this->element('orders/pulse', ['widoczne' => false, 'title' => false]);
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Zapisz')); ?>

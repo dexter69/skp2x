@@ -51,7 +51,7 @@ for ($i = $start; $i >=0; $i--) {
 
 
 <div class="ul-events">
-    <?php $this->Ma->kontrolka_ord($order, $evcontrol);?>
+    <?php $this->Ma->kontrolka_ord($order, $evcontrol, $przypominajka );?>
     <ul>
         <?php echo $lis;?>
     </ul>
