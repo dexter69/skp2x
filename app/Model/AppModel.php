@@ -40,10 +40,11 @@ class AppModel extends Model {
         $response = [
             'curly' => false, 
             'rest' => $txt2check // Jak nie ma przypominajki, to cały tekst do rest
-            //,'start' => !$start,'stop' => !$stop, 'weAreHere' => 0
+            ,'start' => !$start,'stop' => !$stop, 'weAreHere' => 0,
+            'txt' => $txt2check
         ];
 
-        if( $start + $stop > 0 ) {
+        if( !($start === false || $stop === false) ) {
             $response['weAreHere'] =1;
             $response['curly'] = trim(substr($txt2check, $start+1, $stop-$start-1)); 
             $rest = trim(substr($txt2check, 0, $start) . substr($txt2check, $stop+1));
@@ -55,9 +56,15 @@ class AppModel extends Model {
         return $response;
     }
 
-    public function onlyCurly( $txt2check = null ) {
+    public function onlyCurly( $txt2check = null, $remNewLines = true ) {
 
         $result = $this->findCurly( $txt2check );
+        if( $remNewLines ) {
+            // Zastąp w tekście znaki końca linii spacjami
+            $result = str_replace("\r\n"," ",  $result['curly'] ); // Vindovs
+            $result = str_replace("\n"," ",  $result ); // Linux
+            return $result;
+        }   
         return $result['curly'];
     }
 

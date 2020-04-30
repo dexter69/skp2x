@@ -131,12 +131,25 @@ $( document ).ready(function() {
 			$('#OrderOsobaKontaktowa, #OrderTel').removeAttr('required');
 			$('#OrderOsobaKontaktowa, #OrderTel').attr('disabled','disabled');
 		}
-	}
+    }    
+    
+    // Włącz  lub wyłącz przypominajkę
+    function setPulse( title = false ) {
+
+        if( title ) {
+            $('.przypominajka').removeClass('off');
+            $('.przypominajka').attr('title', title);
+        } else {
+            $('.przypominajka').addClass('off');
+            $('.przypominajka').removeAttr('title'); 
+        }
+    }
 
 	function checkCheckboxes() {
 		
-		klino = nr_klienta();
-		
+        klino = nr_klienta();
+        setPulse( curly[klino] );
+        
 		switch( l_c_k() ) {
     		case 0:
     			$('#OrderSposobDostawy').attr('disabled','disabled');

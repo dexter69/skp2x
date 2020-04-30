@@ -336,7 +336,7 @@ class Order extends AppModel {
 								'Customer.id', 'Customer.name', 'Customer.forma_zaliczki',
 								'Customer.procent_zaliczki', 'Customer.forma_platnosci',
 								'Customer.termin_platnosci', 'Customer.osoba_kontaktowa',
-								'Customer.tel', 'Customer.cr'),
+								'Customer.tel', 'Customer.cr', 'Customer.comment'),
 			'order' => array('Customer.id'),
 			'recursive' => 0
 		));	
@@ -358,11 +358,18 @@ class Order extends AppModel {
 				);
 				//adresy siedziby dla javascript
 				$wynik = $this->Customer->AdresSiedziby->find('first',array(
-							'conditions' => array( 'AdresSiedziby.customer_id' => $value['Customer']['id'])
+					'conditions' => array( 'AdresSiedziby.customer_id' => $value['Customer']['id'])
 				));
-				$wynik = $wynik['AdresSiedziby'];
+                $wynik = $wynik['AdresSiedziby'];
+
+                // Get info in curly brackets;
+                //$kartyall[$i]['Customer']['curly'] = $this->onlyCurly($value['Customer']['comment']);
+                $curly[$value['Customer']['id']] = $this->onlyCurly($value['Customer']['comment']);
 				//wyrzucamy niepotrzebne
-				unset( $wynik['user_id'], $wynik['customer_id'], $wynik['order_id'], $wynik['modified'], $wynik['created'], $wynik['comment'] );
+                unset( $wynik['user_id'], $wynik['customer_id'], $wynik['order_id'],
+                    $wynik['modified'], $wynik['created'], $wynik['comment'],
+                    $kartyall[$i]['Customer']['comment']
+                );
 				$adresy[$value['Customer']['id']] = $wynik;
 				$kartyall[$i++]['AdresSiedziby'] = $wynik;
 			}
@@ -377,7 +384,8 @@ class Order extends AppModel {
 			);
 			$result['platnosci'] = $platnosci;
 			$result['karty'] = $kartyall;
-			$result['adresy'] = $adresy;
+            $result['adresy'] = $adresy;
+            $result['curly'] = $curly;
 		}
 
 		

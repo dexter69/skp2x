@@ -25,7 +25,7 @@ class OrderHelper extends AppHelper {
             ,'start' => !$start,'stop' => !$stop, 'weAreHere' => 0
         ];
 
-        if( $start + $stop > 0 ) {
+        if( !($start === false || $stop === false) ) {
             $response['weAreHere'] =1;
             $response['curly'] = trim(substr($txt2check, $start+1, $stop-$start-1)); 
             $rest = trim(substr($txt2check, 0, $start) . substr($txt2check, $stop+1));

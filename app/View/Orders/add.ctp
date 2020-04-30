@@ -8,10 +8,15 @@ $code = "var platnosci = " . json_encode($tedane['platnosci']) . ";\n" .
 		"var defproc = " . json_encode(DEF_ZAL_PROC) . ";\n" .
 		//"var adresy = " . json_encode($tedane['adresy'], JSON_UNESCAPED_UNICODE) . ";\n" .
 		"var adresy = " . $this->Ma->mjson($tedane['adresy']) . ";\n" .
-		"var czas_realiz = " . ORD_TIME . ";";
+        "var czas_realiz = " . ORD_TIME . ";\n" .
+        "var curly = " . $this->Ma->mjson($tedane['curly']) . ";"
+        ;
 		
-echo $this->Html->scriptBlock($code, array('block' => 'scriptBottom'));
-echo $this->Html->script( 'order-add', array('block' => 'scriptBottom')); 
+echo $this->Html->scriptBlock($code, array('block' => 'scriptBottom')); 
+echo $this->Html->script( 
+    $this->App->makeCssJsTable(['order-add'], 'js'),
+    array('block' => 'scriptBottom')
+); 
 
 //echo '<pre>'; print_r($tedane); echo '</pre>';
 
@@ -172,14 +177,15 @@ $this->Ma->displayActions($links);
 		echo $this->Html->tag('/div');
         //echo $this->Form->input('status');
         
-        // Przypominajka
-        echo $this->element('orders/pulse', ['widoczne' => true]);
+        // Przypominajka, przy dodawaniu zamówienia domyślnie jest OFF
+        echo $this->element('orders/pulse', ['widoczne' => false]);
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Zapisz')); ?>
 </div>
 
 <?php
-//echo '<pre>'; print_r($tedane); echo '</pre>';
+//echo $this->App->print_r2($tedane);
+//echo "(false === 0) : " . (false === 0);
 
 

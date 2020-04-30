@@ -80,3 +80,4 @@ if( $wazne ) { // Znaczy, że jest jakaś przypominajka
 <?php
 //echo '<pre>'; print_r($customer); echo '</pre>';$customer['comment']
 //echo '<pre>'; print_r($siedziba); echo '</pre>';
+//echo $this->App->print_r2($check);
