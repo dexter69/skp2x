@@ -402,7 +402,7 @@ class Customer extends AppModel {
             'options' => [
                 "bra"=>"Brak informacji",
                 "psi"=>"Targi PSI",
-                "rem"=>"Tari RemaDays",
+                "rem"=>"Targi RemaDays",
                 "tar"=>"Inne targi",
                 "int"=>"Internet",
                 "oso"=>"Pozyskany Osobiście"
