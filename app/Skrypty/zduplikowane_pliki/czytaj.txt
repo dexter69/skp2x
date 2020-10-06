@@ -1,0 +1,11 @@
+Chodzi o załączane wielokrotnie pliki. Przykładowo:
+handlowiec ma przykładowo 3 karty w zamówieniu i jeden z plików, np. projekt.pdf jest wspólny dla wszystkich 3 kart. Handlowiec do opisu każdej karty załącza ten plik, skutkiem czego mamy 3 razy ten sam plik i zajęte jest 3 razy więcej miejsca.
+
+Rozwiązanie:
+
+1. Wyznaczyć zbiory/grupy powtarzających się plików
+2. Dla każdego zbioru:
+- zostawiamy pierwszy plik
+- pozostałe z grupy usuwamy z serwera i zachowujemy gdzieś w bezpiecznym miejscu
+- nazwy usuniętych plików linkujemy do pliku pierwszego
+Można by również wszystkie poprawki zrobić w bazie danych, ale rozwiązanie z linkami jest bezpieczniejsze.
