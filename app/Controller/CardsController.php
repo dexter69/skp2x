@@ -163,13 +163,14 @@ class CardsController extends AppController {
         }
         //$links = $this->links;
         //$cards['upc'] = $this->userPersoChange();
-        $cards['pvis'] = $user_perso;
+        $cards['pvis'] = $user_perso;        
         $cards = $this->Card->quasiPaginate(
                 $par,
                 array('conditions' => $opcje),
                 $this->request->params,
                 $cards
         );
+        $cards['pchan'] = $this->userPersoChange();
         $paramki = $this->request->params;
         $this->set( compact('cards', /*'karty', 'links'*/ 'par', 'paramki', 'ptodo' ) );
 
@@ -206,13 +207,22 @@ class CardsController extends AppController {
             $vju = $this->Card->get_view_options();
             //$card['Card']['upc'] = $this->userPersoChange();
             $card['Card']['pvis'] = $this->userPersoVis();
+            $card['Card']['pchan'] = $this->userPersoChange();
             // Dla wyświetlania widoku karty w innym kolorze gdy jest ZAMKNIĘTA
             $konec = $card['Card']['status'] == KONEC;
             $limited = $this->limitedView;
             $this->set(compact('card', 'evcontrol', 'links', 'vju', 'limited', 'konec'));
                              
-	}       
-        
+    }   
+        // Sprawdzamy czy dany zalogowany użytkownik może zmieniać datę perso    
+        private function userPersoChange() {
+
+            if( in_array( $this->Auth->user('dzial'), [ SUA, KIP ]) ) {                
+                return true;
+            }
+            return false;
+        }
+
         private function userPersoVis() {
         // sprawdź, czy zalogowany użytkownik może widzieć datę perso  
             if( in_array( $this->Auth->user('dzial'), [ SUA, PER, DTP, KIP ]) ) {                

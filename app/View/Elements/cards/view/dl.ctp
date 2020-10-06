@@ -16,7 +16,7 @@
         $data = $order['stop_day'];
     }
     $datka = $this->Ma->md($data);
-    if( $card['pvis'] && $this->Ma->stanPersoChange( $card ) ) {
+    if( $card['pchan'] && $this->Ma->stanPersoChange( $card ) ) {
     // jeżeli można zmieniać datę perso    
         $klasa .=  ' changable';
     }

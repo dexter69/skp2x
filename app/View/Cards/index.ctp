@@ -121,7 +121,7 @@ if( array_key_exists($par, $klasa) )
                         $data = $card['Order']['stop_day'];
                     }
                     $datka = $this->Ma->mdvs($data);
-                    if( $pvis && $this->Ma->stanPersoChange( $card['Card'] ) ) {
+                    if( $cards['pchan'] && $this->Ma->stanPersoChange( $card['Card'] ) ) {
                     // jeżeli można zmieniać datę perso    
                         $klasa .=  ' changable';                        
                     }
