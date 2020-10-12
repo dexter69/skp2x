@@ -10,6 +10,8 @@
 /build
 /dist
 /tags
+/lib/Cake/
+/lib/_Cake_2.4.3/
 
 
 # OS generated files #
