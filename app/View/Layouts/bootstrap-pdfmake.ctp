@@ -37,7 +37,7 @@
         ================================================== 
         Placed at the end of the document so the pages load faster -->        
         <?php
-            echo $this->Html->script(array('jquery-1.11.2.min', 'bootstrap.min.js'));
+            echo $this->Html->script(array('jquery-1.11.2.min', 'bootstrap/bootstrap.min'));
             //oraz pdf make
             echo $this->Html->script(array('lib/pdfmake.min', 'lib/vfs_fonts')); 
             echo $this->fetch('scriptBottom');
