@@ -239,7 +239,10 @@ class Event extends AppModel {
 
                         // sumulujemy proces przesyłania do perso do sprawdzenia
                         $karty[$i]['status'] = W4PDOK;   
-                        $karty[$i]['remstatus'] = W_PROD;                             
+                        $karty[$i]['remstatus'] = W_PROD;
+                        
+                        // resetujemy starą datę perso (jeżeli by takowa istniała)
+                        $karty[$i]['stop_perso'] = NULL;
                     } else {
                         $karty[$i]['status'] = KONEC; // zostawiamy zakończoną                                
                     }      
