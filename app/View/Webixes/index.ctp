@@ -40,7 +40,8 @@ var globalAppData = {
     loggedInUser: <?php echo json_encode($loggedInUser); ?>, // Info o zalogowanym użytkowniku
     customerOwners: [
         {id: 0, value: "Wszyscy"},    
-        {id: 3, value: "Agnieszka"},
+        //{id: 3, value: "Agnieszka"},
+        {id: 41, value: "Aleksander"},
         {id: 17, value: "Ania"},
         {id: 2, value: "Beata"},
         //{id: 1, value: "Darek"},
