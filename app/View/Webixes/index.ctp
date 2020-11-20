@@ -30,7 +30,7 @@
             ]
         ])
     );  
-    echo $this->App->print_r2($handlowcy);
+    //echo $this->App->print_r2($handlowcy);
 ?>
 
 <script type="text/javascript" charset="utf-8">
