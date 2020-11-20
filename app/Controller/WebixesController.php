@@ -48,8 +48,9 @@ class WebixesController extends AppController {
         }
         
         $this->layout='webix';
-        $webixJsFiles = $this->webixJsFiles;
-        $this->set(compact( ['loggedInUser', 'webixJsFiles'] ));
+        $webixJsFiles = $this->webixJsFiles;        
+        $handlowcy = $this->Webix->listaHandlowcowDoPulpitu();
+        $this->set(compact( ['loggedInUser', 'webixJsFiles', 'handlowcy'] ));
         //$this->render(false); // na razie nie potrzebujemy view w .ctp
     }  
 
