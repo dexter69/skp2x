@@ -52,12 +52,23 @@ $cakeDescription = __d('cake_dev', 'SKP');
 		$cstr = " class='persos'";
 	} else {
 		$cstr = "";
-	}
+    }
+    /* Jeżeli karta jest podpięta do job'a, który ma nadany jakiś nr, to możemy wygenerować
+       link do etykiet z numerem joba w widoku karty */
+    if( $this->params['controller'] == 'cards' && $this->action == 'view' && $jnr ) {
+        $jobnumer = $jnr;
+    } else {
+        $jobnumer = 0;
+    }
 ?>
 <body <?php echo $bstr;?>>	
 	<div id="container"<?php echo $cstr;?>>
 		<div id="header">			
-			<?=	$this->element('forLayouts/leftIcons', ['departament' => $departament] ); ?>
+			<?=	$this->element('forLayouts/leftIcons', [
+                'departament' => $departament,
+                'jobnumer' => $jobnumer
+                ]);
+            ?>
 			<div id="szukanie" class="hid">
 				<?php echo $this->Ma->formularzSzukajKarty(); ?>
 			</div>

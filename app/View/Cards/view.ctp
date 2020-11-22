@@ -1,5 +1,12 @@
 <?php 
 
+// Chcemy mieć nr job'a do do linku do etykiet w widoku karty
+if( $card['Job']['nr'] ) { // jeżeki mamy jakis nr job'a
+    $this->set("jnr", (int)substr($card['Job']['nr'],2));
+} else {
+    $this->set("jnr", 0);
+}
+
 echo $this->element('cards/view/head', array(
     'title' => $card['Card']['name'],
     'card_id' => $card['Card']['id']    )); ?>
@@ -70,9 +77,9 @@ echo $this->element('cards/view/head', array(
 
 <?php 
 //$this->Proof->printR($vju);
-//$this->App->print_r2($card);
+//echo $this->App->print_r2($card);
 //$this->Ma->kontrolka($card, $evcontrol);
-//$this->App->print_r2($evcontrol);
+//echo $this->App->print_r2($evcontrol);
 
 
 

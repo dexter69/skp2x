@@ -47,4 +47,4 @@ if( $result != null ) { // znaczy było POST
     } 
 }
 
-//$this->App->print_r2($result);
+//echo $this->App->print_r2($jnr);

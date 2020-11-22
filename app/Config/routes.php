@@ -34,7 +34,7 @@
         Router::connect('/info', array('controller' => 'pages', 'action' => 'display', 'info'));
         
         // etykiety
-        Router::connect('/etykiety', array('controller' => 'tasks', 'action' => 'label'));
+        Router::connect('/etykiety/*', array('controller' => 'tasks', 'action' => 'label'));
 
         // Handlowe po nowemu, special search        
         Router::connect('/szukaj', array('controller' => 'disposals', 'action' => 'index'));

@@ -11,12 +11,16 @@ class TasksController extends AppController {
     public $helpers = array('BootForm', 'Task');
 
     /* To będzie metoda wyświetlająca interfejs do etykiet dla przebieralni */
-    public function label() {
+    public function label( $jnr = 0 ) {
         
         $req = null; $result = null;
-        if ($this->request->is(array('post', 'put'))) {
-            $req = $this->request->data;          
-            $this->Task->taskViaNoExists($req['Task']['numer']);
+        if( $this->request->is(array('post', 'put')) || $jnr ) {
+            if( $jnr ) {
+                $this->Task->taskViaNoExists($jnr);
+            } else {
+                $req = $this->request->data;          
+                $this->Task->taskViaNoExists($req['Task']['numer']);
+            }            
             $tmp = $this->Task->taskViaErr;
             /*  Tymczasowa modyfikacja - chcemy mieć w kartach opcję etykiety 'lo'.
                 Taka symulacja. Później do usunięcia */
