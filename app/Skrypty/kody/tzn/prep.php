@@ -3,27 +3,28 @@
 $info zawiera nazwy plików do wygenerowania oraz wartości,
 ile kazdy z plików ma zawierać kodów */
 
-$inFile = "40k_2019-lato.txt";
+$inFile = "25k_2020.txt";
 
 $info = [
-    '15441_FIS17' => 1000,
-    '15442_FIS18' => 1000,
-    '15443_A17' => 1400,
-    '15444_A18' => 1400,
-    '15445_B17' => 1400,
-    '15446_B18' => 1400,
-    '15447_C17' => 5000,
-    '15448_C18' => 5000,
-    '15449_D17' => 6000,
-    '15450_D18' => 6000,
-    '15451_Premium17' => 300,
-    '15452_Premium18' => 300,
-    '15453_TZN17' => 500,
-    '15454_TZN18' => 500,
-    '15455_Kwalifikacje' => 6500,
-    '15456_KwalifikacjeZlote' => 500,
-    '15457_VIP17' => 150,    
-    '15458_VIP18' => 150
+    'A_16' => 550,
+    'A_17' => 550,
+    'B_16' => 550,
+    'B_17' => 550,
+    'C_16' => 1900,
+    'C_17' => 1900,
+    'D_16' => 2300,
+    'D_17' => 2300,
+    'PREMIUM_16' => 210,
+    'PREMIUM_17' => 210,
+    'PZN_16' => 180,
+    'PZN_17' => 180,
+    'TZN_16' => 230,
+    'TZN_17' => 230,
+    'VIP_16' => 65,
+    'VIP_17' => 65,
+    'T_16' => 530,    
+    'T_17' => 530,
+    'KWALIFIKACJE' => 5100
 ];
 
 function printSet( $nameOfOutputFile = "xyz.txt", $ile=1, $fileHandler) {
