@@ -1073,6 +1073,7 @@ form#EventAffectForm div.submit, form#EventViewForm div.submit {
 	margin: 0 2px;
 }
 
+form#EventAddForm div.submit.nieaktywny,
 form#EventViewForm div.submit.nieaktywny {
 	background-color: #d1d1d1;
 	/*display: inline-block;*/
