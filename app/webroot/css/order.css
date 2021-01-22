@@ -61,6 +61,18 @@ span.event_no {
   right: 0;
   padding: 5px; }
 
+span.fixit {
+  display: block;
+  padding: 3px 10px;
+  position: absolute;
+  top: 0;
+  right: 15px;
+  color: #bfb095;
+  cursor: pointer; }
+
+span.fixit > i.fa {
+  font-size: 20px; }
+
 /* We need it to desirably set the element przypominajka */
 #OrderAddForm, .event-order > #EventViewForm {
   position: relative; }

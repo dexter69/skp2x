@@ -13,5 +13,10 @@
             echo $this->element('orders/view/ul_events/the-post', ['posciki' => $posciki]);
         ?>        
     </div>
-    <span class="event_no"><?php echo $licznik;?></span>    
+    <span class="event_no"><?php echo $licznik;?></span> 
+    <?php
+        if( $fix ) { // jeż uż może edytować swoje zdarzenie, to wyświetl kontrolkę
+            echo '<span class="fixit"><i class="fa fa-wrench" aria-hidden="true"></i></span>';
+        }
+    ?> 
 </li>

@@ -30,6 +30,7 @@ for ($i = $start; $i >=0; $i--) {
         $kartkomm = null;
     }
     $imieLudzia = $ludz[$event['user_id']]['name'];
+    $fix = $ludz[$event['user_id']]['fix'];
     $klaska = $evtext[$event['co']]['class'];
     $whatDid = "{$evtext[$event['co']][$ludz[$event['user_id']]['k']]} $co$kartkomm";
     $datka = $this->Ma->mdt($event['created']);
@@ -43,7 +44,8 @@ for ($i = $start; $i >=0; $i--) {
         'whatDid' => $whatDid,
         'datka' => $datka,        
         'posciki' => $posciki,
-        'licznik' => $licznik
+        'licznik' => $licznik,
+        'fix' => $fix // czy może edytować swój post
     ]);
 
 }

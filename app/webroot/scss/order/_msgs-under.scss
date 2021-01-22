@@ -4,6 +4,7 @@
 */
 
 $dymek-color: #dbdad0;
+$kolor-ikonki-wersji: #bfb095;
 
 // Generalnie style zdarzeń są kiepsko zrobione, tu przy okzaji trochę wygładzamy
 // Nadpisujemy poprzednie definicje, żeby było trochę szersze
@@ -30,7 +31,7 @@ ul.wersja li span {
     text-align: center;
     padding: 5px;    
     text-decoration: none;
-    background-color: #bfb095;
+    background-color: $kolor-ikonki-wersji;
     border-radius: 3px;
     cursor: default;
 }
@@ -77,4 +78,19 @@ span.event_no {
     top: 0px;
     right: 0;
     padding: 5px;
+}
+
+//Ikona "edycji" postu
+span.fixit {
+    display: block;
+    padding: 3px 10px;
+    position: absolute;
+    top: 0;
+    right: 15px;    
+    color: $kolor-ikonki-wersji;
+    cursor: pointer;
+}
+
+span.fixit > i.fa {
+    font-size: 20px;
 }

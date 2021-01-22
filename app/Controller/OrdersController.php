@@ -342,7 +342,7 @@ class OrdersController extends AppController {
 		
 		$evcontrol = $this->prepareSubmits($order);
 		$users = $this->Order->User->find('all', array(
-					'fields' => array( 'id','name','k', 'enotif'),
+					'fields' => array( 'id','name','k', 'enotif', 'FIX_EO'),
 					'recursive' => 0
 		));
 		
@@ -363,7 +363,13 @@ class OrdersController extends AppController {
 		}
 		$vju = $this->Order->get_view_options();
 		foreach( $users as $value) {
-			$ludz[$value['User']['id']] = array('name'=>$value['User']['name'], 'k'=>$value['User']['k'], 'enotif'=>$value['User']['enotif']);
+			$ludz[$value['User']['id']] = array(
+                'name'=>$value['User']['name'],
+                'k'=>$value['User']['k'],
+                'enotif'=>$value['User']['enotif'],
+                /* czy dany,użytkownik jest tym samym, co zalogowany oraz czy ma prawa do edycji swoich zdarzeń */
+                'fix' =>  $value['User']['FIX_EO'] && ($value['User']['id'] == $this->Auth->user('id'))
+            );
         }
 		
 		$evtext = $this->Order->eventText;
