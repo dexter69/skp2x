@@ -23,7 +23,14 @@ $( document ).ready(function() {
 	$('th.clickable').click(function() {				
 		toggleStatusEditablePossibility( this );
 	});
-	*/
+    */
+   $( "span.cyferka" ).hover(    
+    function() {        
+      $("p.ekstra-msgs .no-" + $(this).text()).addClass( "visible" );
+    }, function() {
+      $("p.ekstra-msgs .no-" + $(this).text()).removeClass( "visible" );
+    }
+  );
 
 });
 

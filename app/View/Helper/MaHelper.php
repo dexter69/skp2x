@@ -682,7 +682,29 @@ class MaHelper extends AppHelper {
             echo $this->Html->tag('/div');  
         }
 	}	
-															 
+    
+    /**
+     * Nieależnie czy jest to post starego typu, po prostu tekst,
+     * czy też mamy kilka wersji, czyli kilka bloków msg, to konwerujemy to na tablicę postów  */
+
+    public function convertEventMsgs( $msg ) {        
+
+        $ret = [""];
+        if( strlen($msg) ) { //jeżeli nie jest pusty
+            $post = nl2br($msg); // formatujemy
+            if( $this->isBlockMark($post) ) { // jeżeli tekst zaczyna się od zanczika bloku
+                $ret = explode(ZNACZNIK_MSG, substr($post, strlen(ZNACZNIK_MSG)) );
+            } else {
+                $ret = [ $post ]; // po prostu sformatuj post i zwróć w tablicy 
+            }
+        }
+        return $ret;
+    }
+
+    private function isBlockMark( $txt ) {
+        return substr($txt, 0, strlen(ZNACZNIK_MSG)) === ZNACZNIK_MSG;
+    }
+
 	public function kontrolka_job($job, $submity) {
 		
 		function plikoza($przyciski = array()) {

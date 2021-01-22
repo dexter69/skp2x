@@ -1,3 +1,66 @@
+@charset "UTF-8";
+/*
+    Style związane z wyświetlaniem zdarzeń pod zamówieniem.
+    Nowa funkcjonalność - posty z historią, starszymi wersjami
+*/
+div.ul-events ul li.post div.postpost {
+  width: 65%; }
+
+ul.wersja {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 60%; }
+
+ul.wersja li {
+  float: right;
+  margin: 0; }
+
+ul.wersja li span {
+  display: block;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  background-color: #bfb095;
+  border-radius: 3px;
+  cursor: default; }
+
+ul.wersja li span.cyferka {
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-left: 10px;
+  padding-right: 10px; }
+
+ul.wersja li span.tekst {
+  background-color: transparent; }
+
+p.ekstra-msgs {
+  position: relative;
+  margin: 0;
+  padding: 0; }
+
+p.ekstra-msgs span {
+  background-color: #dbdad0;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px grey;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  z-index: 999;
+  display: none;
+  font-size: 80%; }
+
+p.ekstra-msgs span.visible {
+  display: block; }
+
+span.event_no {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  padding: 5px; }
+
 /* We need it to desirably set the element przypominajka */
 #OrderAddForm, .event-order > #EventViewForm {
   position: relative; }

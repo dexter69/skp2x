@@ -8,12 +8,10 @@
         </p>
         <span><?php echo $datka;?></span>
     </div>
-    <div>
-        <ol class="olevent">
-            <li>
-                <?php echo $poscik; ?>
-            </li>
-        </ol>
-        <span class="event_nr"><?php echo $licznik;?></span>
+    <div class="postpost">
+        <?php
+            echo $this->element('orders/view/ul_events/the-post', ['posciki' => $posciki]);
+        ?>        
     </div>
+    <span class="event_no"><?php echo $licznik;?></span>    
 </li>

@@ -34,15 +34,15 @@ for ($i = $start; $i >=0; $i--) {
     $whatDid = "{$evtext[$event['co']][$ludz[$event['user_id']]['k']]} $co$kartkomm";
     $datka = $this->Ma->mdt($event['created']);
 
-    $poscik = nl2br($event['post']);
+    $posciki = $this->Ma->convertEventMsgs($event['post']);
     $licznik = $i + 1;
 
     $lis .= $this->element('orders/view/ul_events/li',[
         'imieLudzia' => $imieLudzia,
         'klaska' => $klaska,
         'whatDid' => $whatDid,
-        'datka' => $datka,
-        'poscik' => $poscik,
+        'datka' => $datka,        
+        'posciki' => $posciki,
         'licznik' => $licznik
     ]);
 
