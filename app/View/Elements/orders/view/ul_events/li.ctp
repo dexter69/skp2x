@@ -8,7 +8,7 @@
         </p>
         <span><?php echo $datka;?></span>
     </div>
-    <div class="postpost">
+    <div class="postpost" data-evid="<?php echo $evid?>">
         <?php
             echo $this->element('orders/view/ul_events/the-post', ['posciki' => $posciki]);
         ?>        
@@ -16,7 +16,7 @@
     <span class="event_no"><?php echo $licznik;?></span> 
     <?php
         if( $fix ) { // jeż uż może edytować swoje zdarzenie, to wyświetl kontrolkę
-            echo '<span class="fixit"><i class="fa fa-wrench" aria-hidden="true"></i></span>';
+            echo '<span class="fixit" ' . 'data-evid="' . $evid . '"><i class="fa fa-wrench" aria-hidden="true"></i></span>';
         }
     ?> 
 </li>

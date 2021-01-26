@@ -11,7 +11,10 @@ ul.wersja {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-size: 60%; }
+  font-size: 60%;
+  position: absolute;
+  bottom: 5px;
+  right: 5px; }
 
 ul.wersja li {
   float: right;
@@ -48,7 +51,7 @@ p.ekstra-msgs span {
   position: absolute;
   top: 10px;
   right: 25px;
-  z-index: 999;
+  z-index: 2;
   display: none;
   font-size: 80%; }
 
@@ -72,6 +75,106 @@ span.fixit {
 
 span.fixit > i.fa {
   font-size: 20px; }
+
+/*
+  Style do edycji postu
+
+  Thanks to:
+  https://www.w3schools.com/howto/howto_js_fullscreen_overlay.asp
+  https://css-tricks.com/centering-css-complete-guide/ */
+.fix-block {
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */
+  height: 100%;
+  width: 0;
+  position: fixed;
+  /* Stay in place */
+  z-index: 7;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  background-color: black;
+  /* Black fallback color */
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Black w/opacity */
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
+  transition: 0.5s;
+  /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */ }
+
+.fix-block .fix-div, .fix-div form, .fix-block .fix-div.edit .kreciola, .fix-block .fix-div .errmsg {
+  display: none; }
+
+.fix-block .fix-div.edit, .fix-block .fix-div.sending, .fix-block .fix-div.error {
+  display: block;
+  position: relative;
+  width: 60%;
+  height: 100%;
+  margin: 0 auto; }
+
+.fix-div.edit form {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 800px; }
+
+/* Poniżej style, elementów formularza */
+.fix-div.edit form textarea {
+  min-height: 200px; }
+
+.fix-div.edit form div {
+  margin: 0;
+  padding: 10px; }
+
+.fix-div p.all, .fix-div p.aktualny {
+  visibility: hidden; }
+
+.fix-div.edit form button {
+  padding: 0.6em 2em;
+  color: white;
+  background-color: #66b2b2;
+  border-color: #66b2b2;
+  border-radius: 10px;
+  margin-right: 20px; }
+
+.fix-block .fix-div.sending .kreciola {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1000%;
+  color: #2a85ec; }
+
+.fix-block .fix-div.error .errmsg {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 250%;
+  color: red;
+  padding: 0;
+  border: solid bisque 1px;
+  border-radius: 10px;
+  background-color: #3c3d36;
+  box-shadow: 20px 20px 5px #252424; }
+
+.fix-block .fix-div.error .errmsg div {
+  margin: 0;
+  padding: 30px; }
+
+.fix-block .fix-div.error .errmsg p {
+  margin: 0;
+  text-align: right;
+  padding: 0 20px 20px 0; }
+
+.fix-block .fix-div.error .errmsg p a {
+  color: bisque; }
+
+.fix-block .fix-div.error .errmsg p a:hover {
+  color: orange; }
 
 /* We need it to desirably set the element przypominajka */
 #OrderAddForm, .event-order > #EventViewForm {

@@ -1,4 +1,10 @@
 <?php
+// Dla rozróżnienia wersji dev i prod
+// To uzywamy w WebixHelper
+define('appVersion', '2.8.01');
+// A to w AppHelper
+define('appNumber', '2021-01-26_02-50'); // Just date and subversion
+
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
  *
@@ -129,12 +135,6 @@ Configure::write('CakePdf', array(
 	//'filename' => 'example.pdf'	
 ));
 
-// Dla rozróżnienia wersji dev i prod
-// To uzywamy w WebixHelper
-define('appVersion', '2.8.00');
-// A to w AppHelper
-define('appNumber', '2020-04-30_14-00'); // Just date and subversion
-
 define('webixCustomersURL', '/klienci'); // URL strony klientów po Webix'owemu
 
 /**
@@ -160,6 +160,8 @@ if( DS == WIN) { // We are on Windows!
 } else { // We are on Linux!
     Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');     
 }
+
+define('ZNACZNIK_MSG', '*@#'); // znacznik w poscie eventu do obsługi wielu wersji danego postu
 
 /*
 Lepsza wersja sprawdzania NIP'u.

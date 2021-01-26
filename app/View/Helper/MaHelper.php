@@ -691,7 +691,7 @@ class MaHelper extends AppHelper {
 
         $ret = [""];
         if( strlen($msg) ) { //jeżeli nie jest pusty
-            $post = nl2br($msg); // formatujemy
+            $post = $msg; //$post = nl2br($msg); // formatujemy
             if( $this->isBlockMark($post) ) { // jeżeli tekst zaczyna się od zanczika bloku
                 $ret = explode(ZNACZNIK_MSG, substr($post, strlen(ZNACZNIK_MSG)) );
             } else {

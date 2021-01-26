@@ -293,4 +293,31 @@ class EventsController extends AppController {
 			$this->Session->setFlash(__('The event could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+    }
+
+
+    public function evupdate() {
+
+        $success = false;
+        if ( $this->Event->save($this->request->data) ) {
+            $success = true;
+        } 
+        $this->set([
+            'answer' => [
+                'success' => $success,
+                'dostalem' => $this->request->data,
+            ],            
+            '_serialize' => 'answer' //to używamy, gdy nie chcemy view
+        ]);
+        //sleep(3);
+
+    }
+
+
+
+
+
+}
+    
+
+    

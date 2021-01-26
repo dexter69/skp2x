@@ -44,6 +44,11 @@ class AppHelper extends Helper {
         return $retArr;
     }
 
+    // Replace any variant of html br to new line char
+    function br2nl( $input ) {
+        return preg_replace('/<br(\s+)?\/?>/i', "\n", $input);
+    }
+
     public function bnr2nrj($bnr = null, $inicjaly = null, $ishtml = true) {
 		
 		if($bnr && $bnr > BASE_NR) {

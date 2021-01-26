@@ -1,0 +1,128 @@
+/*
+  Style do edycji postu
+
+  Thanks to:
+  https://www.w3schools.com/howto/howto_js_fullscreen_overlay.asp
+  https://css-tricks.com/centering-css-complete-guide/ */
+
+// Nasz overlay
+.fix-block {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */   
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 7; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.7); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+// Normalnie nasze div'y z poszczególnymi formularzami nie są widoczne oraz
+// potrzebujemy, by formularz był schowany podczas wysyłania danych
+// Blok s kręciołą sygnalizujący wysyłanie zapytania do serwera, normalnie nie widoczny
+// Oraz blok z informacją o błędzie
+.fix-block .fix-div, .fix-div form, .fix-block .fix-div.edit .kreciola, .fix-block .fix-div .errmsg {
+    display: none;
+}
+
+// Wyświetlanie w trybie pokazania formularza, w trybie wysyłania, w trybie błędu
+.fix-block .fix-div.edit, .fix-block .fix-div.sending, .fix-block .fix-div.error {
+    display: block;
+    position: relative;
+    width: 60%;   
+    height: 100%;
+    margin: 0 auto;
+}
+
+// W trybie edycji pokazujemy formularz
+.fix-div.edit form {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 800px;
+    //height: 240px;
+    //background-color: blueviolet;
+}
+
+/* Poniżej style, elementów formularza */
+.fix-div.edit form textarea {
+    min-height: 200px;
+    //display: block;
+}
+
+.fix-div.edit form div {
+    margin: 0;
+    padding: 10px;
+}
+
+// Tu mamy wszystkie multiposty dotychczasowe
+.fix-div p.all, .fix-div p.aktualny {
+    visibility: hidden;
+}
+
+$kolor-buttona: #66b2b2;
+
+.fix-div.edit form button {
+    padding: 0.6em 2em;
+    color: white;
+    background-color: $kolor-buttona; 
+    border-color: $kolor-buttona;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+// Style, bo pokazać blok z kręciołą
+.fix-block .fix-div.sending .kreciola {    
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 1000%;    
+    color: #2a85ec;
+}
+
+// Style, bo pokazać info z błędem
+.fix-block .fix-div.error .errmsg {    
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 250%;    
+    color: red;
+    padding: 0;
+    border: solid bisque 1px;
+    border-radius: 10px;
+    background-color: #3c3d36;
+    box-shadow: 20px 20px 5px rgb(37, 36, 36);
+}
+
+// Kontener z tekstem
+.fix-block .fix-div.error .errmsg div {
+    margin: 0;    
+    padding: 30px;
+}
+
+// kontener z krzyżykiem do zamknięcia
+.fix-block .fix-div.error .errmsg p {
+    margin: 0;    
+    text-align: right;
+    padding: 0 20px 20px 0;    
+}
+
+// krzyżyk
+.fix-block .fix-div.error .errmsg p a {
+    color: bisque;
+}
+
+.fix-block .fix-div.error .errmsg p a:hover {
+    color: orange;
+}
