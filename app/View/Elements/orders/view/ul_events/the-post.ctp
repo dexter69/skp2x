@@ -9,9 +9,17 @@
         $msg = '<ul class="wersja">';         
         for( $i=1; $i<$size; $i++ ) {                
             $msg_body .= '<span class="old-msg no-' . $i .'">' . $posciki[$size - $i] . '</span>';
-            $msg .= $this->element('orders/view/ul_events/sub_li', ["item" => $i, "klasa" => "cyferka", "klasa_li" => ""]);           
+            $msg .= $this->element('orders/view/ul_events/sub_li', [                
+                "span_val" => $i,
+                "li_attrs" => "data-digit='{$i}'",
+                "span_attrs" => "class='cyferka'"
+            ]);           
         }
-        $msg .= $this->element('orders/view/ul_events/sub_li', ["item" => "starsze wersje:", "klasa" => "tekst", "klasa_li" => "toli"]); 
+        $msg .= $this->element('orders/view/ul_events/sub_li', [
+            "span_val" => "starsze wersje:",
+            "li_attrs" => "class='toli'",
+            "span_attrs" => "class='tekst'"
+        ]); 
         $msg .= '</ul>';
         $msg .= '<p class="ekstra-msgs">' . nl2br($msg_body) . '</p>';
     } else {

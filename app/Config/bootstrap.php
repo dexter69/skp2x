@@ -1,10 +1,4 @@
 <?php
-// Dla rozróżnienia wersji dev i prod
-// To uzywamy w WebixHelper
-define('appVersion', '2.8.01');
-// A to w AppHelper
-define('appNumber', '2021-01-26_02-50'); // Just date and subversion
-
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
  *
@@ -27,6 +21,9 @@ define('appNumber', '2021-01-26_02-50'); // Just date and subversion
  * @since         CakePHP(tm) v 0.10.8.2117
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
+// tam definijemy numery wesji apikacji
+require 'ver.php';
 
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));

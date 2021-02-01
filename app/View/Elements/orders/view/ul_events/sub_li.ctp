@@ -1,10 +1,3 @@
-<?php
-    if( $klasa_li == "" ) {
-        $strcl = "";
-    } else {
-        $strcl = 'class="' . $klasa_li . '"';
-    }
-?>
-<li <?php echo $strcl?>>
-    <span class="<?php echo $klasa;?>"><?php echo $item; ?></span>
+<li <?php echo $li_attrs ?> >
+    <span <?php echo $span_attrs?> ><?php echo $span_val ?></span>
 </li>

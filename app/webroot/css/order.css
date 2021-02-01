@@ -44,19 +44,19 @@ p.ekstra-msgs {
   padding: 0; }
 
 p.ekstra-msgs span {
+  display: none; }
+
+p.ekstra-msgs span.visible {
+  display: block;
   background-color: #dbdad0;
   border-radius: 5px;
   box-shadow: 10px 10px 5px grey;
   padding: 10px 20px;
   position: absolute;
-  top: 10px;
+  top: 50px;
   right: 25px;
   z-index: 2;
-  display: none;
   font-size: 80%; }
-
-p.ekstra-msgs span.visible {
-  display: block; }
 
 span.event_no {
   position: absolute;

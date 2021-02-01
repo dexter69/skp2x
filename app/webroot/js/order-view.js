@@ -22,16 +22,6 @@ $( document ).ready(function() {
 	/*
         Kod do obsługi edycji postów.    */
 
-    // Chmurki z poprzednimi wersjami postu
-    $( "span.cyferka" ).hover(    
-        function() {        
-            $("p.ekstra-msgs .no-" + $(this).text()).addClass( "visible" );
-            }, function() {
-            $("p.ekstra-msgs .no-" + $(this).text()).removeClass( "visible" );
-        }
-    );
-    
-
     // Po kliknięciu w to, otwieramy formularz
     $( "span.fixit" ).click(function() {
         // Włącz overlay
@@ -50,7 +40,46 @@ $( document ).ready(function() {
         }
     });
 
+    // przyczep funkcjonalność chmurek do wszystkich selektorów li - kontrolek poprzedniej wersji
+    setChmurki( ".wersja > :not(.toli)" );
+
 });
+
+/* Przyczep funkcjonalność chmurki do elemntów li w ul.wersja.
+   Argument to selektor reprezentujący element/elementy, do których mają być przytwierdzone chmurki */
+function setChmurki( zelektor ) {
+
+    let theLis = $( zelektor ); // tu mamy wszystkie li pasujące do selektora
+
+    let hoveredLI, chmurka;
+
+    theLis.hover(
+        // gdy mysza wchodzi na li
+        function(){
+            // cyferka spana w tym konkretnym li
+
+            hoveredLI = this; // tu mamy konkretne li, to na które "wjechała myszka"
+
+            // Cyferka zawarta w tym konkretnym li (a dokładnie w span'ie)
+            let cyferka = $(hoveredLI).data("digit");            
+
+            // Korespondująca z tym li chmurka do pokazania
+            chmurka = $(hoveredLI).parent().parent().children(".ekstra-msgs").children(".old-msg.no-" + cyferka);
+            
+            // Pokaż ją!
+            $(chmurka).addClass( "visible" );
+
+        },
+        // gdy mysza schodzi z li
+        function(){
+            // To schowaj chmurkę!
+            $(chmurka).removeClass( "visible" );
+            hoveredLI = null, chmurka = null;
+        }
+    );
+    // 
+
+}
 
 function zapiszPosta( idPosta, znacznik ) {
         
@@ -98,10 +127,12 @@ function setDymki( dane, evid ) {
     let nrek = $(selektor + " li").length;
 
     // Dodaj kontrolkę dymka
-    let html = '<li><span class="cyferka">' + nrek + '</span></li>';    
+    let html = '<li data-digit="' + nrek + '"><span class="cyferka">' + nrek + '</span></li>';
     let toli = $(selektor + " .toli").before( html );
+
+    let ourLi = toli.prev();
     // To jest nasz nowy span
-    let theSpan = toli.prev().children();
+    let theSpan = ourLi.children();
 
     // Teraz zawartość dymka
     // Nasz kontener msgs
@@ -110,13 +141,7 @@ function setDymki( dane, evid ) {
     $(selektor2).append(html2);
 
     // Jeszcze ustaw dla nowego obiektu, coby chmurka działała    
-    $( theSpan ).hover(    
-        function() {        
-            $("p.ekstra-msgs .no-" + $(this).text()).addClass( "visible" );
-            }, function() {
-            $("p.ekstra-msgs .no-" + $(this).text()).removeClass( "visible" );
-        }
-    );
+    setChmurki(ourLi);    
 
 }
 
