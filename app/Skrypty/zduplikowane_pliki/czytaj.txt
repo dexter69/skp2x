@@ -1,11 +1,27 @@
-Chodzi o załączane wielokrotnie pliki. Przykładowo:
-handlowiec ma przykładowo 3 karty w zamówieniu i jeden z plików, np. projekt.pdf jest wspólny dla wszystkich 3 kart. Handlowiec do opisu każdej karty załącza ten plik, skutkiem czego mamy 3 razy ten sam plik i zajęte jest 3 razy więcej miejsca.
+Chodzi o te same, załączane wielokrotnie pliki. Przykładowo:
+Handlowiec ma 3 karty w zamówieniu i jeden z plików, np. projekt.pdf jest wspólny dla wszystkich 3 kart. Handlowiec do opisu każdej karty załącza ten plik,
+skutkiem czego mamy 3 razy ten sam plik i zajęte jest 3 razy więcej miejsca.
 
 Rozwiązanie:
 
 1. Wyznaczyć zbiory/grupy powtarzających się plików
+[aby upewnić się, że to są identycznye pliki, obliczamy hash'e]
 2. Dla każdego zbioru:
-- zostawiamy pierwszy plik
+- zostawiamy pierwszy plik lub pierwszy link (plik/i już przeniesony/ne na drugi dysk)
 - pozostałe z grupy usuwamy z serwera i zachowujemy gdzieś w bezpiecznym miejscu
 - nazwy usuniętych plików linkujemy do pliku pierwszego
 Można by również wszystkie poprawki zrobić w bazie danych, ale rozwiązanie z linkami jest bezpieczniejsze.
+
+
+Prykład linkowania dla dwóch konkretnych plików, które (tak się złożyło) istniały już jako linkami
+Plik:
+_karta_kobylnica_cmyk_x3_krzywe_finisz.pdf
+Załączony dwukrotnie do zam. 1396/15 i 1181/17
+na dysku miały nazwy odpowiednio/kolejno:
+5666a519-f658-41a4-961c-04c10a0a0a02
+2017-09-15_14.50.52_59bbccac-7444-4ecc-8fa0-0bfe0a0a0a0a
+(przypadkowo obydwa to już były linki symboliczne)
+
+Przeniosłem ten drugi (2017-*) w inne miejsce i utworzyłem link symboliczny:
+ln -s 5666a519-f658-41a4-961c-04c10a0a0a02 2017-09-15_14.50.52_59bbccac-7444-4ecc-8fa0-0bfe0a0a0a0a
+Czyli zamiast usuniętego pliku stworzyłem link do tego starszego i link do linku i wszystko gra :-)
