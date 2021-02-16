@@ -190,4 +190,39 @@ class OrderHelper extends AppHelper {
         ];
     }
 
+    /**
+     * Funkcja używana przy konstrukcji elementów do wyświetlania chmurek, dla edytowalnych postów */
+
+    public function constructChmurki($posciki) {    
+        /* zkładamy, że $posciki zawiera conajmniej 1 element, nawet jeżeli uż. nic nie napisał,
+        to mamy element z pustym stringiem */
+
+        $size = count($posciki);
+        $msg_body = "";
+        $chmurki = "";
+        if(  $size > 1 ) { 
+            // Skonstruuj pozostałe, starsze wersje posta i doklej do $msg
+            $msg = '<ul class="wersja">';         
+            for( $i=1; $i<$size; $i++ ) { 
+                $tresc = $posciki[$size - $i];               
+                $msg_body .= '<span class="old-msg no-' . $i . '">' . $tresc . '</span>';
+                $chmurki .= "<p class='chmurka nr-${i}'>${tresc}</p>";
+                $msg .= "<li data-digit='{$i}'><span class='cyferka'>${i}</span></li>";
+            }            
+            $msg .= "<li class='toli'><span class='tekst'>starsze wersje:</span></li>";            
+            $msg .= '</ul>';
+            //$msg .= '<p class="ekstra-msgs">' . nl2br($msg_body) . '</p>';
+        } else {
+            $msg = '';
+        }
+
+        $postek0 = nl2br($posciki[0]);
+        return [
+            'ol' => "<ol class='olevent'><li>${postek0}</li></ol>",
+            'msg' => $msg,
+            'chmurki' => nl2br($chmurki)
+        ];        
+
+    }
+
 }

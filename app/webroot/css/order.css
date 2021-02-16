@@ -38,25 +38,21 @@ ul.wersja li span.cyferka {
 ul.wersja li span.tekst {
   background-color: transparent; }
 
-p.ekstra-msgs {
-  position: relative;
-  margin: 0;
-  padding: 0; }
-
-p.ekstra-msgs span {
+p.chmurka {
   display: none; }
 
-p.ekstra-msgs span.visible {
+p.chmurka.visible {
   display: block;
+  position: absolute;
+  bottom: 30px;
+  right: 0;
+  padding: 15px;
   background-color: #dbdad0;
   border-radius: 5px;
   box-shadow: 10px 10px 5px grey;
-  padding: 10px 20px;
-  position: absolute;
-  top: 50px;
-  right: 25px;
-  z-index: 2;
-  font-size: 80%; }
+  font-size: 75% !important;
+  min-width: 80px;
+  min-height: 20px; }
 
 span.event_no {
   position: absolute;

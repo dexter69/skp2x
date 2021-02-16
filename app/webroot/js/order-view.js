@@ -61,13 +61,17 @@ function setChmurki( zelektor ) {
             hoveredLI = this; // tu mamy konkretne li, to na które "wjechała myszka"
 
             // Cyferka zawarta w tym konkretnym li (a dokładnie w span'ie)
-            let cyferka = $(hoveredLI).data("digit");            
+            let cyferka = $(hoveredLI).data("digit"); 
 
             // Korespondująca z tym li chmurka do pokazania
-            chmurka = $(hoveredLI).parent().parent().children(".ekstra-msgs").children(".old-msg.no-" + cyferka);
+            // $(hoveredLI).parent().parent().parent() => li.post            
+            chmurka = $(hoveredLI).parent().parent().parent().children(".chmurka.nr-" + cyferka);
             
             // Pokaż ją!
             $(chmurka).addClass( "visible" );
+            // Ustal odległość chmurki od prawej (im większy nr chmurki, tym większa odległość)
+            let szerkoscLi = 38 // mniej więcej szerokosc (ustawiona w css)
+            $(chmurka).css("right", (cyferka*szerkoscLi-szerkoscLi/2)+"px");
 
         },
         // gdy mysza schodzi z li
