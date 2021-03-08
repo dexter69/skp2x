@@ -1,0 +1,22 @@
+Skrypt, który będzie porządkował automatycznie zduplikowane pliki.
+
+Algorytm:
+1. Weź plik, nazwijmy go BIEŻĄCY
+2. Sprawdź, czy istnieje identyczny, wcześniej wrzucony plik. Musimy znaleźć najstarszy plik. Szukanie zaczynamy
+więc od najstarszego.
+
+TAK =>
+NIe =>
+
+3. Przenieś BIEŻĄCY do archiwum i zamiast niego utwórz link do znalezonego starego pliku.
+
+!
+Najpierw napiszemy skrypt, który będzie inwentaryzował pliki, powiedzmy inve.php
+
+algo:
+Algorytm stosujemy dla każdego pliku zapsanego w bazie skp, sczytujemy z `uploads`. Informacje z przetworzenia plików,
+zapisujemy w osobnej tabeli, powiedzmy `pliki`. Tabela będzie zawierała wszelkie potrzebne info co do ewentualnych akcji,
+które trzeba podjąć dla danego pliku.
+
+cdn...
+
