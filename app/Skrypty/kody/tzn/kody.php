@@ -11,11 +11,11 @@ require 'funkcje.php';
 
 // To są starsze bazy
 $arrOfFiles = [
-    '63k_2019.txt',
+    '25k_2020.txt',
 ];
 
 // Plik z wygenerowanymi kodami, sprawdzamy czy się nie powtarzają z tym co już mamy
-$newF = '25k_2020.txt';
+$newF = '26k_2021.txt';
 
 // Plik w którym zapisujemy wynik
 $outF = 'res.txt';
