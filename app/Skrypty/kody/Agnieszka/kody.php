@@ -14,7 +14,7 @@ https://www.browserling.com/tools/text-from-regex
 
 użyty regex: [A-Z]{4}\d\d
 
-14.12.2020 - wygląda na to, ze na razie wystarczy na razie 5$ więcejgenerować jako zakładkę na zdublowane
+14.12.2020 - wygląda na to, ze na razie wystarczy na razie 5k więcej generować jako zakładkę na zdublowane
 */
 
 require 'funkcje.php';
@@ -29,7 +29,8 @@ $arrOfFiles = [
     'kody30k_lut-2019.txt',  // robione - 7.02.2019
     'kody30k_paz-2019.txt', // robione 28.10.2019
     'kody30k_mar-2020.txt',  // 19.03.2020
-    'kody30k_gru-2020.txt' // ostatnie robione 14.12.2020
+    'kody30k_gru-2020.txt', // 14.12.2020
+    'kody30k_lut-2022.txt'  // ostatnie robione 15.02.2022
 ];
 
 // Plik z wygenerowanymi kodami, sprawdzamy czy się nie powtarzają z tym co już mamy
