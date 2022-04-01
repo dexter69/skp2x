@@ -30,7 +30,7 @@ $poczta->sendMail();
 $poczta->clean();
 
 if( $poczta->homePlTime != null ) { // czas interakcji z serwerem pocztowym
-    print("\nCzas Home.pl: $poczta->homePlTime ms");
+    print("\nCzas interakcji z serwerem pocztowym: $poczta->homePlTime ms");
 }
 //logujemy czas wykonania skryptu
 $script_time = (microtime(true) - $time_start) * 1000; // koniec pomiaru, chcemy w milisekundach

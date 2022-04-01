@@ -7,6 +7,8 @@ class POCZTA {
     public $conection = null;
     
     public $rekord = null; // tu wczytujemy rekord z bazy
+
+    public $konto = null; // informacja z którego konta zstało wysłane
     
     private $emailSent = false; // rezuktat wysyłania emaila
     private $emailErr = null;   // tu będziemy wpisywać błąd PHPMailera
@@ -43,8 +45,17 @@ class POCZTA {
             //startowy log - gdy coś jest
             print("\n" . START_STR2 . date("Y-m-d, H:i:s"));
             $emailconf = new EmailConfig;
-            // wysyłamy parzyste rekordy z innego konta niz nieparzyste (bo Home.pl nie lubi jak sie za dużo maili wysyła)
+            /* wysyłamy parzyste rekordy z innego konta niz nieparzyste (bo Home.pl nie lubi jak sie za dużo maili wysyła)
+            Przenieśliśmy poniżej do if
             $config = ( $this->rekord['id'] % 2 == 0 ) ? $emailconf->homepl_smtp : $emailconf->homepl_smtp1;
+            */
+            if( $this->rekord['id'] % 2 == 0 ) {
+                $emailconf->homepl_smtp;
+                $this->konto = 'SMTP';
+            } else {
+                $emailconf->homepl_smtp1;
+                $this->konto = 'SMTP-1';
+            }
             
             $mail = new PHPMailer;
             //ustaw parametry
@@ -72,6 +83,7 @@ class POCZTA {
         if( $this->rekord ) { // coś było wczytane z bazy
             if( $this->emailSent ) { //pomyślnie wysłany email
                 print("\nE-mail OK");
+                print("\nKonto --> " . $this->konto);
                 $this->odnotujWdb(); // odznacz w bazie rekord, który został wysłany
             } else { //raportuj błąd wysłania e-maila
                 print("\nE-mail NIE został wysłany.\n" . $this->emailErr);
