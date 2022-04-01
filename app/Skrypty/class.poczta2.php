@@ -50,10 +50,10 @@ class POCZTA {
             $config = ( $this->rekord['id'] % 2 == 0 ) ? $emailconf->homepl_smtp : $emailconf->homepl_smtp1;
             */
             if( $this->rekord['id'] % 2 == 0 ) {
-                $emailconf->homepl_smtp;
+                $config = $emailconf->homepl_smtp;
                 $this->konto = 'SMTP';
             } else {
-                $emailconf->homepl_smtp1;
+                $config = $emailconf->homepl_smtp1;
                 $this->konto = 'SMTP-1';
             }
             
