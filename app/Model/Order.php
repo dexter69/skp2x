@@ -331,7 +331,8 @@ class Order extends AppModel {
 		
 		$result = array();
 		$kartyall = $this->Card->find('all', array(
-			'conditions' => array('Card.owner_id' => $userid, 'Card.order_id' => 0),
+			//'conditions' => array('Card.owner_id' => $userid, 'Card.order_id' => 0),
+            'conditions' => array('Card.user_id' => $userid, 'Card.order_id' => 0),
 			'fields' => array(	'Card.name', 'Card.quantity', 'Card.customer_id', 'Card.order_id',
 								'Customer.id', 'Customer.name', 'Customer.forma_zaliczki',
 								'Customer.procent_zaliczki', 'Customer.forma_platnosci',

@@ -477,28 +477,50 @@ class CardsController extends AppController {
             //chcemy tylko klientów, którzy są "własnością" zalogowanego użytkownika
             // UWAGA, przy zmianie na klientów różnych użytkowników - to nie bedzie dzialać            
             $ownerid = $this->Auth->user('id');
-            $customers = $this->Card->Customer->find('all', array(
-                    'recursive' => 0,
-                    'conditions' => array('owner_id' => $ownerid),
-                    'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id', 'Customer.etylang')
+
+            $moi_ = $this->Card->Customer->find('all', array(
+                'recursive' => 0,
+                'conditions' => array('owner_id' => $ownerid),
+                'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id', 'Customer.etylang')
             ));
+
+            // Wszyscy kilenci, którzy nie są własnością danego handlowca
+            $inni_ = $this->Card->Customer->find('all', array(
+                'recursive' => 0,
+                'conditions' => array('owner_id !=' => $ownerid),
+                'fields' => array('Customer.id', 'Customer.name', 'Customer.owner_id', 'Customer.etylang')
+            ));
+
+            /*
+            $customers = $moi_;
 
             if( empty($customers) ) {
                 $this->Session->setFlash( 'Musisz najpierw dodać jakiegoś klienta !' );
                 return $this->redirect($this->referer());
             }
+            */          
 
-            // przygotowujemy tablicę z klientami dla autocomplete w $jscode
-            $klienci = array();
-            foreach( $customers as $row ) { 
-                $klienci[] = array(
+            $moi = array();
+            foreach( $moi_ as $row ) { 
+                $moi[] = array(
                     'label' => $row['Customer']['name'],
                     'id' => (int)$row['Customer']['id'],
                     'etylang' => $row['Customer']['etylang']
                 );             
             }
-            $jscode =   "var yeswyb = " . true . ";\nvar yesperso = " . JEDEN .                        
-                        ";\nvar klienci =  "  . json_encode($klienci);
+            
+            $inni = array();
+            foreach( $inni_ as $row ) { 
+                $inni[] = array(
+                    'label' => $row['Customer']['name'],
+                    'id' => (int)$row['Customer']['id'],
+                    'etylang' => $row['Customer']['etylang']
+                );             
+            }
+
+            $jscode =   "var yeswyb = " . true . ";\nvar yesperso = " . JEDEN .  ";\nvar ilukli =  "  . count($moi) .
+                        ";\nvar moi =  " . json_encode($moi) . ";\nvar inni =  " . json_encode($inni) .
+                        ";\nvar klienci =  "  . json_encode($moi);
 
             // Chcemy pliki podpięte do kart "w buforze" zalogowanego użytkownika
             $wspolne = $this->Card->findPropperUploads();

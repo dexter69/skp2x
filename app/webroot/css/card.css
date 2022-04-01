@@ -82,6 +82,17 @@ Dokładnie związane z kartami serwisowymi personalizacją. Wcześniejsze mogą 
   font-size: 90%;
   text-align: right; }
 
+/* 31.03.2022 - etykieta pola Klient klikalna, autocomplete ograniczona długość w dół */
+
+#klientdiv > label {
+      cursor: pointer; }
+
+.ui-autocomplete {
+    max-height: 600px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden; }
+
 #karty tr.problem {
   background-color: #ffefb5; }
 

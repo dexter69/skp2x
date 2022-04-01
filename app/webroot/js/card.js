@@ -182,6 +182,31 @@
 		});
 		
 	}
+
+    function addAutocomplete() {
+
+        $( '#CardKlient' ).autocomplete({
+            source: klienci,
+            select: function(event, ui) {
+                $('#CardCustomerId').val(ui.item.id);
+                $('.cu' + ui.item.id).show();
+                if( $('.cu' + ui.item.id).length ) {
+                    $('#wdiv > label').show();
+                }
+                //Ustaw proponowany język wg klienta
+                $('#CardEtylang').val(ui.item.etylang);
+            }
+        });
+
+    }
+
+    // Usuń i ponownie dołącz autocomplete
+
+    function reAddAutocomplete() {
+
+        $( '#CardKlient' ).autocomplete( "destroy" );
+        addAutocomplete();
+    }
 	
 	
 	$( document ).ready(function() {
@@ -229,7 +254,27 @@
                     }
             });
 
+            /**
+             * 
+             */
+            var theLabelEl = '#klientdiv > label';
+            $( theLabelEl ).click(function() {
+                var cltxt = $( theLabelEl ).text();
+                
+                if( cltxt == 'Klient - inny') {
+                    klienci = moi;
+                    $( theLabelEl ).text('Klient - mój');
+                } else {
+                    klienci = inni;
+                    $( theLabelEl ).text('Klient - inny');
+                }
+                reAddAutocomplete();
+                console.log(klienci.length);
+            });
+            
+            addAutocomplete();
 
+            /*
             $( '#CardKlient' ).autocomplete({
                 source: klienci,
                 select: function(event, ui) {
@@ -242,6 +287,7 @@
                     $('#CardEtylang').val(ui.item.etylang);
                 }
             });
+            */
 	
 	
 });
