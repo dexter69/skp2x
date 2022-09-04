@@ -1012,7 +1012,7 @@ public function add2() {
 								return true;
 							break;
 							default:
-								return true;
+								return false;
 						}
 						break;
 		}

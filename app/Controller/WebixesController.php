@@ -46,6 +46,13 @@ class WebixesController extends AppController {
             $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
             return $this->redirect($this->referer());
         }
+
+        if ( $this->Auth->user('CX') == IDX_OWN) {
+            // Jeżeli użytkownik ma uprawnienia do listowania tylko swoich klientów
+            // To przekierowujemy na starą listę (bo w Webixach za dużo przerabiania)
+            return $this->redirect( array('controller' => 'customers', 'action' => 'index', 'my') );
+            
+        }
         
         $this->layout='webix';
         $webixJsFiles = $this->webixJsFiles;        
