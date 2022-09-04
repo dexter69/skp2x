@@ -264,10 +264,10 @@ class JobsController extends AppController {
 
 
 
-
+						// do poprawy nie są zdefiniowane poniższe
                         case sDAFC:
                                 if( $logged_user == $tworca )
-                                        $submits[eKOR_POP] = 0;
+                                        // $submits[eKOR_POP] = 0;
                                 break;
 
 
@@ -280,7 +280,7 @@ class JobsController extends AppController {
 
                         case sB_REJ:
                                 if( $logged_user == $tworca ) {
-                                        $submits[eKOR_POP] = 0;
+                                        // $submits[eKOR_POP] = 0;
                                 }
                                 if( $logged_dzial == DTP ) {
                                         $submits[eJ_FILE] = 0;
