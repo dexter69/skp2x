@@ -1012,7 +1012,8 @@ public function add2() {
 								return true;
 							break;
 							default:
-								return true;
+								if ($upraw != IDX_OWN) return true;
+								return false;
 						}
 						break;
 		}
