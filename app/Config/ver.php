@@ -7,4 +7,4 @@
 // To uzywamy w WebixHelper
 define('appVersion', '2.8.10');
 // A to w AppHelper
-define('appNumber', '2022-09-04_22-50'); // Just date and subversion
+define('appNumber', '2022-09-05_09-45'); // Just date and subversion
