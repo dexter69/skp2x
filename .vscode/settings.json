@@ -1,4 +1,19 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "editor.fontSize": 16
+    "editor.fontSize": 16,
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+            "savePath": "/app/webroot/css2"
+        },        
+    ],
+    "liveSassCompile.settings.excludeList": [
+        "/**/node_modules/**",
+        "/.vscode/**"
+    ],
+    "liveSassCompile.settings.generateMap": true,
+    "liveSassCompile.settings.autoprefix": [
+        "defaults"
+    ]
 }

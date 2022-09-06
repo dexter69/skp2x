@@ -1,0 +1,480 @@
+@charset "UTF-8";
+/*
+Doddatki do zamówień via sass
+*/
+#confirm-stuff {
+  display: none;
+}
+
+#confirm-stuff.up {
+  display: block;
+}
+
+#confirm-stuff .kover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.6;
+  width: 9999px;
+  height: 9999px;
+  z-index: 100;
+}
+
+#confirm-stuff .content-wrap {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 200px;
+  background-color: violet;
+  z-index: 200;
+  margin-top: -100px;
+  margin-left: -200px;
+}
+
+#confirm-stuff .content-wrap .sterowanie {
+  background-color: yellowgreen;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/*
+    Dotyczy widoku handlowego.
+*/
+#the-dd {
+  position: relative;
+}
+
+#the-dd > span {
+  position: absolute;
+  right: 0.5em;
+  color: green;
+}
+
+.new-type-header {
+  position: relative;
+}
+
+.new-type-header > p {
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0.5em;
+}
+
+.new-type-header > p.ikony-handlowe {
+  padding-top: 2.1em;
+}
+
+.ikony-handlowe .fa {
+  font-size: 210%;
+}
+
+.ikony-handlowe .fa-file-pdf-o {
+  font-size: 170%;
+}
+
+.ikony-handlowe > span {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0.3em;
+}
+
+.ikony-handlowe > .pdf-span {
+  margin-top: 0.15em;
+}
+
+.ikony-handlowe > .pdf-span i {
+  color: red;
+}
+
+.ikony-handlowe > .pdf-span i:hover {
+  color: #ff6666;
+}
+
+.numer-handlowy {
+  font-size: 200%;
+  margin-bottom: 0.8em;
+}
+
+.daty-handlowe {
+  font-size: 180%;
+  color: lightseagreen;
+  margin: 0;
+}
+
+.daty-handlowe > span {
+  font-size: 50%;
+  display: block;
+  color: black;
+}
+
+.numer-handlowy > span {
+  color: lightseagreen;
+  font-weight: bold;
+}
+
+.daty-handlowe {
+  position: absolute;
+  right: 0;
+}
+
+.numer-handlowy .ekspres {
+  color: red;
+  font-weight: bold;
+  font-size: 0.7em;
+}
+
+.new-type-header label {
+  font-size: 0.4em;
+}
+
+.new-type-header label span {
+  color: black;
+}
+
+dl.in-order {
+  width: 40%;
+  display: inline-block;
+}
+
+.order-uwagi {
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 2em;
+  width: 55%;
+}
+
+.order-uwagi > p {
+  font-weight: bold;
+  margin-top: 0.4em;
+}
+
+.in-order .rodzcust {
+  color: #0096a1;
+  font-weight: bold;
+}
+
+/* 
+    Prepaid po nowemu
+*/
+#the-dd-2 {
+  font-size: 83%;
+  padding: 6px 4.31px 0 10px;
+}
+
+#the-dd-2.clickable > i.fa-usd {
+  cursor: pointer;
+}
+
+#the-dd-2 .fa-caret-right, #the-dd-2.clickable.open .fa-caret-right {
+  display: none;
+}
+
+#the-dd-2.clickable .fa-caret-right {
+  display: inline-block;
+  font-size: 150%;
+}
+
+#the-dd-2 .drugi, #the-dd-2 .trzeci {
+  display: none;
+}
+
+#the-dd-2.open .drugi, #the-dd-2.open .trzeci {
+  display: inline-block;
+  margin-left: 0.3em;
+}
+
+#the-dd-2.waiting > i[dolar=one],
+#the-dd-2.waiting > i[dolar=two],
+#the-dd-2.waiting > i[dolar=three] {
+  display: none;
+}
+
+/* Kolory dolarów */
+#the-dd-2 i.fa-spinner {
+  display: none;
+}
+
+#the-dd-2.waiting i.fa-spinner {
+  display: inline-block;
+  color: grey;
+}
+
+#the-dd-2.red i.fa-usd {
+  color: red;
+}
+
+#the-dd-2.red i.fa-usd.drugi {
+  color: orange;
+}
+
+#the-dd-2.red i.fa-usd.trzeci {
+  color: green;
+}
+
+#the-dd-2.ora i.fa-usd {
+  color: orange;
+}
+
+#the-dd-2.ora i.fa-usd.drugi {
+  color: green;
+}
+
+#the-dd-2.ora i.fa-usd.trzeci {
+  color: red;
+}
+
+#the-dd-2.gre i.fa-usd {
+  color: green;
+}
+
+#the-dd-2.gre i.fa-usd.drugi {
+  color: red;
+}
+
+#the-dd-2.gre i.fa-usd.trzeci {
+  color: orange;
+}
+
+#pay-err {
+  font-size: 120%;
+  margin: 0 1em;
+  padding: 1em 2em;
+  background-color: #ffa5bc;
+  position: relative;
+  cursor: pointer;
+}
+
+#pay-err > i {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 80%;
+}
+
+.ikony-handlowe .servo {
+  font-size: 83%;
+  padding: 6px 4.31px 0 5px;
+  color: #666666;
+}
+
+.ikony-handlowe .servo.ukryty {
+  display: none;
+}
+
+#servo-span {
+  cursor: pointer;
+  color: #20b2aa;
+}/*# sourceMappingURL=order.css.map */ {
+  background: #f7347a;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  box-shadow: 0 0 0 0 rgb(0, 0, 0);
+  transform: scale(1);
+  -webkit-animation: pulse 2s infinite;
+          animation: pulse 2s infinite;
+}
+
+#OrderAddForm .przypominajka {
+  position: absolute;
+  left: 120px;
+  bottom: -87px;
+}
+
+.event-order > #EventViewForm .przypominajka {
+  position: absolute;
+  left: 150px;
+  bottom: -5px;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+#ekspresorder {
+  cursor: pointer;
+  width: 100px;
+  max-height: 100px;
+  min-height: 100px;
+  margin: 0;
+  padding: 0;
+  background-image: url("../img/expres_szary.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 62px;
+  right: 20px;
+}
+
+#ekspresorder.ekspres {
+  background-image: url("../img/expres.png");
+}
+
+dd span.ekspres {
+  color: red;
+  font-weight: bold;
+}
+
+#kart_wrap, #timeandpay, #commentwrap, #wysylka_wrap {
+  padding: 1em 0;
+}
+
+#wysylka_wrap > div {
+  padding: 0.3em 0;
+}
+
+#wysylka_wrap > div > div {
+  padding: 0 0.5em;
+}
+
+div.datepickerwrap {
+  position: relative;
+  min-width: 420px;
+  width: 420px;
+  padding: 0 1em 0 0;
+}
+
+#paywrap {
+  min-width: 300px;
+  padding: 0 0 0 0;
+}
+
+#platnosci > div {
+  padding: 0 0.5em;
+}
+
+#platnosci div > div {
+  padding: 0.3em 0;
+}
+
+#platnosci > div:first-child {
+  min-width: 190px;
+}
+
+#platnosci select {
+  width: 99%;
+}
+
+/* ####### */
+#nr_budynku_div, #kod_div {
+  width: 15%;
+}
+
+#kraj_div {
+  width: 28%;
+}
+
+#dostava_div {
+  width: 26%;
+}
+
+/*  POPRAWKI
+*/
+div.the_awesome > #miasto_div input {
+  width: 97%;
+}
+
+div.the_awesome > #kraj_div input {
+  width: 97%;
+}
+
+div.the_awesome > #kod_div input {
+  width: 90%;
+}
+
+div.the_awesome > #tel_div input {
+  width: 97%;
+}
+
+div.the_awesome > #nr_budynku_div input {
+  width: 94%;
+}
+
+#ordcards {
+  margin: 0;
+}
+
+#ordcards select {
+  font-size: 130%;
+}
+
+#ordcards a {
+  font-size: 110%;
+  line-height: 1.8em;
+}
+
+#ordcards td.noinput {
+  vertical-align: middle;
+}
+
+#ordcards td {
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0.2em;
+}
+
+#ordcards td input {
+  width: 90%;
+}
+
+#ordcards td.cena input {
+  width: 85%;
+}
+
+#ordcards th:first-child, #ordcards td:first-child {
+  width: 1.5em;
+}
+
+#ordcards .mnoznik {
+  width: 5em;
+}
+
+#ordcards .cena {
+  width: 7em;
+}
+
+#ordcards .ile {
+  width: 9em;
+}
+
+#ordcards .nazwakar {
+  min-width: 14em;
+}
+
+div.orders.form {
+  min-width: 755px;
+}
+
+div.index th:first-child, div.index td:first-child {
+  width: 4em;
+}/*# sourceMappingURL=order.css.map */

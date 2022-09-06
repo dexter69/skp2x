@@ -1,0 +1,154 @@
+@charset "UTF-8";
+/*
+Style do głównego toolbara */
+.app-main .toolbar-menu a:focus {
+  outline-style: none;
+}
+
+.toolbar-menu .webix_disabled {
+  color: orange;
+}
+
+[view_id=userInfoToolbar] button {
+  text-align: right;
+  padding-right: 10px;
+}
+
+/*
+    Style dotyczące tabelki z listą klientów */
+.list-of-customers span.gruby {
+  font-weight: 600;
+}
+
+.customers-kosz {
+  color: green;
+}
+
+.trashHeader {
+  cursor: pointer;
+}
+
+/*
+Szczegóły o kliencie, po prawej stronie listy*/
+.customer-panel .customer-detail-toolbar {
+  background-color: rgb(178, 216, 216);
+}
+
+.customer-panel .customer-detail-toolbar button.webixtype_base {
+  color: rgb(74, 74, 74);
+}
+
+.customer-detail-toolbar .cd-button button.webix_img_btn {
+  text-align: center;
+}
+.customer-detail-toolbar .cd-button button.webix_img_btn span {
+  color: green;
+  font-size: 20px;
+}
+.customer-detail-toolbar .cd-button button.webix_img_btn span.webix_badge {
+  font-size: 95%;
+}
+
+.customer-detail-toolbar .cd-button button.webix_img_btn:hover,
+.customer-detail-toolbar .cd-button button.webix_img_btn:focus {
+  background-color: rgb(53, 192, 178);
+}
+
+.customer-detail {
+  border-radius: 5px;
+}
+
+.customer-detail > .webix_template {
+  padding: 15px 15px 15px 30px;
+}
+
+.the-customer-detail > .siedziba > * {
+  margin: 0;
+}
+
+.the-customer-detail > .siedziba > * {
+  margin: 0.2em 0;
+}
+
+#lof-id .link-item {
+  display: inline-block;
+  margin: 0;
+  padding: 0 5px;
+}
+
+#lof-id .link-item:first-child {
+  padding-left: 0;
+}
+
+.elemOfCustDetail {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
+
+.left-right-elem {
+  padding: 20px 0;
+}
+
+.left-right-elem .table {
+  display: table;
+  border-collapse: collapse;
+}
+
+.left-right-elem .table-row {
+  display: table-row;
+}
+
+.left-right-elem .table-cell {
+  display: table-cell;
+  padding: 0.05em 0.5em 0.05em 0;
+}
+
+.cdetails-comment {
+  padding-top: 10px;
+  border-top: 5px solid #d9e1e1;
+}
+
+/*
+    Button do generacji linków **/
+#link-producer button > * {
+  color: green;
+}
+
+/*
+Zdeprecjonowane lub na razie nie używane definicje */
+.customer-detail .customer-full-name > div {
+  font-size: 125%;
+}
+
+/* Kolor sidebar'a */
+.webix_sidebar, .webix_sidebar_popup_title {
+  background-color: #e0f2f2;
+}
+
+/*
+    Style do dodawania zamówienia */
+.add-quick-order > .add-inside > .webix_template {
+  margin: 0 0 0 15px;
+}
+
+.klient-nazwa .label-name > label {
+  font-size: 82%;
+}
+
+.klient-nazwa .label-name > div {
+  color: black;
+  font-size: 125%;
+}
+
+.add-quick-order.moj-naglowek > .webix_header > div,
+.moj-naglowek .webix_header > div {
+  background-color: rgb(178, 216, 216);
+}
+
+.add-quick-order.moj-naglowek > .webix_header > div > span,
+.moj-naglowek .webix_header > div > span {
+  color: black;
+  font-weight: bold;
+  font-size: 90%;
+}/*# sourceMappingURL=core.css.map */
