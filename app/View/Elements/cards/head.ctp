@@ -5,7 +5,7 @@ $this->set('title_for_layout', $title);
 
 echo $this->Html->css(
     $this->App->makeCssJsTable(
-        ['card', 'custom-theme1/jquery-ui-1.10.4.custom.min'],
+        ['/css2/card', 'custom-theme1/jquery-ui-1.10.4.custom.min'],
         'css'
     ),
     null,

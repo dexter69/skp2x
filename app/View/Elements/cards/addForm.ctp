@@ -12,7 +12,7 @@
 
         $markup =
             $this->Form->input('Card.name', $vju['name']) .
-            $this->Form->input('klient', array('label' => 'Klient - mój', 'div' => array('id' => 'klientdiv', 'class' => 'input text required'), 'required' => true));
+            $this->Form->input('klient', array('label' => 'Klient - mój', 'div' => array('id' => 'klientdiv', 'class' => $klientClass), 'required' => true));
         $this->Ma->responsive_divs( $markup, 'karta_klient');
 
         echo $this->Ma->viewheader('MATERIAŁ, KOLORYSTYKA', array('class' => 'masymetric')); 
