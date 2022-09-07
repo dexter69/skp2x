@@ -114,10 +114,12 @@ class BootHtmlHelper extends AppHelper {
             $ul .= '</ul>';
             $markup .= $ul . '</div>';
             return $markup;
-        } else {
+        }
+        if( $ile == 1 ) { // Zamówienie zawiera 1-ą kartę
             $ilosc = $karty[0]['quantity'];
             return $this->cardLink( $karty[0]['id'], $karty[0]['name']);
         }
+        return $this->cardLink();
     }
     
     // chcemy ładny link do edycji klienta
