@@ -159,9 +159,12 @@ class OrdersController extends AppController {
 		} else {
 			$ordersx = $this->Paginator->paginate();
 		}
-		$orders = $ordersx;//$this->addJobAndSerwisInfo($ordersx, $par);
-		//$orders['Customer']['kwa'] = "Miau";
-		$this->set( compact('orders', 'par' ) );
+		$orders = $ordersx;
+
+		// Jeżeli użytkownik może tylko wyświetlać swoich klientów, to olewamy (na razie filtry)
+        $tylkoDlaSwoich = $this->Auth->user('OX') == IDX_OWN;
+
+		$this->set( compact('orders', 'par', 'tylkoDlaSwoich' ) );
 		$this->set('_serialize', 'orders');
 	}
 

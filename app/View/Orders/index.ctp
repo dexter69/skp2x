@@ -15,7 +15,7 @@ $this->Ma->displayActions('orders'); ?>
 
 <div class="orders index">
     <?php // Nagłówek "HANDLOWE" + filtry obok
-    echo $this->Ma->ordersIdxH2($par); ?>    
+    echo $this->Ma->ordersIdxH2($par, $tylkoDlaSwoich); ?>    
     <table cellpadding="0" cellspacing="0" class="lista-handlowych">
     <tr>
         <th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
