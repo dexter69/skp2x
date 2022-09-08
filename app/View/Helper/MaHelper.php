@@ -1773,6 +1773,22 @@ class MaHelper extends AppHelper
 		return $markup;
 	}
 
+	// Mak H2 header with filters for orders list
+	public function ordersIdxH2($par = null)	{	
+		// Przygotuj klasę
+		$klasa = array(
+			'my'=>null, 'accepted'=>null, 'rejected'=>null,
+			'wait4check'=>null,	'active'=>null,	'closed'=>null,
+			'today'=>null, 'serwis'=>null, 'wszystkie'=>null 
+		);
+		if( $par == null || $par == 'all-but-priv')
+			$klasa['wszystkie'] = 'swieci';
+		else
+			$klasa[$par] = 'swieci';	
+		$idxf = $this->indexFiltry('orders', $klasa);
+		return '<h2 class="hfiltry"><div>HANDLOWE</div>' . $idxf . '</h2>';
+	}
+
 	public function indexFiltry($kontroler = null, $klasa = array())
 	{
 

@@ -11,24 +11,11 @@
 $this->set('title_for_layout', 'Handlowe');
 echo $this->Html->css(array('order', 'order/order-index.css?v=201811141223'), array('inline' => false));
 //echo $this->Html->script(array('jquery', 'common'), array('inline' => false)); 
-$this->Ma->displayActions('orders');
-$klasa = array(
-	'my'=>null, 'accepted'=>null, 'rejected'=>null,
-	'wait4check'=>null,	'active'=>null,	'closed'=>null,
-	'today'=>null, 'serwis'=>null, 'wszystkie'=>null 
-);
-if( $par == null || $par == 'all-but-priv')
-	$klasa['wszystkie'] = 'swieci';
-else
-	$klasa[$par] = 'swieci';
-?>
+$this->Ma->displayActions('orders'); ?>
 
 <div class="orders index">
-    <h2 class="hfiltry"><div><?php echo 'HANDLOWE</div>'; 
-            echo $this->Ma->indexFiltry('orders', $klasa);
-    ?>
-
-    </h2>
+    <?php // Nagłówek "HANDLOWE" + filtry obok
+    echo $this->Ma->ordersIdxH2($par); ?>    
     <table cellpadding="0" cellspacing="0" class="lista-handlowych">
     <tr>
         <th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
