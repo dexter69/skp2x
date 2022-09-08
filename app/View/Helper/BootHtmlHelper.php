@@ -11,12 +11,12 @@ class BootHtmlHelper extends AppHelper {
     
     public $helpers = array('Html', 'Math');
     
-    public function glyphLink( $glyphname = null, $kontroler = null, $akcja = null, $id = null ) {
     /* 
      * $glyphname - nazwa boot ikonki
      * $kontroler - nazwa kontrolera
-     *   $akcja - akcja kontrolera 
-   */
+     * $akcja - akcja kontrolera */
+    public function glyphLink( $glyphname = null, $kontroler = null, $akcja = null, $id = null ) {
+    
         if( $id != null ) {
             $opcje = array( 'controller' => $kontroler, 'action' => $akcja, $id);
         } else {
