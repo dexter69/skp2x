@@ -1184,17 +1184,19 @@ class MaHelper extends AppHelper
 		)
 	);
 
-
 	public function displayActions($kontroler = null)
 	{
 
 		$cntab = [
 			'customers' => 'klienci',
 			'cards' => 'karty',
-			'orders' => 'zamowienia',
-			'jobs' => 'zlecenia'
+			'orders' => 'zamowienia'
 		];
 
+		// Wartość 'OX' traktukemy jako wskaźnik ograniczeń użytkownika
+		// Jeżeli może tylko swoje zamówienia wyświetlać, to nie wyświtlamy mu również linków do zlec produkcyjnych
+		$limited = AuthComponent::user('OX') == IDX_OWN;
+		if (!$limited) { $cntab['jobs'] = 'zlecenia'; }
 
 		echo $this->Html->tag('div', null, array('id' => 'gener', 'class' => 'actions'));
 		echo $this->Html->tag('ul', null, array('class' => 'ble'));
@@ -1778,7 +1780,7 @@ class MaHelper extends AppHelper
 	{
 
 		if ($omitFilters) {
-			$idxf = "";			
+			$idxf = "";
 		} else {
 			// Przygotuj klasę
 			$klasa = array(
