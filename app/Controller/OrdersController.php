@@ -82,7 +82,7 @@ class OrdersController extends AppController {
 					return $this->redirect( array('action' => 'index', 'no-priv-no-kor') );
 					break;
 				case IDX_OWN:
-					return $this->redirect( array('action' => 'index', 'my') );
+					return $this->redirect( array('action' => 'index', 'moich-klientow') );
 					break;
 				default:
 					$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
@@ -107,6 +107,9 @@ class OrdersController extends AppController {
 				// Poprzednio było tak
 				$opcje = array('Order.user_id' => $this->Auth->user('id'));
 			break;
+			case 'moich-klientow':
+				$opcje = array('Customer.owner_id' => $this->Auth->user('id'));
+				break;
 			case 'accepted':
 				$opcje = array('Order.status' => O_ACC);
 			break;
@@ -1015,7 +1018,8 @@ public function add2() {
 									break;
 								}
 							break;
-							case 'my':
+							// case 'my': // my wchodzi wtedy w default i przekierowujemy na 'moich-klientow'
+							case 'moich-klientow':
 								return true;
 							break;
 							default:
