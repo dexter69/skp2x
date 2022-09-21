@@ -729,9 +729,8 @@ class CardsController extends AppController
                             break;
                         case VIEW_OWN:
                             $karta_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
-                            if( $jego_karta || $karta_jego_klienta ) return true;
+                            if ($jego_karta || $karta_jego_klienta) return true;
                             return false;
-                            
                     }
                 }
                 break;
