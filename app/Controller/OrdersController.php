@@ -347,7 +347,7 @@ class OrdersController extends AppController
 	{
 
 		if (!$this->Order->exists($id)) {
-			throw new NotFoundException(__('Invalid order'));
+			throw new NotFoundException(__('Nie ma takiego zamówienia'));
 		}
 		$options = array(
 			'conditions' => array('Order.' . $this->Order->primaryKey => $id),
@@ -355,7 +355,7 @@ class OrdersController extends AppController
 		);
 		$order = $this->Order->find('first', $options);
 
-		if (!$this->akcjaOK($order['Order'], 'view')) {
+		if (!$this->akcjaOK($order, 'view')) {
 			$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
 			return $this->redirect($this->referer());
 		}
@@ -1006,7 +1006,7 @@ class OrdersController extends AppController
 				}
 				break;
 			case 'view':
-				$order = $dane;
+				$order = $dane['Order'];
 				if ($this->Auth->user('id') == $order['user_id'])
 					$jego_zamowienie = true;
 				else
@@ -1034,7 +1034,9 @@ class OrdersController extends AppController
 							return false;
 							break;
 						case VIEW_OWN:
-							return $jego_zamowienie;
+							$zamowienie_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
+							if( $jego_zamowienie || $zamowienie_jego_klienta ) return true;
+							return false;
 							break;
 					}
 				}

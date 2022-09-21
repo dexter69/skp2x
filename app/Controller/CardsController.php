@@ -202,7 +202,7 @@ class CardsController extends AppController
     public function view($id = null)
     {
         if (!$this->Card->exists($id)) {
-            throw new NotFoundException(__('Invalid card'));
+            throw new NotFoundException(__('Nie ma takiej karty'));
         }
         $options = array('conditions' => array('Card.' . $this->Card->primaryKey => $id));
         $card = $this->Card->find('first', $options);
@@ -728,8 +728,10 @@ class CardsController extends AppController
                             return false;
                             break;
                         case VIEW_OWN:
-                            return $jego_karta;
-                            break;
+                            $karta_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
+                            if( $jego_karta || $karta_jego_klienta ) return true;
+                            return false;
+                            
                     }
                 }
                 break;
