@@ -189,8 +189,7 @@ class JobsController extends AppController
 	}
 
 
-	private function prepareSubmits($job)
-	{
+	private function prepareSubmits($job) {
 
 		$tworca = $job['Job']['user_id'];
 		$logged_dzial = $this->Auth->user('dzial');
@@ -201,10 +200,10 @@ class JobsController extends AppController
 		$kiper = $logged_dzial == KIP || $this->Auth->user('kiper');
 
 		if (count($job['Card'])) { //zlecenie musi miec jakies karty
-
+			// 22.09.2022 Robimy tak by osoby z działu KOR mogły działać na swoich nie swoich zleceniach
 			switch ($status) {
 				case sPRIVJ:
-					if ($logged_dzial == SUA || $logged_user == $tworca) {
+					if ($logged_dzial == SUA || $logged_dzial == KOR || $logged_user == $tworca) {
 						$submits[eJPUBLI] = 0;
 					} //0 oznacza, że komentarz nie wymagany
 					break;
@@ -215,7 +214,7 @@ class JobsController extends AppController
 					break;
 				case sHAS_F1:
 				case sHAS_F2:
-					if ($logged_user == $tworca) {
+					if ($logged_dzial == KOR || $logged_user == $tworca) {
 						$submits[eJF_OK] = 0;
 						$submits[eJF_BACK] = 1;
 					}
@@ -240,7 +239,7 @@ class JobsController extends AppController
 					}
 					break;
 				case sKOR2FIX:
-					if ($logged_user == $tworca) {
+					if ($logged_dzial == KOR || $logged_user == $tworca) {
 						$submits[eJ_KOR2DTP] = 1;
 						$submits[eJ_KOR2B] = 0;
 					}
@@ -252,7 +251,7 @@ class JobsController extends AppController
 					}
 					break;
 				case sPAUSE4K:
-					if ($logged_user == $tworca) {
+					if ($logged_dzial == KOR || $logged_user == $tworca) {
 						$submits[eJ_KBACK] = 0;
 						$submits[eJ_KOR2DTP] = 1;
 					}
@@ -273,7 +272,7 @@ class JobsController extends AppController
 
 
 
-					// do poprawy nie są zdefiniowane poniższe
+				// do poprawy nie są zdefiniowane poniższe
 				case sDAFC:
 					if ($logged_user == $tworca)
 						// $submits[eKOR_POP] = 0;
