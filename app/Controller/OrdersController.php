@@ -104,14 +104,11 @@ class OrdersController extends AppController
 					'Order.status !=' => PRIV
 				));
 				break;
-			case 'my':
-				// 19 XI 2022 Zmiana znaczenia "moje", teraz to są wszyskie zamówienia, które zostały wystawione dla "mojego" klienta
-				// $opcje = array('Customer.owner_id' => $this->Auth->user('id'));
-
-				// Poprzednio było tak
+			case 'my':				
 				$opcje = array('Order.user_id' => $this->Auth->user('id'));
 				break;
 			case 'moich-klientow':
+				// Zamówienia moich klientów, niekoniecznie wystawioe przeze mnie
 				$opcje = array('Customer.owner_id' => $this->Auth->user('id'));
 				break;
 			case 'accepted':
@@ -124,9 +121,6 @@ class OrdersController extends AppController
 				$opcje = array('Order.status' => array(NOWKA, FIXED, UZUPED));
 				break;
 			case 'active':
-				//$opcje = array('Order.status  !=' => array(KONEC, PRIV));
-
-
 				$opcje = array('OR' => array(
 
 					array('Order.user_id' => $this->Auth->user('id'), 'Order.status !=' => KONEC),
