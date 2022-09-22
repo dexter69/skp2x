@@ -49,11 +49,6 @@ class CardsController extends AppController
         $this->Card->recursive = 0;
         $user_perso = $this->userPersoVis();
 
-        //        if( $user_perso && in_array($par, array('persocheck', 'ponly', 'pover', 'ptodo')) ) { 
-        //        } else {
-        //            $this->Paginator->settings = $this->paginate;
-        //        }
-
         if (!$user_perso || !in_array($par, array('persocheck', 'ponly', 'pover', 'ptodo'))) {
             $this->Paginator->settings = $this->paginate;
         }
@@ -69,7 +64,7 @@ class CardsController extends AppController
                 case IDX_NO_KOR:
                     return $this->redirect(array('action' => 'index', 'no-priv-no-kor'));
                 case IDX_OWN:
-                    return $this->redirect(array('action' => 'index', 'my'));
+                    return $this->redirect(array('action' => 'index', 'moich-klientow'));
                 default:
                     $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
                     return $this->redirect($this->referer());
@@ -96,10 +91,13 @@ class CardsController extends AppController
                     )
                 );
                 break;
-
             case 'my':
                 $opcje = array('Card.user_id' => $this->Auth->user('id'));
                 break;
+                case 'moich-klientow':
+                    // Karty moich klientów, niekoniecznie wystawioe przeze mnie
+				    $opcje = array('Customer.owner_id' => $this->Auth->user('id'));
+                    break;
             case 'dtpcheck':
                 $opcje = array(
                     'Card.status' => array(W4D, W4DP, W4DPNO, W4DPOK),
@@ -180,7 +178,9 @@ class CardsController extends AppController
         );
         $cards['pchan'] = $this->userPersoChange();
         $paramki = $this->request->params;
-        $this->set(compact('cards', /*'karty', 'links'*/ 'par', 'paramki', 'ptodo'));
+        // Jeżeli użytkownik może tylko wyświetlać karty swoich klientów, to olewamy (na razie) filtry
+		$tylkoDlaSwoich = $this->Auth->user('CAX') == IDX_OWN;
+        $this->set(compact('cards', /*'karty', 'links'*/ 'par', 'paramki', 'ptodo', 'tylkoDlaSwoich'));
     }
 
     /**
@@ -759,12 +759,13 @@ class CardsController extends AppController
                         if ($upraw != IDX_OWN) return true;
                         return false;
                         break;
-                    case 'my':
-                    case 'szukaj':
+                    // case 'my': // my wchodzi wtedy w default i przekierowujemy na 'moich-klientow'
+                    case 'szukaj':                
+                    case 'moich-klientow':
                         return true;
                         break;
-
                     default:
+                        if ($upraw != IDX_OWN) return true;
                         return false;
                 }
                 break;

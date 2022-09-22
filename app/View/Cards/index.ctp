@@ -21,8 +21,11 @@ if( array_key_exists($par, $klasa) )
 ?>
 
 <div id="indekskart" class="cards index">
-	<h2 class="hfiltry"><div><?php echo 'KARTY</div>'; 
-		echo $this->Ma->indexFiltry('cards', $klasa);
+	<h2 class="hfiltry"><div><?php echo 'KARTY</div>';
+        // jeżeli użytkwnik może tylko swoje (bądź swoich klienntów) to olewamy (na razie) filtry
+        if (!$tylkoDlaSwoich) { 
+            echo $this->Ma->indexFiltry('cards', $klasa);
+        }
 	?>
 		
 	</h2>
