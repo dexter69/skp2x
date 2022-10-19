@@ -11,6 +11,10 @@ App::uses('AppModel', 'Model');
 class Event extends AppModel
 {
 
+        // Chodzi o zatwierdzanie przez Franka/Marka i parso
+        // Wrtość false oznacza, że nie wysyłamy potwierdzeń e-mail
+        // o zatwierzeniu DTP i perso
+        private $powiadamiaj_O_zatwierdzeniu = false;
         public $code = 0;
         public $msg = null;
 
@@ -773,6 +777,19 @@ class Event extends AppModel
                 return $rqdata;
         }
 
+        /**
+         * W niektórych przypadkach nie chcemy wysyłać powiadomień. Obliczamy wrtość 'sent'
+         * W tych szczególnych przypadkach będzie to wartość 1, czyli jakby e-mail już został
+         * wysłany     */
+        private function calculateSentValue($event) {
+
+                if ($event == d_ok || $event == p_ok) { // zdarzenie zatwierdzenia przez DTP lub PERSO
+                        // $this->powiadamiaj_O_zatwierdzeniu = flase => zwracamy 1, czyli już wysłane
+                        return $this->powiadamiaj_O_zatwierdzeniu ? 0 : 1;
+                }
+                return 0; // default value
+        }
+
         private function saveStuff($event, $rqdata = array(), $addPerso = false)
         {
 
@@ -784,10 +801,12 @@ class Event extends AppModel
                         $rqdata['Event'][0]['odbiorcy'] = $this->e_data['odbiorcy'];
                         $rqdata['Event'][0]['temat'] = $this->e_data['temat'];
                         $rqdata['Event'][0]['url'] = Router::url($this->e_data['linktab'], true);
+                        $rqdata['Event'][0]['sent'] = $this->calculateSentValue($event);
                 } else {
                         $rqdata['Event']['odbiorcy'] = $this->e_data['odbiorcy'];
                         $rqdata['Event']['temat'] = $this->e_data['temat'];
                         $rqdata['Event']['url'] = Router::url($this->e_data['linktab'], true);
+                        $rqdata['Event']['sent'] = $this->calculateSentValue($event);
                 }
                 if (!in_array($event, array(odemknij, send_o, eJ_FILE1, eJ_FILE2, eJ_FILE3, eJ_DBACK))) {
                         if (array_key_exists('Order', $rqdata)) {
