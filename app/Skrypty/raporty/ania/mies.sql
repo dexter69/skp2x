@@ -1,6 +1,6 @@
 /*
 Chcemy wszystkie karty (ilosci), które zostały zkończone (zamknięte zamówienie)
-w danym misiącu - tu listopad */
+w danym misiącu - tu styczeń */
 
 SET -- Ustawiamy zmienne
 @mies = "01",
