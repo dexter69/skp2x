@@ -546,7 +546,7 @@ class CardsController extends AppController
 
         // Chcemy pliki podpięte do kart "w buforze" zalogowanego użytkownika
         $wspolne = $this->Card->findPropperUploads();
-        $vju = $this->Card->get_view_options();
+        $vju = $this->Card->get_view_options(true); // modify sth
         $links = $this->links;
         $referer = $this->referer();
         $this->set(compact('vju', 'ownerid', 'wspolne', 'links', 'jscode', 'referer', 'customers', 'klienci', 'tylkoDlaSwoich'/**/));
@@ -590,7 +590,7 @@ class CardsController extends AppController
         $orders = $this->Card->Order->find('list');
         $jobs = $this->Card->Job->find('list');
         //$this -> render('edit_');
-        $vju = $this->Card->get_view_options();
+        $vju = $this->get_view_options_for_edit(); //$this->Card->get_view_options(true); // modify sth
         $links = $this->links;
 
         // id usera brane z karty - przyda się do edycji przez inne osoby niz handlowiec: twórca
@@ -610,6 +610,15 @@ class CardsController extends AppController
 
         $wspolne = $this->Card->findPropperUploads();
         $this->set(compact('vju', 'users', 'klienci', 'orders', 'jobs', 'links', 'jscode', 'wspolne'));
+    }
+
+    private function get_view_options_for_edit() {
+        $cutit = true;
+        // Nie używamy już materiału BIO, ale jeżeli wcześniejsza karta miała taką opcję, to musi być w możliwościach edycji
+        if($this->request->data['Card']['a_material'] == 2 || $this->request->data['Card']['r_material'] == 2) {
+            $cutit = false;
+        }
+        return $this->Card->get_view_options($cutit);
     }
 
     /**

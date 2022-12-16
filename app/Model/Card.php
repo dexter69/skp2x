@@ -1015,7 +1015,8 @@ class Card extends AppModel {
                                         'div' => false, //array('id' => 'user_id_div'),
                                         'options' => array(
                                                         '1' => 'STANDARD PVC',
-                                                        '2' => 'BIO PVC',
+                                                        '2' => 'BIO PVC',												
+														'6' => 'RECYKLING',
                                                         '3' => 'TRANSPARENT',
                                                         '4' => 'KOLOROWE PVC',
                                                         '5' => 'PVC Z FOLIĄ',
@@ -1194,7 +1195,11 @@ class Card extends AppModel {
                                                 )							
             );
 		
-		public function get_view_options() {
+		/**
+		 * $modify = true - jeżeli potrzebujemy zmodofikować zwracane opcje
+		 * 15.12.2022 - przkład: nie używamy już plastiku bio, więc nie powinien być dostępny w opcjach dodawania i edycji karty
+		 * Potrzebny jest natomiast w widokach, bo produkowaliśmy takie karty */
+		public function get_view_options($modify = false) {
    
 			// 
 			$this->view_options['x_sito']['options'] = $this->farby_na_sito;
@@ -1205,7 +1210,13 @@ class Card extends AppModel {
 			$this->view_options['rodo'] = $this->Upload->view_options['rodo'];
             $this->view_options['etykieta'] = $this->etyk_view['etykieta'];
             $this->view_options['etylang'] = $this->etyk_view['etylang'];
-			return $this->view_options;
+			return $modify ? $this->modified_view_options() : $this->view_options;
+		}
+
+		private function modified_view_options() {
+			$modified = $this->view_options;
+			unset($modified['x_material']['options']['2']); // Remove BIO PVC - we do not use it anymore
+			return $modified;
 		}
                 
 }
