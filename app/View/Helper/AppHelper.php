@@ -80,6 +80,7 @@ class AppHelper extends Helper {
             TRA => 'TRA',
             KOL => 'KOL',
             FOL => 'FOLIA',
+            REC => 'REC',
             OPVC => 'INNY'
         ),
         'long1' => array(

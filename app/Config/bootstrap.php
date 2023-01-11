@@ -201,6 +201,7 @@ define('BIO', 2);    // BIO PVC
 define('TRA', 3);    // TRANSPARENT PVC    
 define('KOL', 4);    // KOLOROWE PVC    
 define('FOL', 5);    // PVC Z FOLIĄ    
+define('REC', 6);    // PVC Z RECYKLINGU  
 define('OPVC', 0);    // INNE
 
 
