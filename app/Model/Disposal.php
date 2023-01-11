@@ -334,6 +334,8 @@ class Disposal extends AppModel {
         return $this->searchParams;
     }
 
+    private $otrzymane = [];
+
     // to ponizej, do doopy
     public function theSpecialFindIle() {
 

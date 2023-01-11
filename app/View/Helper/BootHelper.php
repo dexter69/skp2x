@@ -9,6 +9,18 @@ App::uses('AppHelper', 'View/Helper');
 
 class BootHelper extends AppHelper {
 
+    public $helpers = array('Html');
+
+    /**
+     *  $jshtml musi być prawidłowym kodem js, nazwa $jshtml bo możemy użyć wyniku plików .ctp
+     *  Dodaje blok skryptu w dolnym bloku     */
+    public function bottomScript($jshtml) {
+        return $this->Html->scriptBlock(
+            $this->stripScript($jshtml), // w AppHelper - na wselki wypadek, usuwa początkowy tag <script> jeżeli takowy istnieje
+            ['block' => 'scriptBottom']
+        );
+    }
+
     /* funkcja do sprawdzania pewnych danych dla elementu select bootstrap
         $this->element('bootstrap/selects/select')
     */

@@ -1,4 +1,12 @@
 <?php
+/*
+*   20.12.2022
+    Wykorzystujemy ten kontroler zamiast OrdersController
+    Tam już duzo kodu jest...
+    Wcześniej napisana obsługa specjalnego wyszukiwania dla Ani
+
+    Teraz (20.12.2022) zaczynamy robienie zamówień po nowemu
+*/
 
 App::uses('AppController', 'Controller');
 
@@ -10,6 +18,13 @@ class DisposalsController extends AppController {
     
     public $paginate = null;
 
+    public function nowe() {
+        $this->layout='bootstrap';
+    }
+
+    /// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    /// It was earilier made
+
     public function index() {
 
         // Date picker config
@@ -19,6 +34,8 @@ class DisposalsController extends AppController {
         $this->layout='bootstrap';
 	}   
 
+    /**
+     * Wywoływane jest przez javascript przy zmianie parametrów na stronie /szukaj      */
     public function search() {
 
         // Ustawiamy parametry szukania, na podstawie otrzymanych danych

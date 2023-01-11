@@ -38,6 +38,8 @@
 
         // Handlowe po nowemu, special search        
         Router::connect('/szukaj', array('controller' => 'disposals', 'action' => 'index'));
+        // Nowe zamówienie
+        // Router::connect('/nowe-zamowienie', array('controller' => 'disposals', 'action' => 'nowe'));
 
         // Handlowe - nowe zamówienie i edycja with webix (26.09.2018 => przenosimy się do WebixesController)
         Router::connect('/handlowe/dodaj', array('controller' => 'requests', 'action' => 'dodaj'));
