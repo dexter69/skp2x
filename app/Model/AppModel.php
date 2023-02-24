@@ -352,13 +352,24 @@ class AppModel extends Model {
                 $uids[$karta['user_id']] = 1; } //przypisz na razie cokolwiek					
         }
         $uids[4] = 1; // Jola zawsze dostaje (a teraz to obsługuje Anię)			
-        $uids[15] = 1; // Kubuś zawsze dostaje			
+        // $uids[15] = 1; // Kubuś zawsze dostaje			
         $uids[34] = 1; // Karolina zawsze dostaje			
         unset($uids[AuthComponent::user('id')]); // generujący zdarzenie nie dostaje maila
-        $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze                        
+        $uids[1] = 1; // Darek zawsze dostaje, nawet jak sam napisze    
+        $uids = $this->takiHack($uids, $eventtab['co']);
         $tab = array();
         foreach( $uids as $key => $wartosc) { $tab[] = $key; }
         $this->ludzikoza( $tab, $eventtab, $addPerso );
+    }
+
+    /**
+     * Obhcodzimy problem - chcemy żeby dla zdarzenia 52 czyli eJ_COF2DTP dostawał i Marek i Frank   */
+    private function takiHack($uids, $co) {
+        if ($co == eJ_COF2DTP) { // to nasze zdarzenie
+           $uids[6] = 1; // Frank
+           $uids[19] = 1; // Marek
+        }
+        return $uids;
     }
         
     private function ludzikoza( $tab, $eventtab, $addPerso = false ) {
