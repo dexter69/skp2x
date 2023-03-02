@@ -363,11 +363,16 @@ class AppModel extends Model {
     }
 
     /**
-     * Obhcodzimy problem - chcemy żeby dla zdarzenia 52 czyli eJ_COF2DTP dostawał i Marek i Frank   */
+     * Obhcodzimy problem - chcemy żeby dla zdarzenia 52 czyli eJ_COF2DTP dostawał i Marek i Frank
+     * A publikacje dla Kubusia * */
     private function takiHack($uids, $co) {
+        // publi servpubli
         if ($co == eJ_COF2DTP) { // to nasze zdarzenie
            $uids[6] = 1; // Frank
            $uids[19] = 1; // Marek
+        }
+        if ($co == publi || $co == servpubli) {
+                $uids[15] = 1;
         }
         return $uids;
     }
