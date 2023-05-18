@@ -140,6 +140,10 @@ class JobsController extends AppController
 		if (!$this->Job->exists($id)) {
 			throw new NotFoundException(__('Nie ma takiego zlecenia'));
 		}
+		if (!$this->akcjaOK([], 'view', $id)) {
+			$this->Session->setFlash('WYŚWIETLENIE NIE JEST MOŻLIWE LUB NIE MASZ UPRAWNIEŃ...');
+			return $this->redirect($this->referer());
+		}
 		$options = array('conditions' => array('Job.' . $this->Job->primaryKey => $id));
 
 		$job = $this->Job->find('first', $options);
@@ -411,8 +415,13 @@ class JobsController extends AppController
 	// sprawdzamy uprawnienia dla akcji w tym kontrolerze
 	private function akcjaOK($dane = array(), $akcja = null, $par = null)
 	{
-
 		switch ($akcja) {
+			case 'view':
+				// Na razie uproszczona wersja, tylko handlowcy nie mogą zobaczyć
+				if ($this->Auth->user('dzial') != '1') {
+					return true;
+				}
+				break;
 			case 'add':
 				if ($this->Auth->user('JA') == HAS_RIGHT)
 					return true;
