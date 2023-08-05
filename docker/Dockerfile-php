@@ -1,0 +1,15 @@
+FROM php:5.6-fpm-alpine
+
+WORKDIR /var/www/html
+
+# PHP
+RUN docker-php-ext-install pdo_mysql 
+# RUN apt-get update
+# RUN apt install php5.6-intl
+# RUN docker-php-ext-install intl
+
+# Cake PhP
+COPY ["Inne rzeczy/cakephp.tar.gz", "."]
+RUN tar -xf cakephp.tar.gz && rm cakephp.tar.gz
+COPY [".", "."]
+RUN chown www-data:www-data -R *
