@@ -1,0 +1,32 @@
+services:
+  skp-php:
+    container_name: skp-php
+    image: skp:2x-php-fpm
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-php
+    networks:
+      - internal
+  nginx:
+    container_name: skp-nginx
+    image: skp:2x-nginx
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-nginx
+    ports:
+      - "8080:80"
+    networks:
+      - internal
+  mariadb:
+    container_name: skp-mariadb
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+    volumes:
+      - "mariadb:/var/lib/mysql"
+    networks:
+      - internal
+volumes:
+  mariadb:
+networks:
+  internal:
