@@ -356,10 +356,13 @@ class OrdersController extends AppController
 
 		if (!$this->akcjaOK($order, 'view')) {
 			$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+			// Robimy taki myk, bo na Lando to nie działa
 			$referer = $this->request->referer(false);
 			if( preg_match('/skp.lan/', $referer ) === 1 ) {
+				// Na SKP flash i wracamy tam gdzie byliśmy
 				return $this->redirect($referer);
 			} 
+			// Na lando ogólna akcja
 			return $this->redirect([ 'action' => 'index' ]);
 		}
 
