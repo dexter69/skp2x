@@ -96,8 +96,18 @@ class CardsController extends AppController
                 break;
                 case 'moich-klientow':
                     // Karty moich klientów, niekoniecznie wystawioe przeze mnie
-				    $opcje = array('Customer.owner_id' => $this->Auth->user('id'));
+				    /**
+                     * Było:
+                     * $opcje = array('Customer.owner_id' => $this->Auth->user('id'));                     */                    
+                    if ($this->Auth->user('flag') != '000') {
+                        // Znaczy, że interesują nas klienci oflagowani
+                        $opcje = array('Customer.flag' => $this->Auth->user('flag'));
+                    } else {
+                        // Zamówienia moich klientów, niekoniecznie wystawione przeze mnie
+                        $opcje = array('Customer.owner_id' => $this->Auth->user('id'));
+                    }
                     break;
+                    
             case 'dtpcheck':
                 $opcje = array(
                     'Card.status' => array(W4D, W4DP, W4DPNO, W4DPOK),
@@ -208,7 +218,14 @@ class CardsController extends AppController
         $card = $this->Card->find('first', $options);
         if (!$this->akcjaOK($card, 'view')) {
             $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-            return $this->redirect($this->referer());
+            // Robimy taki myk, bo na Lando to nie działa
+			$referer = $this->request->referer(false);
+			if( preg_match('/skp.lan/', $referer ) === 1 ) {
+				// Na SKP flash i wracamy tam gdzie byliśmy
+				return $this->redirect($referer);
+			} 
+			// Na lando ogólna akcja
+			return $this->redirect([ 'action' => 'index' ]);
         }
         $evcontrol = $this->prepareSubmits($card);
         $links = $this->links;
