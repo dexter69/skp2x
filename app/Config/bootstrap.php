@@ -399,11 +399,12 @@ define('VIEW_SAL', 9); //ogladanie super wszystkich
 define('IDX_OWN', 1); //listowanie swoich
 define('IDX_SHR', 2); //listowanie wspólnych (i swoich)
 define('IDX_NO_KOR', 3);  // IDX_NO_PRIV, ale bez kart/zamówień widocznych dla koordynatora początkowo
-define('IDX_NO_PRIV', 5); 
-						/* listowanie wszystkich za wyjątkiem prywatnych zamówień innych ludzi
-						   lub (w przypadku kart) listowanie wszystkich za wyjątkiem samotnych
-						   lub podpiętych do prywatnych zleceń innych ludzi 
-						 */
+
+/*
+listowanie wszystkich za wyjątkiem prywatnych zamówień innych ludzi lub (w przypadku kart)
+listowanie wszystkich za wyjątkiem samotnych lub podpiętych do prywatnych zleceń innych ludzi */
+define('IDX_NO_PRIV', 5);
+
 define('IDX_ALL', 7); //listowanie wszystkich
 define('IDX_SAL', 9); //listowanie super wszystkich
 
