@@ -108,8 +108,13 @@ class OrdersController extends AppController
 				$opcje = array('Order.user_id' => $this->Auth->user('id'));
 				break;
 			case 'moich-klientow':
-				// Zamówienia moich klientów, niekoniecznie wystawioe przeze mnie
-				$opcje = array('Customer.owner_id' => $this->Auth->user('id'));
+				if ($this->Auth->user('flag') != '000') {
+					// Znaczy, że interesują nas klienci oflagowani
+					$opcje = array('Customer.flag' => $this->Auth->user('flag'));
+				} else {
+					// Zamówienia moich klientów, niekoniecznie wystawione przeze mnie
+					$opcje = array('Customer.owner_id' => $this->Auth->user('id'));
+				}				
 				break;
 			case 'accepted':
 				$opcje = array('Order.status' => O_ACC);
@@ -351,7 +356,11 @@ class OrdersController extends AppController
 
 		if (!$this->akcjaOK($order, 'view')) {
 			$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-			return $this->redirect($this->referer());
+			$referer = $this->request->referer(false);
+			if( preg_match('/skp.lan/', $referer ) === 1 ) {
+				return $this->redirect($referer);
+			} 
+			return $this->redirect([ 'action' => 'index' ]);
 		}
 
 		$evcontrol = $this->prepareSubmits($order);
