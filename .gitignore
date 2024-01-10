@@ -42,8 +42,9 @@ Thumbs.db
 /app/webroot/webix/v5.4.0/codebase/*
 /app/webroot/webix/v5.4.0/samples/*
 
-# Rózne testowe bazy danych
+# Rózne testowe bazy danych i adminer
 /db/ignore/*
+/db/adminer-4.8.1-pl.php
 
 # Node modules
 /node_modules/*
