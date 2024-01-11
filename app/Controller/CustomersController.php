@@ -54,9 +54,21 @@ class CustomersController extends AppController {
 				$customers = $this->Paginator->paginate();
 				break;
 			case 'my':
+                                if ($this->Auth->user('flag') != '000') {
+                                        $opcje = ['OR' => [
+                                                // Interesują nas klienci oflagowani
+                                                ['Customer.flag' => $this->Auth->user('flag')],
+                                                // Oraz swoi
+                                                ['Customer.owner_id' => $this->Auth->user('id')]
+                                        ]];
+                                        
+				} else {
+					// Tylko swoi
+					$opcje = array('Customer.owner_id' => $this->Auth->user('id'));
+				}
 				$customers = $this->Paginator->paginate(
-					'Customer',
-					array('Customer.user_id' => $this->Auth->user('id'))
+					'Customer',					
+                                        $opcje
 				);
 				break;
 		}
