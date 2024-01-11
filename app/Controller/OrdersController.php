@@ -1041,9 +1041,9 @@ class OrdersController extends AppController
 							break;
 						case VIEW_OWN:
 							$zamowienie_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
-							if( $jego_zamowienie || $zamowienie_jego_klienta ) return true;
-							return false;
-							break;
+							$zamowienie_flagowego_klienta = $this->Auth->user('flag') == $dane['Customer']['flag'];
+							$wynik = $jego_zamowienie || $zamowienie_jego_klienta || $zamowienie_flagowego_klienta;
+							return $wynik;							
 					}
 				}
 				break;
