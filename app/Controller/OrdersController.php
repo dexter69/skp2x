@@ -89,9 +89,10 @@ class OrdersController extends AppController
 					return $this->redirect(array('action' => 'index', 'moich-klientow'));
 					break;
 				default:
-					$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-					return $this->redirect($this->referer());
-					break;
+					return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.'); 
+					// $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+					// return $this->redirect($this->referer());
+					// break;
 			}
 		}
 
@@ -355,15 +356,16 @@ class OrdersController extends AppController
 		$order = $this->Order->find('first', $options);
 
 		if (!$this->akcjaOK($order, 'view')) {
-			$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-			// Robimy taki myk, bo na Lando to nie działa
-			$referer = $this->request->referer(false);
-			if( preg_match('/skp.lan/', $referer ) === 1 ) {
-				// Na SKP flash i wracamy tam gdzie byliśmy
-				return $this->redirect($referer);
-			} 
-			// Na lando ogólna akcja
-			return $this->redirect([ 'action' => 'index' ]);
+			return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+			// $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+			// // Robimy taki myk, bo na Lando to nie działa
+			// $referer = $this->request->referer(false);
+			// if( preg_match('/skp.lan/', $referer ) === 1 ) {
+			// 	// Na SKP flash i wracamy tam gdzie byliśmy
+			// 	return $this->redirect($referer);
+			// } 
+			// // Na lando ogólna akcja
+			// return $this->redirect([ 'action' => 'index' ]);
 		}
 
 		$evcontrol = $this->prepareSubmits($order);
@@ -913,7 +915,7 @@ class OrdersController extends AppController
 			$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
 			$dt = $this->Order->find('first', $options);
 
-			if ($this->akcjaOK($dt['Order'], 'edit')) {
+			if ($this->akcjaOK($dt, 'edit')) {
 				unset($dt['User']['password']); // nie chcemy przesylać hasla nawet zahaszowanego
 				if ($dt['Order']['sposob_dostawy'] != IA) //inny adres nie jest potrzebny
 					unset($dt['AdresDostawy']);
@@ -942,10 +944,8 @@ class OrdersController extends AppController
 					array_push($dt['Card'], $value['Card']);
 				}
 				$this->request->data = $dt;
-			} else {
-				$this->Session->setFlash('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');
-				return $this->redirect($this->referer());
-				//return $this->redirect(array('action' => 'index'));
+			} else {	// Redirect	
+				$this->goBackWhereYouCameFrom('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');
 			}
 		}
 		$users = $this->Order->User->find('list');
@@ -988,23 +988,30 @@ class OrdersController extends AppController
 	}
 
 	// sprawdzamy uprawnienia dla akcji w tym kontrolerze
-	private function akcjaOK($dane = array(), $akcja = null, $par = null)
-	{
+	private function akcjaOK($dane = array(), $akcja = null, $par = null)	{
 
+		if (is_null($dane)) {
+			$zamowienieFlagowegoKlienta = false;
+			$jego_zamowienie = false;
+			$zamowienie_jego_klienta = false;
+		} else {
+			$zamowienieFlagowegoKlienta = $this->Auth->user('flag') == $dane['Customer']['flag'];
+			$jego_zamowienie = $dane['Order']['user_id'] == $this->Auth->user('id');
+			$zamowienie_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
+		}		
+		
 		switch ($akcja) {
 			case 'edit':
-				$order = $dane; // dawne poniżej: $order['status'] == PRIV ||  $order['status'] == O_REJ
-				if ($this->Auth->user('OE') == EDIT_SAL || in_array($order['status'], array(PRIV, O_REJ, W4UZUP, UZU_REJ))) { //stan zamówienia pozawla na edycję
+				$order = $dane['Order']; // dawne poniżej: $order['status'] == PRIV ||  $order['status'] == O_REJ
+				if ($this->Auth->user('OE') == EDIT_SAL || in_array($order['status'], array(PRIV, O_REJ, W4UZUP, UZU_REJ))) { //stan zamówienia pozawla na edycję					
 					switch ($this->Auth->user('OE')) {
 						case NO_RIGHT:
 							return false;
 						case EDIT_OWN:
-							if ($this->Auth->user('id') == $order['user_id'])
-								return true;
-							else
-								return false;
-						case EDIT_SHR:
-							return false;
+							return $jego_zamowienie;							
+						case EDIT_SHR: // Wykorzystamy do edycji flagowych
+							// Można edytować swoje lub dla swojego klienta lub flagowe
+							return $jego_zamowienie || $zamowienie_jego_klienta || $zamowienieFlagowegoKlienta;
 						case EDIT_ALL:
 						case EDIT_SAL:
 							return true;
@@ -1012,38 +1019,22 @@ class OrdersController extends AppController
 				}
 				break;
 			case 'view':
-				$order = $dane['Order'];
-				if ($this->Auth->user('id') == $order['user_id'])
-					$jego_zamowienie = true;
-				else
-					$jego_zamowienie = false;
+				$order = $dane['Order'];				
 				if (1) { //jeżeli nie ma przeszkód, nie związanych z uprawnieniami, do wyświetlenia
 					switch ($this->Auth->user('OV')) {
 						case VIEW_SAL:
 						case VIEW_ALL:
-							return true;
-							break;
+							return true;							
 						case VIEW_NO_PRIV: //nie może prywatnych zamówień innych ludzi oglądać
 							if ($jego_zamowienie || ($order['status'] != PRIV))
 								return true;
 							else
-								return false;
-							break;
-							/*
-								case VIEW_NO_KOR: // jak NO_PRIV + to co na pocz dla koordynatora
-									if( !in_array($order['status'], array( PRIV, NOWKA, KREJ1, FIXED1 ) ) )
-										return true;
-								break;	
-								*/
+								return false;													
 						case NO_RIGHT:
 						case VIEW_SHR:
-							return false;
-							break;
-						case VIEW_OWN:
-							$zamowienie_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
-							$zamowienie_flagowego_klienta = $this->Auth->user('flag') == $dane['Customer']['flag'];
-							$wynik = $jego_zamowienie || $zamowienie_jego_klienta || $zamowienie_flagowego_klienta;
-							return $wynik;							
+							return false;							
+						case VIEW_OWN:														
+							return $jego_zamowienie || $zamowienie_jego_klienta || $zamowienieFlagowegoKlienta; //$zamowienie_flagowego_klienta;							
 					}
 				}
 				break;
@@ -1062,8 +1053,7 @@ class OrdersController extends AppController
 							case IDX_NO_PRIV:
 							case IDX_ALL:
 							case IDX_SAL:
-								return true;
-								break;
+								return true;								
 						}
 						break;
 						// case 'my': // my wchodzi wtedy w default i przekierowujemy na 'moich-klientow'

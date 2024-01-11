@@ -15,5 +15,6 @@
     "liveSassCompile.settings.generateMap": true,
     "liveSassCompile.settings.autoprefix": [
         "defaults"
-    ]
+    ],
+    "intelephense.environment.phpVersion": "5.6.40"
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Application level Controller
  *
@@ -29,190 +30,212 @@ App::uses('Controller', 'Controller');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
-	
-    public $helpers = array('Form', 'Html', 'Ma');
+class AppController extends Controller
+{
 
-    public $components = array(
-	'RequestHandler',
-        'Session',
-        'Auth' => array(
-            'loginRedirect' => array('controller' => 'orders', 'action' => 'index'),
-            //'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
-           'logoutRedirect' => array('controller' => 'orders', 'action' => 'index')
-        )
-    );
-    
-    /* Predefiniowane ilości kart w batonie */
-    public $batons = array(
-        'max' => 500,
-        'indmax' => '500', // indeks wartości max w tablicy 'rodzaje'
-        'rodzaje' => array(
-            '500' => 500,
-            '250' => 250,
-            '200' => 200,
-            '150' => 150,
-            '100' => 100
-        ),
-        // dodajemy dane do pudeł zbiorczych
-        'parcel' => array(
+        public $helpers = array('Form', 'Html', 'Ma');
+
+        public $components = array(
+                'RequestHandler',
+                'Session',
+                'Auth' => array(
+                        'loginRedirect' => array('controller' => 'orders', 'action' => 'index'),
+                        //'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
+                        'logoutRedirect' => array('controller' => 'orders', 'action' => 'index')
+                )
+        );
+
+        /* Predefiniowane ilości kart w batonie */
+        public $batons = array(
+                'max' => 500,
+                'indmax' => '500', // indeks wartości max w tablicy 'rodzaje'
                 'rodzaje' => array(
-                        '5' => 5000,
-                        '3' => 3000,
-                        '2,5' => 2500,
-                        '2' => 2000,
-                        '1' => 1000
-                ), // trochę zakręcone - wartości jw, ale klucze te same, co dla batonów,
-                // by utwozyć powiązanie do UI poprzez klucze dla batonów
-                'conected2bat' => array(
-                        '500' => 5000,
-                        '250' => 3000,
-                        '200' => 2500,
-                        '150' => 2000,
-                        '100' => 1000
-                )   
-        )
-    );
-	
-    public function beforeFilter() {
+                        '500' => 500,
+                        '250' => 250,
+                        '200' => 200,
+                        '150' => 150,
+                        '100' => 100
+                ),
+                // dodajemy dane do pudeł zbiorczych
+                'parcel' => array(
+                        'rodzaje' => array(
+                                '5' => 5000,
+                                '3' => 3000,
+                                '2,5' => 2500,
+                                '2' => 2000,
+                                '1' => 1000
+                        ), // trochę zakręcone - wartości jw, ale klucze te same, co dla batonów,
+                        // by utwozyć powiązanie do UI poprzez klucze dla batonów
+                        'conected2bat' => array(
+                                '500' => 5000,
+                                '250' => 3000,
+                                '200' => 2500,
+                                '150' => 2000,
+                                '100' => 1000
+                        )
+                )
+        );
 
-        $this->set('juzer', $this->Auth->User('name') );
-        $this->set('departament', $this->Auth->User('dzial') );
-    }
-    
-    
-    // Sprawdzamy, czy wśród załączonych plików jest plik etykiety
-    public function parseUploads( $uploads = array() ) {
-        //$uploads - tablica z plikami
-        foreach( $uploads as $row ) {
-            if( $row['role'] == ETYKIETA) {
-                // karta zawiera plik do etykiet, kończymy i zwracamy id uploadu
-                return $row['id']; 
-            }
+        public function beforeFilter()
+        {
+
+                $this->set('juzer', $this->Auth->User('name'));
+                $this->set('departament', $this->Auth->User('dzial'));
         }
-        return false;
-    }
-    
-    
-    /*
+
+        /**
+         * $this->request->referer();
+         * Nie działa na Lando - nie daje poprawnego URL'a
+         * Zamiast tego dostjemy skp.lando.site
+         * 
+         * Używamy env('HTTP_REFERER') który daje nam poprawny, pełen URL z którego przyszlismy.
+         * To jest prawdopodobnie problem z CakePHP, trza by spróbować nowszą wersję.				 */
+
+        public function goBackWhereYouCameFrom($msg = '')
+        {
+                if ($msg != '') {
+                        $this->Session->setFlash($msg);
+                }
+                return $this->redirect(env('HTTP_REFERER'));
+        }
+
+        // Sprawdzamy, czy wśród załączonych plików jest plik etykiety
+        public function parseUploads($uploads = array())
+        {
+                //$uploads - tablica z plikami
+                foreach ($uploads as $row) {
+                        if ($row['role'] == ETYKIETA) {
+                                // karta zawiera plik do etykiet, kończymy i zwracamy id uploadu
+                                return $row['id'];
+                        }
+                }
+                return false;
+        }
+
+
+        /*
      *  DEPREC ##############################################
      */
-    
-    // 
-    // do sterowania aktywną pozycją w navbarze
-    //
-    public $navbar = array(
-        'customers' => array(
-            'index' => false,
-            'add' => false
-        ),
-        'cards' => array(
-            'index' => false,
-            'add' => false
-        ),
-        'orders' => array(
-            'index' => false,
-            'add' => false
-        ),
-        'jobs' => array(
-            'index' => false,
-            'add' => false
-        )
-    );
-    
-    public $navLiClasses = array('', '', '', '', '', '', '', '', '', '');
-    
-    // ustaw $navLiClasses tak by navbar był wyrysowany prawidłowo
-    public function setNav( $ind1 = null, $ind2 = null) {
-        
-        if( !array_key_exists( $ind1, $this->navbar ) || !array_key_exists( $ind2, $this->navbar[$ind1] )   ) {
-            return;
+
+        // 
+        // do sterowania aktywną pozycją w navbarze
+        //
+        public $navbar = array(
+                'customers' => array(
+                        'index' => false,
+                        'add' => false
+                ),
+                'cards' => array(
+                        'index' => false,
+                        'add' => false
+                ),
+                'orders' => array(
+                        'index' => false,
+                        'add' => false
+                ),
+                'jobs' => array(
+                        'index' => false,
+                        'add' => false
+                )
+        );
+
+        public $navLiClasses = array('', '', '', '', '', '', '', '', '', '');
+
+        // ustaw $navLiClasses tak by navbar był wyrysowany prawidłowo
+        public function setNav($ind1 = null, $ind2 = null)
+        {
+
+                if (!array_key_exists($ind1, $this->navbar) || !array_key_exists($ind2, $this->navbar[$ind1])) {
+                        return;
+                }
+                $this->navbar[$ind1][$ind2] = true;
+                $this->navLiClasses = array();
+                foreach ($this->navbar as $kontroler) {
+                        foreach ($kontroler as $value) {
+                                if ($value) {
+                                        $this->navLiClasses[] = 'class="active"';
+                                } else {
+                                        $this->navLiClasses[] = '';
+                                }
+                        }
+                }
         }
-        $this->navbar[$ind1][$ind2] = true;
-        $this->navLiClasses = array();
-        foreach( $this->navbar as $kontroler) {
-            foreach( $kontroler as $value ) {
-                if( $value ) {
-                    $this->navLiClasses[] = 'class="active"';
+
+        // convert base nr to nrh - numer handlowego
+        public function bnr2nrh2($bnr = null, $inicjaly = null, $ishtml = true, $sepyearchar = '/')
+        {
+
+                if ($bnr && $bnr > BASE_NR) {
+                        if ($ishtml) {
+                                $startspan = '<span class="ordernr">';
+                                $stopspan = '</span>';
+                        } else {
+                                $startspan = $stopspan = null;
+                        }
+                        if ($inicjaly) {
+                                //return ($bnr - BASE_NR).$startspan.'/'.BASE_YE.' '.$inicjaly.$stopspan;
+                                return (int)substr((int)$bnr, 2) . $startspan . $sepyearchar . substr((int)$bnr, 0, 2) . ' ' . $inicjaly . $stopspan;
+                        } else {
+                                //return ($bnr - BASE_NR).$startspan.'/'.BASE_YE.' H'.$stopspan;
+                                return (int)substr((int)$bnr, 2) . $startspan . $sepyearchar . substr((int)$bnr, 0, 2) . ' H' . $stopspan;
+                        }
                 } else {
-                    $this->navLiClasses[] = '';
-                }
-            }
-        }
-    }
-    
-    // convert base nr to nrh - numer handlowego
-    public function bnr2nrh2($bnr = null, $inicjaly = null, $ishtml = true, $sepyearchar = '/') {
-
-            if($bnr && $bnr > BASE_NR) {
-                    if( $ishtml ) {
-                            $startspan = '<span class="ordernr">';
-                            $stopspan = '</span>';
-                    } else {
-                            $startspan = $stopspan = null;
-                    }
-                    if( $inicjaly ) {
-                            //return ($bnr - BASE_NR).$startspan.'/'.BASE_YE.' '.$inicjaly.$stopspan;
-                            return (int)substr((int)$bnr,2).$startspan.$sepyearchar.substr((int)$bnr,0,2).' '.$inicjaly.$stopspan;
-                    } else   {
-                            //return ($bnr - BASE_NR).$startspan.'/'.BASE_YE.' H'.$stopspan;
-                            return (int)substr((int)$bnr,2).$startspan.$sepyearchar.substr((int)$bnr,0,2).' H'.$stopspan;
-                    }
-            } else { 
-                return $bnr; 
-            }
-
-    }	
-	
-    // convert base nr to nrj - numer job'a
-    public function bnr2nrj2($bnr = null, $inicjaly = null, $ishtml = true, $sepyearchar = '/') {
-
-            if($bnr && $bnr > BASE_NR) {
-                    if( $ishtml ) {
-                            $startspan = '<span class="ordernr">';
-                            $stopspan = '</span>';
-                    } else 
-                            $startspan = $stopspan = null;
-                    //return ($bnr - BASE_NR).'/'.BASE_YE;
-                    //return ($bnr - BASE_NR).$startspan.'/'.BASE_YE.$stopspan;
-                    return (int)substr((int)$bnr,2).$startspan.$sepyearchar.substr((int)$bnr,0,2).$stopspan;
-            } else
-                    return $bnr;
-    }
-
-    public $links = array(
-        aCUS_ADD, aCUS_LIST,
-        aCARD_ADD, aCARD_LIST,
-        aORD_ADD, aORD_LIST,
-        aJOB_ADD, aJOB_LIST,
-        //aUSER_ADD, aUSER_LIST
-    );
-        
-    public function dozwolonaAkcja() {
-
-        //$uid = $this->Auth->user('id');
-        $dzial = $this->Auth->user('dzial');
-        $kontroler = $this->params['controller'];
-        //$akcja = $this->action;
-        if($kontroler == 'webixes') {
-                if( !in_array($dzial, [4,5,7,8]) ) {
-                      return true;  
+                        return $bnr;
                 }
         }
-        return false;
-    }
-	
-    public function actionAllowed() {
 
-            $uid = $this->Auth->user('id');
-            $dzial = $this->Auth->user('dzial');
-            $kontroler = $this->params['controller'];
-            $akcja = $this->action;
-            if( empty($this->params['pass']) ) $par = null;
-            else
-                    $par = $this->params['pass'][0];
+        // convert base nr to nrj - numer job'a
+        public function bnr2nrj2($bnr = null, $inicjaly = null, $ishtml = true, $sepyearchar = '/')
+        {
 
-            $this->links = array();
+                if ($bnr && $bnr > BASE_NR) {
+                        if ($ishtml) {
+                                $startspan = '<span class="ordernr">';
+                                $stopspan = '</span>';
+                        } else
+                                $startspan = $stopspan = null;
+                        //return ($bnr - BASE_NR).'/'.BASE_YE;
+                        //return ($bnr - BASE_NR).$startspan.'/'.BASE_YE.$stopspan;
+                        return (int)substr((int)$bnr, 2) . $startspan . $sepyearchar . substr((int)$bnr, 0, 2) . $stopspan;
+                } else
+                        return $bnr;
+        }
+
+        public $links = array(
+                aCUS_ADD, aCUS_LIST,
+                aCARD_ADD, aCARD_LIST,
+                aORD_ADD, aORD_LIST,
+                aJOB_ADD, aJOB_LIST,
+                //aUSER_ADD, aUSER_LIST
+        );
+
+        public function dozwolonaAkcja()
+        {
+
+                //$uid = $this->Auth->user('id');
+                $dzial = $this->Auth->user('dzial');
+                $kontroler = $this->params['controller'];
+                //$akcja = $this->action;
+                if ($kontroler == 'webixes') {
+                        if (!in_array($dzial, [4, 5, 7, 8])) {
+                                return true;
+                        }
+                }
+                return false;
+        }
+
+        public function actionAllowed()
+        {
+
+                $uid = $this->Auth->user('id');
+                $dzial = $this->Auth->user('dzial');
+                $kontroler = $this->params['controller'];
+                $akcja = $this->action;
+                if (empty($this->params['pass'])) $par = null;
+                else
+                        $par = $this->params['pass'][0];
+
+                $this->links = array();
 
 
                 switch ($kontroler) {
@@ -272,8 +295,12 @@ class AppController extends Controller {
                                                         case SUA:
                                                                 break;
                                                         default:
-                                                                unset($this->links[4], $this->links[7],  $this->links[8],
-                                                                $this->links[9]);
+                                                                unset(
+                                                                        $this->links[4],
+                                                                        $this->links[7],
+                                                                        $this->links[8],
+                                                                        $this->links[9]
+                                                                );
                                                                 break;
                                                 }
                                                 break;
@@ -396,6 +423,5 @@ class AppController extends Controller {
                                 }
                                 break;
                 }
-    }
-	
+        }
 }

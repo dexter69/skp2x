@@ -56,10 +56,8 @@ class JobsController extends AppController
 				case IDX_OWN:
 					return $this->redirect(array('action' => 'index', 'my'));
 					break;
-				default:
-					$this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-					return $this->redirect($this->referer());
-					break;
+				default:					
+					return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');					
 			}
 		}
 
@@ -141,8 +139,7 @@ class JobsController extends AppController
 			throw new NotFoundException(__('Nie ma takiego zlecenia'));
 		}
 		if (!$this->akcjaOK([], 'view', $id)) {
-			$this->Session->setFlash('WYŚWIETLENIE NIE JEST MOŻLIWE LUB NIE MASZ UPRAWNIEŃ...');
-			return $this->redirect($this->referer());
+			return $this->goBackWhereYouCameFrom('WYŚWIETLENIE NIE JEST MOŻLIWE LUB NIE MASZ UPRAWNIEŃ...');			
 		}
 		$options = array('conditions' => array('Job.' . $this->Job->primaryKey => $id));
 
@@ -335,8 +332,9 @@ class JobsController extends AppController
 		}
 
 		if (!$this->akcjaOK(null, 'add')) {
-			$this->Session->setFlash('WYGLĄDA NA TO, ŻE NIE MASZ UPRAWNIEŃ...');
-			return $this->redirect($this->referer());
+			return $this->goBackWhereYouCameFrom('WYGLĄDA NA TO, ŻE NIE MASZ UPRAWNIEŃ...');
+			// $this->Session->setFlash('WYGLĄDA NA TO, ŻE NIE MASZ UPRAWNIEŃ...');
+			// return $this->redirect($this->referer());
 		}
 
 

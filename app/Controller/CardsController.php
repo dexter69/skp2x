@@ -66,8 +66,9 @@ class CardsController extends AppController
                 case IDX_OWN:
                     return $this->redirect(array('action' => 'index', 'moich-klientow'));
                 default:
-                    $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-                    return $this->redirect($this->referer());
+                    return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+                    // $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+                    // return $this->redirect($this->referer());
             }
         }
 
@@ -217,15 +218,16 @@ class CardsController extends AppController
         $options = array('conditions' => array('Card.' . $this->Card->primaryKey => $id));
         $card = $this->Card->find('first', $options);
         if (!$this->akcjaOK($card, 'view')) {
-            $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-            // Robimy taki myk, bo na Lando to nie działa
-			$referer = $this->request->referer(false);
-			if( preg_match('/skp.lan/', $referer ) === 1 ) {
-				// Na SKP flash i wracamy tam gdzie byliśmy
-				return $this->redirect($referer);
-			} 
-			// Na lando ogólna akcja
-			return $this->redirect([ 'action' => 'index' ]);
+            return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+            // $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
+            // // Robimy taki myk, bo na Lando to nie działa
+			// $referer = $this->request->referer(false);
+			// if( preg_match('/skp.lan/', $referer ) === 1 ) {
+			// 	// Na SKP flash i wracamy tam gdzie byliśmy
+			// 	return $this->redirect($referer);
+			// } 
+			// // Na lando ogólna akcja
+			// return $this->redirect([ 'action' => 'index' ]);
         }
         $evcontrol = $this->prepareSubmits($card);
         $links = $this->links;
@@ -598,8 +600,7 @@ class CardsController extends AppController
         } else {
             $this->request->data = $this->Card->znajdzTaKarta($id);
             if (!$this->akcjaOK($this->request->data, 'edit')) {
-                $this->Session->setFlash('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');
-                return $this->redirect($this->referer());
+                return $this->goBackWhereYouCameFrom('EDYCJA NIE JEST MOŻLIWA LUB NIE MASZ UPRAWNIEŃ.');                
             }
         }
         $users = $this->Card->Owner->find('list');
@@ -696,7 +697,7 @@ class CardsController extends AppController
         ));
     }
 
-    private function isEdycjaKartyOK($c_user_id = null, $c_status = null, $o_status = null)
+    private function isEdycjaKartyOK($c_user_id = null, $c_status = null, $o_status = null, $flagowa = false)
     {
 
         $cae = $this->Auth->user('CAE');
@@ -713,6 +714,10 @@ class CardsController extends AppController
             if ($cae ==  EDIT_ALL || $cae ==  EDIT_SAL) {
                 return true;
             }
+            if ($cae == EDIT_SHR) {
+                // Karta flagowa
+                return $flagowa;
+            }
         }
         return false;
     }
@@ -720,16 +725,18 @@ class CardsController extends AppController
 
     private function akcjaOK($dane = array(), $akcja = null, $par = null)
     {
-
+        $card = $dane['Card'];
+        $karta_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
+        if ($this->Auth->user('id') == $card['user_id'])
+            $jego_karta = true;
+        else
+            $jego_karta = false;
+        $kartaFlagowa = $this->Auth->user('flag') == $dane['Customer']['flag'];
         switch ($akcja) {
-            case 'edit':
-                return $this->isEdycjaKartyOK($dane['Card']['user_id'], $dane['Card']['status'], $dane['Order']['status']);
+            case 'edit':                
+                return $this->isEdycjaKartyOK($dane['Card']['user_id'], $dane['Card']['status'], $dane['Order']['status'], $kartaFlagowa);
             case 'view':
-                $card = $dane['Card'];
-                if ($this->Auth->user('id') == $card['user_id'])
-                    $jego_karta = true;
-                else
-                    $jego_karta = false;
+                                
                 if (1) { //jeżeli nie ma przeszkód, nie związanych z uprawnieniami, do wyświetlenia
                     switch ($this->Auth->user('CAV')) {
                         case VIEW_SAL:
@@ -751,10 +758,9 @@ class CardsController extends AppController
                             break;
                         case NO_RIGHT:
                         case VIEW_SHR:
-                            return false;
-                            break;
-                        case VIEW_OWN:
-                            $karta_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
+                            if ($jego_karta || $karta_jego_klienta || $kartaFlagowa) return true;
+                            return false;                            
+                        case VIEW_OWN:                            
                             if ($jego_karta || $karta_jego_klienta) return true;
                             return false;
                     }
