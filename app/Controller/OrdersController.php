@@ -343,29 +343,18 @@ class OrdersController extends AppController
 	 * @param string $id
 	 * @return void
 	 */
-	public function view($id = null)
-	{
+	public function view($id = null) {
 
 		if (!$this->Order->exists($id)) {
 			throw new NotFoundException(__('Nie ma takiego zamówienia'));
-		}
-		$options = array(
+		}		
+		$order = $this->Order->find('first', [
 			'conditions' => array('Order.' . $this->Order->primaryKey => $id),
 			//'recursive' => 2 // to jest porażka
-		);
-		$order = $this->Order->find('first', $options);
-
-		if (!$this->akcjaOK($order, 'view')) {
+		]);
+		
+		if (!$this->akcjaOK($order, 'view')) {			
 			return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-			// $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-			// // Robimy taki myk, bo na Lando to nie działa
-			// $referer = $this->request->referer(false);
-			// if( preg_match('/skp.lan/', $referer ) === 1 ) {
-			// 	// Na SKP flash i wracamy tam gdzie byliśmy
-			// 	return $this->redirect($referer);
-			// } 
-			// // Na lando ogólna akcja
-			// return $this->redirect([ 'action' => 'index' ]);
 		}
 
 		$evcontrol = $this->prepareSubmits($order);
@@ -990,28 +979,23 @@ class OrdersController extends AppController
 	// sprawdzamy uprawnienia dla akcji w tym kontrolerze
 	private function akcjaOK($dane = array(), $akcja = null, $par = null)	{
 
-		if (is_null($dane)) {
-			$zamowienieFlagowegoKlienta = false;
-			$jego_zamowienie = false;
-			$zamowienie_jego_klienta = false;
-		} else {
-			$zamowienieFlagowegoKlienta = $this->Auth->user('flag') == $dane['Customer']['flag'];
-			$jego_zamowienie = $dane['Order']['user_id'] == $this->Auth->user('id');
-			$zamowienie_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
-		}		
+		$order = $dane['Order'];
+		$customer = $dane['Customer'];				
 		
 		switch ($akcja) {
 			case 'edit':
-				$order = $dane['Order']; // dawne poniżej: $order['status'] == PRIV ||  $order['status'] == O_REJ
 				if ($this->Auth->user('OE') == EDIT_SAL || in_array($order['status'], array(PRIV, O_REJ, W4UZUP, UZU_REJ))) { //stan zamówienia pozawla na edycję					
 					switch ($this->Auth->user('OE')) {
 						case NO_RIGHT:
 							return false;
 						case EDIT_OWN:
-							return $jego_zamowienie;							
+							return $this->jegoZamowienie($order);							
 						case EDIT_SHR: // Wykorzystamy do edycji flagowych
-							// Można edytować swoje lub dla swojego klienta lub flagowe
-							return $jego_zamowienie || $zamowienie_jego_klienta || $zamowienieFlagowegoKlienta;
+							// Można edytować swoje lub dla swojego klienta lub flagowe							
+							return
+								$this->jegoZamowienie($order) ||
+								$this->zamowienieJegoKlienta($customer) ||
+								$this->zamowienieFlagowegoKlienta($customer);
 						case EDIT_ALL:
 						case EDIT_SAL:
 							return true;
@@ -1019,53 +1003,73 @@ class OrdersController extends AppController
 				}
 				break;
 			case 'view':
-				$order = $dane['Order'];				
-				if (1) { //jeżeli nie ma przeszkód, nie związanych z uprawnieniami, do wyświetlenia
-					switch ($this->Auth->user('OV')) {
-						case VIEW_SAL:
-						case VIEW_ALL:
-							return true;							
-						case VIEW_NO_PRIV: //nie może prywatnych zamówień innych ludzi oglądać
-							if ($jego_zamowienie || ($order['status'] != PRIV))
-								return true;
-							else
-								return false;													
-						case NO_RIGHT:
-						case VIEW_SHR:
-							return false;							
-						case VIEW_OWN:														
-							return $jego_zamowienie || $zamowienie_jego_klienta || $zamowienieFlagowegoKlienta; //$zamowienie_flagowego_klienta;							
-					}
-				}
-				break;
+				return $this->akcjaViewOK($order, $customer);								
 			case 'index':
-				$upraw = $this->Auth->user('OX');
-				switch ($par) {
-					case null:
-						if ($upraw == IDX_ALL || $upraw == IDX_SAL) return true;
-						break;
-					case 'all-but-priv':
-						if ($upraw == IDX_NO_PRIV || $upraw == IDX_ALL || $upraw == IDX_SAL) return true;
-						break;
-					case 'no-priv-no-kor':
-						switch ($upraw) {
-							case IDX_NO_KOR:
-							case IDX_NO_PRIV:
-							case IDX_ALL:
-							case IDX_SAL:
-								return true;								
-						}
-						break;
-						// case 'my': // my wchodzi wtedy w default i przekierowujemy na 'moich-klientow'
-					case 'moich-klientow':
-						return true;
-						break;
-					default:
-						if ($upraw != IDX_OWN) return true;
-						return false;
-				}
-				break;
+				return $this->akcjaIndexOK($par);				
 		}
 		return false;
+	}
+
+	private function akcjaViewOK($order, $customer) {
+		if (true) {
+			//jeżeli nie ma przeszkód, nie związanych z uprawnieniami, do wyświetlenia
+			switch ($this->Auth->user('OV')) {
+				case VIEW_SAL:
+				case VIEW_ALL:
+					return true;							
+				case VIEW_NO_PRIV://nie może prywatnych zamówień innych ludzi oglądać
+					return $this->jegoZamowienie($order) || ($order['status'] != PRIV);																		
+				case NO_RIGHT:
+				case VIEW_SHR:
+					return
+						$this->jegoZamowienie($order) ||
+						$this->zamowienieJegoKlienta($customer) ||
+						$this->zamowienieFlagowegoKlienta($customer);												
+				case VIEW_OWN:														
+					return
+						$this->jegoZamowienie($order) ||
+						$this->zamowienieJegoKlienta($customer);
+			}
+		}
+		return false;
+	}
+
+	private function jegoZamowienie($order) {
+		return $order['user_id'] == $this->Auth->user('id');		
+	}
+
+	private function zamowienieJegoKlienta($customer) {
+		return $customer['opiekun_id'] == $this->Auth->user('id');
+	}
+
+	private function zamowienieFlagowegoKlienta($customer) {		
+		return $customer['flag'] == $this->Auth->user('flag');
+	}
+
+	private function akcjaIndexOK($par) {
+		$upraw = $this->Auth->user('OX');
+		switch ($par) {
+			case null:
+				if ($upraw == IDX_ALL || $upraw == IDX_SAL) return true;
+				break;
+			case 'all-but-priv':
+				if ($upraw == IDX_NO_PRIV || $upraw == IDX_ALL || $upraw == IDX_SAL) return true;
+				break;
+			case 'no-priv-no-kor':
+				switch ($upraw) {
+					case IDX_NO_KOR:
+					case IDX_NO_PRIV:
+					case IDX_ALL:
+					case IDX_SAL:
+						return true;								
+				}
+				break;
+				// case 'my': // my wchodzi wtedy w default i przekierowujemy na 'moich-klientow'
+			case 'moich-klientow':
+				return true;				
+			default:
+				if ($upraw != IDX_OWN) return true;
+				return false;
+		}
 	}
 }
