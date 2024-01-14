@@ -102,8 +102,7 @@ class CustomersController extends AppController
          * @param string $id
          * @return void
          */
-        public function view($id = null)
-        {
+        public function view($id = null) {
                 if (!$this->Customer->exists($id)) {
                         throw new NotFoundException('Taki klient nie istnieje');
                 }
@@ -345,8 +344,7 @@ class CustomersController extends AppController
                 return $this->redirect(array('action' => 'index'));
         }
 
-        private function akcjaOK($dane = array(), $akcja = null, $par = null)
-        {
+        private function akcjaOK($dane = array(), $akcja = null, $par = null) {
 
                 $customer = $dane;
                 $jego_klient = $this->Auth->user('id') == $customer['user_id'];
@@ -355,30 +353,26 @@ class CustomersController extends AppController
                         case 'view':
                                 switch ($this->Auth->user('CV')) {
                                         case VIEW_OWN:
-                                                if ($jego_klient) return true;
-                                                break;
+                                                return $jego_klient;                                                
                                         case VIEW_SHR:
-                                                if ($jego_klient || $flagowy_klient) return true;
-                                                break;                                                
+                                                return $jego_klient || $flagowy_klient;                                                                                                
                                         case VIEW_ALL:
                                         case VIEW_SAL:
-                                                return true;
-                                                break;
+                                                return true;                                                
                                 }
                                 break;
                         case 'edit':
-
                                 switch ($this->Auth->user('CE')) {
                                         case EDIT_OWN:
                                                 if ($this->Auth->user('id') == $customer['user_id']) return true;
                                                 break;
+                                        case EDIT_SHR:
+                                                return $jego_klient || $flagowy_klient; 
                                         case EDIT_ALL:
                                         case EDIT_SAL:
                                                 return true;
-                                                break;
                                 }
-                                return false;
-                                break;
+                                return false;                                
                         case 'index':
                                 $upraw = $this->Auth->user('CX');
                                 switch ($par) {

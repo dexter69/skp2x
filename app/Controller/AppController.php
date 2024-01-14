@@ -91,8 +91,18 @@ class AppController extends Controller
          * Używamy env('HTTP_REFERER') który daje nam poprawny, pełen URL z którego przyszlismy.
          * To jest prawdopodobnie problem z CakePHP, trza by spróbować nowszą wersję.				 */
 
-        public function goBackWhereYouCameFrom($msg = '')
-        {
+        public function goBackWhereYouCameFrom($msg = '') {
+                
+                /**
+                 * Work around na razie. Jeżeli wchodzimy z Webixowego pulpitu, to na razie
+                 * nie przekierowujemy i nie wyświtlamy flasza, bo nie ma obsługi. */
+                // Na razie nie działa dobrze - do zrobienia
+                // if (substr(env('HTTP_REFERER'),-8) != '/klienci') {
+                //         if ($msg != '') {
+                //                 $this->Session->setFlash($msg);
+                //         }
+                //         return $this->redirect(env('HTTP_REFERER'));
+                // }
                 if ($msg != '') {
                         $this->Session->setFlash($msg);
                 }
