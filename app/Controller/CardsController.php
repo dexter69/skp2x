@@ -218,16 +218,7 @@ class CardsController extends AppController
         $options = array('conditions' => array('Card.' . $this->Card->primaryKey => $id));
         $card = $this->Card->find('first', $options);
         if (!$this->akcjaOK($card, 'view')) {
-            return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-            // $this->Session->setFlash('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
-            // // Robimy taki myk, bo na Lando to nie działa
-			// $referer = $this->request->referer(false);
-			// if( preg_match('/skp.lan/', $referer ) === 1 ) {
-			// 	// Na SKP flash i wracamy tam gdzie byliśmy
-			// 	return $this->redirect($referer);
-			// } 
-			// // Na lando ogólna akcja
-			// return $this->redirect([ 'action' => 'index' ]);
+            return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');            
         }
         $evcontrol = $this->prepareSubmits($card);
         $links = $this->links;
@@ -723,113 +714,85 @@ class CardsController extends AppController
     }
 
 
-    private function akcjaOK($dane = array(), $akcja = null, $par = null)
-    {
+    private function akcjaOK($dane = array(), $akcja = null, $par = null) {
         $card = $dane['Card'];
-        $karta_jego_klienta = $dane['Customer']['opiekun_id'] == $this->Auth->user('id');
-        if ($this->Auth->user('id') == $card['user_id'])
-            $jego_karta = true;
-        else
-            $jego_karta = false;
-        $kartaFlagowa = $this->Auth->user('flag') == $dane['Customer']['flag'];
+        $customer = $dane['Customer'];        
+        $kartaFlagowa = $this->Auth->user('flag') == $customer['flag'];
         switch ($akcja) {
             case 'edit':                
-                return $this->isEdycjaKartyOK($dane['Card']['user_id'], $dane['Card']['status'], $dane['Order']['status'], $kartaFlagowa);
+                return $this->isEdycjaKartyOK($card['user_id'], $card['status'], $dane['Order']['status'], $kartaFlagowa);
             case 'view':
-                                
-                if (1) { //jeżeli nie ma przeszkód, nie związanych z uprawnieniami, do wyświetlenia
-                    switch ($this->Auth->user('CAV')) {
-                        case VIEW_SAL:
-                        case VIEW_ALL:
-                            return true;
-                            break;
-                        case VIEW_NO_PRIV: //nie może prywatnych kart innych ludzi oglądać
-                            //if( $jego_karta || !in_array($card['status'], array(STARTED, STICKED))  )
-                            if ($jego_karta || $card['status'] != PRIV)
-                                return true;
-                            break;
-                        case VIEW_NO_KOR:
-                            if ($card['status'] != PRIV && $card['status'] != NOWKA)
-                                return true;
-                            break;
-                        case VIEW_LIM_1:
-                            $this->limitedView = 1; // użytkownik będzie miał ograniczony widok karty, typ 1
-                            return true;
-                            break;
-                        case NO_RIGHT:
-                        case VIEW_SHR:
-                            if ($jego_karta || $karta_jego_klienta || $kartaFlagowa) return true;
-                            return false;                            
-                        case VIEW_OWN:                            
-                            if ($jego_karta || $karta_jego_klienta) return true;
-                            return false;
-                    }
-                }
-                break;
+                return $this->akcjaViewOK($card, $customer);
             case 'index':
-                $upraw = $this->Auth->user('CAX');
-                switch ($par) {
-                    case null:
-                        if ($upraw == IDX_ALL || $upraw == IDX_SAL)
-                            return true;
-                        break;
-                    case 'all-but-priv':
-                    case 'active':
-                    case 'closed':
-                        //if( $upraw == IDX_NO_PRIV || $upraw == IDX_ALL || $upraw == IDX_SAL) return true;
-                        if (in_array($upraw, array(IDX_NO_PRIV, IDX_ALL, IDX_SAL))) return true;
-                        break;
-                    case 'no-priv-no-kor':
-                        if (in_array($upraw, array(IDX_NO_KOR, IDX_NO_PRIV, IDX_ALL, IDX_SAL))) return true;
-                        break;
-                    case 'ponly':
-                    case 'pover':
-                    case 'ptodo':
-                    case 'dtpcheck':
-                    case 'hot':
-                    case 'persocheck':
-                        if ($upraw != IDX_OWN) return true;
-                        return false;
-                        break;
-                    // case 'my': // my wchodzi wtedy w default i przekierowujemy na 'moich-klientow'
-                    case 'szukaj':                
-                    case 'moich-klientow':
-                        return true;
-                        break;
-                    default:
-                        if ($upraw != IDX_OWN) return true;
-                        return false;
-                }
-                break;
+                return $this->akcjaIndexOK($par);                
         }
         return false;
     }
 
-    /* Z powyższego na wszelki wypadek
-         case 'edit':
-                    $card = $dane['Card'];
-                    $order = $dane['Order'];
-                    if( $this->Auth->user('CAE') == EDIT_SAL || $card['status'] == PRIV ||							
-                            in_array($order['status'], array(O_REJ, W4UZUP, UZU_REJ)) ) { 
-                            //stan karty pozawla na edycję
-                            switch( $this->Auth->user('CAE') ) {
-                                case NO_RIGHT:
-                                case EDIT_SHR:
-                                        return false;
-                                case EDIT_OWN: // ($lang ? 'en' : 'pl')
-                                    return $this->Auth->user('id') == $card['user_id'] ? true : false;
-                                case EDIT_ALL:
-                                case EDIT_SAL:
-                                    return true;
-                            }							
-                    } else {
-                        return false; }
-                    break;
-          
-         */
+    private function akcjaIndexOK($par) {
+        $upraw = $this->Auth->user('CAX');
+        switch ($par) {
+            case null:
+                return $upraw == IDX_ALL || $upraw == IDX_SAL;                
+            case 'all-but-priv':
+            case 'active':
+            case 'closed':
+                return in_array($upraw, array(IDX_NO_PRIV, IDX_ALL, IDX_SAL));                
+            case 'no-priv-no-kor':
+                return in_array($upraw, array(IDX_NO_KOR, IDX_NO_PRIV, IDX_ALL, IDX_SAL));                
+            case 'ponly':
+            case 'pover':
+            case 'ptodo':
+            case 'dtpcheck':
+            case 'hot':
+            case 'persocheck':
+                return $upraw != IDX_OWN;            
+            case 'szukaj':                
+            case 'moich-klientow':
+                return true;                
+            default:
+                return $upraw != IDX_OWN;                
+        }
+        return false;
+    }
 
-    public function addCzasPerso()
-    {
+    private function akcjaViewOK($card, $customer) {
+        if (true) {
+            //jeżeli nie ma przeszkód, nie związanych z uprawnieniami, do wyświetlenia
+            switch ($this->Auth->user('CAV')) {
+                case VIEW_SAL:
+                case VIEW_ALL:
+                    return true;                            
+                case VIEW_NO_PRIV: //nie może prywatnych kart innych ludzi oglądać
+                    return $this->jegoKarta($card) || $card['status'] != PRIV;                            
+                case VIEW_NO_KOR:
+                    return $card['status'] != PRIV && $card['status'] != NOWKA;                            
+                case VIEW_LIM_1:
+                    $this->limitedView = 1; // użytkownik będzie miał ograniczony widok karty, typ 1
+                    return true;                            
+                case NO_RIGHT:
+                case VIEW_SHR:
+                    return $this->jegoKarta($card) || $this->kartaJegoKlienta($customer) || $this->kartaFlagowa($customer);                                                       
+                case VIEW_OWN:   
+                    return $this->jegoKarta($card) || $this->kartaJegoKlienta($customer); 
+            }
+        }
+        return false;
+    }
+
+    private function jegoKarta($card) {
+        return $this->Auth->user('id') == $card['user_id'];				
+	}
+
+    private function kartaJegoKlienta($customer) {
+        return $customer['opiekun_id'] == $this->Auth->user('id');        
+    }
+
+    private function kartaFlagowa($customer) {
+        return $customer['flag'] == $this->Auth->user('flag');
+    }
+
+    public function addCzasPerso() {
 
         //$this->autoRender = false; // We don't render a view in this example
         $this->request->onlyAllow('ajax'); // No direct access via browser URL
