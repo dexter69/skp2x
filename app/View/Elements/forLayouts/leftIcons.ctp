@@ -5,7 +5,7 @@
     <a href="/szukaj" target="_blank" class="layout-link"><i class="fa fa-search" aria-hidden="true"></i></a>
 <?php } ?>
 <?php
-    if($departament == SUA || $departament == PER || $departament == KON) {
+    if($departament == PER || $departament == KON || $departament == DTP || $departament == SUA) {
         if( $jobnumer ) {
             $link = '/etykiety/' . $jobnumer;
         } else {
