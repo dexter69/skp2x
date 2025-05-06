@@ -7,20 +7,12 @@ xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
 database:
-    type: mysql
-    version: "5.7"
+    type: mariadb
+    version: "10.2"
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 corepack_enable: false
-
-# hooks:
-#   post-start:
-#     - exec: chmod -R 777 app/tmp
-#     - exec: chmod -R 777 app/tmp/cache
-#     - exec: chmod -R 777 app/tmp/logs
-#     - exec: chmod -R 777 app/tmp/sessions
-#     - exec: chmod -R 777 app/tmp/tests
 
 # Key features of DDEV's config.yaml:
 
