@@ -14,13 +14,13 @@ composer_version: "2"
 web_environment: []
 corepack_enable: false
 
-hooks:
-  post-start:
-    - exec: chmod -R 777 app/tmp
-    - exec: chmod -R 777 app/tmp/cache
-    - exec: chmod -R 777 app/tmp/logs
-    - exec: chmod -R 777 app/tmp/sessions
-    - exec: chmod -R 777 app/tmp/tests
+# hooks:
+#   post-start:
+#     - exec: chmod -R 777 app/tmp
+#     - exec: chmod -R 777 app/tmp/cache
+#     - exec: chmod -R 777 app/tmp/logs
+#     - exec: chmod -R 777 app/tmp/sessions
+#     - exec: chmod -R 777 app/tmp/tests
 
 # Key features of DDEV's config.yaml:
 
