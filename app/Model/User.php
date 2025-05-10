@@ -11,52 +11,61 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
  * @property Order $Order 
  * @property Group $Group
  */
-class User extends AppModel {
-    
-    public function hashMe( $item2hash = null ) {
-        
-        $passwordHasher = new SimplePasswordHasher();
-        //$this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
-        return $passwordHasher->hash($item2hash);
-    }
-	
-	
-/**
- * Zmienna regulująca zależności między wyświetlaniem w widokach a bazą danych
- *
- * @var array
- */
-	
+
+class User extends AppModel
+{
+
+	public function hashMe($item2hash = null)
+	{
+
+		$passwordHasher = new SimplePasswordHasher();
+		//$this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
+		return $passwordHasher->hash($item2hash);
+	}
+
+
+	/**
+	 * Zmienna regulująca zależności między wyświetlaniem w widokach a bazą danych
+	 *
+	 * @var array
+	 */
+
 	// formatowania do views
-	public $view_options = 
-		array (
-			'dzial' =>  array( 
-				//'label' => 'Zaliczka?',
-				//'div' => false,
-				'options' => array(
-						SUA=>'superadmin', MAR=>'marketing', KOR=>'koordynator',
-						KIP=> 'kierownik prod.', DTP=> 'dział DTP', PER=> 'personalizacja',
-						SEK=> 'sekretariat', KON=>'kontrola jakości'
-				),
-				'default' => 1 //
-			)					
-		);	
-        
-    public function inicjaly() {
-        
-        return $this->find('list', array(
-            'fields' => array('inic')
-        ));
-    }
+	public $view_options =
+	array(
+		'dzial' =>  array(
+			//'label' => 'Zaliczka?',
+			//'div' => false,
+			'options' => array(
+				SUA => 'superadmin',
+				MAR => 'marketing',
+				KOR => 'koordynator',
+				KIP => 'kierownik prod.',
+				DTP => 'dział DTP',
+				PER => 'personalizacja',
+				SEK => 'sekretariat',
+				KON => 'kontrola jakości'
+			),
+			'default' => 1 //
+		)
+	);
+
+	public function inicjaly()
+	{
+
+		return $this->find('list', array(
+			'fields' => array('inic')
+		));
+	}
 
 
-    
 
-/**
- * Validation rules
- *
- * @var array
- */
+
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'username' => array(
 			'notEmpty' => array(
@@ -90,13 +99,13 @@ class User extends AppModel {
 		),*/
 	);
 
-//The Associations below have been created with all possible keys, those that are not needed can be removed
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
 	public $belongsTo = array(
 		'Group' => array(
 			'className' => 'Group',
@@ -104,11 +113,11 @@ class User extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
 		'CardAdded' => array(
 			'className' => 'Card',
@@ -161,7 +170,7 @@ class User extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		),		
+		),
 		'Event' => array(
 			'className' => 'Event',
 			'foreignKey' => 'user_id',
@@ -204,14 +213,14 @@ class User extends AppModel {
 		'Disposal'
 
 	);
-	
-	
-	public function beforeSave($options = array()) {
-            if (isset($this->data[$this->alias]['password'])) {
-                $passwordHasher = new SimplePasswordHasher();
-                $this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
-            }
-            return true;
-	}
 
+
+	public function beforeSave($options = array())
+	{
+		if (isset($this->data[$this->alias]['password'])) {
+			$passwordHasher = new SimplePasswordHasher();
+			$this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
+		}
+		return true;
+	}
 }
