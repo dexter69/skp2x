@@ -8,7 +8,8 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
  * @property Customer $Customer
  * @property Event $Event
  * @property Job $Job
- * @property Order $Order
+ * @property Order $Order 
+ * @property Group $Group
  */
 class User extends AppModel {
     
@@ -28,18 +29,18 @@ class User extends AppModel {
 	
 	// formatowania do views
 	public $view_options = 
-            array (
-                'dzial' =>  array( 
-                    //'label' => 'Zaliczka?',
-                    //'div' => false,
-                    'options' => array(
-                            SUA=>'superadmin', MAR=>'marketing', KOR=>'koordynator',
-                            KIP=> 'kierownik prod.', DTP=> 'dział DTP', PER=> 'personalizacja',
-                            SEK=> 'sekretariat', KON=>'kontrola jakości'
-                    ),
-                    'default' => 1 //
-                )					
-            );	
+		array (
+			'dzial' =>  array( 
+				//'label' => 'Zaliczka?',
+				//'div' => false,
+				'options' => array(
+						SUA=>'superadmin', MAR=>'marketing', KOR=>'koordynator',
+						KIP=> 'kierownik prod.', DTP=> 'dział DTP', PER=> 'personalizacja',
+						SEK=> 'sekretariat', KON=>'kontrola jakości'
+				),
+				'default' => 1 //
+			)					
+		);	
         
     public function inicjaly() {
         
@@ -89,7 +90,19 @@ class User extends AppModel {
 		),*/
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Group' => array(
+			'className' => 'Group',
+			'foreignKey' => 'group_id'
+		)
+	);
 
 /**
  * hasMany associations
