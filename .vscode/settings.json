@@ -16,5 +16,5 @@
     "liveSassCompile.settings.autoprefix": [
         "defaults"
     ],
-    "intelephense.environment.phpVersion": "5.6.40"
+    "intelephense.environment.phpVersion": "5.6"
 }
