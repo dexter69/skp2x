@@ -28,6 +28,6 @@ CREATE TABLE `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- Dodanie kolumny group_id do tabeli users
-ALTER TABLE `users` ADD COLUMN `group_id` int(10) unsigned DEFAULT NULL;
+ALTER TABLE `users` ADD COLUMN `group_id` int(10) unsigned DEFAULT NULL AFTER `id`;
 ALTER TABLE `users` ADD KEY `group_id` (`group_id`);
 ALTER TABLE `users` ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
