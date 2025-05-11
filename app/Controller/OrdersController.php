@@ -26,14 +26,12 @@ class OrdersController extends AppController
 		)
 	);
 
-	public function beforeFilter()
-	{
+	public function beforeFilter() {
 		parent::beforeFilter();
 		//$this->actionAllowed();
 		$this->links = array(nORD_LIST, nORD_ADD, nORD_EDIT, nORD_DEL);
 		$this->set('links', $this->links);
 	}
-
 
 	/**
 	 * serwis // tzw. zamówienia serwisowe
@@ -345,6 +343,18 @@ class OrdersController extends AppController
 	 */
 	public function view($id = null) {
 
+		$permissionsChecked = false;
+
+		// Metoda 1: Używanie nowego systemu uprawnień
+		if ( $this->Permission->userIsOnNewPermissionSystem() ) {
+			if (!$this->Permission->check('orders_view', 1)) {
+				$this->Session->setFlash('Brak uprawnień do przeglądania zamówień. (nowy system)');
+				return $this->redirect(array('controller' => 'orders', 'action' => 'index'));
+			}
+			// Znaczy uprawnienia sprawdzone - musimy to zaznaczyć
+			$permissionsChecked = true;
+		}
+
 		if (!$this->Order->exists($id)) {
 			throw new NotFoundException(__('Nie ma takiego zamówienia'));
 		}		
@@ -353,7 +363,8 @@ class OrdersController extends AppController
 			//'recursive' => 2 // to jest porażka
 		]);
 		
-		if (!$this->akcjaOK($order, 'view')) {			
+		// Metoda 2: Jeżeli uprawnienia nie zostały sprawdzone metodą 1, to sprawdzamy po staremu.
+		if (!$permissionsChecked && !$this->akcjaOK($order, 'view')) {			
 			return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
 		}
 
@@ -426,7 +437,7 @@ class OrdersController extends AppController
 			$order["Customer"]["przypominajka"] = false;
 		}
 		unset($order["Customer"]["comment"]);
-
+		
 		$this->set(compact(
 			'order',
 			'evcontrol',
@@ -1007,6 +1018,7 @@ class OrdersController extends AppController
 			case 'index':
 				return $this->akcjaIndexOK($par);				
 		}
+		$this->_stare = true; // stare sprawdzanie miało miejsce;
 		return false;
 	}
 

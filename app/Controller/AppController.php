@@ -42,7 +42,8 @@ class AppController extends Controller
                         'loginRedirect' => array('controller' => 'orders', 'action' => 'index'),
                         //'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
                         'logoutRedirect' => array('controller' => 'orders', 'action' => 'index')
-                )
+                ),
+                'Permission'
         );
 
         /* Predefiniowane ilości kart w batonie */
@@ -76,9 +77,8 @@ class AppController extends Controller
                 )
         );
 
-        public function beforeFilter()
-        {
-
+        public function beforeFilter()  {
+                parent::beforeFilter();
                 $this->set('juzer', $this->Auth->User('name'));
                 $this->set('departament', $this->Auth->User('dzial'));
         }

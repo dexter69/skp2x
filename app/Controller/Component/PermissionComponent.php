@@ -18,6 +18,9 @@ class PermissionComponent extends Component {
     
     // Tablica przechowująca uprawnienia zalogowanego użytkownika
     protected $_permissions = array();
+
+    // Zmienna przechowująca info o tym czy zalogowany użytkownik przynależy do nowego systemu uprawnień.
+    protected $_isOnNew = false;
     
     public function initialize(Controller $controller) {
         $this->Controller = $controller;
@@ -26,14 +29,22 @@ class PermissionComponent extends Component {
             $this->_loadPermissions();
         }
     }
+
+    // Zwróć informację, czy użytkownik jest na nowym systemie uprawnień
+    public function userIsOnNewPermissionSystem() {
+        return $this->_isOnNew;
+    }
     
     // Ładuje uprawnienia użytkownika z bazy danych
     protected function _loadPermissions() {
         $user = $this->Auth->user();
+        
         if (empty($user['group_id'])) {
             return false;
         }
-        
+        // To znaczy, ze uzytkownik jest w nowym systemie, ustawmy zmienną
+        $this->_isOnNew = true;
+
         $Permission = ClassRegistry::init('Permission');
         $permissions = $Permission->find('all', array(
             'conditions' => array('Permission.group_id' => $user['group_id']),
