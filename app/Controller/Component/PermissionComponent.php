@@ -19,8 +19,6 @@ class PermissionComponent extends Component {
     // Tablica przechowująca uprawnienia zalogowanego użytkownika
     protected $_permissions = array();
 
-    // Zmienna przechowująca info o tym czy zalogowany użytkownik przynależy do nowego systemu uprawnień.
-    
     /**
      * Zmienna przechowująca info o tym czy zalogowany użytkownik przynależy do nowego systemu uprawnień.
      * Sprawdzenie następuje w _loadPermissions() i wtedy zostaje ustawiona.     */

@@ -46,6 +46,8 @@ class AppController extends Controller
                 'Permission'
         );
 
+        protected $_newCheck = false;
+
         /* Predefiniowane ilości kart w batonie */
         public $batons = array(
                 'max' => 500,

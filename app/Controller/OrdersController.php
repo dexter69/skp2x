@@ -29,7 +29,7 @@ class OrdersController extends AppController {
 	 * Zmienna decydująca o tym, czy metoda akcjaOK powinna zostać wykonana. Ma to związek z przechodzeniem na nowy system uprawnień.
 	 * Domyślan wartość to false, co oznacza, że sprawdzamy po staremu. W wypadku sprawdzania w nowym systemie, zmienna zostaje
 	 * ustawiona true, dzięki czemu akcjaOK nie dokonuje sprawdzania - nie interferuje w proces.	 */
-	private $_newCheck = false;
+	// private $_newCheck = false;
 
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -351,8 +351,10 @@ class OrdersController extends AppController {
 			if (!$this->Permission->check('orders_view', 1)) {
 				$this->Session->setFlash('Brak uprawnień do przeglądania zamówień.');
 				return $this->redirect(array('controller' => 'orders', 'action' => 'index'));
-			}
-			// Znaczy uprawnienia sprawdzone - musimy to zaznaczyć
+			}			
+			/**
+			 * Oznacza, że uprawnienia zostały sprawdzone i nie chcemy by sprawdzać ponownie w starym systemie.
+			 * Dlatego musimy to oznaczyć. */
 			$this->_newCheck = true;			
 		}
 
