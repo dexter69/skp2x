@@ -20,7 +20,11 @@ class PermissionComponent extends Component {
     protected $_permissions = array();
 
     // Zmienna przechowująca info o tym czy zalogowany użytkownik przynależy do nowego systemu uprawnień.
-    protected $_isOnNew = false;
+    
+    /**
+     * Zmienna przechowująca info o tym czy zalogowany użytkownik przynależy do nowego systemu uprawnień.
+     * Sprawdzenie następuje w _loadPermissions() i wtedy zostaje ustawiona.     */
+    private $_isOnNew = false;
     
     public function initialize(Controller $controller) {
         $this->Controller = $controller;

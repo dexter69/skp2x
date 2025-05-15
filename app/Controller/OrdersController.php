@@ -8,8 +8,7 @@ App::uses('AppController', 'Controller');
  * @property Order $Order
  * @property PaginatorComponent $Paginator
  */
-class OrdersController extends AppController
-{
+class OrdersController extends AppController {
 
 	/**
 	 * Components
@@ -26,6 +25,12 @@ class OrdersController extends AppController
 		)
 	);
 
+	/**
+	 * Zmienna decydująca o tym, czy metoda akcjaOK powinna zostać wykonana. Ma to związek z przechodzeniem na nowy system uprawnień.
+	 * Domyślan wartość to false, co oznacza, że sprawdzamy po staremu. W wypadku sprawdzania w nowym systemie, zmienna zostaje
+	 * ustawiona true, dzięki czemu akcjaOK nie dokonuje sprawdzania - nie interferuje w proces.	 */
+	private $_newCheck = false;
+
 	public function beforeFilter() {
 		parent::beforeFilter();
 		//$this->actionAllowed();
@@ -38,8 +43,7 @@ class OrdersController extends AppController
 	 * Prawdopodobnie DEPREC 15.03.2019
 	 */
 
-	public function serwis___($par = null)
-	{
+	public function serwis___($par = null) {
 
 		$par = 'serwis';
 
@@ -61,8 +65,7 @@ class OrdersController extends AppController
 	 *
 	 * @return void
 	 */
-	public function index($par = null)
-	{
+	public function index($par = null) {
 
 		//$time_start = microtime(true);
 
@@ -343,16 +346,14 @@ class OrdersController extends AppController
 	 */
 	public function view($id = null) {
 
-		$permissionsChecked = false;
-
 		// Metoda 1: Używanie nowego systemu uprawnień
 		if ( $this->Permission->userIsOnNewPermissionSystem() ) {
 			if (!$this->Permission->check('orders_view', 1)) {
-				$this->Session->setFlash('Brak uprawnień do przeglądania zamówień. (nowy system)');
+				$this->Session->setFlash('Brak uprawnień do przeglądania zamówień.');
 				return $this->redirect(array('controller' => 'orders', 'action' => 'index'));
 			}
 			// Znaczy uprawnienia sprawdzone - musimy to zaznaczyć
-			$permissionsChecked = true;
+			$this->_newCheck = true;			
 		}
 
 		if (!$this->Order->exists($id)) {
@@ -364,7 +365,7 @@ class OrdersController extends AppController
 		]);
 		
 		// Metoda 2: Jeżeli uprawnienia nie zostały sprawdzone metodą 1, to sprawdzamy po staremu.
-		if (!$permissionsChecked && !$this->akcjaOK($order, 'view')) {			
+		if ( !$this->akcjaOK($order, 'view') ) {			
 			return $this->goBackWhereYouCameFrom('NIE MOŻNA WYŚWIETLIĆ LUB NIE MASZ UPRAWNIEŃ.');
 		}
 
@@ -989,6 +990,10 @@ class OrdersController extends AppController
 
 	// sprawdzamy uprawnienia dla akcji w tym kontrolerze
 	private function akcjaOK($dane = array(), $akcja = null, $par = null)	{
+
+		if ($this->_newCheck) { // Sprawdzanie uprawnień nastąpiło już w nowej wersji systemu => nie ingerujemy.
+			return true;
+		}
 
 		$order = $dane['Order'];
 		$customer = $dane['Customer'];				
