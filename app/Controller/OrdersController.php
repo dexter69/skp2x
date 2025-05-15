@@ -25,12 +25,6 @@ class OrdersController extends AppController {
 		)
 	);
 
-	/**
-	 * Zmienna decydująca o tym, czy metoda akcjaOK powinna zostać wykonana. Ma to związek z przechodzeniem na nowy system uprawnień.
-	 * Domyślan wartość to false, co oznacza, że sprawdzamy po staremu. W wypadku sprawdzania w nowym systemie, zmienna zostaje
-	 * ustawiona true, dzięki czemu akcjaOK nie dokonuje sprawdzania - nie interferuje w proces.	 */
-	// private $_newCheck = false;
-
 	public function beforeFilter() {
 		parent::beforeFilter();
 		//$this->actionAllowed();
