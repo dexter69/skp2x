@@ -979,10 +979,8 @@ class OrdersController extends AppController {
 	// sprawdzamy uprawnienia dla akcji w tym kontrolerze
 	private function akcjaOK($dane = array(), $akcja = null, $par = null)	{
 
-		// Sprawdzanie uprawnień nastąpiło już w nowej wersji systemu => nie ingerujemy.
-		if( $this->Permission->wasNewCheck() ) {
-			return true;
-		}
+		// Użytkownik podlega pod sprawdzanie w nowej wersji systemu => nie ingerujemy.
+		if ($this->Permission->isOnNEWsystem()) { return true; }
 
 		// metoda zostanie uruchomiona - notujemy
 		$this->_aOKwasRun = true;

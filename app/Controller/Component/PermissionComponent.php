@@ -16,94 +16,73 @@ App::uses('Component', 'Controller');
 class PermissionComponent extends Component {
     public $components = array('Auth', 'Session');
 
-    private $_newCheck = false;
-
-    public function wasNewCheck() {
-        return $this->_newCheck;
-    }
-
-    /**
-     * Tu wrzucamy kod do sprawdzenia uprawnień. Dzięki metodzie startup (wywoływanej przez CakePHP) wszystko
-     * dzieje się automatycznie. Wystarczy dodać komponent Permissions do AppController.     */
-    public function startup(Controller $controller) {
-
-        // Najpierw sprawdźmy, czy zalogowany użytkownik ma być sprawdzany w nowym systemie
-        // Jeżeli nie, to nie kontynujemy pracy
-        if ( !$this->userIsOnNewPermissionSystem() ) {
-            return;
-        }
-        // Tak - chcemy zapisać, że sprawdzamy w nowym systemie, by kod starego nie robił ego po raz drugi.
-        // $controller->_newCheck = true;
-        $this->_newCheck = true;
-
-        // Pobierz nazwę kontrolera i akcji
-        $controllerName = strtolower($controller->name);
-        $action = $controller->action;
-
-        // Zbuduj nazwę zasobu w formacie: controller_action
-        $resource = $controllerName . '_' . $action;
-
-        // Lista akcji/kontrolerów, które nie wymagają sprawdzania uprawnień
-        $excludedActions = array(                
-            'users_login',
-            'users_logout',
-            // tmp
-            'orders_index',
-            // sprawdzić to jest ajax , wywoływane np. w orders index, po co
-            'orders_prepaid'
-        );
-
-        // Pomiń sprawdzanie dla wykluczonych akcji
-        if (in_array($resource, $excludedActions)) {
-            return;
-        }
-
-        if (!$this->check($resource, 1)) {
-                $controller->Session->setFlash('Brak uprawnień do wykonania tej akcji ( PermissionComponent ): ' . $resource);
-                return $controller->redirect(array('controller' => 'orders', 'action' => 'index'));                
-        }
-    }
-
-    /**
+     /** DO ZMIANY
      * Zmienna definiująca podstawowy model zachowania uprawnień.
      * - false => wszystko co wprost nie jeste dozwolone (zdefiniowane w tabeli permissions), jest zabronione => default RESTRICTED
      * - true => wszysstko, co nie jest wprost uregulowane ( w tabeli permissions ), jest dozwolone => default ALLOWED     */
     private $_undefinedAllowed = false;
 
-    // Tablica przechowująca uprawnienia zalogowanego użytkownika
-    private $_permissions = array();
+    // Lista akcji/kontrolerów, które nie wymagają sprawdzania uprawnień
+    private $_excludedActions = array(                
+        'users_login',
+        'users_logout',
+        // tmp
+        'orders_index',
+        // sprawdzić to jest ajax , wywoływane np. w orders index, po co
+        'orders_prepaid'
+    );
 
     public function initialize(Controller $controller) {
+
+        // Zapisujemy referencję do bieżącego kontrolera w $this->Controller w celu możliwości późniejszego użycia w custom methods.
         $this->Controller = $controller;
-        // Ładuj uprawnienia użytkownika po zalogowaniu
-        if ($this->Auth->user()) {
-            $this->_loadPermissions();
-        }
+
+        // Zalogowany użytkownik;
+        $this->_user = $this->Auth->user();
+
+        // Ładujemy uprawnienia użytkownika, jeżeli jest objęty nowym systemem uprawnień.
+        $this->_loadPermissions();        
     }
 
-    /**
-     * Zmienna przechowująca info o tym czy zalogowany użytkownik przynależy do nowego systemu uprawnień.
-     * Sprawdzenie następuje w _loadPermissions() i wtedy zostaje ustawiona.     */
-    private $_isOnNew = false;
-    
-    // Zwróć informację, czy użytkownik jest na nowym systemie uprawnień
-    public function userIsOnNewPermissionSystem() {
-        return $this->_isOnNew;
+    public function startup(Controller $controller) {
+
+        // Użytkownik sprawdzany jest w starym systemie => kończymy pracę.
+        if( $this->_isOnOLDsystem() ) return;
+
+        // Pobierz nazwę zasobu w formacie: controller_action
+        $resource = $this->_buildResourceName();
+
+        // Pomiń sprawdzanie dla wykluczonych akcji
+        if (in_array($resource, $this->_excludedActions)) return;
+
+        if (!$this->_check($resource, 1)) {
+            $controller->Session->setFlash('Brak uprawnień do wykonania tej akcji ( PermissionComponent ): ' . $resource);
+            return $controller->redirect(array('controller' => 'orders', 'action' => 'index'));                
+        }
+        
     }
-    
+
+    private $_user;
+
+    // Zbuduj nazwę zasobu w formacie: controller_action
+    private function _buildResourceName() { return strtolower($this->Controller->name) . '_' . $this->Controller->action; }
+
+
+    // Czy użytkownik jest na NOWYM systemie uprawnień ?
+    public function isOnNEWsystem() { return !empty($this->_user['group_id']); }
+
+    // Czy użytkownik jest na STARYM systemie uprawnień ?
+    private function _isOnOLDsystem() { return empty($this->_user['group_id']); }
+
     // Ładuje uprawnienia użytkownika z bazy danych
     protected function _loadPermissions() {
-        $user = $this->Auth->user();
-        
-        if (empty($user['group_id'])) {
-            return false;
-        }
-        // To znaczy, ze uzytkownik jest w nowym systemie, ustawmy zmienną
-        $this->_isOnNew = true;
+
+        // Nie ładujemy danych dla użytkownika sprawdzanego w starym systemie.
+        if ($this->_isOnOLDsystem()) { return false; }
 
         $Permission = ClassRegistry::init('Permission');
         $permissions = $Permission->find('all', array(
-            'conditions' => array('Permission.group_id' => $user['group_id']),
+            'conditions' => array('Permission.group_id' => $this->_user['group_id']),
             'fields' => array('Permission.resource', 'Permission.permission_level')
         ));
         
@@ -117,9 +96,12 @@ class PermissionComponent extends Component {
         
         return true;
     }
-    
+
+    // Tablica przechowująca uprawnienia zalogowanego użytkownika
+    private $_permissions = array();
+
     // Sprawdza czy użytkownik ma uprawnienia do danego zasobu
-    public function check($resource, $requiredLevel = 1) {
+    private function _check($resource, $requiredLevel = 1) {
         if (isset($this->_permissions[$resource])) {
             // mamy zdefiniowane uprawnienie dla tego zasobu
             return $this->_permissions[$resource] >= $requiredLevel;
@@ -127,7 +109,10 @@ class PermissionComponent extends Component {
         // nie ma definicji dla tego zasobu, to co zwracamy, zeleży od $_undefinedAllowed
         return $this->_undefinedAllowed;
     }
-    
+
+    ##########################
+    // Jeszcze tego nigdzie nie używamy 
+
     // Pobiera poziom uprawnień dla danego zasobu
     public function getLevel($resource) {
         if (isset($this->_permissions[$resource])) {
@@ -137,17 +122,17 @@ class PermissionComponent extends Component {
     }
     
     // Metoda kompatybilności ze starym systemem
-    public function getLegacyPermission($field) {
-        // Mapowanie starych pól na nowe zasoby
-        $mapping = array(
-            'OV' => 'orders_view',
-            // Dodaj inne mapowania według potrzeb
-        );
+    // public function getLegacyPermission($field) {
+    //     // Mapowanie starych pól na nowe zasoby
+    //     $mapping = array(
+    //         'OV' => 'orders_view',
+    //         // Dodaj inne mapowania według potrzeb
+    //     );
         
-        if (isset($mapping[$field])) {
-            return $this->getLevel($mapping[$field]);
-        }
+    //     if (isset($mapping[$field])) {
+    //         return $this->getLevel($mapping[$field]);
+    //     }
         
-        return 0;
-    }
+    //     return 0;
+    // }
 }
