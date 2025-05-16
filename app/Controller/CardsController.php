@@ -210,8 +210,7 @@ class CardsController extends AppController
     Zminne jest, ewentualnie, ustawiana przez metodę $this->akcjaOK */
     private $limitedView = 0;
 
-    public function view($id = null)
-    {
+    public function view($id = null) {
         if (!$this->Card->exists($id)) {
             throw new NotFoundException(__('Nie ma takiej karty'));
         }
@@ -229,7 +228,8 @@ class CardsController extends AppController
         // Dla wyświetlania widoku karty w innym kolorze gdy jest ZAMKNIĘTA
         $konec = $card['Card']['status'] == KONEC;
         $limited = $this->limitedView;
-        $this->set(compact('card', 'evcontrol', 'links', 'vju', 'limited', 'konec'));
+        $checker = $this->_aOKwasRun ? "akcjaOK TAK" : "akcjaOK NIE";
+        $this->set(compact('card', 'evcontrol', 'links', 'vju', 'limited', 'konec', 'checker'));
     }
     // Sprawdzamy czy dany zalogowany użytkownik może zmieniać datę perso    
     private function userPersoChange()
@@ -713,8 +713,17 @@ class CardsController extends AppController
         return false;
     }
 
+    // Tu wpisujemy info, czy akcjaOK was run
+	private $_aOKwasRun = false;
 
     private function akcjaOK($dane = array(), $akcja = null, $par = null) {
+
+        // Użytkownik podlega pod sprawdzanie w nowej wersji systemu => nie ingerujemy.
+		if ($this->Permission->isOnNEWsystem()) { return true; }
+
+		// metoda zostanie uruchomiona - notujemy
+		$this->_aOKwasRun = true;
+
         $card = $dane['Card'];
         $customer = $dane['Customer'];        
         $kartaFlagowa = $this->Auth->user('flag') == $customer['flag'];
