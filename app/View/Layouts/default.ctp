@@ -77,13 +77,7 @@ $cakeDescription = __d('cake_dev', 'SKP');
 		</div>
 		<div id="content" class="dexmodif">
 
-			<?php echo $this->Session->flash(); ?>
-			<?php if( isset($checker) ) {
-				echo $checker;
-			} else {
-				echo "checker NOT set";
-			}
-			?>
+			<?php echo $this->Session->flash(); ?>			
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">			

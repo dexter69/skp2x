@@ -423,7 +423,6 @@ class OrdersController extends AppController {
 		}
 		unset($order["Customer"]["comment"]);
 
-		$checker = $this->_aOKwasRun ? "akcjaOK TAK" : "akcjaOK NIE";
 		$this->set(compact(
 			'order',
 			'evcontrol',
@@ -433,8 +432,7 @@ class OrdersController extends AppController {
 			'evtext',
 			'coism',
 			'konec',
-			'dzial',
-			'checker'
+			'dzial'
 		));
 		//$this -> render('druknij');
 	}
