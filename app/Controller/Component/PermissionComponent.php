@@ -16,10 +16,12 @@ App::uses('Component', 'Controller');
 class PermissionComponent extends Component {
     public $components = array('Auth', 'Session');
 
-     /** DO ZMIANY
+     /** 
      * Zmienna definiująca podstawowy model zachowania uprawnień.
      * - false => wszystko co wprost nie jeste dozwolone (zdefiniowane w tabeli permissions), jest zabronione => default RESTRICTED
-     * - true => wszysstko, co nie jest wprost uregulowane ( w tabeli permissions ), jest dozwolone => default ALLOWED     */
+     * - true => wszysstko, co nie jest wprost uregulowane ( w tabeli permissions ), jest dozwolone => default ALLOWED.
+     * Zmienna jest ustawiana w trakcie ładowania uprawnień przez metodę _loadPermissions().
+     * Przyjmuje wartość zdefiniowaną w kolumnie `allowed_by_default` tabeli `groups`     */
     private $_undefinedAllowed = false;
 
     // Lista akcji/kontrolerów, które nie wymagają sprawdzania uprawnień
@@ -83,14 +85,15 @@ class PermissionComponent extends Component {
         $Permission = ClassRegistry::init('Permission');
         $permissions = $Permission->find('all', array(
             'conditions' => array('Permission.group_id' => $this->_user['group_id']),
-            'fields' => array('Permission.resource', 'Permission.permission_level')
+            'fields' => array('Permission.resource', 'Permission.permission_level', 'Group.allowed_by_default')
         ));
         
         foreach ($permissions as $permission) {
             $this->_permissions[$permission['Permission']['resource']] = 
                 $permission['Permission']['permission_level'];
         }
-        
+        $this->_undefinedAllowed = $permissions[0]['Group']['allowed_by_default'];
+
         // Opcjonalnie: zapisz uprawnienia w sesji dla szybszego dostępu
         $this->Session->write('Auth.User.Permissions', $this->_permissions);
         
