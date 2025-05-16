@@ -30,8 +30,7 @@ App::uses('Controller', 'Controller');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AppController extends Controller {
 
         public $helpers = array('Form', 'Html', 'Ma');
 
@@ -43,14 +42,18 @@ class AppController extends Controller
                         //'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
                         'logoutRedirect' => array('controller' => 'orders', 'action' => 'index')
                 ),
+                ### UWAGA !!! ###
+                // Samo dodanie tego komponentu powoduje włączenie nowego systemu uprawnień !!!
                 'Permission'
         );
-        
-        /**
-	 * Zmienna decydująca o tym, czy metoda akcjaOK powinna zostać wykonana. Ma to związek z przechodzeniem na nowy system uprawnień.
-	 * Domyślan wartość to false, co oznacza, że sprawdzamy po staremu. W wypadku sprawdzania w nowym systemie, zmienna zostaje
-	 * ustawiona true, dzięki czemu akcjaOK nie dokonuje sprawdzania - nie interferuje w proces.	 */
-        protected $_newCheck = false;
+
+        public function beforeFilter()  {
+
+                parent::beforeFilter();
+
+                $this->set('juzer', $this->Auth->User('name'));
+                $this->set('departament', $this->Auth->User('dzial'));
+        }
 
         /* Predefiniowane ilości kart w batonie */
         public $batons = array(
@@ -83,12 +86,6 @@ class AppController extends Controller
                 )
         );
 
-        public function beforeFilter()  {
-                parent::beforeFilter();
-                $this->set('juzer', $this->Auth->User('name'));
-                $this->set('departament', $this->Auth->User('dzial'));
-        }
-
         /**
          * $this->request->referer();
          * Nie działa na Lando - nie daje poprawnego URL'a
@@ -116,8 +113,7 @@ class AppController extends Controller
         }
 
         // Sprawdzamy, czy wśród załączonych plików jest plik etykiety
-        public function parseUploads($uploads = array())
-        {
+        public function parseUploads($uploads = array()) {
                 //$uploads - tablica z plikami
                 foreach ($uploads as $row) {
                         if ($row['role'] == ETYKIETA) {

@@ -338,19 +338,7 @@ class OrdersController extends AppController {
 	 * @param string $id
 	 * @return void
 	 */
-	public function view($id = null) {
-
-		// Metoda 1: Używanie nowego systemu uprawnień
-		if ( $this->Permission->userIsOnNewPermissionSystem() ) {
-			if (!$this->Permission->check('orders_view', 1)) {
-				$this->Session->setFlash('Brak uprawnień do przeglądania zamówień.');
-				return $this->redirect(array('controller' => 'orders', 'action' => 'index'));
-			}			
-			/**
-			 * Oznacza, że uprawnienia zostały sprawdzone i nie chcemy by sprawdzać ponownie w starym systemie.
-			 * Dlatego musimy to oznaczyć. */
-			$this->_newCheck = true;			
-		}
+	public function view($id = null) {		
 
 		if (!$this->Order->exists($id)) {
 			throw new NotFoundException(__('Nie ma takiego zamówienia'));
@@ -434,7 +422,8 @@ class OrdersController extends AppController {
 			$order["Customer"]["przypominajka"] = false;
 		}
 		unset($order["Customer"]["comment"]);
-		
+
+		$checker = $this->_aOKwasRun ? "akcjaOK TAK" : "akcjaOK NIE";
 		$this->set(compact(
 			'order',
 			'evcontrol',
@@ -444,14 +433,17 @@ class OrdersController extends AppController {
 			'evtext',
 			'coism',
 			'konec',
-			'dzial'
+			'dzial',
+			'checker'
 		));
 		//$this -> render('druknij');
 	}
+
+	// Tu wpisujemy info, czy akcjaOK was run
+	private $_aOKwasRun = false;
 	/*
 		* Dodanie możliwości modyfikacji statusu karty dla niektórych osób */
-	private function addStatusModCap($order_arr = array())
-	{
+	private function addStatusModCap($order_arr = array()) {
 
 		if (in_array($this->Auth->user('dzial'), [SUA, KOR])) { // uprawnione działy
 			$order_arr['statusKartyMoznaModyfikowac'] = true;
@@ -483,11 +475,11 @@ class OrdersController extends AppController {
 
 	}
 
-	/*
- *      Ajax - sprawdzanie kwestii płatności */
 
-	public function prepaid()
-	{
+	/**
+	 * Ajax - sprawdzanie kwestii płatności 	 */
+
+	public function prepaid() {
 
 		$result = $this->Order->prepaidStatus($this->request->data['id']);
 		$answer = $result['Order'];
@@ -987,9 +979,13 @@ class OrdersController extends AppController {
 	// sprawdzamy uprawnienia dla akcji w tym kontrolerze
 	private function akcjaOK($dane = array(), $akcja = null, $par = null)	{
 
-		if ($this->_newCheck) { // Sprawdzanie uprawnień nastąpiło już w nowej wersji systemu => nie ingerujemy.
+		// Sprawdzanie uprawnień nastąpiło już w nowej wersji systemu => nie ingerujemy.
+		if( $this->Permission->wasNewCheck() ) {
 			return true;
 		}
+
+		// metoda zostanie uruchomiona - notujemy
+		$this->_aOKwasRun = true;
 
 		$order = $dane['Order'];
 		$customer = $dane['Customer'];				

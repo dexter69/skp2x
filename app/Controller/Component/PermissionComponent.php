@@ -15,15 +15,64 @@ App::uses('Component', 'Controller');
 
 class PermissionComponent extends Component {
     public $components = array('Auth', 'Session');
-    
-    // Tablica przechowująca uprawnienia zalogowanego użytkownika
-    protected $_permissions = array();
+
+    private $_newCheck = false;
+
+    public function wasNewCheck() {
+        return $this->_newCheck;
+    }
 
     /**
-     * Zmienna przechowująca info o tym czy zalogowany użytkownik przynależy do nowego systemu uprawnień.
-     * Sprawdzenie następuje w _loadPermissions() i wtedy zostaje ustawiona.     */
-    private $_isOnNew = false;
-    
+     * Tu wrzucamy kod do sprawdzenia uprawnień. Dzięki metodzie startup (wywoływanej przez CakePHP) wszystko
+     * dzieje się automatycznie. Wystarczy dodać komponent Permissions do AppController.     */
+    public function startup(Controller $controller) {
+
+        // Najpierw sprawdźmy, czy zalogowany użytkownik ma być sprawdzany w nowym systemie
+        // Jeżeli nie, to nie kontynujemy pracy
+        if ( !$this->userIsOnNewPermissionSystem() ) {
+            return;
+        }
+        // Tak - chcemy zapisać, że sprawdzamy w nowym systemie, by kod starego nie robił ego po raz drugi.
+        // $controller->_newCheck = true;
+        $this->_newCheck = true;
+
+        // Pobierz nazwę kontrolera i akcji
+        $controllerName = strtolower($controller->name);
+        $action = $controller->action;
+
+        // Zbuduj nazwę zasobu w formacie: controller_action
+        $resource = $controllerName . '_' . $action;
+
+        // Lista akcji/kontrolerów, które nie wymagają sprawdzania uprawnień
+        $excludedActions = array(                
+            'users_login',
+            'users_logout',
+            // tmp
+            'orders_index',
+            // sprawdzić to jest ajax , wywoływane np. w orders index, po co
+            'orders_prepaid'
+        );
+
+        // Pomiń sprawdzanie dla wykluczonych akcji
+        if (in_array($resource, $excludedActions)) {
+            return;
+        }
+
+        if (!$this->check($resource, 1)) {
+                $controller->Session->setFlash('Brak uprawnień do wykonania tej akcji ( PermissionComponent ): ' . $resource);
+                return $controller->redirect(array('controller' => 'orders', 'action' => 'index'));                
+        }
+    }
+
+    /**
+     * Zmienna definiująca podstawowy model zachowania uprawnień.
+     * - false => wszystko co wprost nie jeste dozwolone (zdefiniowane w tabeli permissions), jest zabronione => default RESTRICTED
+     * - true => wszysstko, co nie jest wprost uregulowane ( w tabeli permissions ), jest dozwolone => default ALLOWED     */
+    private $_undefinedAllowed = false;
+
+    // Tablica przechowująca uprawnienia zalogowanego użytkownika
+    private $_permissions = array();
+
     public function initialize(Controller $controller) {
         $this->Controller = $controller;
         // Ładuj uprawnienia użytkownika po zalogowaniu
@@ -32,6 +81,11 @@ class PermissionComponent extends Component {
         }
     }
 
+    /**
+     * Zmienna przechowująca info o tym czy zalogowany użytkownik przynależy do nowego systemu uprawnień.
+     * Sprawdzenie następuje w _loadPermissions() i wtedy zostaje ustawiona.     */
+    private $_isOnNew = false;
+    
     // Zwróć informację, czy użytkownik jest na nowym systemie uprawnień
     public function userIsOnNewPermissionSystem() {
         return $this->_isOnNew;
@@ -67,9 +121,11 @@ class PermissionComponent extends Component {
     // Sprawdza czy użytkownik ma uprawnienia do danego zasobu
     public function check($resource, $requiredLevel = 1) {
         if (isset($this->_permissions[$resource])) {
+            // mamy zdefiniowane uprawnienie dla tego zasobu
             return $this->_permissions[$resource] >= $requiredLevel;
         }
-        return false;
+        // nie ma definicji dla tego zasobu, to co zwracamy, zeleży od $_undefinedAllowed
+        return $this->_undefinedAllowed;
     }
     
     // Pobiera poziom uprawnień dla danego zasobu
