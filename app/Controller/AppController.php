@@ -35,6 +35,7 @@ class AppController extends Controller {
         public $helpers = array('Form', 'Html', 'Ma');
 
         public $components = array(
+                'DebugKit.Toolbar',
                 'RequestHandler',
                 'Session',
                 'Auth' => array(

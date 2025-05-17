@@ -25,6 +25,27 @@
 // tam definijemy numery wesji apikacji
 require 'ver.php';
 
+/**
+ * Konfiguracja środowiska
+ * 
+ * Jeśli plik environment.php nie istnieje:
+ * 1. Skopiuj environment.php.default do environment.php
+ * 2. Dostosuj ustawienia w environment.php do swojego środowiska */
+
+if (file_exists(APP . 'Config' . DS . 'environment.php')) {
+    include(APP . 'Config' . DS . 'environment.php');
+} else {
+    // Domyślnie zakładamy, że to produkcja
+    Configure::write('App.isDevEnvironment', false);
+}
+
+// Ustawiamy poziom debugowania na podstawie środowiska => to nadpisze wartość z core.php (w którym i tak wykomentowaliśmy to)
+if (Configure::read('App.isDevEnvironment')) {
+    Configure::write('debug', 2);
+} else {
+    Configure::write('debug', 0);
+}
+
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
@@ -68,10 +89,10 @@ Cache::config('default', array('engine' => 'File'));
  * Uncomment one of the lines below, as you need. Make sure you read the documentation on CakePlugin to use more
  * advanced ways of loading plugins
  *
- * CakePlugin::loadAll(); // Loads all plugins at once
- * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
- *
- */
+ * CakePlugin::loadAll(); // Loads all plugins at once */
+
+ CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
+ 
 
 /**
  * You can attach event listeners to the request lifecycle as Dispatcher Filter. By default CakePHP bundles two filters:

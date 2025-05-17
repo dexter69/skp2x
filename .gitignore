@@ -4,6 +4,7 @@
 /app/Config/email.php
 /app/Config/email2.php
 /app/tmp
+/app/Plugin
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
 /vendors
@@ -51,4 +52,6 @@ Thumbs.db
 db/adminer.sql.gz
 db/adminer.sql
 db/_adminer.sql.gz
-prepros-6.config
+
+# Srodowisko dev / prod
+app/Config/environment.php

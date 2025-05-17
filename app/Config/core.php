@@ -30,8 +30,10 @@
  *
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
+ * 
+ * 2025.05.18 => przeniesione do bootstrap.php ze względu na rozdzielenie środowiska prod/dev
  */
-	Configure::write('debug', 2);
+	// Configure::write('debug', 2);
 
 /**
  * Configure the Error handler used to handle errors for your application. By default

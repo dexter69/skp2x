@@ -1,0 +1,15 @@
+<?php
+/**
+ * Plik wzorcowy konfiguracji środowiska
+ * 
+ * Aby skonfigurować środowisko:
+ * 1. Skopiuj ten plik do environment.php
+ * 2. Dostosuj ustawienia do swojego środowiska
+ */
+
+// Ustaw na true w środowisku deweloperskim, false na produkcji
+Configure::write('App.isDevEnvironment', true);
+
+// Inne ustawienia specyficzne dla środowiska
+// Configure::write('Database.default', 'development');
+// Configure::write('Email.test_mode', true);
