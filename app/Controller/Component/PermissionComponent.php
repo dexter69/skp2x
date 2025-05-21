@@ -58,7 +58,7 @@ class PermissionComponent extends Component {
         if (in_array($resource, $this->_excludedActions)) return;
 
         if (!$this->_check($resource, 1)) {
-            $controller->Session->setFlash('Brak uprawnień do wykonania tej akcji ( PermissionComponent ): ' . $resource);
+            $controller->Session->setFlash("Brak uprawnień do wykonania tej akcji ( PermissionComponent: {$resource} )");
             return $controller->redirect(array('controller' => 'orders', 'action' => 'index'));                
         }
         
@@ -82,18 +82,37 @@ class PermissionComponent extends Component {
         // Nie ładujemy danych dla użytkownika sprawdzanego w starym systemie.
         if ($this->_isOnOLDsystem()) { return false; }
 
-        $Permission = ClassRegistry::init('Permission');
-        $permissions = $Permission->find('all', array(
-            'conditions' => array('Permission.group_id' => $this->_user['group_id']),
-            'fields' => array('Permission.resource', 'Permission.permission_level', 'Group.allowed_by_default')
-        ));
         
-        foreach ($permissions as $permission) {
-            $this->_permissions[$permission['Permission']['resource']] = 
-                $permission['Permission']['permission_level'];
-        }
-        $this->_undefinedAllowed = $permissions[0]['Group']['allowed_by_default'];
+        $Group = ClassRegistry::init('Group');
+        // Upewniamy się, że model Group używa zachowania Containable, co by nam Cake skonstruował query join i zasysnął permissions też
+        $Group->Behaviors->load('Containable');
+        $dane = $Group->find('first', array(
+            'conditions' => array('Group.id' => $this->_user['group_id']),
+            'fields' => array('Group.id', 'Group.allowed_by_default'),
+            'contain' => array(
+                'Permission' => array(
+                    'fields' => array('resource', 'permission_level')
+                )
+            )
+        ));
 
+        /** Zabezpieczamy się przed błędem w bazie danych. Gdyby użytkownik był przypisany do grupy, która nie istnieje.
+         * W takim scenariuszu, nie dajemy mu żadnych uprawnień - $this->_undefinedAllowed domyślnie jest false */
+        if ( empty($dane) ) { return false; }
+
+        $permissions = $dane['Permission'];
+        $group = $dane['Group'];
+
+        if( !empty($permissions) ) {
+            // Zdefiniowano jakieś permissions => załadujmy je
+            foreach ($permissions as $permission) {
+                $this->_permissions[$permission['resource']] = $permission['permission_level'];
+            }
+        }
+
+        // W sytuacji, gdy nie zdefiniowano żadnych permissions, zostanie użyte default permission grupy.
+        $this->_undefinedAllowed = $group['allowed_by_default'];
+         
         // Opcjonalnie: zapisz uprawnienia w sesji dla szybszego dostępu
         $this->Session->write('Auth.User.Permissions', $this->_permissions);
         
@@ -124,18 +143,4 @@ class PermissionComponent extends Component {
         return 0;
     }
     
-    // Metoda kompatybilności ze starym systemem
-    // public function getLegacyPermission($field) {
-    //     // Mapowanie starych pól na nowe zasoby
-    //     $mapping = array(
-    //         'OV' => 'orders_view',
-    //         // Dodaj inne mapowania według potrzeb
-    //     );
-        
-    //     if (isset($mapping[$field])) {
-    //         return $this->getLevel($mapping[$field]);
-    //     }
-        
-    //     return 0;
-    // }
 }
