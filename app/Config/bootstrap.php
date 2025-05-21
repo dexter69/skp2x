@@ -92,6 +92,26 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::loadAll(); // Loads all plugins at once */
 
  CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
+
+ /**
+ * Konfiguracja pod wkhtmltopdf - skopiowane ze starego */
+ CakePlugin::load('CakePdf', array('bootstrap' => true, 'routes' => true));
+
+
+ Configure::write('CakePdf', array(
+        'engine' => 'CakePdf.WkHtmlToPdf',
+		
+        'options' => array(
+            'print-media-type' => true,
+            'outline' => true,
+            'dpi' => 96,
+            'disable-smart-shrinking' => true
+        ),
+        /**/
+        //'orientation' => 'portrait',//'landscape',
+        'download' => true  ,
+		//'filename' => 'example.pdf'	
+ ));
  
 
 /**
@@ -129,28 +149,6 @@ CakeLog::config('error', array(
 	'engine' => 'File',
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
-));
-
-/**
- * Konfiguracja pod wkhtmltopdf - skopiowane ze starego
- */
-
-CakePlugin::load('CakePdf', array('bootstrap' => true, 'routes' => true));
-
-
-Configure::write('CakePdf', array(
-        'engine' => 'CakePdf.WkHtmlToPdf',
-		
-        'options' => array(
-            'print-media-type' => true,
-            'outline' => true,
-            'dpi' => 96,
-            'disable-smart-shrinking' => true
-        ),
-        /**/
-        //'orientation' => 'portrait',//'landscape',
-        'download' => true  ,
-	//'filename' => 'example.pdf'	
 ));
 
 define('webixCustomersURL', '/klienci'); // URL strony klientów po Webix'owemu
