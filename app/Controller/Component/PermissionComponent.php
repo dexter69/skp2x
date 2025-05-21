@@ -66,18 +66,17 @@ class PermissionComponent extends Component {
 
     private $_user;
 
-    // Zbuduj nazwę zasobu w formacie: controller_action
-    private function _buildResourceName() { return strtolower($this->Controller->name) . '_' . $this->Controller->action; }
-
-
     // Czy użytkownik jest na NOWYM systemie uprawnień ?
     public function isOnNEWsystem() { return !empty($this->_user['group_id']); }
 
     // Czy użytkownik jest na STARYM systemie uprawnień ?
     private function _isOnOLDsystem() { return empty($this->_user['group_id']); }
 
+    // Zbuduj nazwę zasobu w formacie: controller_action
+    private function _buildResourceName() { return strtolower($this->Controller->name) . '_' . $this->Controller->action; }
+
     // Ładuje uprawnienia użytkownika z bazy danych
-    protected function _loadPermissions() {
+    private function _loadPermissions() {
 
         // Nie ładujemy danych dla użytkownika sprawdzanego w starym systemie.
         if ($this->_isOnOLDsystem()) { return false; }
@@ -109,8 +108,9 @@ class PermissionComponent extends Component {
                 $this->_permissions[$permission['resource']] = $permission['permission_level'];
             }
         }
-
         // W sytuacji, gdy nie zdefiniowano żadnych permissions, zostanie użyte default permission grupy.
+        
+        // To możemy potrzebować niezależnie od powyższego.
         $this->_undefinedAllowed = $group['allowed_by_default'];
          
         // Opcjonalnie: zapisz uprawnienia w sesji dla szybszego dostępu
