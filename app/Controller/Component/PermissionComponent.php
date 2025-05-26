@@ -16,23 +16,11 @@ App::uses('Component', 'Controller');
 class PermissionComponent extends Component {
     public $components = array('Auth', 'Session');
 
-     /** 
-     * Zmienna definiująca podstawowy model zachowania uprawnień.
-     * - false => wszystko co wprost nie jeste dozwolone (zdefiniowane w tabeli permissions), jest zabronione => default RESTRICTED
-     * - true => wszysstko, co nie jest wprost uregulowane ( w tabeli permissions ), jest dozwolone => default ALLOWED.
-     * Zmienna jest ustawiana w trakcie ładowania uprawnień przez metodę _loadPermissions().
-     * Przyjmuje wartość zdefiniowaną w kolumnie `allowed_by_default` tabeli `groups`     */
-    private $_undefinedAllowed = false;
-
-    // Lista akcji/kontrolerów, które nie wymagają sprawdzania uprawnień
-    private $_excludedActions = array(                
-        'users_login',
-        'users_logout',
-        // tmp
-        'orders_index',
-        // sprawdzić to jest ajax , wywoływane np. w orders index, po co
-        'orders_prepaid'
-    );
+    /**
+     *  WAŻNE !!!!!
+     *  Ta właściwość musi być prawidłowo ukształtowana !!!
+     *  Przechowuje uprawnienia zalogowanego użytkownika.  */
+    private $_permissions = ['_allowed_by_default' => false];
 
     public function initialize(Controller $controller) {
 
@@ -64,6 +52,46 @@ class PermissionComponent extends Component {
         
     }
 
+    // Ładuje uprawnienia użytkownika z bazy danych
+    private function _loadPermissions() {
+
+        // Nie ładujemy danych dla użytkownika sprawdzanego w starym systemie.
+        if ($this->_isOnOLDsystem()) return false;
+
+        // Sprawdź czy uprawnienia są już w sesji
+        if ($this->Session->check('Auth.User.Permissions')) {
+            $this->_permissions = $this->Session->read('Auth.User.Permissions');
+            return true;
+        }
+
+        $dane = $this->_getDataFromDB();
+
+        // Gdy użytkownik nie jest przypisany do żadnej grupy lub byłby przypisany do grupy, która nie istnieje (błąd w bazie danych).
+        if ( empty($dane) ) return false;
+
+        $permissions = $dane['Permission'];
+        $group = $dane['Group'];
+        
+        // Przetwórz wyniki do łatwiejszego formatu
+        if( !empty($permissions) ) {
+            foreach ($permissions as $permission) {
+                $resource = $permission['resource'];
+                $level = $permission['permission_level'];
+
+                $this->_permissions[$resource] = $level;
+            }
+        }
+        
+        if ( array_key_exists('allowed_by_default', $group) ) {
+            $this->_permissions['_allowed_by_default'] = (bool)$group['allowed_by_default'];
+        }
+         
+        // Zapisz uprawnienia w sesji dla szybszego dostępu
+        $this->Session->write('Auth.User.Permissions', $this->_permissions);
+        
+        return true;
+    }
+
     private $_user;
 
     // Czy użytkownik jest na NOWYM systemie uprawnień ?
@@ -75,13 +103,13 @@ class PermissionComponent extends Component {
     // Zbuduj nazwę zasobu w formacie: controller_action
     private function _buildResourceName() { return strtolower($this->Controller->name) . '_' . $this->Controller->action; }
 
-    // Ładuje uprawnienia użytkownika z bazy danych
-    private function _loadPermissions() {
+    /**
+     * Pobiera z bazy permissins dla grupy oraz dane grupy
+     * 
+     * @return array Tablica z danymi lub pusta tablica gdy brak danych
+     */
+    private function _getDataFromDB() {
 
-        // Nie ładujemy danych dla użytkownika sprawdzanego w starym systemie.
-        if ($this->_isOnOLDsystem()) { return false; }
-
-        
         $Group = ClassRegistry::init('Group');
         // Upewniamy się, że model Group używa zachowania Containable, co by nam Cake skonstruował query join i zasysnął permissions też
         $Group->Behaviors->load('Containable');
@@ -95,42 +123,34 @@ class PermissionComponent extends Component {
             )
         ));
 
-        /** Zabezpieczamy się przed błędem w bazie danych. Gdyby użytkownik był przypisany do grupy, która nie istnieje.
-         * W takim scenariuszu, nie dajemy mu żadnych uprawnień - $this->_undefinedAllowed domyślnie jest false */
-        if ( empty($dane) ) { return false; }
-
-        $permissions = $dane['Permission'];
-        $group = $dane['Group'];
-
-        if( !empty($permissions) ) {
-            // Zdefiniowano jakieś permissions => załadujmy je
-            foreach ($permissions as $permission) {
-                $this->_permissions[$permission['resource']] = $permission['permission_level'];
-            }
+        // Cake powinien nam zwrócić prawidłowo ustrukturyzowaną tablicę, ale tak na wszelki wypadek.
+        if ( !empty($dane) )  {
+            if ( !array_key_exists('Permission', $dane) ) $dane['Permission'] = [];
+            if ( !array_key_exists('Group', $dane) ) $dane['Group'] = [];
         }
-        // W sytuacji, gdy nie zdefiniowano żadnych permissions, zostanie użyte default permission grupy.
-        
-        // To możemy potrzebować niezależnie od powyższego.
-        $this->_undefinedAllowed = $group['allowed_by_default'];
-         
-        // Opcjonalnie: zapisz uprawnienia w sesji dla szybszego dostępu
-        $this->Session->write('Auth.User.Permissions', $this->_permissions);
-        
-        return true;
+        return $dane;
     }
-
-    // Tablica przechowująca uprawnienia zalogowanego użytkownika
-    private $_permissions = array();
 
     // Sprawdza czy użytkownik ma uprawnienia do danego zasobu
     private function _check($resource, $requiredLevel = 1) {
-        if (isset($this->_permissions[$resource])) {
-            // mamy zdefiniowane uprawnienie dla tego zasobu
+        
+        // Sprawdź czy zasób jest jawnie zdefiniowany
+        if (isset($this->_permissions[$resource])) {            
             return $this->_permissions[$resource] >= $requiredLevel;
         }
-        // nie ma definicji dla tego zasobu, to co zwracamy, zeleży od $_undefinedAllowed
-        return $this->_undefinedAllowed;
+        // Jeśli nie, użyj domyślnej wartości dla grupy
+        return $this->_permissions['_allowed_by_default'];
     }
+
+    // Lista akcji/kontrolerów, które nie wymagają sprawdzania uprawnień
+    private $_excludedActions = array(                
+        'users_login',
+        'users_logout',
+        // tmp
+        'orders_index',
+        // sprawdzić to jest ajax , wywoływane np. w orders index, po co
+        'orders_prepaid'
+    );
 
     ##########################
     // Jeszcze tego nigdzie nie używamy 
