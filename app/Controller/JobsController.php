@@ -409,10 +409,18 @@ class JobsController extends AppController
 		return $this->redirect(array('action' => 'index'));
 	}
 
+	// Tu wpisujemy info, czy akcjaOK was run
+	private $_aOKwasRun = false;
 
 	// sprawdzamy uprawnienia dla akcji w tym kontrolerze
-	private function akcjaOK($dane = array(), $akcja = null, $par = null)
-	{
+	private function akcjaOK($dane = array(), $akcja = null, $par = null) {
+
+		// Użytkownik podlega pod sprawdzanie w nowej wersji systemu => nie ingerujemy.
+		if ($this->Permission->isOnNEWsystem()) { return true; }
+
+		// metoda zostanie uruchomiona - notujemy
+		$this->_aOKwasRun = true;
+
 		switch ($akcja) {
 			case 'view':
 				// Na razie uproszczona wersja, tylko handlowcy nie mogą zobaczyć
