@@ -46,6 +46,9 @@ if (Configure::read('App.isDevEnvironment')) {
     Configure::write('debug', 0);
 }
 
+// Ładowanie konfiguracji uprawnień
+Configure::load('permissions');
+
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 

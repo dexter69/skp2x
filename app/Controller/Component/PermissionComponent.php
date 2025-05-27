@@ -42,9 +42,12 @@ class PermissionComponent extends Component {
         // Pobierz nazwę zasobu w formacie: controller_action
         $resource = $this->_buildResourceName();
 
-        // Pomiń sprawdzanie dla wykluczonych akcji
-        if (in_array($resource, $this->_excludedActions)) return;
+        // Pobierz listę wykluczonych (ze sprawdzania) akcji z konfiguracji
+        $excludedActions = Configure::read('Permissions.excludedActions');
 
+        // Pomiń sprawdzanie dla wykluczonych akcji
+        if (in_array($resource, $excludedActions)) return;
+        
         if (!$this->_check($resource, 1)) {
             $controller->Session->setFlash("Brak uprawnień do wykonania tej akcji ( PermissionComponent: {$resource} )");
             return $controller->redirect(array('controller' => 'orders', 'action' => 'index'));                
@@ -141,16 +144,6 @@ class PermissionComponent extends Component {
         // Jeśli nie, użyj domyślnej wartości dla grupy
         return $this->_permissions['_allowed_by_default'];
     }
-
-    // Lista akcji/kontrolerów, które nie wymagają sprawdzania uprawnień
-    private $_excludedActions = array(                
-        'users_login',
-        'users_logout',
-        // tmp
-        'orders_index',
-        // sprawdzić to jest ajax , wywoływane np. w orders index, po co
-        'orders_prepaid'
-    );
 
     ##########################
     // Jeszcze tego nigdzie nie używamy 
