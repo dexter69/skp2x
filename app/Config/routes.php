@@ -41,8 +41,10 @@
         // Nowe zamówienie
         // Router::connect('/nowe-zamowienie', array('controller' => 'disposals', 'action' => 'nowe'));
 
-        // Handlowe - nowe zamówienie i edycja with webix (26.09.2018 => przenosimy się do WebixesController)
-        Router::connect('/handlowe/dodaj', array('controller' => 'requests', 'action' => 'dodaj'));
+        Router::connect('/handlowe/dodaj', array('controller' => 'orders', 'action' => 'dodaj'));
+
+        // Handlowe - nowe zamówienie i edycja with webix (26.09.2018 => przenosimy się do WebixesController)        
+        // RequestsController nie jest używany => wychodzimy z tego na razie (28.05.2025)
         Router::connect('/handlowe/edytuj/*', array('controller' => 'requests', 'action' => 'edytuj'));
 
         Router::connect(webixCustomersURL, array('controller' => 'webixes', 'action' => 'index'));

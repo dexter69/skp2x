@@ -32,6 +32,13 @@ class OrdersController extends AppController {
 		$this->set('links', $this->links);
 	}
 
+
+	public function dodaj() {
+		// $this->layout = 'tailwind/dash';
+		$this->set('title_for_layout', 'Nowe Zamówienie');
+		$this->layout = 'tailwind/hat';
+	}
+
 	/**
 	 * serwis // tzw. zamówienia serwisowe
 	 * Prawdopodobnie DEPREC 15.03.2019
@@ -818,7 +825,8 @@ class OrdersController extends AppController {
 				'controller' => 'cards', 'action' => 'index'
 			));
 		}
-
+		// debug($vju);
+		// debug($tedane);
 		$this->set(compact('vju', 'tedane'));
 	}
 
